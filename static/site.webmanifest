@@ -1,0 +1,11 @@
+{
+  "name": "Brennenstuhl on Security",
+  "short_name": "janbrennenstuhl.eu",
+  "icons": [{
+    "src": "google-touch-icon.png",
+    "sizes": "512x512"
+  }],
+  "background_color": "#212529",
+  "theme_color": "#212529",
+  "display": "fullscreen"
+}

@@ -1,0 +1,10 @@
+{{- $ThemeVersion := "3.30.0" -}}
+<footer class="site-footer">
+    <section class="copyright">
+        {{ default .Site.Title .Site.Copyright }} 
+    </section>
+    
+    <section class="powerby">
+        {{ .Site.Params.footer.customText | safeHTML }} · Powered by <a rel="nofollow noopener" href="https://gohugo.io/">Hugo</a> & <a rel="nofollow noopener" href="https://github.com/CaiJimmy/hugo-theme-stack">Stack</a><br /><a href="/imprint/">Imprint</a> · <a href="/privacy-policy/">Privacy</a>
+    </section>
+</footer>

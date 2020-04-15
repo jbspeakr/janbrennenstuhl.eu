@@ -1,0 +1,33 @@
+# {{ .Site.Title }}
+
+> {{ partialCached "data/description" . }}
+
+About the Author: 
+
+Jan Brennenstuhl is a Principal Engineer in Berlin, Germany, with over 15 years of experience, specializing in product-minded software engineering, web security, and clean code. 
+His expertise lies in usable security, modernizing customer identity and access management (IAM) and engineering single sign-on (SSO) solutions.
+
+## Main Categories
+
+{{- range .Site.Taxonomies.categories }}
+- [{{ .Page.LinkTitle }}]({{ .Page.Permalink }}): {{.Page.Description}}
+{{- end }}
+
+## Key Articles
+
+{{- $posts := where .Site.RegularPages "Type" "in" .Site.Params.mainSections -}}
+{{- $featuredPosts := where $posts ".Params.featured" true -}}
+{{ range $featuredPosts }}
+- [{{ .LinkTitle }}]({{ .Permalink }}): {{.Page.Description}}
+{{- end }}
+
+## Important Pages
+
+{{- $pages := where .Site.RegularPages "Section" "page" -}}
+{{- $featuredPages := where $pages ".Params.featured" true -}}
+{{ range $featuredPages }}
+- [{{ .LinkTitle }}]({{ .Permalink }}): {{.Page.Description}}
+{{- end }}
+
+
+

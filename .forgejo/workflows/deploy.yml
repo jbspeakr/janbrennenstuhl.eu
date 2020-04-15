@@ -1,0 +1,57 @@
+name: Publish Blog
+on:
+  push:
+    branches:
+      - main  # Set a branch to deploy
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: codeberg-tiny
+    env:
+      HUGO_CACHEDIR: /tmp/hugo_cache
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v4
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: https://github.com/peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.147.8'
+          extended: true
+        
+      - uses: https://code.forgejo.org/actions/cache@v4
+        with:
+          path: ${{ env.HUGO_CACHEDIR }} 
+          key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-hugomod-
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Setup IndexNow 
+        # Generate files dynamically to prevent them from being leaked in public repositories.
+        # This example will put the file in the root directory of the site.You may change the location by yourself.
+        run: echo ${{ secrets.INDEXNOW_KEY }} > public/${{ secrets.INDEXNOW_KEY }}.txt
+
+      - name: Deploy to BunnyCDN
+        uses: https://github.com/ayeressian/bunnycdn-storage-deploy@v2.3.0
+        with:
+          source: "public"
+          destination: ""
+          storageZoneName: "${{ secrets.STORAGE_NAME }}"
+          storagePassword: "${{ secrets.STORAGE_PASSWORD }}"
+          accessKey: "${{ secrets.ACCOUNT_API_KEY }}"
+          pullZoneId: "${{ secrets.ZONE_ID }}"
+          upload: "true"
+          remove: "true"
+          purgePullZone: "true"
+
+      - name: indexnow-action
+        uses: https://github.com/bojieyang/indexnow-action@v2
+        with:
+          sitemap-location: 'https://www.janbrennenstuhl.eu/sitemap.xml'
+          key: ${{ secrets.INDEXNOW_KEY }}

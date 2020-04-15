@@ -1,0 +1,24 @@
+{{- $extLinkURL := .Get "url" -}}
+{{- $extLinkTitle := .Get "title" -}}
+<div class="card">
+  <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-16 col-lg-5 pt-4">
+          <img class="mx-auto d-block lazyload blur-up" src="/images/bunny.svg" alt="Bunny.net Logo" >
+        </div>  
+        <div class="col">
+          <div class="h5">
+            <a class="stretched-link" rel="nofollow noopener sponsored" href="{{- $extLinkURL -}}">{{- $extLinkTitle -}}</a>
+          </div>
+          <p class="small">
+            {{ with .Inner}}
+              {{ . | markdownify}}
+            {{ end }}
+          </p>
+        </div>
+      </div>
+  </div>
+  <div class="card-footer">
+    <i class="small">Note: As a bunny.net affiliate, I earn from referring.</i>
+  </div>
+</div>

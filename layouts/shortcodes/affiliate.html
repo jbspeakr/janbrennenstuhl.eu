@@ -1,0 +1,6 @@
+{{- $extLinkURL := .Get "url" -}}
+{{- $extLinkText := .Get "urltext" -}}
+{{- $extLinkTitle := .Get "title" -}}
+<a href="{{- $extLinkURL -}}" rel="nofollow noopener sponsored" title="{{- $extLinkTitle -}}">
+{{- $extLinkText -}}
+</a>

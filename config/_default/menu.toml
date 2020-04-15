@@ -1,0 +1,40 @@
+# Configure main menu and social menu
+#[[main]]
+#identifier = "home"
+#name = "Home"
+#url = "/"
+#[main.params]
+#icon = "home"
+#newtab = true
+
+[[social]]
+identifier = "github"
+name = "GitHub"
+url = "https://github.com/jbspeakr"
+
+[social.params]
+icon = "brand-github"
+
+[[social]]
+identifier = "mastodon"
+name = "Mastodon"
+url = "https://infosec.exchange/@jbspeakr"
+
+[social.params]
+icon = "brand-mastodon"
+
+[[social]]
+identifier = "bluesky"
+name = "Bluesky"
+url = "https://bsky.app/profile/janbrennenstuhl.eu"
+
+[social.params]
+icon = "brand-bluesky"
+
+[[social]]
+identifier = "linkedin"
+name = "LinkedIn"
+url = "https://www.linkedin.com/in/brennenstuhl/"
+
+[social.params]
+icon = "brand-linkedin"
