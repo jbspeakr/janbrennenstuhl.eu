@@ -4,7 +4,7 @@ description: "Monocyte: A AWS Immune System. Comply to EU regulations by finding
 excerpt: "Monocyte: A AWS Immune System. Comply to EU regulations by finding and deleting AWS resources in regions outside of Europe with AWS Monocyte!"
 slug: aws-cloud-immune-system
 date: 2015-03-18
-lastmod: 2018-11-12
+lastmod: 2025-06-22
 draft: false
 weight: 50
 image: monocyte.webp
@@ -26,6 +26,6 @@ This (of course!) leads to several conflicts of goals. On the one hand companies
 
 To accomplish that, we built our own base-layer of what we call a cloud immune system: [AWS Monocyte](https://github.com/ImmobilienScout24/aws-monocyte). The name Monocyte is related to a [type of white blood cells](https://en.wikipedia.org/wiki/Monocyte) that are part of e.g. a human's innate immune system, the first line of defense being responsible for searching and destroying alien organisms to prevent unwanted infections.
 
-As [Arne Hilmann](https://arnehilmann.github.io/) and I explained during the [AWS UserGroup Meetup](http://www.meetup.com/AWS-Berlin/events/220609022/) this March at the Immobilien Scout HQ in Berlin (checkout [our presentation](https://dl.dropboxusercontent.com/u/1874278/datahackit/AWS-Monocyte.pdf)), our tool is (in that biological sense) able to find and delete AWS resources in regions outside the EU. This allows companies to make sure that (accidentally) created non-EU resources are destroyed on a regular basis and helps in that way to (unfortunately reactively) enforce legal requirements.
+As [Arne Hilmann](https://arnehilmann.github.io/) and I explained during the [AWS UserGroup Meetup](http://www.meetup.com/AWS-Berlin/events/220609022/) this March at the Immobilien Scout HQ in Berlin, our tool is (in that biological sense) able to find and delete AWS resources in regions outside the EU. This allows companies to make sure that (accidentally) created non-EU resources are destroyed on a regular basis and helps in that way to (unfortunately reactively) enforce legal requirements.
 
 Right now, AWS Monocyte is able to handle just a subset of the plenty Amazon Services, including Cloudformation Stacks, EC2 Instances, EC2 Volumes, RDS Instances, RDS Snapshots, DynamoDB Tables and S3 Bucket. Implementing support for further Amazon Web Services is pretty easy and I hereby ask you to [fork our project](https://github.com/ImmobilienScout24/aws-monocyte) and help extending its power!

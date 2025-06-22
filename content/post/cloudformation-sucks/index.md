@@ -4,7 +4,7 @@ description: "Infrastructure as code is great but AWS Cloudformation is not! Lea
 excerpt: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist …"
 slug: why-aws-cloudformation-sucks
 date: 2015-05-21
-lastmod: 2017-08-03
+lastmod: 2025-06-22
 draft: false
 weight: 50
 image: aws-cloudformation-sucks.webp
@@ -20,7 +20,7 @@ It also enables you to think different about your IT infrastructure and how to w
 
 ## JSON Lang, WTF?!
 
-CloudFormation templates are simple JSON-formatted text files that (in theory) can easily be created and maintained by hand as nowadays every dev (and/ or ops) should be able to read and write valid JSON. However, AWS CloudFormation uses the originally static '[lightweight data-interchange format](http://json.org/)' as a scripting language, allowing e.g. the definition and usage of parameter and (somehow crazy) [intrinsic function](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) references.
+CloudFormation templates are simple JSON-formatted text files that (in theory) can easily be created and maintained by hand as nowadays every dev (and/ or ops) should be able to read and write valid JSON. However, AWS CloudFormation uses the originally static *[lightweight data-interchange format](https://www.json.org/json-en.html)* as a scripting language, allowing e.g. the definition and usage of parameter and (somehow crazy) [intrinsic function](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) references.
 
 In my eyes, this is a heavy misusage that leads to several problems regarding complexity and comprehensibility. You can find several deterrent examples that illustrate this right in the official AWS developers guide. If you still don't think JSON is a syntax-bloated, hard-to-read data format just have a look on how to define [DataPipelines using CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-datapipeline-pipeline.html#d0e32425) and tell me you like it and that you are able to easily understand all the definitions as well as their interactions. It took me some time...
 

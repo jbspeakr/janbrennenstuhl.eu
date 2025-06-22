@@ -4,7 +4,7 @@ linkTitle: "Protect Your Accounts: 5 Studies on Password Strength Meters"
 description: "Worried about weak passwords? Check out the latest research on Password Strength Meters to keep your accounts secure! Click here to learn more."
 lead: ""
 date: 2023-05-03
-lastmod: 2023-05-03
+lastmod: 2025-06-22
 draft: false
 image: password-strength-meter-illustration.webp
 type: docs
@@ -29,7 +29,7 @@ Unsurprisingly, these meters only make a difference *"when users are forced to c
 
 Researchers from Concordia University analyzed the weaknesses and inconsistencies of password-strength meters employed by selected popular websites. While the study was published already in 2014, most of the finding can still today be observed in the open wild. The authors conclude that designing password strength indicators deserves thorough expertise, research and dedication: Password-strength *"meters should avoid providing misleading strength outcomes, especially for weak passwords."*  
 
-<b><a href="https://madiba.encs.concordia.ca/~x_decarn/papers/password-meters-ndss2014.pdf" rel="noopener">→ Read the Paper</a></b> (.pdf)
+<b><a href="https://xavier2dc.fr/papers/password-meters-ndss2014.pdf" rel="noopener">→ Read the Paper</a></b> (.pdf)
 
 ## Low-Budget Password Strength Estimation
 
