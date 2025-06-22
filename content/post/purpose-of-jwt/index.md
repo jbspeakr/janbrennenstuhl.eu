@@ -5,7 +5,7 @@ excerpt: "JSON Web Token (JWT) allow you to establish stateless authentication. 
 lead: "Discover the secrets of Stateless Authentication with JWT"
 slug: purpose-jwt-stateless-authentication
 date: 2017-04-28
-lastmod: 2023-05-02
+lastmod: 2025-06-22
 draft: false
 weight: 50
 image: stateless-authentication.webp
@@ -136,7 +136,7 @@ With tokens not being opaque but locally introspectable, clients can retrieve ad
 
 - Token storage: Store tokens in a secure location on the client side, such HttpOnly cookies or other safe places.
 - Transport security: Use HTTPS to protect tokens from being intercepted during transmission.
-- Token revocation: By design, JWTs are not remotely revokable. To revoke tokens in case of token theft or user logout requires, a stateful mechanism to be in place – which sort of [counters the stateless approach](https://www.dinochiesa.net/?p=1388 "Revoking or Blacklisting JWT").
+- Token revocation: By design, JWTs are not remotely revokable. To revoke tokens in case of token theft or user logout requires, a stateful mechanism to be in place – which sort of [counters the stateless approach](https://web.archive.org/web/20241106205450/https://www.dinochiesa.net/?p=1388 "Revoking or Blacklisting JWT").
 - Token update: There is no way of altering an issued JWT. Prolongating its expiration date for example is not possible.
 
 ## Best Practices for JWT Implementation
