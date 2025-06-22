@@ -1,6 +1,6 @@
 # janbrennenstuhl.eu
 
-This repository contains the source code, content and deployment job for [janbrennenstuhl.eu](https://www.janbrennenstuhl.eu/), the personal website and blog of Jan Brennenstuhl, a product-minded principal software engineer with focus on usable security & web authentication. The website is built using the Hugo static site generator and the Hugo Theme Stack.
+This repository contains the source code, content and deployment job for [janbrennenstuhl.eu](https://www.janbrennenstuhl.eu), the personal website and blog of Jan Brennenstuhl, a product-minded principal software engineer with focus on usable security & web authentication. The website is built using the Hugo static site generator and the Hugo Theme Stack.
 
 ## Project Overview
 
