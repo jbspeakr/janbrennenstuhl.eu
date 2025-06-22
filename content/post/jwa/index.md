@@ -6,7 +6,7 @@ excerpt: "The JSON Web Algorithms (JWA) standard provides definitions for severa
 lead: "Algorithms for Modern Identity & Access Management (IAM)"
 slug: jwa-json-web-algorithms
 date: 2023-06-08
-lastmod: 2023-06-22
+lastmod: 2025-06-22
 draft: false
 weight: 50
 image: json-web-algorithms-jwa.webp
