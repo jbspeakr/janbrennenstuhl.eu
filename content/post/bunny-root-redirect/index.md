@@ -6,7 +6,7 @@ excerpt: "In this article I share three approaches to redirect a root domain to 
 lead: "Three methods to seamless redirection using Bunny DNS"
 slug: bunny-cdn-domain-redirect
 date: 2025-04-22
-lastmod: 2025-06-08
+lastmod: 2025-06-22
 draft: false
 weight: 50
 image: bunnycdn-eurostack.webp
@@ -24,7 +24,7 @@ links:
 
 Although technically no longer necessary, the `www` subdomain is deeply ingrained in internet history and user habits. Redirecting root domains (like _janbrennenstuhl.eu_) to its `www` subdomain (_www.janbrennenstuhl.eu_) offers benefits, especially [when using a content delivery network (CDN)](https://bunny.net/blog/how-aname-dns-records-affect-cdn-routing/ "Bunny CDN: How ANAME DNS records affect CDN routing") or caring about search engine optimization (SEO).  
 
-In this article I share three different aproaches to redirect a root domain to its `www` subdomain when using Bunny CDN with Bunny DNS. All three approaches are technically sound and working solutions, returning proper A records for the domain root.
+In this article, I share three different approaches to redirect a root domain to its `www` subdomain when using Bunny CDN with Bunny DNS. All three approaches are technically sound and working solutions, returning proper A records for the domain root.
 
 ## Option 1: Redirect Record (RDR)
 
@@ -39,13 +39,13 @@ Configuring a new redirect record is as simple as heading over to Bunny DNS and 
 A "Pull Zone" in Bunny CDN is a fundamental concept that defines how static assets are delivered using Bunny's network of edge servers.
 A `PZ` record is a Bunny-custom, special DNS record type that provides some level of abstraction when glueing a domain to a "Pull Zone". Instead of directly resolving to an IP address, Bunny DNS understands that requests for that particular domain should be directed to its CDN infrastructure associated with the corresponding "Pull Zone".
 
-Configuring a new "Pull Zone" record is as simple as heading over to Bunny DNS and choosing `PZ` as record type in the _"Add DNS Record"_ prompt. Prerequisit is an existing "Pull Zone" that the root domain should point to. The actual HTTP redirect would then be handled by [a dedicated "Edge Rule"](#dedicated-edge-rule).
+Configuring a new "Pull Zone" record is as simple as heading over to Bunny DNS and selecting `PZ` as record type in the _"Add DNS Record"_ prompt. Prerequisite is an existing "Pull Zone" that the root domain should point to. The actual HTTP redirect would then be handled by [a dedicated "Edge Rule"](#dedicated-edge-rule).
 
 ![Bunny DNS – Pullzone Record config](bunnycdn-pullzone-record.webp "Bunny DNS – How to add a pullzone record")
 
 ## Option 3: Canonical Name Record (CNAME)
 
-Last but not least, Bunny DNS allows to create `CNAME` records also for root domains. This is possible (and also returns an A record) as Bunny transparently performs `CNAME` flattening under the hood. 
+Finally, Bunny DNS also allows creating `CNAME` records for root domains. This is possible (and also returns an A record) as Bunny transparently performs `CNAME` flattening under the hood. 
 
 Configuring a new canonical name record is as simple as heading over to Bunny DNS and choosing `CNAME` as record type in the _"Add DNS Record"_ prompt. The actual HTTP redirect would then be handled by [a dedicated "Edge Rule"](#dedicated-edge-rule). 
 
@@ -69,4 +69,4 @@ In case a root domain points to a Bunny CDN "Pull Zone" either by using either a
 
 In summary, while the `www` subdomain isn't a technical necessity in the modern web, redirecting root domains to it is a best practice for SEO consistency, technical flexibility, and user experience. It ensures that websites are treated as a single entity by search engines and provides a consistent and potentially more reliable experience for visitors.
 
-Bunny.net DNS supports three different approaches for redirecting a root domain to its `www` subdomain. All result in perfecly fine DNS configs and high-speed resolution when paired with Bunny CDN.
+Bunny.net DNS supports three different approaches for redirecting a root domain to its `www` subdomain. All result in perfectly fine DNS configs and high-speed resolution when paired with Bunny CDN.

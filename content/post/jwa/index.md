@@ -6,7 +6,7 @@ excerpt: "The JSON Web Algorithms (JWA) standard provides definitions for severa
 lead: "Algorithms for Modern Identity & Access Management (IAM)"
 slug: jwa-json-web-algorithms
 date: 2023-06-08
-lastmod: 2023-06-08
+lastmod: 2023-06-22
 draft: false
 weight: 50
 image: json-web-algorithms-jwa.webp
@@ -20,7 +20,7 @@ homepage: false
 
 *JSON Web Algorithms (JWA)* is a specification providing a list of cryptographic algorithms. It's an integral part of the *JSON Object Signing and Encryption (JOSE)* family of standards. JOSE includes, for example, *JSON Web Tokens (JWT)*, *JSON Web Signature (JWS)*, and *[JSON Web Encryption (JWE)]({{< ref "/post/jwe-token/index.md" >}} "An Exploration into JSON Web Encryption Standards (JWE)")*.
 
-JWA provides definitions for several cryptographic algorithms. These algorithms enable a variety of purposes.
+JWA provides definitions for several cryptographic algorithms. These algorithms enable various purposes.
 
 In this guide, you’ll learn the following:
 - <mark>How to decode JWA short names</mark>
@@ -46,7 +46,7 @@ The most common algorithm names defined in the JWA specification include the fol
 
 ## Different Types of JSON Web Algorithms
 
-The JWA specification defines many cryptographic algorithms powering a variety of purposes, including:
+The JWA specification defines many cryptographic algorithms powering various use cases, including:
 
 - **Signing with JSON Web Signature (JWS)** ensures a token's integrity during transit.
 - **Encryption with JSON Web Encryption (JWE)** to safeguard the confidentiality of token payload.
@@ -62,7 +62,7 @@ Symmetric algorithms need all involved parties to know the same key. They are he
 
 ### Delving into Asymmetric Key Algorithms
 
-JWA specifies two asymmetric encryption and digital signature algorithm families – RSA and ECDSA. Public-private key pairs form the foundation of asymmetric algorithms. They enable decoupling verification or decryption of a token from being able to forge a new one. This is essential for distributed token validation scenarios. It allows decentralized authorization decision-making in OAuth 2.0 and OpenId Connect (OIDC).
+JWA specifies two asymmetric encryption and digital signature algorithm families – RSA and ECDSA. Public-private key pairs form the foundation of asymmetric algorithms. They enable decoupling verification or decryption of a token from being able to forge a new one. This is essential for distributed token validation scenarios. It allows decentralized authorization decision-making in OAuth 2.0 and OpenID Connect (OIDC).
 
 ## Practical Applications of JWA
 
@@ -74,4 +74,4 @@ At the forefront of this practical application is a central authorization server
 
 JWA is part of the JSON Web Token (JWT) suite of technologies. It's a collection of cryptographic algorithms. Being a vital ingredient of every JWT, JWA powers the entire JOSE toolbox. These JOSE technologies build secure systems that can interoperate easily. OpenID Connect is a famous example of such a framework.
 
-Please note that each JSON Web Algorithm has its own security implications. Appropriate use cases depend on the specifics of the implementation. It is paramount to choose algorithms that best meet your specific security requirements.
+Please note that each JSON Web Algorithm has its security implications. Appropriate use cases depend on the specifics of the implementation. It is paramount to choose algorithms that best meet your specific security requirements.
