@@ -1,6 +1,6 @@
 ---
 title: "Imprint & Responsible Editor"
-description: "We do not use cookies and we do not collect any personal data."
+description: "Imprint and responsible editor contact for janbrennenstuhl.eu"
 date: 2023-04-15
 lastmod: 2025-05-20
 draft: false
