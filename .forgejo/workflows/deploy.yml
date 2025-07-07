@@ -23,7 +23,7 @@ jobs:
       - name: Setup Hugo
         uses: https://github.com/peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.147.8'
+          hugo-version: '0.147.9'
           extended: true
         
       - uses: https://code.forgejo.org/actions/cache@v4
