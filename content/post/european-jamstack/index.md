@@ -11,7 +11,7 @@ draft: false
 weight: 50
 image: european-jamstack.webp
 categories: ["software-engineering"]
-tags: ["eurostack"]
+tags: ["eurostack", "jamstack"]
 
 links:
   - title: "Go European: Host with Bunny CDN"

@@ -11,7 +11,7 @@ draft: false
 weight: 50
 image: bunnycdn-eurostack.webp
 categories: ["software-engineering"]
-tags: ["eurostack", "operational-excellence"]
+tags: ["eurostack", "operational-excellence", "jamstack"]
 pinned: false
 homepage: false
 
