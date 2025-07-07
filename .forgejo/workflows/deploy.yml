@@ -26,13 +26,6 @@ jobs:
           hugo-version: '0.147.9'
           extended: true
         
-      - uses: https://code.forgejo.org/actions/cache@v4
-        with:
-          path: ${{ env.HUGO_CACHEDIR }} 
-          key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-hugomod-
-
       - name: Build
         run: hugo --minify
 
