@@ -25,14 +25,29 @@ jobs:
         with:
           hugo-version: '0.147.9'
           extended: true
-        
+
+      - name: Restore Hugo cache
+        id: restore-cache
+        uses: https://code.forgejo.org/actions/cache/restore@v4
+        with:
+          path: ./resources
+          key: brennenstuhl-hugo-resources-cache-
+          restore-keys: |
+            brennenstuhl-hugo-resources-cache-
+
       - name: Build
         run: hugo --minify
 
-      - name: Setup IndexNow 
+      - name: Setup IndexNow
         # Generate files dynamically to prevent them from being leaked in public repositories.
-        # This example will put the file in the root directory of the site.You may change the location by yourself.
+        # This example will put the file in the root directory of the site. You may change the location by yourself.
         run: echo ${{ secrets.INDEXNOW_KEY }} > public/${{ secrets.INDEXNOW_KEY }}.txt
+
+      - name: Save Hugo cache
+        uses: https://code.forgejo.org/actions/cache/save@v4
+        with:
+          path: ./resources
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}${{ hashFiles('./resources/**/*') }}
 
       - name: Deploy to BunnyCDN
         uses: https://github.com/ayeressian/bunnycdn-storage-deploy@v2.3.0
