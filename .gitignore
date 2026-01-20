@@ -4,3 +4,4 @@ resources
 .netlify
 .idea
 .DS_Store
+*.zip
