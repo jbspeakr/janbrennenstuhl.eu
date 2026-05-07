@@ -15,7 +15,6 @@ menu:
     identifier: "compromised-credentials"
 weight: 100
 toc: true
-slug: compromised-credentials-stuffing
 ---
 
 ## Protocols for Checking Compromised Credentials
