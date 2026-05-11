@@ -23,7 +23,7 @@ jobs:
       - name: Setup Hugo
         uses: https://github.com/peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.147.9'
+          hugo-version: '0.161.1'
           extended: true
 
       - name: Restore Hugo cache
