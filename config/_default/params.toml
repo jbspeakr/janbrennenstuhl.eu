@@ -9,8 +9,8 @@ since = 2015
 customText = "Made and hosted in the EU 🇪🇺"
 
 [dateFormat]
-published = "02. Jan 2006"
-lastUpdated = "02. Jan 2006"
+published = "2006-01-02"
+lastUpdated = "2006-01-02"
 
 [sidebar]
 emoji = "🔐"
