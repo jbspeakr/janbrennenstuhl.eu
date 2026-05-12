@@ -16,29 +16,29 @@
                     <h2 class="section-description">{{ . }}</h2>
                 {{ end }}
             </div>
-    
-            {{- $image := partialCached "helper/image" (dict "Context" . "Type" "section") .RelPermalink "section" -}}
-            {{ if $image.exists }}
+
+            {{- $image := partial "helper/image" (dict "Image" .Params.image "Resources" .Resources "Context" .) -}}
+            {{ if $image.Permalink }}
                 <div class="section-image">
-                    {{ if $image.resource }}
-                        {{- $Permalink := $image.resource.RelPermalink -}}
-                        {{- $Width := $image.resource.Width -}}
-                        {{- $Height := $image.resource.Height -}}
-    
-                        {{- if (default true .Page.Site.Params.imageProcessing.cover.enabled) -}}
-                            {{- $thumbnail := $image.resource.Fill "120x120" -}}
+                    {{ if $image.Resource }}
+                        {{- $Permalink := $image.Permalink -}}
+                        {{- $Width := $image.Width -}}
+                        {{- $Height := $image.Height -}}
+
+                        {{- if (default true .Site.Params.imageProcessing.thumbnail.enabled) -}}
+                            {{- $thumbnail := $image.Resource.Fill "120x120" -}}
                             {{- $Permalink = $thumbnail.RelPermalink -}}
                             {{- $Width = $thumbnail.Width -}}
                             {{- $Height = $thumbnail.Height -}}
                         {{- end -}}
-                        
-                        <img src="{{ $Permalink }}" 
+
+                        <img src="{{ $Permalink }}"
                             width="{{ $Width }}"
-                            height="{{ $Height }}" 
+                            height="{{ $Height }}"
                             loading="lazy"
                             alt="{{ .Title }} teaser image">
                     {{ else }}
-                        <img src="{{ $image.permalink }}" loading="lazy" />
+                        <img src="{{ $image.Permalink }}" loading="lazy" />
                     {{ end }}
                 </div>
             {{ end }}
@@ -47,7 +47,7 @@
 
     {{- $subsections := .Sections -}}
     {{- $pages := .Pages | complement $subsections -}}
-    
+
     {{- if eq (len $pages) 0 -}}
         {{/* If there are no normal pages, display subsections in list style, with pagination */}}
         {{/* This happens with taxonomies like categories or tags */}}
@@ -61,13 +61,13 @@
             <div class="subsection-list">
                 <div class="article-list--tile">
                     {{ range . }}
-                        {{ partial "article-list/tile" (dict "context" . "size" "250x150" "Type" "section") }}
+                        {{ partial "article-list/tile" . }}
                     {{ end }}
                 </div>
             </div>
         </aside>
     {{- end -}}
-    
+
     {{/* List only pages that are not a subsection */}}
     {{ $paginator := .Paginate $pages }}
     <section class="article-list--compact">

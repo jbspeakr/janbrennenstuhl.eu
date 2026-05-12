@@ -1,23 +1,23 @@
-<footer class="article-footer">
+<footer class="article-meta article-footer">
     {{ partial "article/components/tags" . }}
 
-    <section class="article-author">
+    <section class="article-author inline-meta">
         {{ partial "helper/icon" "user" }}
         <span>Written by <a href="/about/" rel="author">Jan Brennenstuhl</a></span>
     </section>
 
     {{ if and (.Site.Params.article.license.enabled) (not (eq .Params.license false)) }}
-    <section class="article-copyright">
+    <section class="article-copyright inline-meta">
         {{ partial "helper/icon" "copyright" }}
         <span>{{ default .Site.Params.article.license.default .Params.license | markdownify }}</span>
     </section>
     {{ end }}
 
     {{- if ne .Lastmod .Date -}}
-    <section class="article-lastmod">
+    <section class="article-lastmod inline-meta">
         {{ partial "helper/icon" "clock" }}
         <span>
-            {{ T "article.lastUpdatedOn" }} {{ .Lastmod | time.Format ( or .Site.Params.dateFormat.lastUpdated "Jan 02, 2006 15:04 MST" ) }}
+            {{ T "article.lastUpdatedOn" }} {{ .Lastmod | time.Format (or .Site.Params.dateFormat.lastUpdated "Jan 02, 2006 15:04 MST") }}
         </span>
     </section>
     {{- end -}}

@@ -10,16 +10,16 @@
     {{ end }}
 
     <div class="article-title-wrapper">
-        <h1 class="article-title">
+        <h2 class="article-title">
             <a href="{{ .RelPermalink }}">
                 {{- .Title -}}
             </a>
-        </h1>
-    
-        {{ with .Params.lead }}
-        <h2 class="article-subtitle">
-            {{ . }}
         </h2>
+    
+        {{ with .Params.excerpt }}
+        <p class="article-subtitle">
+            {{ . }}
+        </p>
         {{ end }}
     </div>
 
@@ -27,9 +27,9 @@
     {{ $showDate := not .Date.IsZero }}
     {{ $showFooter := or $showDate $showReadingTime }}
     {{ if $showFooter }}
-    <footer class="article-time">
+    <footer class="article-meta">
         {{ if $showDate }}
-            <div>
+            <div class="inline-meta">
                 {{ partial "helper/icon" "date" }}
                 <time class="article-time--published">
                     {{- .Date | time.Format (or .Site.Params.dateFormat.published "Jan 02, 2006") -}}
@@ -38,7 +38,7 @@
         {{ end }}
 
         {{ if $showReadingTime }}
-            <div>
+            <div class="inline-meta">
                 {{ partial "helper/icon" "clock" }}
                 <time class="article-time--reading">
                     {{ T "article.readingTime" .ReadingTime }}
@@ -49,11 +49,11 @@
     {{ end }}
 
     {{ if .IsTranslated }}
-        <footer class="article-translations">
+        <footer class="article-meta article-translations">
             {{ partial "helper/icon" "language" }}
             <div>
                 {{ range .Translations }}
-                    <a href="{{ .Permalink }}" class="link">{{ .Language.LanguageName }}</a>
+                    <a href="{{ .Permalink }}" class="link">{{ .Language.Label }}</a>
                 {{ end }}
             </div>
         </footer>

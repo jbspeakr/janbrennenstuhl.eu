@@ -2,7 +2,7 @@
 mainSections = ["post"]
 # Output page's full content in RSS.
 rssFullContent = true
-favicon = "/favicon.svg"
+favicon = "img/favicon.svg"
 
 [footer]
 since = 2015
@@ -15,11 +15,7 @@ lastUpdated = "02. Jan 2006"
 [sidebar]
 emoji = "🔐"
 subtitle = "Exploring usable security & website authentication with a foible for data breaches, account security and pass{keys, codes, words}."
-
-[sidebar.avatar]
-enabled = true
-local = false
-src = "/favicon.svg"
+avatar = "img/favicon.svg"
 
 [article]
 headingAnchor = true
@@ -53,16 +49,11 @@ type = "toc"
 site = ""
 card = "summary_large_image"
 
-[defaultImage.opengraph]
-enabled = false
-local = false
-src = ""
-
 [colorScheme]
 toggle = true
 default = "auto"
 
-[imageProcessing.cover]
+[imageProcessing.thumbnail]
 enabled = true
 
 [imageProcessing.content]
