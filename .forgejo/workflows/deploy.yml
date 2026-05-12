@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/setup-go@v5
         with:
-          go-version: '1.24.x' # Change this to whatever you need
+          go-version: '1.26.x' # Change this to whatever you need
 
       - uses: https://code.forgejo.org/actions/checkout@v4
         with:
