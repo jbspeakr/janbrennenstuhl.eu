@@ -7,10 +7,9 @@ draft: false
 image: ethical-hacking.webp
 slug: "ethical-hacking"
 
-# Badge style
-# style:
-#    background: "#2a9d8f"
-#    color: "#fff"
+style:
+    background: "#f4a261"
+    color: "#fff"
 ---
 
 Do you have a strong interest in cybersecurity? Prepared to delve into the fascinating world of ethical hacking? The following articles provide various insights into this fascinating realm. You will discover important strategies and methods that strengthen cybersecurity defenses and fend off online threats. My carefully selected content is intended to pique your interest and motivate your learning process. Take the plunge and advance your cybersecurity skills.
