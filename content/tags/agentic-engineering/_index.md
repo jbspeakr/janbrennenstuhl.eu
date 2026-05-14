@@ -5,7 +5,7 @@ description: "Agentic engineering: AI-augmented development where coding agents 
 date: 2026-05-11
 lastmod: 2026-05-11
 draft: false
-image: jamstack.webp
+image: agentic-engineering.webp
 slug: agentic-engineering
 ---
 
