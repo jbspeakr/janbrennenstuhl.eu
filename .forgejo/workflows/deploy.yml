@@ -7,15 +7,15 @@ on:
 
 jobs:
   deploy:
-    runs-on: codeberg-tiny
+    runs-on: codeberg-small
     env:
       HUGO_CACHEDIR: /tmp/hugo_cache
     steps:
-      - uses: https://code.forgejo.org/actions/setup-go@v5
+      - uses: https://code.forgejo.org/actions/setup-go@v6
         with:
           go-version: '1.26.x' # Change this to whatever you need
 
-      - uses: https://code.forgejo.org/actions/checkout@v4
+      - uses: https://code.forgejo.org/actions/checkout@v6
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
@@ -28,7 +28,7 @@ jobs:
 
       - name: Restore Hugo cache
         id: restore-cache
-        uses: https://code.forgejo.org/actions/cache/restore@v4
+        uses: https://code.forgejo.org/actions/cache/restore@v5
         with:
           path: ./resources
           key: brennenstuhl-hugo-resources-cache-
@@ -44,13 +44,13 @@ jobs:
         run: echo ${{ secrets.INDEXNOW_KEY }} > public/${{ secrets.INDEXNOW_KEY }}.txt
 
       - name: Save Hugo cache
-        uses: https://code.forgejo.org/actions/cache/save@v4
+        uses: https://code.forgejo.org/actions/cache/save@v5
         with:
           path: ./resources
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}${{ hashFiles('./resources/**/*') }}
 
       - name: Deploy to BunnyCDN
-        uses: https://github.com/ayeressian/bunnycdn-storage-deploy@v2.3.0
+        uses: https://github.com/ayeressian/bunnycdn-storage-deploy@vv2.4.6
         with:
           source: "public"
           destination: ""
