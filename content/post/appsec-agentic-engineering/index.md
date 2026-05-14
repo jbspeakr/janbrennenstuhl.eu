@@ -40,11 +40,11 @@ We need to move from _"we found it, you fix it"_ to _"we prevent it, and we fix 
 
 ## From Detection to Mitigation
 
-The traditional loop: Code → Scan → Ticket → Human Fix. It assumes change arrives at human speed and tickets are a fine carrier for fixes.
+The traditional loop is built for human speed: Code → Scan → Ticket → Human Fix.
 
 The agentic loop compresses to: Code → Scan → Feedback → Agent Rewrites → Verified. The agent acts on findings in the same context where the code was written. No ticket. No handoff. Designing, building, and maintaining tooling for that loop is the new AppSec day job.
 
-Distribution changes too. Security scanning can no longer live only in version control platforms and CI. Every engineer needs SAST, DAST, and LLM-based reviewers available locally so their agents can run checks before opening a PR. AppSec owns the packaging, the configuration, and the policy. The job shifts from tuning the CI scanner to shipping the tooling that runs everywhere coding agents do.
+Distribution changes too. Security scanning can no longer live only in version control platforms and CI pipelines. Every engineer needs SAST, DAST, and LLM-based reviewers available locally so their agents can run checks before opening a PR. AppSec owns the packaging, the configuration, and the policy. The job shifts from tuning the CI scanner to shipping the tooling that runs everywhere coding agents do.
 
 ## Shift-Left: AppSec as an Engineering Discipline
 
@@ -64,13 +64,13 @@ There are at least three categories of tooling that AppSec builds and maintains:
 
 **Local security scanning infrastructure.** SAST and DAST available via CLI or [MCP](https://modelcontextprotocol.io/), with centrally managed configuration and policies. The agent self-checks its output locally, before pushing. Engineering teams get scanning that works without setup.
 
-**Security review agents.** Specialized agents that combine security skills with local tooling. They enforce org-specific policies and surface issues the coding agent can act on directly. Tools like [roborev](https://www.roborev.io/) point in this direction: a local daemon that runs automated code reviews on a post-commit hook, delivering findings with file paths, line numbers, and severity before the code reaches CI.
+**Security review agents.** Specialized agents that combine security skills with local tooling. They enforce org-specific policies and surface issues the coding agent can act on directly. Tools like [roborev](https://www.roborev.io/) point in this direction: a local daemon that runs automated agentic code reviews on a post-commit hook, delivering findings with file paths, line numbers, and severity before the code reaches CI.
 
 The integration pattern is a shared **review ledger**: every signal source (static analyzer, dynamic scanner, LLM-based reviewer) writes to the same structured log, typically in [SARIF](https://sarifweb.azurewebsites.net/ "Static Analysis Results Interchange Format (SARIF)"). The coding agent reads the ledger after each iteration and knows which checks passed, which failed, and what to fix next.
 
 ### Securing the Coding Agent
 
-Coding agents are productive when they can **execute** the code they write. They implement, run the tests, see the failure, and improve. Every agent task is therefore an untrusted workload running arbitrary code. This creates a large internal Remote Code Execution surface that touches workstation setup and engineering practice.
+Coding agents are productive when they can **execute** the code they write. They implement, run the tests, see the failure, and improve. Every agent task is therefore an untrusted workload running arbitrary code. This creates a large internal Remote Code Execution (RCE) surface that touches workstation setup and engineering practice.
 
 **Sandboxing and prompt injection defense** are tightly coupled. A coding agent consumes external inputs: dependency metadata, issue descriptions, PR comments, documentation. Each one is a potential [prompt injection](https://owasp.org/www-project-top-10-for-large-language-model-applications/ "OWASP Top 10 for LLM Applications") vector. **Micro-VM isolation** with [Firecracker](https://firecracker-microvm.github.io/), [Sandvault](https://github.com/webcoyote/sandvault), or [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/get-started/ "Docker Sandboxes") gives each task a disposable environment. **Kernel-level sandboxing** with tools like [nono](https://nono.sh/os-sandbox) applies irrevocable filesystem allow-lists via Landlock (Linux) and Seatbelt (macOS), without daemons, containers, or runtime overhead. Containers offer [weaker isolation than their reputation suggests](https://nono.sh/os-sandbox#kernel-sandboxing-vs-the-alternatives). AppSec picks the right [isolation boundary](https://mrinal.com/articles/agent-sandboxes/ "Agent Sandboxes") per workload type and ships the sandbox setup as a paved-road default, together with platform teams.
 
