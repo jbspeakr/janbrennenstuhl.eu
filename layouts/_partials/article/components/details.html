@@ -29,23 +29,21 @@
     {{ $showFooter := or $showDate $showReadingTime }}
     {{ if $showFooter }}
     <footer class="article-meta">
-        {{ if $showDate }}
-            <div class="inline-meta">
+        <div class="inline-meta">
+            {{ if $showDate }}
                 {{ partial "helper/icon" "date" }}
                 <time class="article-time--published">
                     {{- $Page.Date | time.Format (or $Page.Site.Params.dateFormat.published "Jan 02, 2006") -}}
                 </time>
-            </div>
-        {{ end }}
+            {{ end }}
 
-        {{ if $showReadingTime }}
-            <div class="inline-meta">
+            {{ if $showReadingTime }}
                 {{ partial "helper/icon" "clock" }}
                 <time class="article-time--reading">
                     {{ T "article.readingTime" $Page.ReadingTime }}
                 </time>
-            </div>
-        {{ end }}
+            {{ end }}
+        </div>
     </footer>
     {{ end }}
 
