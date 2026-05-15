@@ -28,11 +28,11 @@ Modern package managers are not static library linkers. They are code execution 
 It's not every dependency you add that's a problem; it's every dependency you update.
 {{< /quote >}}
 
-Two problems compound here:
+Two problems arise here:
 
 1. Version ranges like `^1.14.0` do not mean _"I trust version 1.14.0"_. They mean _"I trust every future release that matches this constraint"_. That is a large, open-ended trust delegation. The Axios attackers used exactly that. Version `1.14.1` was a [manifest-only change](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/ "Microsoft: Mitigating the Axios npm supply chain compromise") that added a malicious dependency while leaving the Axios source code untouched. [Semantic versioning](https://semver.org/ "Semantic Versioning Specification") signals maintainer intent, not trustworthiness. The same applies to [floating Docker tags](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html "OWASP Docker Security Cheat Sheet"), [unpinned GitHub Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions#using-third-party-actions "GitHub: Security hardening for GitHub Actions"), and `latest` tags everywhere.
 
-2. Tools like [Dependabot](https://github.com/dependabot) and [Renovate](https://docs.renovatebot.com/) normalized constant dependency updates. At scale, they improve visibility and shorten the window for known CVEs. But they also changed how we consume trust. Security automation quietly became trust automation. Dependency update PRs receive less review than internal code, even though they run with the same or higher privilege. The volume is overwhelming. Eventually the workflow shrinks to: CI passes → vulnerability score drops → merge. That creates a dangerous illusion. _"No known CVEs"_ does not mean _"safe"_. Supply-chain attacks are newly published, initially undetected, semantically valid, and technically _"up to date"_.
+2. Tools like [Dependabot](https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/dependabot-quickstart-guide) and [Renovate](https://docs.renovatebot.com/) normalized constant dependency updates. At scale, they improve visibility and shorten the window for known CVEs. But they also changed how we consume trust. Security automation quietly became trust automation. Dependency update PRs receive less review than internal code, even though they run with the same or higher privilege. The volume is overwhelming. Eventually the workflow shrinks to: CI passes → vulnerability score drops → merge. That creates a dangerous illusion. _"No known CVEs"_ does not mean _"safe"_. Supply-chain attacks are newly published, initially undetected, semantically valid, and technically _"up to date"_.
 
 {{< quote author="Filippo Valsorda" source="Turn Dependabot Off" url="https://words.filippo.io/dependabot/" >}}
 False positive alerts are not only a waste of time, they also reduce security by causing alert fatigue and making proper triage impractical.
@@ -80,7 +80,7 @@ A seven-day cooldown would have prevented both the Axios and TanStack compromise
 
 ### Control Upgrade Cadence
 
-Filippo Valsorda [recommends a better model](https://words.filippo.io/dependabot/ "Turn Dependabot Off") than auto-updating: Run your test suite against the latest dependency versions daily in a sandboxed CI job. You get early warning of breakage without pulling untrusted code into production. You still update. You do it on your schedule, after review, when you are ready.
+Filippo Valsorda [recommends a better model](https://words.filippo.io/dependabot/#test-against-latest-instead-of-updating "Test against latest instead of updating") than auto-updating: Run your test suite against the latest dependency versions daily in a sandboxed CI job. You get early warning of breakage without pulling untrusted code into production. You still update. You do it on your schedule, after review, when you are ready.
 
 ### Verify Provenance, But Do Not Trust It Alone
 
