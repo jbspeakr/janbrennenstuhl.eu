@@ -24,7 +24,7 @@ readingTime = true
 
 [article.license]
 enabled = true
-default = "Licensed under CC BY 4.0"
+default = "CC BY 4.0"
 
 ## Widgets
 [[widgets.homepage]]
