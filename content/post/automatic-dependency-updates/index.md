@@ -7,14 +7,14 @@ lead: "Past and present supply chain compromises prove that automatic dependency
 slug: automatic-dependency-updates
 image: automatic-dependency-updates.webp
 date: 2026-05-15
-lastmod: 2026-05-15
+lastmod: 2026-05-17
 draft: false
 weight: 50
 categories: ["appsec"]
 tags: ["supply-chain-protection", "sdlc"]
 ---
 
-On March 31, 2026, [North Korean state actors compromised Axios](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/ "Microsoft: Mitigating the Axios npm supply chain compromise"), an npm package with over 70 million weekly downloads. Any project declaring `axios@^1.14.0` connected to attacker C2 infrastructure the next time `npm update` ran. Six weeks later, a [self-propagating worm hit 42 TanStack packages](https://snyk.io/blog/tanstack-npm-packages-compromised/ "Snyk: TanStack npm packages compromised"). It reached Mistral AI and UiPath within hours. It also carried valid [SLSA provenance](https://slsa.dev/spec/v1.0/levels "SLSA security levels") attestations, signed by the legitimate build pipeline.
+On March 31, 2026, [North Korean state actors compromised Axios](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/ "Microsoft: Mitigating the Axios npm supply chain compromise"), an npm package with over 70 million weekly downloads. Any project declaring `axios@^1.14.0` connected to attacker C2 infrastructure the next time `npm update` ran. Six weeks later, a [self-propagating worm hit 42 TanStack packages](https://snyk.io/blog/tanstack-npm-packages-compromised/ "Snyk: TanStack npm packages compromised"). It reached Mistral AI, UiPath, and [OpenAI](https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html "The Hacker News: TanStack Supply Chain Attack Hits Two OpenAI Employee Devices") within hours. It also carried valid [SLSA provenance](https://slsa.dev/spec/v1.0/levels "SLSA security levels") attestations, signed by the legitimate build pipeline.
 
 The same infrastructure that helps us stay current also amplified these attacks. Automated dependency updates pushed the compromised packages into production builds faster than any human could react.
 
@@ -76,7 +76,7 @@ minimumReleaseAge = 604800
 exclude-newer = "7 days"
 ```
 
-A seven-day cooldown would have prevented both the Axios and TanStack compromises.
+A seven-day cooldown [covers 90% or more of recent supply chain incidents](https://www.wiz.io/blog/practical-package-security-the-unofficial-guide "Wiz: Practical Package Security - The Unofficial Guide"). It would have prevented both the Axios and TanStack compromises.
 
 ### Control Upgrade Cadence
 
@@ -107,3 +107,7 @@ Every package adds code, maintainers, credentials, infrastructure, and trust ass
 The lesson from 2025 and 2026 supply-chain attacks is not _"never update"_. Stale dependencies become liabilities too. The lesson is that **blind trust does not become safer just because it is automated**.
 
 Secure software supply chains are built on controlled trust: Pinned versions. Enforced cooldowns. Verified provenance. Proxy repository managers. Reachability-aware scanning. A small dependency surface. The fastest update is not always the safest. Sometimes the safest thing to do is wait.
+
+---
+
+_Updated on May 17th: Referenced THN report on "the TanStack supply chain attack hitting two OpenAI employee devices" and the "Practical Package Security" guide by Wiz._
