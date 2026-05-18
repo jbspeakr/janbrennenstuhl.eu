@@ -4,8 +4,8 @@
 
 About the Author: 
 
-Jan Brennenstuhl is a Principal Engineer in Berlin, Germany, with over 15 years of experience, specializing in product-minded software engineering, web security, and clean code. 
-His expertise lies in usable security, modernizing customer identity and access management (IAM) and engineering single sign-on (SSO) solutions.
+Jan Brennenstuhl is a Principal Engineer with a track record of building and operating identity solutions used by millions of customers, balancing UX and security in high-stakes revenue funnels. 
+Currently focused on making agentic SDLC more secure and efficient. Passionate about solving complex challenges at the intersection of security, usability, and automation.
 
 ## Main Categories
 
