@@ -12,7 +12,6 @@ weight: 50
 image: max-password-length-guide.webp
 categories: ["identity-access-management"]
 tags: ["password-security", "password-manager"]
-featured: true
 keywords: password length recommendations, max password length, recommended password length, minimum password length, maximum password length, nist password length
 ---
 

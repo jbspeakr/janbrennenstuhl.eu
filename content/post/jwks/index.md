@@ -12,7 +12,6 @@ weight: 50
 image: "jwks-json-web-key-sets.webp"
 categories: ["identity-access-management"]
 tags: ["jwt", "oidc"]
-featured: true
 ---
 
 ## TL;DR

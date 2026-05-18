@@ -12,6 +12,7 @@ draft: false
 weight: 50
 categories: ["appsec"]
 tags: ["supply-chain-protection", "sdlc"]
+featured: true
 ---
 
 On March 31, 2026, [North Korean state actors compromised Axios](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/ "Microsoft: Mitigating the Axios npm supply chain compromise"), an npm package with over 70 million weekly downloads. Any project declaring `axios@^1.14.0` connected to attacker C2 infrastructure the next time `npm update` ran. Six weeks later, a [self-propagating worm hit 42 TanStack packages](https://snyk.io/blog/tanstack-npm-packages-compromised/ "Snyk: TanStack npm packages compromised"). It reached Mistral AI, UiPath, and [OpenAI](https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html "The Hacker News: TanStack Supply Chain Attack Hits Two OpenAI Employee Devices") within hours. It also carried valid [SLSA provenance](https://slsa.dev/spec/v1.0/levels "SLSA security levels") attestations, signed by the legitimate build pipeline.

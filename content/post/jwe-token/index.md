@@ -12,7 +12,6 @@ weight: 50
 image: jwe-token-json-web-encryption.webp
 categories: ["identity-access-management"]
 tags: ["jwt", "oidc", "oauth2"]
-featured: true
 ---
 
 ## TL;DR
