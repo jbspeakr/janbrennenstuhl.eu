@@ -6,6 +6,9 @@ excerpt: "Agentic engineering will reward AppSec teams that turn security from a
 lead: "Agentic engineering will reward AppSec teams with strong engineering foundations: those building tooling, automating remediation at scale, and treating risk quantitatively alongside SRE and platform peers."
 slug: appsec-agentic-engineering
 image: agentic-engineering-appsec.webp
+imageCredit:
+  name: "A R C"
+  url: "https://unsplash.com/de/fotos/ein-rot-schwarzes-foto-einer-person-die-einen-regenschirm-halt-YSqnP5GcW2I"
 date: 2026-05-14
 lastmod: 2026-05-14
 draft: false
