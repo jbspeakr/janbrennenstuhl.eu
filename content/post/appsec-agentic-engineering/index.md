@@ -1,16 +1,16 @@
 ---
 title: "AppSec in the Age of Agentic Engineering"
 linkTitle: "AppSec in the Age of Agentic Engineering"
-description: "Agentic engineering will reward AppSec teams that turn security from a post-commit gate into a pre-commit engineering capability, built hands-on with SRE and platform engineering."
-excerpt: "Agentic engineering will reward AppSec teams that turn security from a post-commit gate into a pre-commit engineering capability, built hands-on with SRE and platform engineering."
-lead: "Agentic engineering will reward AppSec teams with strong engineering foundations: those building tooling, automating remediation at scale, and treating risk quantitatively alongside SRE and platform peers."
+description: "How AppSec teams can keep up with coding agents: fix findings inside the agent loop, ship security tooling to agents, and manage risk with SRE and platform teams."
+excerpt: "How AppSec teams can keep up with coding agents: fix findings inside the agent loop, ship security tooling to agents, and manage risk with SRE and platform teams."
+lead: "Coding agents write code faster than security teams can triage the findings. AppSec teams that build tooling, automate remediation at scale, and measure risk together with SRE and platform teams are in the best position to keep up."
 slug: appsec-agentic-engineering
 image: agentic-engineering-appsec.webp
 imageCredit:
   name: "A R C"
   url: "https://unsplash.com/de/fotos/ein-rot-schwarzes-foto-einer-person-die-einen-regenschirm-halt-YSqnP5GcW2I"
 date: 2026-05-14
-lastmod: 2026-05-14
+lastmod: 2026-09-24
 draft: false
 featured: true
 weight: 50
@@ -18,108 +18,102 @@ categories: ["appsec"]
 tags: ["agentic-engineering", "sdlc"]
 ---
 
-Agentic engineering is collapsing the Software Development Life-Cycle (SDLC) into fast, autonomous loops. AI-augmented engineers ship code at a volume our security tooling and processes were never built for. Bartosz Ocytko recently mapped [where agentic engineering is heading](https://ocytko.net/posts/quo-vadis-agentic-engineering/ "Quo Vadis, Agentic Engineering?"), pointing at bottlenecks in verification, open source, and compute. Reading his piece, one question stayed with me: what does this shift mean for Application Security?
+In agentic engineering, engineers hand tasks to coding agents that write code, run it, and fix their own mistakes in fast loops. Bartosz Ocytko recently mapped [where agentic engineering is heading](https://ocytko.net/posts/quo-vadis-agentic-engineering/ "Quo Vadis, Agentic Engineering?"), from a surge of commits on GitHub to bottlenecks in verification, open source, and compute. Most security tooling and processes weren't built for that volume of change. While reading his piece, I kept coming back to 1 question: what does this shift mean for application security (AppSec)?
 
-Agentic shifts [will reward organizations with strong engineering foundations](https://www.linkedin.com/posts/bartoszocytko_agentic-engineering-relocates-engineering-share-7455367680225677313-04IU "Bartosz Ocytko via LinkedIn"): those that can verify, coordinate, and safely absorb machine-generated change. AppSec is part of that foundation. Teams that already build tooling, run large-scale remediation, and treat risk quantitatively are well placed to enable agentic engineering at scale. The threat side reinforces this: as top-tier models [lower the barrier for attackers](https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access "Google: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access"), strong security engineering becomes more valuable, not less.
+Ocytko argues that agentic engineering [will reward organizations with strong engineering foundations](https://www.linkedin.com/posts/bartoszocytko_agentic-engineering-relocates-engineering-share-7455367680225677313-04IU "Bartosz Ocytko via LinkedIn"): those that can verify, coordinate, and safely absorb machine-generated change. I think AppSec is part of that foundation. AppSec teams that already build tooling, run large-scale remediation, and treat risk quantitatively are well placed to make agentic engineering safe at scale. Attackers raise the stakes for strong security engineering, too: [Google's Threat Intelligence Group reports](https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access "Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access") that AI models lower the barrier for adversaries to develop exploits. In May 2026, the group reported the first threat actor it believes used a zero-day exploit developed with AI.
 
-Three concrete shifts decide which AppSec teams will thrive:
+The same agents that create the volume can also help with problems that AppSec teams couldn't solve at human scale: too many findings, too few security engineers, and feedback that arrived long after the code was written. I see 3 shifts that decide which AppSec teams keep up:
 
-- **From detection to mitigation.** Fix faster than we discover.
-- **From policy authors to engineers.** Ship security tooling into the coding agent's context.
-- **From gatekeepers to partners.** Join forces with SRE, platform, and cloud engineering teams to treat risk like reliability.
+- From detection to mitigation: prevent findings inside the agent's loop and fix the backlog at fleet scale.
+- From writing policies to building tools: ship security tooling into the context that coding agents work in.
+- From gatekeeping to partnership: manage security risk together with site reliability engineering (SRE), platform, and cloud engineering teams, the way they already manage reliability.
 
-## The Mitigation Gap
+## Findings Pile Up Faster Than Teams Fix Them
 
-Most mature organizations have solved detection. Scanners cover infrastructure, cloud platforms, application code, and CI/CD pipelines. [AI-powered vulnerability discovery](https://www.hackerone.com/blog/ai-vulnerability-discovery-remediation-gap) pushed detection even further. The visibility is there. The ability to fix what we find at scale is not.
+Most mature organizations already have good visibility into known vulnerability classes. Their scanners cover infrastructure, cloud platforms, application code, and continuous integration and delivery (CI/CD) pipelines. AI adds even more findings: HackerOne argues that [AI-powered vulnerability discovery has improved by an order of magnitude](https://www.hackerone.com/blog/ai-vulnerability-discovery-remediation-gap "Finding Fast, Fixing Slow: The Crisis of Asymmetric Remediation"), while remediation hasn't kept up.
 
-A typical large engineering org sits on millions of findings, tens of thousands of open risk issues, and a handful of critical ones [that linger too long](https://www.edgescan.com/the-vulnerability-backlog-crisis-why-45-of-enterprise-vulnerabilities-never-get-fixed/ "The Vulnerability Backlog Crisis"). The bottleneck is not discovery anymore. It is remediation. Detection without mitigation only grows the backlog and extends exposure windows.
+Backlog data shows how far remediation lags behind. Edgescan, a vulnerability management vendor, analyzed its 2024 scanning and penetration testing results in its [Vulnerability Statistics Report 2025](https://info.edgescan.com/hubfs/23DOWNLOADABLE%20CONTENT/Vulnerability%20Statistics%20Reports/Edgescan_VulnerabilityStatsReport_2025.pdf "Edgescan Vulnerability Statistics Report 2025"). At enterprises with more than 1,000 employees, 45.4% of the vulnerabilities discovered within 12 months were still open. High and critical findings with the highest predicted exploit probability (an Exploit Prediction Scoring System score above 0.7) took 115.7 days on average to fix, slightly longer than the 109.4 days for those least likely to be exploited. Every finding that nobody fixes grows the backlog and extends the exposure window, the time during which an attacker can exploit the vulnerability in production.
 
-Agentic engineering widens this gap. Coding agents generate code at machine speed, so new findings appear faster too and the [verification debt](https://fazy.medium.com/agentic-coding-ais-adolescence-b0d13452f981 "Verification debt: the hidden cost of AI-generated code") grows. If remediation still depends on humans picking up tickets between feature work, the backlog wins. Risk only decreases when we fix faster than we discover.
+Coding agents make this worse. They generate code at machine speed, so new findings appear faster. Lars Janssen calls the growing gap between how fast teams generate code and how fast they can check it [verification debt](https://fazy.medium.com/agentic-coding-ais-adolescence-b0d13452f981 "Verification debt: the hidden cost of AI-generated code"). If remediation still depends on engineers picking up tickets between feature work, the backlog keeps growing. Risk only goes down when teams fix findings faster than scanners discover new ones.
 
-The way out is also agentic. If review results feed back into the coding agent's evaluation loop, many findings never reach a ticket. The agent rewrites the code mid-task, before it is ever committed. Prevention inside the loop beats remediation after the fact.
+That requires AppSec teams to move from _"we found it, you fix it"_ to _"we prevent it, and we fix what slips through"_.
 
-The catch: our tools are not built for that loop. When a coding agent submits a PR in seconds, a security gate that takes minutes is the constraint. Binary gates do not work at this volume either. _"Block on medium severity"_ blocks everything. _"Ignore everything below critical"_ leaves real risks open.
+## Move Security Feedback Into the Agent Loop
 
-We need to move from _"we found it, you fix it"_ to _"we prevent it, and we fix what slips through"_.
+In the traditional loop, a scanner reports an issue in the pipeline, someone files a ticket, and an engineer fixes it when there's time. In the agentic loop, the scan results go straight back to the coding agent, which rewrites the code in the same session until the checks pass. Many findings never reach a ticket because the agent fixes them before anyone commits the code. GitHub's [Copilot Autofix](https://github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix/ "Secure code more than three times faster with Copilot Autofix") suggests fixes directly in the pull request, which comes close to this loop. During its 2024 public beta, developers fixed new code scanning alerts in pull requests in a median of 28 minutes, compared with 1.5 hours without Autofix.
 
-## From Detection to Mitigation
+Today's security gates weren't built for this loop. When a coding agent opens a pull request (PR) in seconds, a security gate that takes minutes becomes the slowest step. Binary gates also break down at this volume: _"block on medium severity"_ blocks everything, and _"ignore everything below critical"_ leaves real risks open. The risk budgets I describe further down give teams a better decision rule.
 
-The traditional loop is built for human speed: Code → Scan → Ticket → Human Fix.
+Some findings will still slip through, and most organizations already carry a large backlog. Fixing them 1 ticket at a time doesn't scale. In campaign-based remediation, AppSec targets a whole vulnerability class at once, such as an outdated dependency, an infrastructure as code (IaC) misconfiguration, or an insecure pattern repeated across hundreds of services.
 
-The agentic loop compresses to: Code → Scan → Feedback → Agent Rewrites → Verified. The agent acts on findings in the same context where the code was written. No ticket. No handoff. Designing, building, and maintaining tooling for that loop is the new AppSec day job.
+Spotify's [fleetshift](https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-3-fleet-wide-refactoring/ "Fleet Management at Spotify (Part 3): Fleet-wide Refactoring") is a good mental model: it makes fleet-wide code changes by running a Docker image against each repository. Spotify reports that fleetshift created more than 270,000 PRs in 2022 and merged 77% of them automatically, and that it patched 80% of its production backend services within 9 hours of the Log4j disclosure.
 
-Distribution changes too. Security scanning can no longer live only in version control platforms and CI pipelines. Every engineer needs SAST, DAST, and LLM-based reviewers available locally so their agents can run checks before opening a PR. AppSec owns the packaging, the configuration, and the policy. The job shifts from tuning the CI scanner to shipping the tooling that runs everywhere coding agents do.
+With coding agents, the AppSec team designs the campaign, and agents open, test, and verify the remediation PRs across the fleet. GitHub already supports part of this: in [security campaigns](https://docs.github.com/en/code-security/securing-your-organization/fixing-security-alerts-at-scale/about-security-campaigns "About security campaigns"), teams can assign alerts to the Copilot cloud agent, which opens pull requests with fixes.
 
-## Shift-Left: AppSec as an Engineering Discipline
+## Build and Ship Security Tooling
 
-AppSec roles shift from vulnerability hunter to engineer who builds and ships security tooling and contributes remediation code directly. This is not about configuring scanners or writing policies that block deployments. It is about building the infrastructure that makes coding agents produce secure code by default.
+In this model, AppSec engineers build and ship security tooling and contribute remediation code directly. Their goal is infrastructure that makes coding agents produce secure code by default.
 
-### Campaigns, Not Tickets
+### Security Skills and Machine-Readable Policy
 
-Handling vulnerabilities one by one does not scale. Campaign-based remediation targets entire vulnerability classes at once: dependency upgrades, IaC misconfigurations, repeated insecure patterns across hundreds of services. Spotify's [fleetshift](https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-3-fleet-wide-refactoring/) is a good mental model.
+Skills are packaged instructions that coding agents load when a task needs them, and they follow an [open specification](https://agentskills.io/specification "Agent Skills Specification"). [Project CodeGuard](https://github.com/cosai-oasis/project-codeguard) from the Coalition for Secure AI (CoSAI) publishes general security skills for cryptography, input validation, authentication and authorization, and supply chain security. Organization-specific skills go further and encode internal policies (_"use the central auth SDK, not raw JWT handling"_), approved libraries, and deployment constraints. If the organization distributes skills centrally, AppSec can publish a skill update when a new vulnerability class appears, and every agent in the organization has it the same day.
 
-AppSec designs the campaign. [Coding agents open](https://github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix/ "GitHub Copilot Autofix"), test, and verify the remediation PRs across the fleet. Impact per engineer-hour goes up by an order of magnitude. We stop being a reporting function and start being an engineering multiplier.
+The security policy itself needs the same treatment, because a coding agent can't do much with a 50-page PDF. AppSec teams can turn it into agent instructions, a searchable vector database, or [policy-as-code](https://www.openpolicyagent.org/) rules that agents check while they work. The agent then verifies compliance mid-task without waiting for a human reviewer, and AppSec's work moves from reviewing individual changes to maintaining the policies and risk models that agents enforce.
 
-### Security Tooling for Coding Agents
+### Local Scanners and Review Agents
 
-There are at least three categories of tooling that AppSec builds and maintains:
+Security scanning can't live only in version control platforms and CI pipelines anymore. Coding agents need static application security testing (SAST), dynamic application security testing (DAST), and reviewers based on large language models (LLMs) on the engineer's machine, so they can check their own output before they push. AppSec teams package these tools as command-line interfaces (CLIs) or [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers and manage their configuration and policies centrally. MCP gives agents a standard way to call tools. Engineering teams then get scanning that works without setup.
 
-**Security skills and agent instructions.** General [agentic security skills](https://github.com/cosai-oasis/project-codeguard) cover cryptography, input validation, auth, and supply chain. [The format is standardised](https://agentskills.io/specification "Agent Skills Spec") and coding agents consume them before and during code generation. Organization-specific skill libraries go further: internal policies (_"use the central auth SDK, not raw JWT handling"_), approved libraries, deployment constraints. When a new vulnerability class appears, AppSec publishes a skill update and every agent in the org has it the same day.
+Dedicated review agents combine security skills with local tooling. They check code against organization-specific policies and report issues in a form the coding agent can act on directly. [roborev](https://www.roborev.io/) points in this direction: it's a local daemon that reviews each commit in the background through a git hook and [reports every finding](https://www.roborev.io/docs/guides/reviewing-code/ "roborev: Reviewing code") with a severity and a file and line location before the code reaches a PR.
 
-**Local security scanning infrastructure.** SAST and DAST available via CLI or [MCP](https://modelcontextprotocol.io/), with centrally managed configuration and policies. The agent self-checks its output locally, before pushing. Engineering teams get scanning that works without setup.
+A shared review ledger ties these checks together. Every source, whether static analyzer, dynamic scanner, or LLM-based reviewer, writes to the same structured log, typically in the [Static Analysis Results Interchange Format (SARIF)](https://sarifweb.azurewebsites.net/). The coding agent reads the ledger after each iteration and knows which checks passed, which failed, and what to fix next. LLM-based reviewers can catch context-dependent issues that rule-based scanners miss, but they don't return the same result on every run, so the ledger needs both.
 
-**Security review agents.** Specialized agents that combine security skills with local tooling. They enforce org-specific policies and surface issues the coding agent can act on directly. Tools like [roborev](https://www.roborev.io/) point in this direction: a local daemon that runs automated agentic code reviews on a post-commit hook, delivering findings with file paths, line numbers, and severity before the code reaches CI.
+### Sandboxes and Short-Lived Credentials
 
-The integration pattern is a shared **review ledger**: every signal source (static analyzer, dynamic scanner, LLM-based reviewer) writes to the same structured log, typically in [SARIF](https://sarifweb.azurewebsites.net/ "Static Analysis Results Interchange Format (SARIF)"). The coding agent reads the ledger after each iteration and knows which checks passed, which failed, and what to fix next.
+Coding agents are most useful when they can run the code they write: they implement a change, run the tests, read the failure, and try again. That makes every agent task an untrusted workload running arbitrary code, often on an engineer's laptop. For AppSec, this adds up to a large internal remote code execution (RCE) surface, and securing it touches workstation setup as well as engineering practice.
 
-### Securing the Coding Agent
+Sandboxing and prompt injection defense go together. A coding agent reads external input such as dependency metadata, issue descriptions, PR comments, and documentation, and each of these can carry a [prompt injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/ "OWASP LLM01:2025 Prompt Injection") that tells the agent to do something else. A sandbox limits the damage when that happens, and the common options differ in isolation strength and cost:
 
-Coding agents are productive when they can **execute** the code they write. They implement, run the tests, see the failure, and improve. Every agent task is therefore an untrusted workload running arbitrary code. This creates a large internal Remote Code Execution (RCE) surface that touches workstation setup and engineering practice.
+- Lightweight virtual machines (micro-VMs) such as [Firecracker](https://firecracker-microvm.github.io/) and [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/get-started/ "Docker Sandboxes") give each task a disposable environment with its own kernel.
+- OS-level sandboxes are lighter. [nono](https://nono.sh/os-sandbox) applies irrevocable, kernel-enforced filesystem allow-lists through Landlock on Linux and Seatbelt on macOS, and [Sandvault](https://github.com/webcoyote/sandvault) runs agents as a separate macOS user inside `sandbox-exec`. The nono authors point out that OS-level sandboxing doesn't give the memory isolation of a virtual machine.
+- Containers share the host kernel, so [escaping 1 container puts the attacker on the host](https://mrinal.com/articles/agent-sandboxes/ "Agent Sandboxes: how to create millions of them").
 
-**Sandboxing and prompt injection defense** are tightly coupled. A coding agent consumes external inputs: dependency metadata, issue descriptions, PR comments, documentation. Each one is a potential [prompt injection](https://owasp.org/www-project-top-10-for-large-language-model-applications/ "OWASP Top 10 for LLM Applications") vector. **Micro-VM isolation** with [Firecracker](https://firecracker-microvm.github.io/), [Sandvault](https://github.com/webcoyote/sandvault), or [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/get-started/ "Docker Sandboxes") gives each task a disposable environment. **Kernel-level sandboxing** with tools like [nono](https://nono.sh/os-sandbox) applies irrevocable filesystem allow-lists via Landlock (Linux) and Seatbelt (macOS), without daemons, containers, or runtime overhead. Containers offer [weaker isolation than their reputation suggests](https://nono.sh/os-sandbox#kernel-sandboxing-vs-the-alternatives). AppSec picks the right [isolation boundary](https://mrinal.com/articles/agent-sandboxes/ "Agent Sandboxes") per workload type and ships the sandbox setup as a paved-road default, together with platform teams.
+AppSec picks the isolation boundary that fits each workload's trust level and, together with platform teams, ships the sandbox setup as the default configuration engineers get out of the box.
 
-**Identity brokerage and delegation.** Coding agents should never hold persistent IAM roles or long-lived API keys. An identity broker issues short-lived, task-scoped credentials on demand and revokes them when the task completes. Beyond internal credentials, coding agents increasingly act on behalf of users across third-party services. That needs proper [delegation and consent](https://oauth.net/2.1/) infrastructure with narrow, time-limited permissions the user can revoke at any moment. Without this, teams end up storing tokens in agent contexts or hard-coding service accounts. Both fail the moment an agent is compromised or a prompt misinterpreted. AppSec builds the broker together with the platform and IAM teams, and abstracts it away so coding agents transparently exchange tokens instead of reusing whatever credential is at hand.
+Credentials need the same care. Coding agents should never hold persistent identity and access management (IAM) roles or long-lived API keys. An identity broker issues short-lived, task-scoped credentials on demand and revokes them when the task completes. AppSec can build the broker together with platform and IAM teams and hide it behind the agent's tooling, so agents exchange tokens automatically and never fall back on whatever credential is at hand.
+
+Beyond internal credentials, agents increasingly act on behalf of users in third-party services. That needs [delegation and consent](https://oauth.net/2.1/) infrastructure with narrow, time-limited permissions the user can revoke at any moment. Without it, teams end up storing tokens in agent contexts or hard-coding service accounts, and both fail as soon as an attacker compromises an agent or the agent misreads a prompt.
 
 ### Threat Modeling and Offensive Testing
 
-Traditional scanners catch known CVEs, common misconfigurations, and obvious injection points. They miss logic flaws: broken access control across multi-step workflows, business logic bypasses, race conditions in state. Catching design-level flaws means encoding domain knowledge into agents. Security expertise becomes infrastructure.
+Traditional scanners catch known vulnerabilities listed as Common Vulnerabilities and Exposures (CVEs), common misconfigurations, and obvious injection points. They miss logic flaws such as broken access control across multi-step workflows, business logic bypasses, and race conditions. To catch design-level flaws, AppSec teams have to encode their domain knowledge into agents.
 
-**Agentic threat modeling** turns a periodic exercise into a continuous practice. [AppSec builds agent setups](https://www.detectionatscale.com/p/threat-modeling-ai-agents-mcp "Building Threat Models with MCP and AI Agents") that review applications and repositories regularly, analyzing access control patterns, data flow boundaries, and trust assumptions. They run continuously and surface drift against the org's security posture.
+Threat modeling, where a team maps how an attacker could abuse a system's design, usually happens in periodic workshops. Jack Naglieri [built threat models with AI agents and MCP](https://www.detectionatscale.com/p/threat-modeling-ai-agents-mcp "Building Threat Models with MCP and AI Agents") and argues that agents remove the weeks of meetings and documentation review that kept threat modeling a once-a-year exercise. Naglieri's example comes from detection engineering, but the approach carries over to applications. AppSec teams can build agent setups that regularly review applications and repositories, analyze access control patterns, data flow boundaries, and trust assumptions, and report drift from the organization's security posture.
 
-**Continuous offensive simulation** complements this: agentic pentesting as a service. Not scanners running pattern matching but agents that understand the application's business logic and actively look for the flaws a human pentester would target: authorization boundaries, multi-step attack paths, [privilege escalation opportunities](https://labs.secengai.com/p/ai-assisted-web-pentesting-using-claude-code-burp-mcp "AI-assisted Web Pentesting Using Claude Code + Burp MCP"). Building them means turning years of offensive expertise into repeatable strategies.
+Agentic penetration testing (pentesting) complements this, and AppSec can offer it to engineering teams as an internal service. These agents explore the application's business logic and look for the flaws a human pentester would target: authorization boundaries, multi-step attack paths, and privilege escalation. To build them, AppSec teams turn their offensive expertise into repeatable attack strategies. Public setups today still keep a human in the loop. In [AI-assisted web pentesting with Claude Code and Burp MCP](https://labs.secengai.com/p/ai-assisted-web-pentesting-using-claude-code-burp-mcp "AI-assisted Web Pentesting Using Claude Code + Burp MCP"), for example, the agent suggests the next test and the pentester decides whether to run it.
 
-## Converging with SRE and Platform Engineering: Risk as Reliability
+## Partner With SRE and Platform Teams
 
-{{< quote source="Building Secure and Reliable Systems" url="https://google.github.io/building-secure-and-reliable-systems/raw/toc.html" >}}
-A system cannot be reliable if it is insecure, and it cannot be secure if it is operationally unreliable.
+{{< quote source="Building Secure and Reliable Systems" url="https://google.github.io/building-secure-and-reliable-systems/raw/pr01.html" >}}
+Can a system ever truly be considered reliable if it isn't fundamentally secure? Or can it be considered secure if it's unreliable?
 {{< /quote >}}
 
-Engineering teams already manage [error budgets](https://sre.google/sre-book/embracing-risk/ "Google SRE Book: Embracing Risk") for availability, and security can join that model. A **risk budget** caps how long a high-risk, reachable vulnerability is allowed to exist in production before it burns error budget, just like downtime does. AppSec provides the framework and the tooling; the business owner sets the target like any other [SLO](https://sre.google/sre-book/service-level-objectives/ "Google SRE Book: Service Level Objectives").
+In SRE, the product owner sets a [service level objective (SLO)](https://sre.google/sre-book/service-level-objectives/ "Google SRE Book: Service Level Objectives") such as 99.9% availability, and the remaining 0.1% becomes the service's [error budget](https://sre.google/sre-book/embracing-risk/ "Google SRE Book: Embracing Risk"), which the team can spend on outages and risky releases. AppSec can join that model with a **risk budget**. The risk budget sets how long a high-risk, reachable vulnerability may stay open in production before it burns error budget, just like downtime does. AppSec provides the framework and the tooling, and the product owner sets the target, just as for the SLO.
 
-This directly addresses a problem of the agentic SDLC: coding agents generate change faster than human triage can process it, so without quantitative targets every finding competes for attention equally and nothing gets prioritized. Risk budgets give a decision rule: fix what burns the budget, defer what does not.
+A risk budget helps with a problem that agentic engineering makes worse. Coding agents generate change faster than people can triage the findings, and without a quantitative target every finding competes for the same attention. With a risk budget, teams fix what burns the budget and defer what doesn't. The conversation moves from _"fix all the bugs"_ to _"manage the exposure window"_, and security becomes an operational concern that AppSec shares with the teams running the service.
 
-The conversation shifts from _"fix all the bugs"_ to _"manage the exposure window"_. Security becomes a shared operational concern rather than a separate checklist.
+Teams can only use a risk budget if they can tell real exposure from noise, and that requires **reachability analysis**: tracing the call graph from the vulnerable code to the application's entry points. A CVE in dead code doesn't burn budget, but the same CVE behind a public API does. At the CI gate, teams then block only changes that introduce _reachable_ risk and stop failing builds on raw finding counts. In production, a monitoring layer tracks how long reachable findings stay open and burns error budget accordingly.
 
-Risk budgets only work if we can tell real exposure from noise. That requires **reachability analysis**: tracing the call graph from vulnerable code to entry points. A CVE in dead code does not burn budget. The same CVE behind a public API does. At the CI gate, this means blocking only changes that introduce *reachable* risk instead of failing on raw counts. In production, a monitoring layer tracks how long reachable findings stay open and burns error budget accordingly.
+Platform and cloud engineering teams already ship the paved roads that engineering teams build on: base images, service templates, IaC modules, identity primitives, and networking defaults. AppSec teams get the most reach by building security into those [golden paths](https://www.redhat.com/en/topics/platform-engineering/golden-paths "What is a Golden Path for software development?"). A hardened base image or a secure-by-default service template then carries security to every service that uses it, including the code that agents write. Platform engineering owns the templates and modules, and AppSec owns the security defaults inside them. I cover this model in more detail in [Shift Down]({{< ref "/post/appsec-shift-down/index.md" >}} "Shift Down: Why Agentic Engineering Demands Platform-Level Security").
 
-The convergence goes further than SRE. Platform and cloud engineering teams already ship the paved roads that engineering teams build on: base images, service templates, IaC modules, identity primitives, networking defaults. AppSec wins by shifting security *into* [those golden pathes](https://www.redhat.com/en/topics/platform-engineering/golden-paths "What is a Golden Path for software development?"), not by stacking parallel guardrails on top. Hardened base images, secure-by-default service templates, opinionated IaC modules, and central identity primitives carry security with them. The job is co-owned: platform engineering ships the road, AppSec ships the security defaults inside it.
+## Where to Start
 
-On the policy side, make security policy machine-readable. The 50-page Security Policy PDF turns into agent instructions, a vector database, or [policy-as-code](https://www.openpolicyagent.org/) rules that coding agents check in real time. When policy is code, the agent verifies compliance mid-task without a human gate. AppSec shifts from reviewing individual changes to maintaining the policies and risk models that agents enforce continuously.
+None of this has to happen at once. A team that wants to start can work through these steps in order:
 
-## From Gate to Force Multiplier
+1. Sandbox the coding agents that engineers already run, and replace their long-lived credentials with short-lived, task-scoped ones.
+2. Package the existing scanners as CLIs or MCP servers with central configuration, and make them write SARIF.
+3. Publish an organization-specific security skill that encodes the internal policies that matter most.
+4. Pick 1 vulnerability class from the backlog and fix it across the fleet as a campaign.
+5. Agree on a risk budget for reachable vulnerabilities with 1 service owner and their SRE team.
 
-The shift from traditional to agentic AppSec touches every part of how we think about security in the SDLC:
-
-| Dimension | Where we've been | Where we're heading |
-|---|---|---|
-| **Focus** | Detection and reporting | Mitigation and prevention |
-| **Verification** | Periodic, gate-based | Continuous, real-time |
-| **Remediation** | Human-led via tickets | Coding-agent-led auto-fix loops |
-| **Trust Model** | Developer-centric | Zero-trust, actor-centric |
-| **Scanners** | Deterministic rules | Probabilistic, context-aware |
-| **Scale** | One issue at a time | Campaign-based, fleet-wide |
-| **Velocity** | Slowed down by triage | Accelerated by auto-verification |
-
-For years, we carried structural problems that were unsolvable at human scale: too many findings, too few engineers, a feedback loop that was too slow. Agentic engineering does not just create new challenges. It hands us the tools to finally solve the old ones. Auto-remediation loops have the potential to close the gap between finding and fixing. Contextual risk assessment filters the noise. Machine-readable policies spread security expertise beyond the security team. Campaign-based remediation clears backlogs that have grown for years.
-
-The industry bottleneck is shifting from code generation to verification and mitigation. Agentic shifts will reward AppSec teams with strong engineering foundations: teams that move from detection to mitigation, turn security into a hands-on engineering discipline, and partner with SRE, platform, and cloud engineering to treat risk like reliability. These teams will not just keep pace. They will become the force multipliers that make agentic engineering safe enough to trust at scale.
+The sandbox comes first because the exposure exists as soon as an engineer runs an agent with access to their machine.
