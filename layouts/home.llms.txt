@@ -1,33 +1,19 @@
-# {{ .Site.Title }}
+# Brennenstuhl on Security
 
-> {{ partialCached "data/description" . }}
+> Essays and research by Jan Brennenstuhl on application security, identity, and agentic engineering.
 
-About the Author: 
+Canonical HTML and resolved Markdown contain the same substantive text. Publication, modification, and review dates have separate meanings. A rebuild is not a technical review.
 
-Jan Brennenstuhl is a Principal Engineer with a track record of building and operating identity solutions used by millions of customers, balancing UX and security in high-stakes revenue funnels. 
-Currently focused on making agentic SDLC more secure and efficient. Passionate about solving complex challenges at the intersection of security, usability, and automation.
+- [Content catalog]({{ "content-index.json" | absURL }}): versioned metadata, provenance, sections, and SHA-256 content hashes.
+- [RSS]({{ "index.xml" | absURL }}): full-content updates.
+- [Author]({{ "about/" | absURL }}): background and attribution.
+- [Agentic engineering]({{ "topics/agentic-engineering/" | absURL }})
+- [Identity and authentication]({{ "topics/identity-authentication/" | absURL }})
+- [Application security]({{ "topics/application-security/" | absURL }})
 
-## Main Categories
+Original writing is CC BY 4.0 unless the entry says otherwise. Credited media retain their own rights. The catalog is a site-owned contract, not a web standard.
 
-{{- range .Site.Taxonomies.categories }}
-- [{{ .Page.LinkTitle }}]({{ .Page.Permalink }}): {{.Page.Description}}
-{{- end }}
-
-## Key Articles
-
-{{- $posts := where .Site.RegularPages "Type" "in" .Site.Params.mainSections -}}
-{{- $featuredPosts := where $posts ".Params.featured" true -}}
-{{ range $featuredPosts }}
-- [{{ .LinkTitle }}]({{ .Permalink }}): {{.Page.Description}}
-{{- end }}
-
-## Important Pages
-
-{{- $pages := where .Site.RegularPages "Section" "page" -}}
-{{- $featuredPages := where $pages ".Params.featured" true -}}
-{{ range $featuredPages }}
-- [{{ .LinkTitle }}]({{ .Permalink }}): {{.Page.Description}}
-{{- end }}
-
-
-
+## Published content
+{{ range partial "eligible.html" . }}
+- [{{ .Title }}]({{ .Permalink }}index.md): {{ .Description }}
+{{ end }}

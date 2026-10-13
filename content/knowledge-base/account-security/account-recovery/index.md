@@ -1,4 +1,10 @@
 ---
+id: jb-research-account-recovery
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Account Recovery Research"
 linkTitle: "Account Recovery & Password Resets » Account Security Research"
 description: "Security Research | Explore different methods of account recovery, including password reset, and discover tips for making the process more secure."

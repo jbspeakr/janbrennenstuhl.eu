@@ -1,4 +1,10 @@
 ---
+id: jb-readme-1
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "Weak Crypto, Github SAML Attack & Twitter Security UX"
 linkTitle: "Weak Crypto, Github SAML Attack & Twitter Security UX"
 description: "Want to use JWT for password-reset or email activation? Turn app state into HMAC-keys to guarantee one-time use of JWTs! This is how it works …"

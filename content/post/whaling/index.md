@@ -1,4 +1,10 @@
 ---
+id: jb-whaling
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "Whaling Phishing: Definition and Prevention Strategies"
 linkTitle: "Whaling Phishing: Definition and Prevention Strategies"
 description: "Learn the definition of whaling phishing and effective prevention strategies. Stay protected from sophisticated cyber attacks with our expert guide."

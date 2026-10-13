@@ -1,0 +1,8 @@
+beautifulsoup4==4.13.4
+markdownify==1.2.0
+soupsieve==3.0.3
+typing_extensions==4.16.0
+six==1.17.0
+PyYAML==6.0.2
+
+Pillow==11.3.0

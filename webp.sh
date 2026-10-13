@@ -1,24 +1,8 @@
-#!/bin/bash
-
-find . -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) -print0 | while IFS= read -r -d $'\0' file; do
-  # Get the directory of the original file
-  file_dir=$(dirname "$file")
-
-  # Extract the filename without the extension
-  filename=$(basename "$file")
-  extension="${filename##*.}"
-  name_without_ext="${filename%.*}"
-
-  # Construct the output filename with the correct directory
-  output_file="${file_dir}/${name_without_ext}.webp"
-
-  # Execute cwebp
-  echo "Converting '$file' to '$output_file'..."
-  cwebp -q 78 -m 5 -preset picture -metadata none "$file" -o "$output_file"
-
-  if [ $? -ne 0 ]; then
-    echo "Error converting '$file'"
-  fi
-done
-
-echo "Conversion process completed."
+#!/usr/bin/env bash
+# Explicit, non-destructive conversion; source masters are never replaced.
+set -euo pipefail
+if [[ $# != 2 ]]; then printf 'Usage: %s source.png output.webp\n' "$0" >&2; exit 2; fi
+case "$1" in *.png|*.jpg|*.jpeg) ;; *) printf 'Source must be PNG or JPEG.\n' >&2; exit 2;; esac
+case "$2" in *.webp) ;; *) printf 'Output must be WebP.\n' >&2; exit 2;; esac
+if [[ -e "$2" ]]; then printf 'Output already exists; choose a new filename.\n' >&2; exit 1; fi
+cwebp -q 80 -m 6 -metadata none "$1" -o "$2"

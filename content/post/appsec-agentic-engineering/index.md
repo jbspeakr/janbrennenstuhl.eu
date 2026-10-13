@@ -1,4 +1,10 @@
 ---
+id: jb-appsec-agentic-engineering
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['agentic-engineering', 'application-security']
+imageDecorative: true
 title: "AppSec in the Age of Agentic Engineering"
 linkTitle: "AppSec in the Age of Agentic Engineering"
 description: "How AppSec teams can keep up with coding agents: fix findings inside the agent loop, ship security tooling to agents, and manage risk with SRE and platform teams."

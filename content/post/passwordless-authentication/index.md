@@ -1,4 +1,10 @@
 ---
+id: jb-passwordless-authentication
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Passwordless Authentication: Future of Cybersecurity"
 linkTitle: "Passwordless Authentication: The Future of Cybersecurity"
 description: "Discover the world of passwordless authentication and how it's transforming cybersecurity. Learn about its benefits and types in this in-depth guide."

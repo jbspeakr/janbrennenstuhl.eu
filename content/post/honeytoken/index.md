@@ -1,4 +1,10 @@
 ---
+id: jb-honeytoken
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "Honeytoken: Authentication Attack Breach Detection"
 linkTitle: "Honeytoken: Authentication Attack Breach Detection"
 description: "Threat Detection: Discover the power of Honeytoken in credential breach detection, and learn how they bolster defenses against authentication attacks."

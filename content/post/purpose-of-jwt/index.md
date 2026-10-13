@@ -1,4 +1,10 @@
 ---
+id: jb-purpose-of-jwt
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "The Purpose of JWT: Stateless Authentication"
 description: "Establish stateless authentication with JWT. Uncover fundamental ideas of JSON Web Token, security concepts & commonpitfalls to avoid in this concise guide."
 excerpt: "JSON Web Token (JWT) allow you to establish stateless authentication. I explain why this is important and what's the fundamental difference to stateful authentication."

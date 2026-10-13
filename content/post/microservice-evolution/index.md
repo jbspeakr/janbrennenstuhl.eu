@@ -1,4 +1,10 @@
 ---
+id: jb-microservice-evolution
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "Evolution of a Microservice: A Git History Visualisation"
 description: "Keeping microservices micro is a must if you want to benefit from them. How to visualize git histories and what you can learn from it. Devops ✓ Git ✓ Gource ✓"
 excerpt: "Keeping microservices micro is a must if you want to benefit from them. I take a deep dive into the evolution of a microservice …"

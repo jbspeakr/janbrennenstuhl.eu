@@ -1,4 +1,10 @@
 ---
+id: jb-cloudformation-sucks
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "Abusing JSON: Why AWS CloudFormation sucks?!"
 description: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist. Devops ✓ AWS ✗ JSON ✗"
 excerpt: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist …"

@@ -1,4 +1,10 @@
 ---
+id: jb-research-reinforced-authentication
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Reinforced Authentication Studies"
 linkTitle: "Reinforced Authentication: Studies Redefine Account Security"
 description: "Security research studies that discover the power of reinforced authentication methods like advanced login challenges and behavioral analysis."

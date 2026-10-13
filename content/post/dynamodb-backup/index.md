@@ -1,4 +1,10 @@
 ---
+id: jb-dynamodb-backup
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "AWS DynamoDB: Backup & Recovery Strategy"
 linkTitle: "AWS DynamoDB: Backup & Recovery Strategy"
 description: "Exploring a backup and recovery strategy for AWS DynamoDB, for optimal system performance and reliability"

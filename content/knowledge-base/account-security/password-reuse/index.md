@@ -1,4 +1,10 @@
 ---
+id: jb-research-password-reuse
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Password Reuse Studies"
 linkTitle: "Data Breaches: 5 Alarming Password Reuse Studies"
 description: "Security Research | Explore 5 alarming password reuse studies revealing the dangers of reusing passwords. Compromised Credentials ➢ Password Security"

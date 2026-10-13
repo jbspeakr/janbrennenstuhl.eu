@@ -1,0 +1,4 @@
+{{ $pages := .RegularPages }}
+{{ if eq .Kind "taxonomy" }}{{ $pages = .Pages }}{{ end }}
+{{ if .IsHome }}{{ $pages = where site.RegularPages "Section" "post" }}{{ end }}
+{{ return (.Paginate $pages.ByDate.Reverse) }}

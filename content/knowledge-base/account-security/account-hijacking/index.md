@@ -1,4 +1,10 @@
 ---
+id: jb-research-account-hijacking
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Account Hijacking Studies: Attacks & Defenses"
 linkTitle: "Account Takeovers & Account Hijacking Attacks » Security Research"
 description: "How to defend against account takeovers & account hijacking attacks? These security research papers give an answer. Account Security ➢ User Authenticity ➢ …"

@@ -1,4 +1,10 @@
 ---
+id: jb-research-password-policy
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Password Strength Meter Studies"
 linkTitle: "Protect Your Accounts: 5 Studies on Password Strength Meters"
 description: "Worried about weak passwords? Check out the latest research on Password Strength Meters to keep your accounts secure! Click here to learn more."

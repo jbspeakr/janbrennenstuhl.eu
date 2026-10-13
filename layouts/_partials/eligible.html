@@ -1,0 +1,3 @@
+{{ $pages := where site.RegularPages "Section" "in" (slice "post" "knowledge-base" "projects" "talks") }}
+{{ with site.GetPage "/page/jan-brennenstuhl" }}{{ $pages = $pages | append . }}{{ end }}
+{{ return $pages.ByDate.Reverse }}

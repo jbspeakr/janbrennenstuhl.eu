@@ -1,4 +1,10 @@
 ---
+id: jb-github-licker
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "How to Check Github Licenses"
 description: "Github Licker is a Github License Checker command line tool that helps you to keep an overview over your organisations OSS licenses. Try it out now!"
 excerpt: "Github Licker is a Github License Checker command line tool that helps you to keep an overview over your organisations OSS licenses. Try it out now!"

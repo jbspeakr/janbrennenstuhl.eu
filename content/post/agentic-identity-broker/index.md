@@ -1,4 +1,11 @@
 ---
+id: jb-agentic-identity-broker
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['agentic-engineering']
+imageDecorative: true
+heroArtwork: delegation
 title: "What I Learned Building an Identity Broker With Coding Agents"
 linkTitle: "Agentic Identity Broker Retrospective"
 description: "Lessons from 10 months of building the open-source Agentic Identity Broker with coding agents: Spec Kit, tests that tested nothing, 6 harness switches, and review."

@@ -1,0 +1,1 @@
+{{ $r := .Page.Resources.GetMatch .Destination }}<figure>{{ if and $r (ne $r.MediaType.SubType "svg") }}{{ partial "image.html" (dict "resource" $r "alt" .PlainText "hero" false) }}{{ else }}<img src="{{ .Destination | safeURL }}" alt="{{ .PlainText }}" loading="lazy">{{ end }}{{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>

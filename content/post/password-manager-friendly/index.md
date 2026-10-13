@@ -1,4 +1,10 @@
 ---
+id: jb-password-manager-friendly
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "How to: Password-Manager Friendly Login Forms"
 linkTitle: "How to: Password-Manager Friendly Login Forms"
 description: "Password Security | Use HTML features to create password-manager friendly login forms for a seamless user experience & enhanced web security"

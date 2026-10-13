@@ -1,0 +1,17 @@
+{{ if or .IsHome .IsBranch }}{{ $initialize := partial "pager.html" . }}{{ end }}
+<!doctype html>
+<html lang="en-GB">
+<head>{{ partial "head.html" . }}</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header wrap">
+  <a class="brand" href="/" aria-label="Brennenstuhl on Security — home"><img src="/favicon.svg" width="36" height="36" alt=""><span>Brennenstuhl <span class="brand-sub">on Security</span></span></a>
+  <nav aria-label="Main navigation"><a href="/writing/" {{ if eq .RelPermalink "/writing/" }}aria-current="page"{{ end }}>Writing</a><a href="/knowledge-base/" {{ if eq .Section "knowledge-base" }}aria-current="true"{{ end }}>Knowledge</a><a href="/projects/" {{ if eq .Section "projects" }}aria-current="true"{{ end }}>Projects</a><a href="/about/" {{ if eq .RelPermalink "/about/" }}aria-current="page"{{ end }}>About</a><a href="/search/" {{ if eq .Layout "search" }}aria-current="page"{{ end }} aria-label="Search the archive">Search <span aria-hidden="true">↗</span></a></nav>
+  <label class="theme-control" hidden>Theme <select id="theme" aria-label="Color theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+</header>
+<main id="main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
+<footer class="site-footer wrap"><div><a class="footer-name" href="/about/">Jan Brennenstuhl</a><p>Independent thinking on secure systems.<br>Written in Berlin. Made and hosted in the EU.</p></div><nav aria-label="Follow and explore"><a href="/index.xml">Subscribe via RSS ↗</a><a href="/talks/">Speaking</a><a href="/topics/">Explore topics</a><a href="/llms.txt">For agents</a><a href="https://infosec.exchange/@jbspeakr" rel="me">Mastodon</a></nav><nav aria-label="Legal"><a href="/imprint/">Imprint</a><a href="/privacy-policy/">Privacy</a><a href="/affiliate-disclaimer/">Independent views</a><a href="https://creativecommons.org/licenses/by/4.0/">Original writing · CC BY 4.0</a><a href="{{ site.Params.sourceRepository }}">Source on Codeberg ↗</a></nav></footer>
+<div class="sr-only" id="feedback" role="status" aria-live="polite"></div>
+{{ $js := resources.Get "js/site.js" | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ if eq .Layout "search" }}{{ $search := resources.Get "js/search.js" | minify | fingerprint }}<script src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}" defer></script>{{ end }}
+</body></html>

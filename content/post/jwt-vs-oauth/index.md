@@ -1,4 +1,10 @@
 ---
+id: jb-jwt-vs-oauth
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "JWT vs OAuth 2.0: Understanding the Key Differences"
 linkTitle: "JWT vs OAuth 2.0: Understanding the Key Differences"
 description: "Learn the key differences between JWT and OAuth 2.0 from our expert guide on JWT vs OAuth. Understand which one to choose for authentication."

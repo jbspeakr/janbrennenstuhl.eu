@@ -1,4 +1,10 @@
 ---
+id: jb-european-jamstack
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "Goodbye Big Tech: My European JAMstack Migration"
 linkTitle: "Goodbye Big Tech: My European JAMstack Migration"
 description: "Looking for a European alternative to replace Github or Netlify? Don't look further! Learn what EU service providers I use to power my JAMstack."

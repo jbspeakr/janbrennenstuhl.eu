@@ -1,4 +1,10 @@
 ---
+id: jb-research-oidc-security
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "OIDC Security Research"
 linkTitle: "Threats & Attacks: Security Research on OpenId Connect (OIDC)"
 description: "Dive into OpenID Connect security, learn from security researchers, and enhance your knowledge on OIDC threats and attack scenarios."

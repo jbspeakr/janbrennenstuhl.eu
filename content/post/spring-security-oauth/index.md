@@ -1,4 +1,10 @@
 ---
+id: jb-spring-security-oauth
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication', 'application-security']
+imageDecorative: true
 title: "On Making Spring Security OAuth RFC-compliant"
 description: "Open-Source Contribution | I fixed a small HTTP header extractor in Spring Security OAuth. Here's what happened & what I learned."
 excerpt: "On Fixing Spring Security OAuth: I fixed a small HTTP header extractor for the Spring Security OAuth open source project recently. Here's what happened & what I learned..."

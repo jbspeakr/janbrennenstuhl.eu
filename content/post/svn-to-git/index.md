@@ -1,4 +1,10 @@
 ---
+id: jb-svn-to-git
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "How to Migrate SVN to GIT with History?"
 description: "Version Control System (VCS) Migration: A short guide on how to migrate SVN to GIT while preserving source code authors and commit history."
 excerpt: "A small step-by-step example on how to move your source code from SVN to GIT."

@@ -1,4 +1,10 @@
 ---
+id: jb-password-spraying
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication', 'application-security']
+imageDecorative: true
 title: "Password Attack Guide: What is Password Spraying?"
 linkTitle: "Password Attack Guide: What is Password Spraying?"
 description: "Learn about password spraying, a common attack technique that hackers use to compromise accounts. Discover how it works & essential prevention strategies."

@@ -1,4 +1,10 @@
 ---
+id: jb-python-tuple-list-to-dict
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "Python Docopt: Convert Tuple List to Dictionary"
 description: "Python Docopt: How to convert a list of tuples into a dictionary in Python. A quick and easy solution for beautiful command-line interfaces …"
 excerpt: "How to convert a list of tuples into a dictionary in Python. A quick and easy solution for beautiful command-line interfaces …"

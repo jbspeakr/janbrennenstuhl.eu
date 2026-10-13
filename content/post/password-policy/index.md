@@ -1,4 +1,10 @@
 ---
+id: jb-password-policy
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "How to Design a Strong & Usable Password Policy"
 linkTitle: "How to Design a Strong & Usable Password Policy"
 description: "Account Security ➢ Learn how to create a secure and user-friendly password policy that strikes the perfect balance between web security and user experience"

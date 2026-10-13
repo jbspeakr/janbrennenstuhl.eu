@@ -1,4 +1,10 @@
 ---
+id: jb-monocyte
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "AWS Monocyte: Let's Build a Cloud Immune System"
 description: "Monocyte: A AWS Immune System. Comply to EU regulations by finding and deleting AWS resources in regions outside of Europe with AWS Monocyte!"
 excerpt: "Monocyte: A AWS Immune System. Comply to EU regulations by finding and deleting AWS resources in regions outside of Europe with AWS Monocyte!"

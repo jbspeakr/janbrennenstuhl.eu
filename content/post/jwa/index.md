@@ -1,4 +1,10 @@
 ---
+id: jb-jwa
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "What is JWA? A Deep Dive into JSON Web Algorithms"
 linkTitle: "What is JWA? A Deep Dive into JSON Web Algorithms"
 description: "JSON Web Algorithms (JWA) power all JWT use cases. Learn how to decode JWA short names, what algorithms there are and why JWA matters for OpenID Connect."

@@ -1,4 +1,10 @@
 ---
+id: jb-bunny-shield-review
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "Bunny Shield Review: 3 Things Need Improvement"
 linkTitle: "Bunny Shield Review: 3 Things Need Improvement"
 description: "I tested Bunny Shield by Bunny.net – Three things that need attention: False positives, bot management & observability."

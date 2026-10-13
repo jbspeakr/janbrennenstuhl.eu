@@ -1,4 +1,10 @@
 ---
+id: jb-assertj-null-not-blank
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "Learning AssertJ: Null ain't Blank"
 description: "This AssertJ bug could lead to severe issues: In Java, a blank String is a CharSequence that is empty, null or whitespace only – except when you use AssertJ!"
 excerpt: "This AssertJ bug could lead to severe issues: In Java, a blank String is a CharSequence that is empty, null or whitespace only – except when you use AssertJ!"

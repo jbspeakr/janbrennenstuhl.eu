@@ -1,4 +1,10 @@
 ---
+id: jb-htw-berlin-agentic-appsec
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['agentic-engineering', 'application-security']
+imageDecorative: true
 title: "Guest Lecture at HTW Berlin: AppSec in the Age of Agentic Engineering"
 linkTitle: "HTW Berlin Guest Lecture"
 description: "My HTW Berlin guest lecture explains why agentic engineering moves AppSec toward harness design, platform constraints, and measurable risk."

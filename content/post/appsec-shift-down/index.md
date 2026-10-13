@@ -1,4 +1,10 @@
 ---
+id: jb-appsec-shift-down
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['agentic-engineering', 'application-security']
+imageDecorative: true
 title: "Shift Down: Why Agentic Engineering Demands Platform-Level Security"
 linkTitle: "Shift Down AppSec"
 description: "Agentic engineering amplifies architectural entropy at machine speed. The answer is not more security gates but fewer decisions: shift security down into platforms."

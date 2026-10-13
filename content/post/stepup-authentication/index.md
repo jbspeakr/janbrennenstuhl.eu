@@ -1,4 +1,10 @@
 ---
+id: jb-stepup-authentication
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Step-Up Authentication: Elevating Security with OpenID Connect (OIDC)"
 linkTitle: "Enhancing Security: A Guide to Step-Up Authentication"
 description: "Delve into this guide on Step-Up Authentication using OpenID Connect. Learn to balance security with friction & how to elevate authentication levels."

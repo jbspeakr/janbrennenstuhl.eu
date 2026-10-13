@@ -1,4 +1,10 @@
 ---
+id: jb-passkeys-controversy
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Passwordless: Critical Notes on FIDO2 Passkeys"
 linkTitle: "Passwordless: Critical Notes on FIDO2 Passkeys"
 description: "Critical notes on passwordless authentication with FIDO2 Passkeys. Potential risks and challenges of passkey concepts & implications for users."
@@ -9,7 +15,7 @@ date: 2023-05-08
 lastmod: 2025-06-09
 draft: false
 weight: 50
-image: fido-Passkeys.webp
+image: fido-passkeys.webp
 categories: ["identity-access-management"]
 tags: ["password-security", "passwordless", "passkeys"]
 pinned: false

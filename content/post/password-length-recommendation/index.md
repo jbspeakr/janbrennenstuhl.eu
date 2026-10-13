@@ -1,4 +1,10 @@
 ---
+id: jb-password-length-recommendation
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Max Password Length: A Secure Password Guide"
 linkTitle: "Max Password Length: A Secure Password Guide"
 description: "A comprehensive password guide with max password length recommendation to ensure your accounts stay safe and secure."

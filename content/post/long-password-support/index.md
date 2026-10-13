@@ -1,4 +1,10 @@
 ---
+id: jb-long-password-support
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Long Password Support for Safer Login Systems"
 linkTitle: "Long Password Support for Safer Login Systems"
 description: "Maximize Login Security with Long Passwords and Secure Hashing. Learn How to Empower Your Login System with our Expert Guide. Read Now!"

@@ -1,4 +1,10 @@
 ---
+id: jb-jwe-token
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "JSON Web Encryption: Exploring JWE Token"
 linkTitle: "JSON Web Encryption: Exploring JWE Token"
 description: "Explore the world of JWE token with this in-depth guide. Gain understanding of JSON Web Encryption standards."

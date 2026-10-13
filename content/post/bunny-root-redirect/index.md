@@ -1,4 +1,10 @@
 ---
+id: jb-bunny-root-redirect
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['software-engineering']
+imageDecorative: true
 title: "Bunny CDN: How to redirect Root Domain to Subdomain"
 linkTitle: "Bunny CDN: Redirect Root Domain to Subdomain"
 description: "Bunny.net: Learn how to redirect a root domain to its www subdomain using Bunny DNS and Bunny CDN Edge Rules."

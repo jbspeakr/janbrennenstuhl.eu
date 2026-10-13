@@ -1,0 +1,1 @@
+<details {{ if .Get 1 }}open{{ end }}><summary>{{ .Get 0 | safeHTML }}</summary>{{ .Inner | markdownify }}</details>

@@ -1,4 +1,10 @@
 ---
+id: jb-whaling-awareness
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "What is Whaling Cyber Awareness? Prevention Tips & Training"
 linkTitle: "What is Whaling Cyber Awareness? Prevention Tips & Training"
 description: "Protect your business from whaling cyber attacks with our comprehensive training and prevention tips. Learn what is whaling cyber awareness today."

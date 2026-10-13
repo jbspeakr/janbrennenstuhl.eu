@@ -1,0 +1,1 @@
+{{ $items := slice }}{{ range partial "eligible.html" . }}{{ $items = $items | append (partial "metadata.html" .) }}{{ end }}{{ dict "schema_version" "1.0" "site" site.BaseURL "items" $items | jsonify }}

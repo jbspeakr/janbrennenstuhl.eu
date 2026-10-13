@@ -1,4 +1,10 @@
 ---
+id: jb-single-use-jwt
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Single-Use JWT: Unlocking the Power of Stateless One Time Token"
 linkTitle: "Single-Use JWT: The Power of Stateless One Time Token"
 description: "Discover JWTs as one-time tokens in secure authentication. Explore benefits, implementation, and real-world use cases. Explore Single-Use JWT!"

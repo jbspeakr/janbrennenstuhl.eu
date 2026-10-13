@@ -1,4 +1,10 @@
 ---
+id: jb-automatic-dependency-updates
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['application-security']
+imageDecorative: true
 title: "Dependency Updates: latest Is Not a Security Strategy"
 linkTitle: "latest Is Not a Security Strategy"
 description: "Automatic dependency updates spread compromised packages faster than humans can react. Version pinning, provenance verification, and repository proxies turn blind trust into controlled trust."

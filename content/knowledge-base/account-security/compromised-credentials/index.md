@@ -1,4 +1,10 @@
 ---
+id: jb-research-compromised-credentials
+kind: research
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Compromised Credentials Research"
 linkTitle: "Security Research: Credential Stuffing & Compromised Credentials"
 description: "How to defend against credential stuffing? How to check for compromised credentials? These top security research papers give answers ➢ User Account Security"

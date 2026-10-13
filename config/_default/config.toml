@@ -1,28 +1,25 @@
-# Change baseurl before deploy
-baseurl = "https://www.janbrennenstuhl.eu"
-locale = "en-gb"
+baseURL = "https://www.janbrennenstuhl.eu/"
 title = "Brennenstuhl on Security"
-
-# Theme i18n support
-# Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
+locale = "en-GB"
 defaultContentLanguage = "en"
-
-# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
-# This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage = false
-
-# Change it to your Disqus shortname before using
-# disqusShortname = "hugo-theme-stack"
-
+enableRobotsTXT = false
+[frontmatter]
+lastmod = ["lastmod", "date"]
 [pagination]
 pagerSize = 5
 path = ""
-
 [outputFormats.llms]
 mediaType = "text/plain"
 baseName = "llms"
 isPlainText = true
 notAlternative = true
-
+[outputFormats.catalog]
+mediaType = "application/json"
+baseName = "content-index"
+isPlainText = true
+notAlternative = true
 [outputs]
-home = ["HTML", "RSS", "llms"]
+home = ["HTML", "RSS", "llms", "catalog"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]

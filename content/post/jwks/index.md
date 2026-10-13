@@ -1,4 +1,10 @@
 ---
+id: jb-jwks
+kind: essay
+status: published
+reviewStatus: not-reviewed
+topics: ['identity-authentication']
+imageDecorative: true
 title: "Mastering JWKS: JSON Web Key Sets Explained"
 linkTitle: "Mastering JWKS: JSON Web Key Sets Explained"
 description: "Demystify JWKS with this simplified guide. Learn about JSON Web Key Sets, their purpose, and how to implement them successfully. Master JWKS now!"

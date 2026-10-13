@@ -1,4 +1,9 @@
 ---
+id: jb-author
+kind: profile
+status: published
+reviewStatus: not-reviewed
+topics: [application-security, identity-authentication, agentic-engineering]
 title: "About Jan Brennenstuhl"
 description: "Jan Brennenstuhl is a principal engineer focused on application security, agentic engineering, and the intersection of security, usability, and automation."
 date: 2021-04-08

@@ -1,9 +1,9 @@
 ---
 title: "Privacy Policy: No Cookies & Privacy First"
-description: "We do not use cookies and we do not collect any personal data."
-lead: "janbrennenstuhl.eu does neither use cookies nor does it collect any personal data."
+description: "No cookies, third-party analytics, or search-query collection. An optional theme preference stays in your browser."
+lead: "A publication you can read without tracking scripts or an account."
 date: 2023-04-15
-lastmod: 2025-06-01
+lastmod: 2026-10-13
 draft: false
 images: []
 robots: "noindex, follow"
@@ -18,22 +18,22 @@ license: false
 #      icon: cookie-off
 ---
 
-## Website visitors
+<span id="website-visitors"></span>
 
-- No personal information is collected.
-- No information is stored in the browser.
-- No information is shared with, sent to or sold to third-parties.
-- No information is shared with advertising companies.
-- No information is mined and harvested for personal and behavioral trends.
-- No information is monetized.
+## Reading and search
 
-### Information we collect and what we use it for
+This site does not load third-party analytics scripts or set cookies. Search runs in your browser after downloading a static index. Search terms are not sent to an analytics service. A query in the address bar is part of the page URL requested from the hosting service.
 
-I run [Plausible](https://plausible.io/) analytics on janbrennenstuhl.eu. The following information is collected:
+## Color preference
 
-- __Page URL__. I track the page URL of each page view on this website. I use this to understand which pages have been viewed and how many times a particular page has been viewed. For example: _https://www.janbrennenstuhl.eu_.
-- __HTTP Referrer__. I use the referrer string to understand the number of visitors referred to this website from links on other sites. For example: _https://github.com/_.
-- __Browser__. I use this to understand what browsers people use when visiting this website. This is derived from the User-Agent HTTP header. The full User-Agent is discarded. For example: _Chrome_.
-- __Operating system__. I use this to understand what operating systems people use when visiting this website. I only use the brand of the operating system and don’t include the version number or any other details. This is derived from the User-Agent HTTP header. The full User-Agent is discarded. For example: _GNU/Linux_.
-- __Device type__. I use this to understand what devices people use when visiting this website. This is derived from window.innerWidth. The actual width of the browser in pixels is discarded. For example: _Desktop_.
-- __Visitor Country__. I look up the visitor’s country using the IP address. I do not track anything more granular than the country of origin and the IP address of the visitor is discarded. I never store IP addresses in databases or logs. For example: _Germany_.
+If you choose a light or dark theme, the site saves that preference in your browser’s local storage. Choosing System removes it. The preference is not sent to the server. If storage is unavailable, reading and theme selection still work.
+
+<span id="information-we-collect-and-what-we-use-it-for"></span>
+
+## Hosting and external links
+
+The site is delivered through Bunny. HTTP requests necessarily include connection information such as your IP address; this page does not make claims about hosting-provider log retention. External links, including video and presentation links, open the respective provider’s site.
+
+## Contact
+
+For questions about this website, [contact the responsible editor](/imprint/).
