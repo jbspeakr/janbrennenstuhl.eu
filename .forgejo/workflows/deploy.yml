@@ -2,33 +2,44 @@ name: Publish Blog
 on:
   push:
     branches:
-      - main  # Set a branch to deploy
+      - main
   pull_request:
 
+# Queue main pushes; never interrupt an upload halfway through.
+concurrency:
+  group: blog-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  deploy:
+  # Runs for pushes and pull requests. Uses no secrets.
+  build:
     runs-on: codeberg-small
     env:
       HUGO_CACHEDIR: /tmp/hugo_cache
     steps:
-      - uses: https://code.forgejo.org/actions/setup-go@v6
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          go-version: '1.27.x' # Change this to whatever you need
-
-      - uses: https://code.forgejo.org/actions/checkout@v6
-        with:
+          persist-credentials: false
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Setup Hugo
-        uses: https://github.com/peaceiris/actions-hugo@v3
+      - uses: https://code.forgejo.org/actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
-          hugo-version: '0.166.0'
+          go-version-file: go.mod
+
+      - name: Read Hugo version
+        id: hugo
+        run: echo "version=$(tr -d '[:space:]' < .hugo-version)" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Hugo
+        uses: https://github.com/peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3.2.1
+        with:
+          hugo-version: ${{ steps.hugo.outputs.version }}
           extended: true
 
       - name: Restore Hugo cache
         id: restore-cache
-        uses: https://code.forgejo.org/actions/cache/restore@v5
+        uses: https://code.forgejo.org/actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ./resources
           key: brennenstuhl-hugo-resources-cache-
@@ -38,19 +49,44 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Setup IndexNow
-        # Generate files dynamically to prevent them from being leaked in public repositories.
-        # This example will put the file in the root directory of the site. You may change the location by yourself.
-        run: echo ${{ secrets.INDEXNOW_KEY }} > public/${{ secrets.INDEXNOW_KEY }}.txt
-
+      # Only main may write the cache, so a pull request cannot poison later builds.
       - name: Save Hugo cache
-        uses: https://code.forgejo.org/actions/cache/save@v5
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: https://code.forgejo.org/actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ./resources
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}${{ hashFiles('./resources/**/*') }}
 
+      # Tarball keeps dotfiles such as .well-known/ that artifact uploads may skip.
+      - name: Package site
+        run: tar -czf site.tar.gz -C public .
+
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
+        with:
+          name: site
+          path: site.tar.gz
+          retention-days: 14
+          if-no-files-found: error
+
+  # Publishes the exact bytes built above, and only from main.
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build]
+    runs-on: codeberg-small
+    steps:
+      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        with:
+          name: site
+
+      - name: Unpack site
+        run: mkdir public && tar -xzf site.tar.gz -C public
+
+      - name: Setup IndexNow
+        # Generate files dynamically to prevent them from being leaked in public repositories.
+        run: echo ${{ secrets.INDEXNOW_KEY }} > public/${{ secrets.INDEXNOW_KEY }}.txt
+
       - name: Deploy to BunnyCDN
-        uses: https://github.com/ayeressian/bunnycdn-storage-deploy@v2.4.5
+        uses: https://github.com/ayeressian/bunnycdn-storage-deploy@251c77f4b9e7e683ad00086de2bef5770c3386b2 # v2.4.5
         with:
           source: "public"
           destination: ""
@@ -63,7 +99,7 @@ jobs:
           purgePullZone: "true"
 
       - name: indexnow-action
-        uses: https://github.com/bojieyang/indexnow-action@v2
+        uses: https://github.com/bojieyang/indexnow-action@cd6d1576582c1839b80dd71f418f172aa40d6552 # v2.1.0
         with:
           sitemap-location: 'https://www.janbrennenstuhl.eu/sitemap.xml'
           key: ${{ secrets.INDEXNOW_KEY }}

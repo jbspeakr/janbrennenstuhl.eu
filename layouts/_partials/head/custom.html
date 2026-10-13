@@ -15,185 +15,114 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" crossorigin="use-credentials" href="/site.webmanifest" />
 
-{{ $baseURL := "/" | absURL -}}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://www.janbrennenstuhl.eu/about/#person",
-      "name": "Jan Brennenstuhl",
-      "url": "https://www.janbrennenstuhl.eu/about/",
-      "jobTitle": "Principal Software Engineer",
-      "description": "Jan Brennenstuhl is a product-minded principal software engineer with focus on usable security & web authentication.",
-      "sameAs": [
-        "https://bsky.app/profile/janbrennenstuhl.eu",
-        "https://github.com/jbspeakr",
-        "https://infosec.exchange/@jbspeakr",
-        "https://www.linkedin.com/in/brennenstuhl/"
-      ],
-        "image": {
-            "@type": "ImageObject",
-            "@id": "https://www.janbrennenstuhl.eu/about/#person-image",
-            "url": "https://www.janbrennenstuhl.eu/about/jan-brennenstuhl.webp",
-            "width": "1260",
-            "height": "1920",
-            "caption": "Jan Brennenstuhl"
-        }
-    },
-    {
-      "@type": "WebSite",
-      "@id": {{ print $baseURL "#website" }},
-      "url": {{ print $baseURL }},
-      "name": "{{ .Site.Title }}",
-      "description": "{{ .Site.Params.sidebar.subtitle }}",
-      "publisher": {
-        "@id": "https://www.janbrennenstuhl.eu/about/#person"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://www.janbrennenstuhl.eu/search/?keyword={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
-    },
-    {
-      {{ if and (ne .Kind "taxonomy") (ne .Kind "term") -}}
-        "@type": "WebPage",
-      {{ else -}}
-        "@type": "CollectionPage",
-      {{ end -}}
-      "@id": {{ .Permalink }},
-      "url": {{ .Permalink }},
-      "name": "{{ .Title }}",
-      "description": "{{ .Description }}",
-      "isPartOf": {
-        "@id": {{ print $baseURL "#website" }}
-      },
-      "about": {
-        "@id": "https://www.janbrennenstuhl.eu/about/#person"
-      },
-      "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05CET" }}",
-      "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05CET" }}",
-      "inLanguage": "{{ .Site.Params.languageCode }}",
-      "potentialAction": [{
-        "@type": "ReadAction", 
-        "target": [{{ .Permalink }}]
-      }]
-    },
-    
-    {{ if not .IsHome -}}
-    {
-      "@type": "BreadcrumbList",
-      "@id": {{ print .Permalink "#breadcrumb" }},
-      "name": "Breadcrumbs",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "{{ .Site.Title }}",
-        "item": "{{ .Site.BaseURL }}"
-      }, 
-      {{ if eq .Section "post" -}}
-      {{ with .Site.Taxonomies.categories.Get (index (.Params.categories) 0) }}
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ .Page.Title }}",
-        "item": {{ .Page.Permalink }}
-      }, 
-      {{ end -}}
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{ .Title }}",
-        "item": {{ .Permalink }}
-      },
-      {{- else -}}
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ .Title }}",
-        "item": {{ .Permalink }}
-      }
-      {{ end -}}
-      ]
-    },
-    {{ end -}}
+{{- $person := dict "@id" ("about/#person" | absURL) -}}
+{{- $website := dict "@id" ("#website" | absURL) -}}
+{{- $dateFormat := "2006-01-02T15:04:05Z07:00" -}}
+{{- $lang := site.Language.Locale -}}
 
-    {{ if or (eq .Section "post") -}}
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "BlogPosting",
-          "@id": {{ print .Permalink "#article" }},
-          "headline": "{{ .Title }}",
-          "description": "{{ .Description }}",
-          "isPartOf": {
-            "@id": {{ .Permalink }}
-          },
-          "mainEntityOfPage": {
-            "@id": {{ .Permalink }}
-          },
-          "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05CET" }}",
-          "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05CET" }}",
-          "author": {
-            "@id": "https://www.janbrennenstuhl.eu/about/#person"
-          },
-          "publisher": {
-            "@id": "https://www.janbrennenstuhl.eu/about/#person"
-          },
-          "image": {
-            "@type": "ImageObject",
-            "@id": {{ print .Permalink "#article-image" }},
-            "url": {{ .Params.image }},
-            "contentUrl": {{ .Params.image }},
-            "caption": "{{ .Title }}"
-          },
-        },
-      ]
-    },
-    {{ end -}}
+{{- $graph := slice
+  (dict
+    "@type" "Person"
+    "@id" ("about/#person" | absURL)
+    "name" "Jan Brennenstuhl"
+    "url" ("about/" | absURL)
+    "jobTitle" "Principal Software Engineer"
+    "description" "Jan Brennenstuhl is a product-minded principal software engineer with focus on usable security & web authentication."
+    "sameAs" (slice
+      "https://bsky.app/profile/janbrennenstuhl.eu"
+      "https://github.com/jbspeakr"
+      "https://infosec.exchange/@jbspeakr"
+      "https://www.linkedin.com/in/brennenstuhl/"
+    )
+    "image" (dict
+      "@type" "ImageObject"
+      "@id" ("about/#person-image" | absURL)
+      "url" ("about/jan-brennenstuhl.webp" | absURL)
+      "width" 1260
+      "height" 1920
+      "caption" "Jan Brennenstuhl"
+    )
+  )
+  (dict
+    "@type" "WebSite"
+    "@id" ("#website" | absURL)
+    "url" ("/" | absURL)
+    "name" site.Title
+    "description" site.Params.sidebar.subtitle
+    "inLanguage" $lang
+    "publisher" $person
+    "potentialAction" (dict
+      "@type" "SearchAction"
+      "target" (dict
+        "@type" "EntryPoint"
+        "urlTemplate" ("search/?keyword={search_term_string}" | absURL)
+      )
+      "query-input" "required name=search_term_string"
+    )
+  )
+-}}
 
-    {{ if or (eq .Section "knowledge-base") (eq .Section "page") -}}
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Article",
-          "@id": {{ print .Permalink "#article" }},
-          "headline": "{{ .Title }}",
-          "description": "{{ .Description }}",
-          "isPartOf": {
-            "@id": {{ .Permalink }}
-          },
-          "mainEntityOfPage": {
-            "@id": {{ .Permalink }}
-          },
-          "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05CET" }}",
-          "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05CET" }}",
-          "author": {
-            "@id": "https://www.janbrennenstuhl.eu/about/#person"
-          },
-          "publisher": {
-            "@id": "https://www.janbrennenstuhl.eu/about/#person"
-          },
-          {{ if .Params.image -}}
-          "image": {
-            "@type": "ImageObject",
-            "@id": {{ print .Permalink "#article-image" }},
-            "url": {{ .Params.image }},
-            "contentUrl": {{ .Params.image }},
-            "caption": "{{ .Title }}"
-          },
-          {{ end -}}
-        },
-      ]
-    },
-    {{ end -}}
-  ]
-}
-</script>
+{{- $webPage := dict
+  "@type" (cond (in (slice "section" "taxonomy" "term") .Kind) "CollectionPage" "WebPage")
+  "@id" .Permalink
+  "url" .Permalink
+  "name" .Title
+  "isPartOf" $website
+  "about" $person
+  "inLanguage" $lang
+  "potentialAction" (slice (dict "@type" "ReadAction" "target" (slice .Permalink)))
+-}}
+{{- with .Description }}{{ $webPage = merge $webPage (dict "description" .) }}{{ end -}}
+{{- if not .PublishDate.IsZero }}{{ $webPage = merge $webPage (dict "datePublished" (.PublishDate.Format $dateFormat)) }}{{ end -}}
+{{- if not .Lastmod.IsZero }}{{ $webPage = merge $webPage (dict "dateModified" (.Lastmod.Format $dateFormat)) }}{{ end -}}
+{{- $graph = $graph | append $webPage -}}
+
+{{- if not .IsHome -}}
+  {{- $crumbs := slice (dict "name" site.Title "item" ("/" | absURL)) -}}
+  {{- if and .IsPage (eq .Section "post") -}}
+    {{- with .GetTerms "categories" -}}
+      {{- with index . 0 }}{{ $crumbs = $crumbs | append (dict "name" .Title "item" .Permalink) }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $crumbs = $crumbs | append (dict "name" .Title "item" .Permalink) -}}
+  {{- $items := slice -}}
+  {{- range $i, $c := $crumbs -}}
+    {{- $items = $items | append (merge (dict "@type" "ListItem" "position" (add $i 1)) $c) -}}
+  {{- end -}}
+  {{- $graph = $graph | append (dict
+    "@type" "BreadcrumbList"
+    "@id" (print .Permalink "#breadcrumb")
+    "name" "Breadcrumbs"
+    "itemListElement" $items
+  ) -}}
+{{- end -}}
+
+{{- if and .IsPage (in (slice "post" "knowledge-base" "page") .Section) -}}
+  {{- $article := dict
+    "@type" (cond (eq .Section "post") "BlogPosting" "Article")
+    "@id" (print .Permalink "#article")
+    "headline" .Title
+    "isPartOf" (dict "@id" .Permalink)
+    "mainEntityOfPage" (dict "@id" .Permalink)
+    "datePublished" (.PublishDate.Format $dateFormat)
+    "dateModified" (.Lastmod.Format $dateFormat)
+    "inLanguage" $lang
+    "author" $person
+    "publisher" $person
+  -}}
+  {{- with .Description }}{{ $article = merge $article (dict "description" .) }}{{ end -}}
+  {{- with site.Params.article.license }}{{ if .enabled }}{{ $article = merge $article (dict "license" "https://creativecommons.org/licenses/by/4.0/") }}{{ end }}{{ end -}}
+  {{- with .Params.image -}}
+    {{- $url := . | absURL -}}
+    {{- with $.Resources.Get . }}{{ $url = .Permalink }}{{ end -}}
+    {{- $article = merge $article (dict "image" (dict
+      "@type" "ImageObject"
+      "@id" (print $.Permalink "#article-image")
+      "url" $url
+      "contentUrl" $url
+      "caption" $.Title
+    )) -}}
+  {{- end -}}
+  {{- $graph = $graph | append $article -}}
+{{- end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

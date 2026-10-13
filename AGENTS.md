@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Hugo 0.161.1 (extended) blog using Hugo Theme Stack v4.
+Hugo (extended) blog using Hugo Theme Stack v4. The Hugo version is pinned in `.hugo-version`; CI reads it from there.
 
 ## Repository layout
 
@@ -10,7 +10,8 @@ config/_default/     Site, navigation, markup, and theme configuration
 content/              Page bundles: posts, pages, knowledge base, categories, and tags
 layouts/             Local Hugo Theme Stack overrides
 static/              Files copied to the site unchanged
-.forgejo/workflows/  CI build and BunnyCDN deployment
+.forgejo/workflows/  CI build (all pushes and PRs) and BunnyCDN deployment (main only)
+.hugo-version        Pinned Hugo version for CI and local development
 go.mod, go.sum       Hugo module and pinned theme dependency
 public/              Generated site output; do not edit
 resources/           Hugo cache/generated assets; do not edit
