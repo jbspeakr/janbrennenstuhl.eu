@@ -1,0 +1,4 @@
+{{- /* Only informative images are shown; decorative stock heroes gave way to the generated diagram. */ -}}
+{{- if and .Params.image .Params.imageAlt (not .Params.imageDecorative) }}{{ with .Resources.GetMatch .Params.image }}
+<figure class="hero-image">{{ partial "picture.html" (dict "resource" . "alt" $.Params.imageAlt "eager" true) }}{{ with $.Params.imageCredit }}<figcaption>Image: <a href="{{ .url }}">{{ .name }}</a></figcaption>{{ end }}</figure>
+{{- end }}{{ end }}

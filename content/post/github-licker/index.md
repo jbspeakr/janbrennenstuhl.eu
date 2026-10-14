@@ -1,23 +1,16 @@
 ---
 id: jb-github-licker
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['software-engineering']
 imageDecorative: true
 title: "How to Check Github Licenses"
 description: "Github Licker is a Github License Checker command line tool that helps you to keep an overview over your organisations OSS licenses. Try it out now!"
-excerpt: "Github Licker is a Github License Checker command line tool that helps you to keep an overview over your organisations OSS licenses. Try it out now!"
+claim: "Github-Licker is a small Python command-line tool that uses the GitHub Licenses API to list the licenses of an organization's repositories and find repositories without a license file."
 slug: github-license-checker
 date: 2015-03-25
 lastmod: 2017-04-17
 draft: false
 weight: 50
 image: github-licker.webp
-categories: ["software-engineering"]
 tags: ["open-source", "git"]
-pinned: false
-homepage: false
 ---
 On Github, every organization with a fast growing open-source codebase quickly figures out a couple of shortcomings regarding the Github web interface. Especially, when it comes to Github organizations that are already around for some time, you often find some information missing that could probably help managing and controlling your organizations repositories...
 

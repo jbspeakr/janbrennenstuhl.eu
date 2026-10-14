@@ -1,44 +1,43 @@
 # Working on janbrennenstuhl.eu
 
-A static editorial publication for human readers and HTTP clients. Hugo extended is pinned in `.hugo-version`; Python build dependencies are pinned in `requirements.txt`. No Go module or frontend application runtime is required. Node dependencies are only for browser QA.
+A static publication for people and agents. **Hugo extended is the only build dependency** (version in `.hugo-version`). Release scripts and checks use the Python 3.11+ standard library. Node is only for browser QA, Lighthouse and edge-script tests.
 
 ## Commands
 
 ```sh
-./scripts/bootstrap.sh
-./scripts/verify.sh                 # production build, exports, all static contracts
-.venv/bin/python scripts/serve.py    # verified output on http://127.0.0.1:8000
-npm ci
-npx playwright install chromium
-npm run test:browser                # starts its own local server
+./scripts/bootstrap.sh              # Hugo at the pinned version (Linux x86-64 downloads and verifies it)
+./scripts/verify.sh                 # production build + scripts/check.py + unit tests
+python3 scripts/serve.py            # serve public/ on :8000 like the edge (404s, MIME, Markdown negotiation)
+npm ci && npx playwright install chromium
+npm run test:browser                # axe matrix, keyboard, no-JS, reflow, palette, explainers, redirects
+npm run test:lighthouse             # lab gate on three routes
+npm run test:edge                   # MCP server and negotiation unit tests
 ```
 
-Use `hugo server` for quick template iteration; the complete Markdown, search, social-card, and catalog outputs require `verify.sh`. Do not edit `public/`, `resources/`, `.venv/`, `.tools/`, or `test-results/`.
+`hugo server` is fine for template work. Do not edit `public/`, `resources/`, `.tools/`, `node_modules/` or `test-results/`.
 
 ## Architecture
 
-- `content/`: authoritative Markdown page bundles. Preserve published URLs and headings.
-- `layouts/`: owned Hugo templates. `eligible.html` selects all substantive public content independently of the homepage.
-- `assets/css/site.css`: design tokens, responsive layouts, both themes and print.
-- `assets/js/`: small progressive enhancements. Only search loads the search module/index.
-- `scripts/build.py`: source validation → Hugo → rendered-HTML-to-Markdown/catalog/search → social cards → static validation.
-- `tests/fixtures/baseline-routes.json`: original 147 routes and heading anchors from `bc528e7905f6cb3fef08169d85774754b697fb7f`. Do not weaken the fixture to conceal a regression.
-- `.forgejo/workflows/deploy.yml`: unprivileged verification/browser jobs; main-push-only publication of the same checksummed artifact.
+- `content/`: Markdown page bundles. Preserve published URLs and heading anchors.
+- `layouts/`: owned templates. `_partials/eligible.html` selects every substantive page; `_partials/data/*` derive id, kind, topics, series and status; `_partials/md/*` are the Markdown versions of shortcodes; `_partials/diagram.html` draws the trust-boundary diagrams.
+- Output formats (config/_default/config.toml): `index.md` twins, `llms.txt`, `llms-full.txt`, `catalog.json`, `findings.json`, `feed.json`, `search/index.json`, `redirects.json`.
+- `data/`: `topics.toml` (six topics and tag mapping), `series.toml`, `glossary.toml`, `redirects.toml`.
+- `assets/css/site.css`: tokens, layout, both themes, print. `assets/js/`: `site.js` (shared), `palette.js` and `search.js` (on demand), `explainers/*` (per page).
+- `edge/`: Bunny Edge Scripts for Markdown negotiation and the read-only MCP server.
+- `scripts/check.py`: release gates. `tests/fixtures/baseline-routes.json`: the 147 original routes and heading anchors; never weaken it to hide a regression.
 
 ## Content contract
 
-Published essays, research, projects and talks require `id`, `title`, `description`, `date`, `kind`, `topics`, `status`, `reviewStatus`. Assign the ID once; never derive a new ID from a renamed title. Keep existing slugs. `lastmod` means a meaningful content change; `reviewed` and `reviewStatus: reviewed` require an actual editorial review. Missing review dates must never imply freshness. Status is `published`, `archived`, or `superseded`; the last requires `supersededBy` pointing to another page.
+See `docs/CONTENT-CONTRACT.md`. Authors write `title`, `description`, `date`, `tags` (and `slug` for posts). Everything else is derived. Existing `id` values are permanent. `lastmod` means a meaningful content change. `reviewed` requires an actual editorial review by Jan; never add it on someone's behalf, and a missing review date must never be presented as freshness.
 
-`description` is metadata; `excerpt` and `lead` default to it when omitted. A hero needs `imageAlt` or explicit `imageDecorative: true`. Never treat an informative diagram as decorative. Preserve credits and original media rights. Existing original content is CC BY 4.0; check individual exceptions.
-
-Use Hugo `ref` for internal source references. `quote`, `details`, `youtube` (external link), and `callout` are supported. All substantive content must survive HTML-to-Markdown conversion. Add parity fixtures for new components, including captions, quotations, code, tables, footnotes and static explanations for interactive content.
+Field-guide entries are question-led: `answer`, key findings as `finding` shortcodes with sources, an evidence table, what to do, and a `changes` log. Numbers come from the cited source or are left out. Every shortcode needs a Markdown variant; interactive explainers need a static explanation that stands alone.
 
 ## Design contract
 
-Warm paper `#f6f3ed`, graphite `#20232a`, raspberry `#ac174d`; separate dark tokens. Editorial serif headings, system sans UI/body, system monospace code. Maintain the compact header, readable article column, native controls, visible focus, reduced-motion support, no-JS navigation/search browse fallback, and locally scrollable code/tables.
+See `docs/DESIGN.md`. Dark-first OKLCH tokens with an equal light theme; Geist and Geist Mono self-hosted; one accent (signal amber) per view; generated boundary diagrams; nothing below 13px; visible focus; reduced-motion support; everything usable without JavaScript.
 
-Budgets: shared CSS ≤25 kB gzip; shared initial JS ≤15 kB gzip; no runtime fonts or third-party scripts; initial article target ≤300 kB transfer. Test 360/768/1440px in both themes and reflow at 320px. Browser tests are necessary for presentation changes; passing a build alone is not visual approval.
+Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 30 kB, preloaded font ≤ 35 kB, inline diagram ≤ 6 kB, zero third-party requests. Test 360/768/1440 px in both themes and reflow at 320 px. Passing tests is not design approval.
 
 ## Release contract
 
-No production credentials in PR jobs. Never publish from a pull request, rebuild between verification and deployment, delete old assets during upload, or introduce an account-wide Bunny API key. Read `docs/DELIVERY.md` before touching deployment. Edge caching, MIME, validators, live redirect status, rollback, and screen-reader checks are explicit release gates; local tests cannot certify them.
+Read `docs/DELIVERY.md` before touching deployment. No production credentials in PR jobs; publish only from `main`; never rebuild between verification and deployment; never delete remote files during upload; no account-wide Bunny API key. The inline theme script is allowed by a CSP hash documented in `docs/DELIVERY.md`; `check.py` fails until the doc and the edge match the build. Edge caching, MIME, 301s, negotiation, rollback and screen-reader checks are release gates that local tests cannot certify.

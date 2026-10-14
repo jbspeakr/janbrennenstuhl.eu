@@ -1,0 +1,8 @@
+{{- $items := slice -}}
+{{- range partial "feed-pages.html" . -}}
+  {{- $item := dict "id" .Permalink "url" .Permalink "title" .Title "summary" (.Params.claim | default .Description) "content_html" (partial "feed-html.html" .) "date_published" (.PublishDate.Format "2006-01-02T15:04:05Z07:00") "date_modified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00") "tags" (partial "data/topics.html" .) "language" "en-GB" -}}
+  {{- with partial "social-card.html" . }}{{ $item = merge $item (dict "image" .Permalink) }}{{ end -}}
+  {{- $items = $items | append $item -}}
+{{- end -}}
+{{- $self := "" }}{{ with .OutputFormats.Get "jsonfeed" }}{{ $self = .Permalink }}{{ end -}}
+{{- return dict "version" "https://jsonfeed.org/version/1.1" "title" (cond .IsHome site.Title (printf "%s · %s" .Title site.Title)) "home_page_url" .Permalink "feed_url" $self "description" (.Description | default site.Params.description) "language" "en-GB" "icon" ("android-chrome-512x512.png" | absURL) "favicon" ("favicon-96x96.png" | absURL) "authors" (slice (dict "name" site.Params.author "url" ("about/" | absURL))) "items" $items -}}

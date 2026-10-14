@@ -1,0 +1,5 @@
+<nav class="guide-nav" aria-labelledby="guide-nav-title">
+  <h2 id="guide-nav-title">{{ .Parent.Title }}</h2>
+  <ul>{{ range .Parent.RegularPages.ByWeight }}<li><a href="{{ .RelPermalink }}"{{ if eq . $ }} aria-current="page"{{ end }}>{{ .Title }}</a></li>{{ end }}</ul>
+  <p><a href="/knowledge-base/">Field guide</a> <span aria-hidden="true">·</span> <a href="/glossary/">Glossary</a></p>
+</nav>

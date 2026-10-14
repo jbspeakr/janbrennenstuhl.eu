@@ -5,7 +5,6 @@ lead: "A publication you can read without tracking scripts or an account."
 date: 2023-04-15
 lastmod: 2026-10-13
 draft: false
-images: []
 robots: "noindex, follow"
 sitemap_exclude: true
 slug: privacy-policy

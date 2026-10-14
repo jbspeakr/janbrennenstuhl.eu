@@ -1,15 +1,10 @@
 ---
-title: "Search the Brennenstuhl Security Archive"
+title: "Search"
+description: "Search every essay, field-guide entry, talk and project, with type and topic filters."
 slug: "search"
 layout: "search"
 date: 2025-05-01
-lastmod: 2025-05-20
-outputs:
-    - html
-menu:
-    main:
-        name: Search
-        weight: 3
-        params: 
-            icon: search
+lastmod: 2026-10-13
+outputs: [html, searchindex]
+sitemap_exclude: true
 ---

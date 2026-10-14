@@ -1,13 +1,10 @@
 ---
 id: jb-whaling-awareness
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['application-security']
 imageDecorative: true
 title: "What is Whaling Cyber Awareness? Prevention Tips & Training"
 linkTitle: "What is Whaling Cyber Awareness? Prevention Tips & Training"
 description: "Protect your business from whaling cyber attacks with our comprehensive training and prevention tips. Learn what is whaling cyber awareness today."
+claim: "Whaling defense combines regular awareness training and simulations with SPF, DKIM and DMARC, two-factor email login, and payment policies that require out-of-band verification and two sign-offs."
 excerpt: "In this comprehensive guide I talk about key concepts of cybersecurity awareness training and defensive measures in context of whale phishing. Learn how AI and ML can support whaling prevention and understand why knowledge is our strongest weapon, and vigilance our constant ally."
 lead: "Phishing Training & Prevention Tips"
 slug: "what-is-whaling-cyber-awareness"
@@ -17,11 +14,9 @@ lastmod: 2025-03-25
 draft: false
 weight: 50
 image: what-is-whaling-cyber-awareness.webp
-categories: ["ethical-hacking"]
 tags: ["phishing", "social-engineering", "defensive-security"]
-pinned: false
-homepage: false
 keywords: "What is Whaling Cyber Awareness, Whaling Cyber Awareness"
+series: whaling
 ---
 
 <mark>***Disclaimer:** This article involved collaboration with a GenAI tool for personal research. All content was reviewed and edited by myself. Feel free to report inaccuracies. Thanks.*</mark>

@@ -1,0 +1,24 @@
+{{- $date := .PublishDate -}}
+{{- $key := printf "brennenstuhl%d%s" $date.Year (replaceRE "[^a-z0-9]" "" (lower (index (split (.Title | plainify) " ") 0))) -}}
+{{- $plain := printf "Jan Brennenstuhl. “%s.” %s, %s. %s" .Title site.Title ($date.Format "2 January 2006") .Permalink -}}
+{{- $apa := printf "Brennenstuhl, J. (%s). %s. %s. %s" ($date.Format "2006, January 2") .Title site.Title .Permalink -}}
+{{- $bib := printf "@online{%s,\n  author = {Brennenstuhl, Jan},\n  title = {%s},\n  date = {%s},\n  organization = {%s},\n  url = {%s}\n}" $key .Title ($date.Format "2006-01-02") site.Title .Permalink -}}
+{{- $state := partial "data/status.html" . -}}
+<footer class="cite" id="cite" aria-labelledby="cite-title">
+  <h2 id="cite-title">Cite this</h2>
+  <dl>
+    <div><dt>Plain</dt><dd><p>{{ $plain }}</p><button type="button" class="link-button" data-copy="{{ $plain }}" hidden>Copy</button></dd></div>
+    <div><dt>APA</dt><dd><p>{{ $apa }}</p><button type="button" class="link-button" data-copy="{{ $apa }}" hidden>Copy</button></dd></div>
+    <div><dt>BibTeX</dt><dd><pre tabindex="0" aria-label="BibTeX citation"><code>{{ $bib }}</code></pre><button type="button" class="link-button" data-copy="{{ $bib }}" hidden>Copy</button></dd></div>
+  </dl>
+  <p class="cite-meta">
+    {{- with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown version</a> <span aria-hidden="true">·</span> {{ end -}}
+    ID <code>{{ partial "data/id.html" . }}</code> <span aria-hidden="true">·</span>
+    {{ if ne .Params.license false }}<a href="{{ site.Params.license.url }}">CC BY 4.0</a>{{ else }}No reuse license specified{{ end }} <span aria-hidden="true">·</span>
+    {{ with $state.reviewed }}Reviewed {{ time.Format "2 January 2006" . }}{{ else }}Not yet reviewed{{ end }} <span aria-hidden="true">·</span>
+    <a href="/imprint/">Send a correction</a>
+  </p>
+  {{- with .Params.changes }}
+  <details class="changes"><summary>What changed</summary><ul>{{ range . }}<li><time datetime="{{ time.Format "2006-01-02" .date }}">{{ time.Format "2 January 2006" .date }}</time>: {{ .note | markdownify }}</li>{{ end }}</ul></details>
+  {{- end }}
+</footer>

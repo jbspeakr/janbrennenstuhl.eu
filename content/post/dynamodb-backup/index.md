@@ -1,13 +1,10 @@
 ---
 id: jb-dynamodb-backup
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['application-security']
 imageDecorative: true
 title: "AWS DynamoDB: Backup & Recovery Strategy"
 linkTitle: "AWS DynamoDB: Backup & Recovery Strategy"
 description: "Exploring a backup and recovery strategy for AWS DynamoDB, for optimal system performance and reliability"
+claim: "You can back up DynamoDB tables with nightly Data Pipeline exports to S3, use a Lambda function to restage them into a test environment, and restore from the same backups."
 excerpt: "In this article, I outline a DynamoDB backup and recovery strategy based on Datapipelines, S3 & AWS Lambdas."
 lead: "Orchestrating AWS DynamoDB with Datapipelines, S3 & AWS Lambdas"
 slug: aws-dynamodb-backup-recovery
@@ -16,10 +13,7 @@ lastmod: 2025-06-08
 draft: false
 weight: 50
 image: aws-dynamodb-backup-recovery.webp
-categories: ["software-security"]
 tags: ["aws"]
-pinned: false
-homepage: false
 ---
 
 _"Amazon DynamoDB is a fully managed NoSQL database service [...]"_. That's what Amazon states in the [DynamoDB FAQs](https://aws.amazon.com/dynamodb/faqs/). However, their definition is not quite what I would understand as fully managed. It's missing counter-measures against the human error. For that reason, we need a DynamoDB backup and recovery solution, our DynamoDB safety-net...

@@ -1,13 +1,9 @@
 ---
 id: jb-assertj-null-not-blank
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['software-engineering']
 imageDecorative: true
 title: "Learning AssertJ: Null ain't Blank"
 description: "This AssertJ bug could lead to severe issues: In Java, a blank String is a CharSequence that is empty, null or whitespace only – except when you use AssertJ!"
-excerpt: "This AssertJ bug could lead to severe issues: In Java, a blank String is a CharSequence that is empty, null or whitespace only – except when you use AssertJ!"
+claim: "AssertJ's isNotBlank() passes for a null string, unlike Apache Commons StringUtils and Hibernate Validator, so Java tests that rely on it can miss null values."
 lead: "Popular assertions framework AssertJ surprises Java engineers with handling NULL-values different from what is commonly expected"
 slug: assertj-null-not-blank
 date: 2017-09-05
@@ -15,10 +11,7 @@ lastmod: 2025-07-06
 draft: false
 weight: 50
 image: java-assertj-blank.webp
-categories: ["software-engineering"]
 tags: ["open-source", "java"]
-pinned: false
-homepage: false
 ---
 
 As programmers, we probably use strings more than any other type of data structure. The cross-language String environment is characterized by shared vocabulary and well-established concepts. And it is especially important to follow these established naming conventions when it comes to [null strings](https://web.archive.org/web/20200809121851/https://josjong.com/2017/10/16/null-vs-empty-strings-why-oracle-was-right-and-apple-is-not/) vs empty strings (and blank strings).

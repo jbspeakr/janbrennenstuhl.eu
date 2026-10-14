@@ -1,0 +1,4 @@
+{{/* Topic record (id, title, short, description) for an ID; empty dict when unknown. */}}
+{{ $found := dict }}
+{{ range hugo.Data.topics.topic }}{{ if eq .id $ }}{{ $found = . }}{{ end }}{{ end }}
+{{ return $found }}

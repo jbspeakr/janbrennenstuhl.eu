@@ -1,3 +1,0 @@
-{{ $r := .resource }}{{ $widths := slice 360 640 960 1440 }}{{ $srcset := slice }}{{ range $widths }}{{ if le . $r.Width }}{{ $size := $r.Resize (printf "%dx webp q80" .) }}{{ $srcset = $srcset | append (printf "%s %dw" $size.RelPermalink .) }}{{ end }}{{ end }}
-{{ $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink $r.Width) }}
-<img src="{{ $r.RelPermalink }}" srcset="{{ delimit $srcset ", " }}" sizes="(max-width: 800px) calc(100vw - 40px), 760px" width="{{ $r.Width }}" height="{{ $r.Height }}" alt="{{ .alt }}" {{ if .hero }}loading="eager" fetchpriority="high"{{ else }}loading="lazy"{{ end }} decoding="async">

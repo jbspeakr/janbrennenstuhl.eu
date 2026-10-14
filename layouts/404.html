@@ -1,1 +1,9 @@
-{{ define "main" }}<section class="wrap collection"><p class="eyebrow">404 / A missing connection</p><h1>This page is out of reach.</h1><p class="lead">The address may have changed. Search the archive or explore the latest writing.</p><div class="actions"><a href="/search/">Search the archive ↗</a><a href="/writing/">Browse writing ↗</a><a href="/">Return home ↗</a></div></section>{{ end }}
+{{ define "main" }}
+<section class="wrap page notfound">
+  <p class="eyebrow">404 / Outside the boundary</p>
+  <h1>This page is not here.</h1>
+  <p class="lead">The address may have changed, or the page never existed. Search, or start from the index.</p>
+  <form role="search" action="/search/" method="get" class="search-input"><label class="sr-only" for="nf-q">Search terms</label><input id="nf-q" name="q" type="search" placeholder="Search the site"><button type="submit">Search</button></form>
+  <p><a href="/">Home</a> <span aria-hidden="true">·</span> <a href="/writing/">All writing</a> <span aria-hidden="true">·</span> <a href="/knowledge-base/">Field guide</a></p>
+</section>
+{{ end }}

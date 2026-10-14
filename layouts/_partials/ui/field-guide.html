@@ -1,0 +1,19 @@
+{{- $root := eq .RelPermalink "/knowledge-base/" -}}
+<header class="wrap page-header guide-header">
+  <p class="eyebrow">{{ if $root }}Reference{{ else }}<a href="/knowledge-base/">Field guide</a>{{ end }}</p>
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+</header>
+<div class="wrap guide">
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{- $areas := cond $root .Sections (slice .) }}
+  {{- range $areas }}
+  <section class="guide-area" aria-labelledby="area-{{ .File.ContentBaseName | default (urlize .Title) }}">
+    {{ if $root }}<h2 id="area-{{ .File.ContentBaseName | default (urlize .Title) }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2><p>{{ .Description }}</p>{{ else }}<h2 id="area-{{ .File.ContentBaseName | default (urlize .Title) }}" class="sr-only">Entries</h2>{{ end }}
+    <ol class="guide-entries">{{ range .RegularPages.ByWeight }}{{ $state := partial "data/status.html" . }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><p>{{ (.Params.answer | default .Description) | markdownify | plainify | truncate 220 }}</p><span class="row-meta">{{ with $state.reviewed }}Reviewed {{ time.Format "Jan 2006" . }}{{ else }}Not yet reviewed{{ end }}</span></li>{{ end }}
+    </ol>
+  </section>
+  {{- end }}
+  <p class="feeds">Track revisions: <a href="/knowledge-base/index.xml">changes (RSS)</a> <span aria-hidden="true">·</span> <a href="/knowledge-base/feed.json">JSON Feed</a> <span aria-hidden="true">·</span> <a href="/findings.json">all findings (JSON)</a> <span aria-hidden="true">·</span> <a href="/glossary/">Glossary</a></p>
+</div>

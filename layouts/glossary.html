@@ -1,0 +1,10 @@
+{{ define "main" }}
+<article class="wrap page glossary">
+  <header class="page-header"><p class="eyebrow"><a href="/knowledge-base/">Field guide</a></p><h1>{{ .Title }}</h1><p class="lead">{{ .Description }}</p></header>
+  <div class="prose">{{ .Content }}</div>
+  <nav class="glossary-index" aria-label="Glossary letters">
+    {{- $letters := slice }}{{ range sort hugo.Data.glossary.term "term" }}{{ $l := upper (substr .term 0 1) }}{{ if not (in $letters $l) }}{{ $letters = $letters | append $l }}{{ end }}{{ end }}
+    {{- range $letters }}<a href="#letter-{{ lower . }}">{{ . }}</a>{{ end }}
+  </nav>
+</article>
+{{ end }}

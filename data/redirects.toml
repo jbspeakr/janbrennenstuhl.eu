@@ -1,0 +1,281 @@
+# Old routes that are no longer pages: former home pagination, categories, tags
+# and section pagination. Each becomes a redirect page at build time and is listed
+# in /redirects.json so the edge can answer with a real 301 (docs/DELIVERY.md).
+# Front-matter `aliases` on pages are redirects too and are listed alongside.
+
+[[redirect]]
+from = "/1/"
+to = "/"
+[[redirect]]
+from = "/2/"
+to = "/writing/"
+[[redirect]]
+from = "/3/"
+to = "/writing/"
+[[redirect]]
+from = "/4/"
+to = "/writing/"
+[[redirect]]
+from = "/5/"
+to = "/writing/"
+[[redirect]]
+from = "/6/"
+to = "/writing/"
+[[redirect]]
+from = "/7/"
+to = "/writing/"
+[[redirect]]
+from = "/application-security/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/application-security/2/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/application-security/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/ethical-hacking/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/ethical-hacking/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/identity-access-management/1/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/identity-access-management/2/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/identity-access-management/3/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/identity-access-management/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/knowledge-base/1/"
+to = "/knowledge-base/"
+[[redirect]]
+from = "/knowledge-base/account-security/1/"
+to = "/knowledge-base/account-security/"
+[[redirect]]
+from = "/knowledge-base/account-security/2/"
+to = "/knowledge-base/account-security/"
+[[redirect]]
+from = "/knowledge-base/oidc/1/"
+to = "/knowledge-base/oidc/"
+[[redirect]]
+from = "/software-engineering/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/software-engineering/2/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/software-engineering/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/software-security/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/software-security/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/1/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/2/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/3/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/4/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/5/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/6/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/agentic-engineering/1/"
+to = "/topics/agentic-engineering/"
+[[redirect]]
+from = "/tags/agentic-engineering/"
+to = "/topics/agentic-engineering/"
+[[redirect]]
+from = "/tags/aws/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/aws/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/brute-force/1/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/brute-force/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/coding-agents/1/"
+to = "/topics/agentic-engineering/"
+[[redirect]]
+from = "/tags/coding-agents/"
+to = "/topics/agentic-engineering/"
+[[redirect]]
+from = "/tags/data-breach/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/data-breach/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/defensive-security/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/defensive-security/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/eurostack/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/eurostack/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/git/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/git/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/"
+to = "/topics/"
+[[redirect]]
+from = "/tags/jamstack/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/jamstack/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/java/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/java/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/jwt/1/"
+to = "/topics/tokens-jwt/"
+[[redirect]]
+from = "/tags/jwt/2/"
+to = "/topics/tokens-jwt/"
+[[redirect]]
+from = "/tags/jwt/"
+to = "/topics/tokens-jwt/"
+[[redirect]]
+from = "/tags/oauth2/1/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/oauth2/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/offensive-security/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/offensive-security/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/oidc/1/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/oidc/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/open-source/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/open-source/2/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/open-source/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/operational-excellence/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/operational-excellence/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/passkeys/1/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/passkeys/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/password-manager/1/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/password-manager/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/password-security/1/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/password-security/2/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/password-security/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/passwordless/1/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/passwordless/"
+to = "/topics/identity-authentication/"
+[[redirect]]
+from = "/tags/phishing/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/phishing/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/platform-engineering/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/platform-engineering/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/python/1/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/python/"
+to = "/topics/engineering-practice/"
+[[redirect]]
+from = "/tags/sdlc/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/sdlc/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/social-engineering/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/social-engineering/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/supply-chain-protection/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/supply-chain-protection/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/threat-detection/1/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/threat-detection/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/tags/usable-security/1/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/usable-security/"
+to = "/topics/passwords/"
+[[redirect]]
+from = "/tags/ux-security/"
+to = "/topics/passwords/"

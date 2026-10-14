@@ -1,0 +1,6 @@
+{{- $name := .Get 0 -}}
+<section class="explainer" data-explainer="{{ $name }}" aria-labelledby="ex-{{ $name }}">
+  <h3 id="ex-{{ $name }}">{{ .Get 1 | default "Try it" }}</h3>
+  <div class="explainer-static">{{ .Inner | markdownify }}</div>
+  <div class="explainer-app" hidden></div>
+</section>

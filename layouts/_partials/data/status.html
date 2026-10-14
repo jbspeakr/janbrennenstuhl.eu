@@ -1,0 +1,10 @@
+{{/* Editorial status and review fields with honest defaults: a missing review date never implies freshness. */}}
+{{ $status := .Params.status | default "published" }}
+{{ $review := .Params.reviewStatus | default (cond (isset .Params "reviewed") "reviewed" "not-reviewed") }}
+{{ $outdated := false }}
+{{ if and (eq (partial "data/kind.html" .) "essay") (eq $review "not-reviewed") }}
+  {{ $age := sub now.Year .Date.Year }}
+  {{ $fast := false }}{{ range partial "data/topics.html" . }}{{ if in site.Params.fastMovingTopics . }}{{ $fast = true }}{{ end }}{{ end }}
+  {{ $outdated = and $fast (ge $age site.Params.outdatedAfterYears) }}
+{{ end }}
+{{ return dict "status" $status "review_status" $review "reviewed" (.Params.reviewed | default "") "outdated" $outdated }}

@@ -3,23 +3,65 @@ title = "Brennenstuhl on Security"
 locale = "en-GB"
 defaultContentLanguage = "en"
 enableRobotsTXT = false
+# Topics are derived from tags (see data/topics.toml), not a Hugo taxonomy.
+# Old tag and category routes are kept as redirects (data/redirects.toml).
+disableKinds = ["taxonomy", "term"]
+refLinksErrorLevel = "ERROR"
+timeZone = "Europe/Berlin"
+
 [frontmatter]
 lastmod = ["lastmod", "date"]
-[pagination]
-pagerSize = 5
-path = ""
+
+[security.funcs]
+getenv = ["^HUGO_"]
+
+[mediaTypes."application/feed+json"]
+suffixes = ["json"]
+[mediaTypes."application/linkset+json"]
+suffixes = ["json"]
+
+[outputFormats.markdown]
+mediaType = "text/markdown"
+baseName = "index"
+isPlainText = true
+rel = "alternate"
 [outputFormats.llms]
 mediaType = "text/plain"
 baseName = "llms"
 isPlainText = true
 notAlternative = true
-[outputFormats.catalog]
-mediaType = "application/json"
-baseName = "content-index"
+[outputFormats.llmsfull]
+mediaType = "text/plain"
+baseName = "llms-full"
 isPlainText = true
 notAlternative = true
+[outputFormats.catalog]
+mediaType = "application/json"
+baseName = "catalog"
+isPlainText = true
+notAlternative = true
+[outputFormats.findings]
+mediaType = "application/json"
+baseName = "findings"
+isPlainText = true
+notAlternative = true
+[outputFormats.searchindex]
+mediaType = "application/json"
+baseName = "index"
+isPlainText = true
+notAlternative = true
+[outputFormats.redirects]
+mediaType = "application/json"
+baseName = "redirects"
+isPlainText = true
+notAlternative = true
+[outputFormats.jsonfeed]
+mediaType = "application/feed+json"
+baseName = "feed"
+isPlainText = true
+rel = "alternate"
+
 [outputs]
-home = ["HTML", "RSS", "llms", "catalog"]
-section = ["HTML", "RSS"]
-taxonomy = ["HTML", "RSS"]
-term = ["HTML", "RSS"]
+home = ["html", "rss", "jsonfeed", "llms", "llmsfull", "catalog", "findings", "redirects"]
+section = ["html", "rss", "jsonfeed", "markdown"]
+page = ["html", "markdown"]

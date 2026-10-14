@@ -1,0 +1,2 @@
+{{- with .Get "url" }}{{ $.Page.Store.SetInMap "citations" . (dict "@type" "ScholarlyArticle" "name" ($.Get "title") "url" . "datePublished" ($.Get "year" | default "")) }}{{ end -}}
+<tr><th scope="row">{{ with .Get "url" }}<a href="{{ . }}" class="ext">{{ $.Get "title" }}</a>{{ else }}{{ .Get "title" }}{{ end }}{{ with .Get "org" }}<span class="org">{{ . }}</span>{{ end }}</th><td>{{ .Get "year" | default "n/a" }}</td><td>{{ .Get "sample" | default "n/a" }}</td><td>{{ .Get "method" | default "n/a" }}</td><td>{{ trim .Inner " \n" | markdownify }}</td></tr>

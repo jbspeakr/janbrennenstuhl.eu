@@ -4,7 +4,6 @@ description: "Imprint and responsible editor contact for janbrennenstuhl.eu"
 date: 2023-04-15
 lastmod: 2025-05-20
 draft: false
-images: []
 robots: "noindex, follow"
 sitemap_exclude: true
 slug: "imprint"

@@ -1,0 +1,14 @@
+{{- /* Responsive image: AVIF and WebP at 480/960/1440 (never upscaled), explicit dimensions, lazy unless eager. */ -}}
+{{- $r := .resource -}}
+{{- if or (eq $r.MediaType.SubType "svg") (eq $r.MediaType.SubType "gif") -}}
+<img src="{{ $r.RelPermalink }}" alt="{{ .alt }}"{{ if not .eager }} loading="lazy"{{ end }} decoding="async">
+{{- else -}}
+{{- $widths := slice }}{{ range slice 480 960 1440 }}{{ if lt . $r.Width }}{{ $widths = $widths | append . }}{{ end }}{{ end }}{{ $widths = $widths | append (math.Min $r.Width 1920 | int) -}}
+{{- $avif := slice }}{{ $webp := slice }}{{ $fallback := "" -}}
+{{- range $widths }}
+  {{- $a := $r.Resize (printf "%dx avif q60" .) }}{{ $avif = $avif | append (printf "%s %dw" $a.RelPermalink .) -}}
+  {{- $w := $r.Resize (printf "%dx webp q78" .) }}{{ $webp = $webp | append (printf "%s %dw" $w.RelPermalink .) }}{{ $fallback = $w -}}
+{{- end -}}
+{{- $sizes := .sizes | default "(min-width: 760px) 720px, calc(100vw - 2.5rem)" -}}
+<picture><source type="image/avif" srcset="{{ delimit $avif ", " }}" sizes="{{ $sizes }}"><img src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $webp ", " }}" sizes="{{ $sizes }}" width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ .alt }}"{{ if .eager }} fetchpriority="high"{{ else }} loading="lazy"{{ end }} decoding="async"></picture>
+{{- end -}}

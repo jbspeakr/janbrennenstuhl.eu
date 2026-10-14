@@ -1,0 +1,438 @@
+# Glossary terms rendered on /glossary/ and linked from essays.
+# Sorted by `term` at render time. `autolink = true` links the first plain
+# paragraph occurrence of `abbr` in essays and guides, so only set it for
+# unambiguous acronyms that are always written the same way.
+
+# OAuth and OpenID Connect
+
+[[term]]
+id = "oauth"
+term = "OAuth 2.0"
+definition = "An authorization framework that lets a client application get limited access to an HTTP service, either for a user or for itself, without seeing the user's password. The authorization server issues tokens and the resource server accepts them. Defined in RFC 6749; the IETF is consolidating it with its security best practices as the OAuth 2.1 draft."
+see = ["/post/jwt-vs-oauth", "/post/spring-security-oauth"]
+
+[[term]]
+id = "oidc"
+term = "OIDC"
+abbr = "OIDC"
+expansion = "OpenID Connect"
+autolink = true
+definition = "An identity layer on top of OAuth 2.0. The client receives an ID token that tells it who the user is and how they authenticated. Defined in OpenID Connect Core 1.0 by the OpenID Foundation."
+see = ["/knowledge-base/oidc/oidc-security", "/post/stepup-authentication"]
+
+[[term]]
+id = "id-token"
+term = "ID token"
+definition = "A signed JWT that an OpenID Connect provider issues to the client after the user authenticates. It must carry `iss`, `sub`, `aud`, `exp` and `iat`, and can carry `acr`, `amr` and `auth_time`. The client reads it to log the user in; it isn't meant for calling APIs."
+see = ["/post/stepup-authentication"]
+
+[[term]]
+id = "access-token"
+term = "Access token"
+definition = "A credential the client presents to a resource server to access protected resources. It stands for a specific scope and lifetime, and the client should treat it as opaque, even when it's a JWT (RFC 6749, section 1.4)."
+see = ["/post/jwt-vs-oauth"]
+
+[[term]]
+id = "bearer-token"
+term = "Bearer token"
+definition = "An access token that anyone who holds it can use, with no proof that they're the client it was issued to (RFC 6750). Most OAuth access tokens are bearer tokens, so a leaked token is as good as a stolen key until it expires. DPoP and mTLS-bound tokens close that gap."
+
+[[term]]
+id = "refresh-token"
+term = "Refresh token"
+definition = "A long-lived credential the client sends only to the authorization server to get new access tokens when the current ones expire (RFC 6749, section 1.5). The resource server never sees it. OAuth 2.1 requires public clients to use sender-constrained or rotating refresh tokens."
+see = ["/post/purpose-of-jwt"]
+
+[[term]]
+id = "scope"
+term = "Scope"
+definition = "A space-separated list of strings in an OAuth request that says what access the client asks for, such as `repo:read` (RFC 6749, section 3.3). The authorization server can grant fewer scopes than requested and must tell the client when it does."
+
+[[term]]
+id = "claim"
+term = "Claim"
+definition = "A name/value pair in a JWT that asserts something about the subject, such as `sub` for the user ID or `exp` for the expiry time (RFC 7519). Registered claims have fixed meanings; anything else is a public or private claim."
+see = ["/post/purpose-of-jwt"]
+
+[[term]]
+id = "audience"
+term = "Audience"
+definition = "The recipient a token is meant for, carried in the JWT `aud` claim. A resource server must reject a token whose audience doesn't name it, otherwise a token issued for one API works at another."
+see = ["/knowledge-base/agent-identity/mcp-authorization"]
+
+[[term]]
+id = "issuer"
+term = "Issuer"
+definition = "The party that created and signed a token, carried in the JWT `iss` claim as a URL. A verifier checks that the issuer is one it trusts and fetches that issuer's signing keys from its JWKS."
+see = ["/post/jwks"]
+
+[[term]]
+id = "authorization-code-flow"
+term = "Authorization code flow"
+definition = "The OAuth flow for apps with a user present (RFC 6749, section 4.1). The browser takes the user to the authorization server, which redirects back with a short-lived code, and the client exchanges that code for tokens over a direct back-channel request. Combine it with PKCE."
+see = ["/knowledge-base/oidc/oidc-security"]
+
+[[term]]
+id = "pkce"
+term = "PKCE"
+abbr = "PKCE"
+expansion = "Proof Key for Code Exchange"
+autolink = true
+definition = "An extension to the authorization code flow (RFC 7636). The client sends a hash of a random `code_verifier` with the authorization request and the verifier itself with the token request, so an attacker who intercepts the code can't redeem it. OAuth 2.1 requires it."
+see = ["/knowledge-base/oidc/oidc-security"]
+
+[[term]]
+id = "client-credentials"
+term = "Client credentials grant"
+definition = "The OAuth grant a client uses to get an access token for itself, with no user involved (RFC 6749, section 4.4). It's the usual choice for service-to-service calls, and the token carries the client's own permissions."
+
+[[term]]
+id = "token-exchange"
+term = "Token exchange"
+definition = "A grant in which a client hands the authorization server one token (`subject_token`, optionally with an `actor_token`) and gets back a different token, for example one with a narrower audience or one for another service (RFC 8693). The issued token can record delegation in an `act` claim."
+see = ["/knowledge-base/agent-identity/token-exchange", "/post/agentic-identity-broker"]
+
+[[term]]
+id = "delegation"
+term = "Delegation"
+definition = "One principal acts on behalf of another while keeping its own identity. RFC 8693 expresses this with the `act` claim, so a resource server can see both the user and the agent acting for them."
+see = ["/knowledge-base/agent-identity/delegation-vs-robot-accounts"]
+
+[[term]]
+id = "impersonation"
+term = "Impersonation"
+definition = "One principal gets all the rights of another and is indistinguishable from them in the issued token (RFC 8693, section 1.1). Downstream services can't tell who actually made the request."
+see = ["/knowledge-base/agent-identity/delegation-vs-robot-accounts"]
+
+[[term]]
+id = "robot-account"
+term = "Robot account"
+definition = "A non-human account, also called a service account, with its own long-lived credential. When an agent uses one for many people, it acts with the combined permissions of all of them and the audit log can't tell whose request was whose."
+see = ["/knowledge-base/agent-identity/delegation-vs-robot-accounts", "/post/agentic-identity-broker"]
+
+[[term]]
+id = "consent"
+term = "Consent"
+definition = "The user's explicit approval for a specific client to access specific scopes on their behalf, usually on a screen the authorization server shows. A good consent grant names the client, the access and the duration, and the user can withdraw it later."
+see = ["/knowledge-base/agent-identity/consent-and-revocation"]
+
+[[term]]
+id = "token-revocation"
+term = "Token revocation"
+definition = "A client tells the authorization server that a refresh or access token is no longer needed, through the revocation endpoint (RFC 7009). Revoking a refresh token should also invalidate the access tokens from the same grant, but a self-contained JWT access token stays valid at resource servers until it expires unless they check its status."
+see = ["/knowledge-base/agent-identity/consent-and-revocation"]
+
+[[term]]
+id = "resource-indicators"
+term = "Resource indicators"
+definition = "The `resource` parameter a client adds to authorization and token requests to name the API it wants the token for (RFC 8707). The authorization server can then restrict the token's audience to that one resource. MCP clients must send it."
+see = ["/knowledge-base/agent-identity/mcp-authorization"]
+
+[[term]]
+id = "protected-resource-metadata"
+term = "Protected resource metadata"
+definition = "A JSON document a resource server publishes at `/.well-known/oauth-protected-resource` to say which authorization servers it accepts tokens from (RFC 9728). A `401` response can point to it with a `resource_metadata` parameter in the `WWW-Authenticate` header. MCP servers must publish it."
+see = ["/knowledge-base/agent-identity/mcp-authorization"]
+
+[[term]]
+id = "dpop"
+term = "DPoP"
+abbr = "DPoP"
+expansion = "Demonstrating Proof of Possession"
+autolink = true
+definition = "A way to bind access and refresh tokens to a key pair the client holds (RFC 9449). The client signs a short JWT proof for every request and sends it in the `DPoP` header, so a stolen token is useless without the private key."
+
+[[term]]
+id = "mtls-bound-token"
+term = "mTLS certificate-bound token"
+definition = "An access token tied to the client's TLS certificate (RFC 8705). The authorization server puts the certificate's SHA-256 thumbprint in the token's `cnf` claim, and the resource server only accepts the token over a mutual TLS connection that presents the same certificate."
+
+[[term]]
+id = "step-up-authentication"
+term = "Step-up authentication"
+definition = "Asking a logged-in user to authenticate again, or with a stronger method, before a sensitive action. In OAuth, a resource server signals this with the `insufficient_user_authentication` error and the required `acr_values` or `max_age` (RFC 9470)."
+see = ["/post/stepup-authentication"]
+
+[[term]]
+id = "acr"
+term = "ACR"
+abbr = "ACR"
+expansion = "Authentication Context Class Reference"
+autolink = true
+definition = "An OpenID Connect claim (`acr`) that names the assurance level of the user's authentication. Clients request a level with the `acr_values` parameter, and the values themselves are agreed between the provider and the client."
+see = ["/post/stepup-authentication"]
+
+[[term]]
+id = "amr"
+term = "AMR"
+abbr = "AMR"
+expansion = "Authentication Methods References"
+autolink = true
+definition = "An OpenID Connect claim (`amr`) that lists the methods the user authenticated with, such as `pwd`, `otp`, `hwk` or `mfa`. RFC 8176 registers the standard values."
+see = ["/post/stepup-authentication"]
+
+[[term]]
+id = "saml"
+term = "SAML"
+abbr = "SAML"
+expansion = "Security Assertion Markup Language"
+autolink = true
+definition = "An XML-based OASIS standard for exchanging signed authentication and attribute assertions between an identity provider and a service provider. Enterprises still use SAML 2.0 widely for single sign-on, and its XML signature handling has caused repeated vulnerabilities."
+see = ["/post/readme-1"]
+
+# JOSE and JWT
+
+[[term]]
+id = "jose"
+term = "JOSE"
+abbr = "JOSE"
+expansion = "JSON Object Signing and Encryption"
+autolink = true
+definition = "The IETF family of specifications for signing and encrypting JSON: JWS, JWE, JWK and JWA, with JWT built on top. The name comes from the IETF working group that wrote them."
+see = ["/post/jwa", "/post/jwe-token"]
+
+[[term]]
+id = "jwt"
+term = "JWT"
+abbr = "JWT"
+expansion = "JSON Web Token"
+definition = "A compact, URL-safe format for claims, packaged as a JWS (signed) or a JWE (encrypted) (RFC 7519). A verifier must check the signature, the algorithm, `iss`, `aud` and `exp` before trusting any claim; RFC 8725 lists the current best practices."
+see = ["/post/purpose-of-jwt", "/post/jwt-vs-oauth", "/post/single-use-jwt"]
+
+[[term]]
+id = "jws"
+term = "JWS"
+abbr = "JWS"
+expansion = "JSON Web Signature"
+autolink = true
+definition = "A format for content protected with a digital signature or a MAC (RFC 7515). The compact form is three base64url parts separated by dots: header, payload and signature. Anyone can read the payload, so a JWS doesn't hide data."
+see = ["/post/purpose-of-jwt"]
+
+[[term]]
+id = "jwe"
+term = "JWE"
+abbr = "JWE"
+expansion = "JSON Web Encryption"
+autolink = true
+definition = "A format for encrypted content (RFC 7516). The compact form has five parts: header, encrypted key, initialization vector, ciphertext and authentication tag."
+see = ["/post/jwe-token"]
+
+[[term]]
+id = "jwa"
+term = "JWA"
+abbr = "JWA"
+expansion = "JSON Web Algorithms"
+autolink = true
+definition = "The registry of algorithm identifiers that JWS, JWE and JWK use, such as `RS256`, `ES256`, `RSA-OAEP` and `A256GCM` (RFC 7518). A verifier should accept only the algorithms it expects, never whatever the token header claims."
+see = ["/post/jwa"]
+
+[[term]]
+id = "jwk"
+term = "JWK"
+abbr = "JWK"
+expansion = "JSON Web Key"
+autolink = true
+definition = "A JSON representation of a cryptographic key, with members such as `kty`, `kid` and `use` (RFC 7517)."
+see = ["/post/jwks"]
+
+[[term]]
+id = "jwks"
+term = "JWKS"
+abbr = "JWKS"
+expansion = "JSON Web Key Set"
+autolink = true
+definition = "A JSON object whose `keys` member holds a list of JWKs (RFC 7517, section 5). Issuers publish their public signing keys as a JWKS at a URL, and verifiers pick the right key by its `kid`, which lets the issuer rotate keys without breaking clients."
+see = ["/post/jwks"]
+
+# Authentication
+
+[[term]]
+id = "mfa"
+term = "MFA"
+abbr = "MFA"
+expansion = "Multi-factor authentication"
+autolink = true
+definition = "Authentication that requires factors from at least 2 different categories: something you know, something you have, something you are. A password plus a one-time code is MFA; 2 passwords are not."
+see = ["/knowledge-base/account-security/reinforced-authentication"]
+
+[[term]]
+id = "passkey"
+term = "Passkey"
+definition = "A FIDO credential that replaces a password with a key pair: the private key stays with the user, the site stores only the public key. The FIDO Alliance distinguishes synced passkeys, which a cloud service copies across the user's devices, from device-bound passkeys, which never leave one device or security key."
+see = ["/post/passkeys-controversy", "/post/passwordless-authentication"]
+
+[[term]]
+id = "webauthn"
+term = "WebAuthn"
+expansion = "Web Authentication"
+definition = "The W3C browser API that lets a website create and use public-key credentials. The browser scopes each credential to the site's domain, which is why a phishing site can't use it."
+see = ["/post/passkeys-controversy"]
+
+[[term]]
+id = "fido2"
+term = "FIDO2"
+abbr = "FIDO2"
+autolink = true
+definition = "The FIDO Alliance's name for WebAuthn together with CTAP (Client to Authenticator Protocol), which lets a browser talk to a security key or phone. Passkeys are FIDO2 credentials."
+see = ["/post/passkeys-controversy", "/post/passwordless-authentication"]
+
+[[term]]
+id = "nist-sp-800-63b"
+term = "NIST SP 800-63B"
+definition = "The US National Institute of Standards and Technology guideline for authentication and authenticator management. Revision 4 (2025) requires at least 15 characters for passwords used as a single factor, says verifiers should allow at least 64, forbids composition rules and periodic changes, and requires a blocklist check."
+see = ["/post/password-policy", "/post/password-length-recommendation"]
+
+[[term]]
+id = "password-manager"
+term = "Password manager"
+definition = "Software that generates, stores and fills a unique password for each site. Because it fills by domain, it also refuses to fill on a look-alike phishing domain. Login forms with standard `autocomplete` attributes make it work reliably."
+see = ["/post/password-manager-friendly"]
+
+[[term]]
+id = "password-strength-meter"
+term = "Password strength meter"
+definition = "A widget that rates a password as the user types it. Meters that estimate guessability, for example with a dictionary-based estimator, help users; meters that only count character classes reward predictable passwords like `Password1!`."
+see = ["/knowledge-base/account-security/password-policy", "/post/password-policy"]
+
+[[term]]
+id = "password-hashing"
+term = "Password hashing"
+definition = "Storing a password as the output of a deliberately slow, salted function, so a stolen database is expensive to crack. Argon2id (RFC 9106), which won the 2015 Password Hashing Competition, is the usual first choice; bcrypt and scrypt are older options. Fast hashes such as SHA-256 are not suitable."
+see = ["/post/long-password-support"]
+
+[[term]]
+id = "salt"
+term = "Salt"
+definition = "A random value generated per password and stored next to its hash. It makes identical passwords hash differently and stops attackers from using precomputed tables. A salt isn't secret."
+see = ["/post/long-password-support"]
+
+# Attacks on accounts
+
+[[term]]
+id = "brute-force-attack"
+term = "Brute-force attack"
+definition = "Guessing a password by trying many candidates against one account, either online against the login form or offline against a stolen hash. Rate limiting stops the online variant; slow password hashing slows the offline one."
+see = ["/post/password-spraying"]
+
+[[term]]
+id = "credential-stuffing"
+term = "Credential stuffing"
+definition = "An attacker takes username and password pairs leaked from one site and tries them automatically on other sites. It works because people reuse passwords."
+see = ["/knowledge-base/account-security/compromised-credentials", "/knowledge-base/account-security/password-reuse"]
+
+[[term]]
+id = "password-spraying"
+term = "Password spraying"
+definition = "An attacker tries a few common passwords against many accounts, slowly enough that no single account hits its lockout threshold."
+see = ["/post/password-spraying"]
+
+[[term]]
+id = "password-reuse"
+term = "Password reuse"
+definition = "Using the same password, or a small variation of it, on more than one site. A breach at one site then exposes the user's accounts everywhere else."
+see = ["/knowledge-base/account-security/password-reuse"]
+
+[[term]]
+id = "account-takeover"
+term = "Account takeover"
+definition = "An attacker gains control of someone else's account, for example through credential stuffing, phishing, session theft or a weak account recovery flow."
+see = ["/knowledge-base/account-security/account-hijacking", "/knowledge-base/account-security/account-recovery"]
+
+[[term]]
+id = "account-pre-hijacking"
+term = "Account pre-hijacking"
+definition = "An attack class described by Sudhodanan and Paverd in which the attacker acts before the victim creates an account, for example by registering with the victim's email address, and gains access once the victim signs up or recovers the account."
+see = ["/knowledge-base/account-security/account-hijacking"]
+
+[[term]]
+id = "phishing"
+term = "Phishing"
+definition = "Tricking someone into handing over credentials, approving a login or running something, usually with a message or site that imitates one they trust. Passkeys and password managers resist it because they check the domain; people can't do that reliably."
+see = ["/post/whaling", "/post/passkeys-controversy"]
+
+[[term]]
+id = "whaling"
+term = "Whaling"
+definition = "Phishing aimed at senior executives, usually to get them to approve payments or share sensitive data."
+see = ["/post/whaling", "/post/whaling-awareness"]
+
+[[term]]
+id = "honeytoken"
+term = "Honeytoken"
+definition = "A decoy credential or account that no legitimate user or process ever uses. Any attempt to log in with it means someone has access to data they shouldn't, so it triggers an alert. Honeytokens detect breaches; they don't prevent them."
+see = ["/post/honeytoken"]
+
+# Agents
+
+[[term]]
+id = "mcp"
+term = "MCP"
+abbr = "MCP"
+expansion = "Model Context Protocol"
+autolink = true
+definition = "An open protocol, introduced by Anthropic in November 2024, that connects AI applications to servers exposing tools, resources and prompts. Authorization is optional; HTTP-based servers that use it act as OAuth resource servers, publish protected resource metadata (RFC 9728) and must reject tokens issued for other audiences."
+see = ["/knowledge-base/agent-identity/mcp-authorization", "/post/agentic-identity-broker"]
+
+[[term]]
+id = "coding-agent"
+term = "Coding agent"
+definition = "A language model run in a loop with tools to read, edit and run code in a repository, such as a shell and a file editor. It acts with whatever credentials and permissions its environment gives it."
+see = ["/post/appsec-agentic-engineering", "/post/agentic-identity-broker"]
+
+[[term]]
+id = "prompt-injection"
+term = "Prompt injection"
+definition = "An attack in which text the model reads, such as a web page, an issue comment or a tool result, contains instructions the model then follows as if they came from the user. The model can't reliably tell data from instructions, so limiting what the agent can reach is the main defence."
+see = ["/post/appsec-agentic-engineering"]
+
+# Application security practice
+
+[[term]]
+id = "trust-boundary"
+term = "Trust boundary"
+definition = "A line in a system where data or control passes between parts with different levels of trust, such as from the internet to an API or from a tool result into an agent's context. Every input that crosses it needs validation."
+
+[[term]]
+id = "least-privilege"
+term = "Least privilege"
+definition = "Saltzer and Schroeder's 1975 design principle that every program and user should operate with the least set of privileges necessary to complete the job. For tokens, that means narrow scopes, a single audience and short lifetimes."
+see = ["/post/appsec-shift-down"]
+
+[[term]]
+id = "threat-modeling"
+term = "Threat modeling"
+definition = "Analysing a model of a system to find security and privacy concerns. The Threat Modeling Manifesto frames it as 4 questions: what are we working on, what can go wrong, what are we going to do about it, and did we do a good enough job."
+see = ["/post/appsec-agentic-engineering"]
+
+[[term]]
+id = "sbom"
+term = "SBOM"
+abbr = "SBOM"
+expansion = "Software Bill of Materials"
+autolink = true
+definition = "A machine-readable inventory of the components and dependencies that make up a piece of software. SPDX and CycloneDX are the common formats."
+see = ["/post/automatic-dependency-updates"]
+
+[[term]]
+id = "sast"
+term = "SAST"
+abbr = "SAST"
+expansion = "Static Application Security Testing"
+autolink = true
+definition = "Tools that look for vulnerabilities in source code or binaries without running them."
+see = ["/post/appsec-agentic-engineering"]
+
+[[term]]
+id = "dast"
+term = "DAST"
+abbr = "DAST"
+expansion = "Dynamic Application Security Testing"
+autolink = true
+definition = "Tools that look for vulnerabilities by sending requests to a running application from the outside, without access to its source."
+see = ["/post/appsec-agentic-engineering"]
+
+[[term]]
+id = "shift-down"
+term = "Shift down"
+definition = "Moving security decisions into the platform, so teams get secure defaults such as a standard pipeline or workload credentials instead of building and securing them themselves. Shift-left, by comparison, moves checks earlier in each team's workflow."
+see = ["/post/appsec-shift-down"]

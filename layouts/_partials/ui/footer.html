@@ -1,0 +1,21 @@
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-statement">{{ site.Params.statement }}</p>
+      <p>Jan Brennenstuhl writes about application security, identity and agentic engineering. Written in Berlin, hosted in the EU.</p>
+    </div>
+    <nav aria-label="Follow">
+      <h2>Follow</h2>
+      <a href="/index.xml">RSS feed</a><a href="/feed.json">JSON Feed</a><a href="{{ site.Params.mastodon }}" rel="me">Mastodon</a><a href="/knowledge-base/index.xml">Field guide changes</a>
+    </nav>
+    <nav aria-label="For agents">
+      <h2>For agents</h2>
+      <a href="/llms.txt">llms.txt</a><a href="/llms-full.txt">llms-full.txt</a><a href="/catalog.json">Catalog</a><a href="/findings.json">Findings</a>
+    </nav>
+    <nav aria-label="Site">
+      <h2>Site</h2>
+      <a href="/glossary/">Glossary</a><a href="/accessibility/">Accessibility</a><a href="/imprint/">Imprint</a><a href="/privacy-policy/">Privacy</a><a href="/affiliate-disclaimer/">Independence</a><a href="{{ site.Params.sourceRepository }}">Source</a>
+    </nav>
+  </div>
+  <p class="license">Original writing is licensed <a href="{{ site.Params.license.url }}">CC BY 4.0</a> unless an entry says otherwise. Credited third-party media keep their own rights.</p>
+</footer>

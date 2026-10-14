@@ -1,0 +1,4 @@
+{{- $id := .Get 0 }}{{ $found := dict }}{{ range hugo.Data.glossary.term }}{{ if eq .id $id }}{{ $found = . }}{{ end }}{{ end -}}
+{{- if not $found }}{{ errorf "term: unknown glossary id %q at %s" $id .Position }}{{ end -}}
+<a class="term" href="/glossary/#{{ $id }}">{{ if $found.expansion }}<abbr title="{{ $found.expansion }}">{{ .Get 1 | default ($found.abbr | default $found.term) }}</abbr>{{ else }}{{ .Get 1 | default $found.term }}{{ end }}</a>
+{{- /* chomp */ -}}

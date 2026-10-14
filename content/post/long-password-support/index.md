@@ -1,13 +1,10 @@
 ---
 id: jb-long-password-support
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['identity-authentication']
 imageDecorative: true
 title: "Long Password Support for Safer Login Systems"
 linkTitle: "Long Password Support for Safer Login Systems"
 description: "Maximize Login Security with Long Passwords and Secure Hashing. Learn How to Empower Your Login System with our Expert Guide. Read Now!"
+claim: "Login systems should accept long passwords from users and password managers, hash them with Argon2id or scrypt, and still set an explicit maximum length to prevent hashing denial of service."
 excerpt: "Discover why supporting long passwords is crucial in today's digital landscape, the benefits of increased password entropy, and practical tips to smoothly implement these changes. Stay ahead of cyber threats and foster user trust with a fortified login system. Dive in and break the barriers to a more secure future!"
 lead: "Don't compromise on your login system's security!"
 slug: long-password-login-system
@@ -16,11 +13,9 @@ lastmod: 2025-06-08
 draft: false
 weight: 50
 image: long-password-login-system.webp
-categories: ["identity-access-management"]
 tags: ["password-security", "ux-security"]
-pinned: false
-homepage: false
 keywords: long password, login system, secure hashing
+series: passwords
 ---
 
 Strong passwords are necessary for securing user accounts and protecting sensitive data. As a frequent user of authentication systems and principal engineer for a single sign-on solution, I appreciate the necessity of delivering seamless user experience while emphasizing security. In this article, I'll go over the advantages of long passwords, the obstacles for service providers of supporting them, and how to effectively implement them in your login system.
@@ -43,7 +38,7 @@ These restrictions however, only limit users' ability to form strong, secure pas
 
 ### Maximum Password Length: Why do Length Limits Exist?
 
-Length restrictions occur mostly as a result of historical and technological constraints, as well as erroneous worries about usability. Because storage and processing resources were rather limited in the early days of computers, developers implemented password length constraints to conserve resources and assure optimal system operation. However, as technology and our understanding of cybersecurity have grown, it has become increasingly evident that these length constraints are ineffective and dangerous. In today's digital landscape, we must reconsider the justification for these length constraints and favor [robust security measures]({{< ref "/categories/appsec/" >}} "Protecting Web Applications: Cyber Attacks & Account Security") above outmoded norms.
+Length restrictions occur mostly as a result of historical and technological constraints, as well as erroneous worries about usability. Because storage and processing resources were rather limited in the early days of computers, developers implemented password length constraints to conserve resources and assure optimal system operation. However, as technology and our understanding of cybersecurity have grown, it has become increasingly evident that these length constraints are ineffective and dangerous. In today's digital landscape, we must reconsider the justification for these length constraints and favor [robust security measures]({{< ref "/topics/application-security/" >}} "Protecting Web Applications: Cyber Attacks & Account Security") above outmoded norms.
 
 ### The Consequences of Short Password Limits
 
@@ -107,7 +102,7 @@ Client-side password validation is a convenience feature that assists users in c
 
 #### Encouraging Strong Password Practices
 
-Include [a good password strength meter]({{< ref "/knowledge-base/account-security/password-policy/index.md" >}} "5 Studies on Password Strength Meters") into your login form that gives users real-time feedback as they create their passwords. Especially in combination with a user-friendly password strength policy, visual indicators can be used to encourages users to create long, complicated passwords and educates them on the necessity of [strong password security]({{< ref "/tags/password-security/" >}} "Modern Password Security & Secure Passwords").
+Include [a good password strength meter]({{< ref "/knowledge-base/account-security/password-policy/index.md" >}} "5 Studies on Password Strength Meters") into your login form that gives users real-time feedback as they create their passwords. Especially in combination with a user-friendly password strength policy, visual indicators can be used to encourages users to create long, complicated passwords and educates them on the necessity of [strong password security]({{< ref "/topics/passwords/" >}} "Modern Password Security & Secure Passwords").
 
 #### Password Manager Support
 

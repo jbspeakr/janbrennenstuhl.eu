@@ -1,1 +1,5 @@
-<article class="article-row"><div class="row-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time><span>{{ .Params.kind | default "Collection" }}</span></div><div><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2><p>{{ .Params.excerpt | default .Description }}</p><div class="tags">{{ range first 3 (.GetTerms "tags") }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}</div></div><span class="row-arrow" aria-hidden="true">↗</span></article>
+{{- $kind := partial "data/kind.html" . -}}
+<li class="row">
+  <a href="{{ .RelPermalink }}"><span class="row-title">{{ .Title }}</span></a>
+  <span class="row-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>{{ if ne $kind "essay" }} <span class="kind">{{ partial "ui/kind-label.html" $kind }}</span>{{ end }}{{ with partial "data/series.html" . }} <span class="series">{{ .title }}</span>{{ end }}</span>
+</li>

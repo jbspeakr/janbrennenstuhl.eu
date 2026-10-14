@@ -1,12 +1,10 @@
 ---
 title: Economies of Scale for MCP and Agents
 description: Why you need an identity broker — with Magnus Jungsbluth at AGNTCon + MCPCon Europe.
+claim: "Agents should not hold shared, long-lived provider credentials; an identity broker ties delegated access to both person and agent, and a gateway keeps provider tokens out of the agent."
 id: jb-talk-agntcon-2026
-kind: talk
-status: published
-reviewStatus: not-reviewed
-topics: [agentic-engineering, identity-authentication]
 date: 2026-09-18
+topics: [agentic-engineering, identity-authentication]
 ---
 Presented by Magnus Jungsbluth and Jan Brennenstuhl at AGNTCon + MCPCon Europe in Amsterdam on 18 September 2026.
 

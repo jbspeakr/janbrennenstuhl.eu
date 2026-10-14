@@ -1,13 +1,10 @@
 ---
 id: jb-passkeys-controversy
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['identity-authentication']
 imageDecorative: true
 title: "Passwordless: Critical Notes on FIDO2 Passkeys"
 linkTitle: "Passwordless: Critical Notes on FIDO2 Passkeys"
 description: "Critical notes on passwordless authentication with FIDO2 Passkeys. Potential risks and challenges of passkey concepts & implications for users."
+claim: "Passkeys resist phishing but replace knowledge with possession and tie users to devices and Big Tech vendors, so most people should wait for the ecosystem to mature before going passkey-only."
 excerpt: "Explore the untold story of FIDO2 Passkeys and delve into the potential risks and challenges of the hyped passwordless authentication approach. Uncover the dark side of this innovative technology and gain valuable insights into its implications for users and online services alike."
 lead: "Knowledge vs. Possession and other Passkey Controversies"
 slug: "fido-passkeys"
@@ -16,10 +13,7 @@ lastmod: 2025-06-09
 draft: false
 weight: 50
 image: fido-passkeys.webp
-categories: ["identity-access-management"]
 tags: ["password-security", "passwordless", "passkeys"]
-pinned: false
-homepage: false
 keywords: ""
 aliases: []
 ---

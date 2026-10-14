@@ -1,41 +1,43 @@
 # Brennenstuhl on Security
 
-The source of [janbrennenstuhl.eu](https://www.janbrennenstuhl.eu): Jan Brennenstuhl’s independent publication on application security, identity, and agentic engineering. Built with Hugo, hosted on Bunny, and maintained on Codeberg.
+The source of [janbrennenstuhl.eu](https://www.janbrennenstuhl.eu): Jan Brennenstuhl's essays, field guide and research notes on application security, identity, passwords, tokens and agentic engineering. Built with Hugo, hosted on Bunny in the EU, maintained on Codeberg.
 
-The presentation is a small, owned editorial design system: static HTML, system fonts, responsive images, dark/light/system themes, full-content feeds, and progressive enhancement. There is no client application or theme dependency.
+## Build
 
-## Develop
-
-Requirements: Python 3.11+, Git, and Hugo extended at the version in `.hugo-version`. On Linux x86-64, bootstrap downloads and checks the pinned Hugo binary automatically. On other platforms install the matching Hugo release first. Build requirements are installed in a local virtual environment.
+The only build dependency is Hugo extended at the version in `.hugo-version`.
 
 ```sh
-./scripts/bootstrap.sh
-./scripts/verify.sh
-.venv/bin/python scripts/serve.py
+./scripts/bootstrap.sh     # installs or checks Hugo
+./scripts/verify.sh        # builds public/ and runs every static release gate
+python3 scripts/serve.py   # http://127.0.0.1:8000, with real 404s and Markdown negotiation
 ```
 
-Open `http://127.0.0.1:8000`. `verify.sh` builds canonical HTML, resolved Markdown, the content catalog, search index, and social cards; then checks source metadata, routes, fragments, fidelity, structured data, feeds, drafts, and asset budgets. `./scripts/verify.sh --unminified` checks the unminified build too.
-
-For quick template iteration, `hugo server` works, but generated machine/search/social outputs require the complete build. Do not deploy a bare Hugo build.
+Browser and lab checks (Node, test-only):
 
 ```sh
 npm ci
-npx playwright install --with-deps chromium
+npx playwright install chromium
 npm run test:browser
+npm run test:lighthouse
+npm run test:edge
 ```
 
-Browser tests start their own server and cover five page types at three widths in both themes, axe checks, keyboard navigation, theme persistence, search history, no-JS browsing, text spacing, 320px reflow, and a real 404 response. Set `CHROMIUM_EXECUTABLE` only to use an existing compatible browser installation. Test dependencies are not shipped to readers.
+## For agents
 
-## Read with an agent
+- [`/llms.txt`](https://www.janbrennenstuhl.eu/llms.txt) and [`/llms-full.txt`](https://www.janbrennenstuhl.eu/llms-full.txt)
+- Markdown twin of every page at `<url>index.md`, or with `Accept: text/markdown`
+- [`/catalog.json`](https://www.janbrennenstuhl.eu/catalog.json), [`/findings.json`](https://www.janbrennenstuhl.eu/findings.json), [`/feed.json`](https://www.janbrennenstuhl.eu/feed.json)
+- [`/.well-known/api-catalog`](https://www.janbrennenstuhl.eu/.well-known/api-catalog) (RFC 9727)
+- A read-only MCP server (`edge/mcp/`), deployable as a Bunny Edge Script
+- Policy: [`/agents/`](https://www.janbrennenstuhl.eu/agents/). Search and retrieval are welcome; AI training is reserved.
 
-- `/llms.txt`: orientation and per-entry Markdown links.
-- `/content-index.json`: versioned metadata, canonical URLs, provenance, section descriptors and SHA-256 hashes.
-- `/<existing-route>/index.md`: faithful rendered content with attribution, dates and stable section anchors.
-- `/index.xml`: full-content RSS, including knowledge-base entries.
-- `/search/`: all eligible content, with type/topic filters and query URLs; its index is loaded only when searching.
+## Documentation
 
-See [the content contract](docs/CONTENT-CONTRACT.md), [release procedures](docs/DELIVERY.md), and [implementation evidence and remaining release work](docs/IMPLEMENTATION.md).
+- [Content contract](docs/CONTENT-CONTRACT.md): front matter, field-guide shape, shortcodes, machine outputs
+- [Design system](docs/DESIGN.md): tokens, contrast, type, the diagram, budgets
+- [Delivery](docs/DELIVERY.md): CI, Bunny configuration, CSP, redirects, MCP, rollback
+- [Implementation notes](docs/IMPLEMENTATION.md): what changed and what is still open
 
 ## Licenses
 
-Original writing under `content/` is [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), except where an individual page specifies otherwise. Credited third-party media retain their own rights. The old Stack presentation dependency has been removed. Build-only social-card fonts include their upstream license under `assets/fonts/LICENSE`; fonts are not downloaded by readers. Hugo is Apache-2.0 licensed.
+Original writing under `content/` is [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) unless a page says otherwise. Credited third-party media keep their own rights. Geist and Geist Mono are under the SIL Open Font License 1.1 (`static/fonts/OFL.txt`). Hugo is Apache-2.0.

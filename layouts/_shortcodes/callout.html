@@ -1,1 +1,1 @@
-<aside class="callout"><strong>{{ .Get "title" }}</strong>{{ .Inner | markdownify }}</aside>
+<aside class="callout{{ with .Get "type" }} callout-{{ . }}{{ end }}">{{ with .Get "title" }}<p class="callout-title">{{ . }}</p>{{ end }}{{ .Inner | markdownify }}</aside>

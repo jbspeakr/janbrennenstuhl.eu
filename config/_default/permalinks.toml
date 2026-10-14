@@ -1,5 +1,3 @@
-# Permalinks format of each content section
+# Permalinks per section; existing URLs are preserved.
 post = "/:slug/"
 page = "/:slug/"
-categories = "/:slug/"
-tags = "/tags/:slug/"

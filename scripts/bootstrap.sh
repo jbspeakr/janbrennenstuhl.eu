@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
+# Installs the one build dependency: Hugo extended at the version in .hugo-version.
+# Release scripts and checks use only the Python 3.11+ standard library.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-# Python 3.11+; Hugo's exact version is the only runtime binary dependency.
-python3 -c 'import sys; assert sys.version_info >= (3,11), "Python 3.11+ required"'
-python3 -m venv .venv
-.venv/bin/python -m pip install --disable-pip-version-check -r requirements.txt
 required=$(cat .hugo-version)
 if command -v hugo >/dev/null && hugo version | grep -Fq "v${required}"; then
   printf 'Using installed Hugo %s\n' "$required"
@@ -18,4 +16,5 @@ else
   printf 'Install Hugo extended %s for your platform, then rerun this command.\n' "$required" >&2
   exit 1
 fi
+python3 -c 'import sys; assert sys.version_info >= (3, 11), "Python 3.11+ is needed for the checks"'
 printf 'Ready. Run ./scripts/verify.sh\n'

@@ -1,0 +1,6 @@
+{{- /* All findings of a page: front-matter key findings, then `finding` shortcodes in order. Requires rendered content. */ -}}
+{{- $p := . }}{{ $_ := .Content -}}
+{{- $out := slice -}}
+{{- range .Params.findings }}{{ $card := partial "finding-card.html" (dict "page" $p "id" .id "text" (.text | markdownify | plainify | htmlUnescape) "source" $p.Title) }}{{ $out = $out | append (dict "id" (printf "f-%s" .id) "text" (.text | markdownify | plainify | htmlUnescape) "url" (printf "%s#f-%s" $p.Permalink .id) "source" "" "source_url" "" "card" $card.Permalink) }}{{ end -}}
+{{- with .Store.Get "findings" }}{{ range sort . "order" }}{{ $out = $out | append (dict "id" .id "text" (.text | htmlUnescape) "url" .url "source" .source "source_url" .source_url "card" .card) }}{{ end }}{{ end -}}
+{{- return $out -}}

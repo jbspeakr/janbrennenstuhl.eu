@@ -1,6 +1,7 @@
 ---
 title: Writing
 slug: writing
-layout: archives
-description: Essays and field notes on secure systems.
+layout: writing
+description: Every essay in chronological order, newest first.
+aliases: ["/archives/"]
 ---

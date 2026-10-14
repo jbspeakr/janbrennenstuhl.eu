@@ -1,14 +1,10 @@
 ---
 id: jb-automatic-dependency-updates
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['application-security']
 imageDecorative: true
 title: "Dependency Updates: latest Is Not a Security Strategy"
 linkTitle: "latest Is Not a Security Strategy"
 description: "Automatic dependency updates spread compromised packages faster than humans can react. Version pinning, provenance verification, and repository proxies turn blind trust into controlled trust."
-excerpt: "Automatic dependency updates spread compromised packages faster than humans can react. Version pinning, provenance verification, and repository proxies turn blind trust into controlled trust."
+claim: "Automatic dependency updates push compromised packages into builds within hours, so teams should pin exact versions, enforce release-age cooldowns, and upgrade on their own schedule after review."
 lead: "Past and present supply chain compromises prove that automatic dependency updates are attack amplifiers. Here is what controlled trust looks like in practice."
 slug: automatic-dependency-updates
 image: automatic-dependency-updates.webp
@@ -19,9 +15,16 @@ date: 2026-05-15
 lastmod: 2026-05-17
 draft: false
 weight: 50
-categories: ["appsec"]
 tags: ["supply-chain-protection", "sdlc"]
 featured: false
+series: agentic-appsec
+findings:
+  - id: deps-pin-exact-versions
+    text: "A version range like `^1.14.0` trusts every future matching release, which the Axios attackers used in 2026, so teams should pin exact versions and force transitive ones with overrides."
+  - id: deps-7-day-cooldown
+    text: "According to Wiz, a 7-day release-age cooldown covers 90% or more of recent supply chain incidents, and it would have blocked both the Axios and TanStack compromises."
+  - id: deps-provenance-not-enough
+    text: "The TanStack worm shipped malicious npm packages with valid SLSA Build Level 3 attestations, so provenance verification is necessary but not enough on its own."
 ---
 
 On March 31, 2026, [North Korean state actors compromised Axios](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/ "Microsoft: Mitigating the Axios npm supply chain compromise"), an npm package with over 70 million weekly downloads. Any project declaring `axios@^1.14.0` connected to attacker C2 infrastructure the next time `npm update` ran. Six weeks later, a [self-propagating worm hit 42 TanStack packages](https://snyk.io/blog/tanstack-npm-packages-compromised/ "Snyk: TanStack npm packages compromised"). It reached Mistral AI, UiPath, and [OpenAI](https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html "The Hacker News: TanStack Supply Chain Attack Hits Two OpenAI Employee Devices") within hours. It also carried valid [SLSA provenance](https://slsa.dev/spec/v1.0/levels "SLSA security levels") attestations, signed by the legitimate build pipeline.
@@ -110,7 +113,7 @@ Not every CVE in your dependency tree matters. A vulnerability in a function you
 A little copying is better than a little dependency.
 {{< /quote >}}
 
-Every package adds code, maintainers, credentials, infrastructure, and trust assumptions. Modern ecosystems normalize [absurd dependency depth](https://research.swtch.com/deps "Russ Cox: Our Software Dependency Problem"). Before adding a package, ask: can we write this in 30 lines? If yes, write it. A [coding agent]({{< ref "/tags/agentic-engineering/">}}) can do most of the work for you.
+Every package adds code, maintainers, credentials, infrastructure, and trust assumptions. Modern ecosystems normalize [absurd dependency depth](https://research.swtch.com/deps "Russ Cox: Our Software Dependency Problem"). Before adding a package, ask: can we write this in 30 lines? If yes, write it. A [coding agent]({{< ref "/topics/agentic-engineering/" >}}) can do most of the work for you.
 
 ## Controlled Trust, Not Blind Trust
 

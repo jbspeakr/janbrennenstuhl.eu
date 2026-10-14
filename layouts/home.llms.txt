@@ -1,19 +1,30 @@
-# Brennenstuhl on Security
+# {{ site.Title }}
 
-> Essays and research by Jan Brennenstuhl on application security, identity, and agentic engineering.
+> Essays, a field guide and research notes by Jan Brennenstuhl on application security, identity, passwords, tokens and agentic engineering. Every page has a Markdown twin at its URL plus `index.md`, and every claim in the field guide has a stable anchor you can cite.
 
-Canonical HTML and resolved Markdown contain the same substantive text. Publication, modification, and review dates have separate meanings. A rebuild is not a technical review.
+Jan Brennenstuhl is a principal engineer in Berlin working on application security and agent identity. Original writing is CC BY 4.0 unless an entry says otherwise: reuse it, and link the canonical URL. Publication, modification and review dates mean different things; a rebuild is not a review.
 
-- [Content catalog]({{ "content-index.json" | absURL }}): versioned metadata, provenance, sections, and SHA-256 content hashes.
-- [RSS]({{ "index.xml" | absURL }}): full-content updates.
-- [Author]({{ "about/" | absURL }}): background and attribution.
-- [Agentic engineering]({{ "topics/agentic-engineering/" | absURL }})
-- [Identity and authentication]({{ "topics/identity-authentication/" | absURL }})
-- [Application security]({{ "topics/application-security/" | absURL }})
+## How to read this site
 
-Original writing is CC BY 4.0 unless the entry says otherwise. Credited media retain their own rights. The catalog is a site-owned contract, not a web standard.
+- [Full corpus as one Markdown file]({{ "llms-full.txt" | absURL }}): every entry below, newest first.
+- [Catalog]({{ "catalog.json" | absURL }}): IDs, URLs, dates, review status, topics, license and content hashes for every entry.
+- [Findings]({{ "findings.json" | absURL }}): every quotable finding with its anchor URL and source.
+- [JSON Feed]({{ "feed.json" | absURL }}) and [RSS]({{ "index.xml" | absURL }}): full-content updates. Each topic has its own feeds.
+- [Glossary]({{ "glossary/" | absURL }}): definitions of OAuth, OIDC, JOSE and agent-identity terms, with anchors.
+- Content negotiation: request any page with `Accept: text/markdown` to get its Markdown twin.
 
-## Published content
-{{ range partial "eligible.html" . }}
-- [{{ .Title }}]({{ .Permalink }}index.md): {{ .Description }}
+## Topics
+{{ range hugo.Data.topics.topic }}
+- [{{ .title }}]({{ printf "topics/%s/" .id | absURL }}): {{ .description }}
+{{- end }}
+{{ $all := partialCached "eligible.html" . "all" }}
+{{- range slice (dict "title" "Field guide" "section" "knowledge-base") (dict "title" "Essays" "section" "post") (dict "title" "Talks and projects" "section" "talks projects") (dict "title" "Reference" "section" "page") }}
+## {{ .title }}
+{{ range where $all "Section" "in" (split .section " ") }}
+- [{{ .Title }}]({{ with .OutputFormats.Get "markdown" }}{{ .Permalink }}{{ end }}): {{ .Params.claim | default .Description }}
+{{- end }}
 {{ end }}
+## Optional
+
+- [Now]({{ "now/index.md" | absURL }}): current projects and talks.
+- [Accessibility statement]({{ "accessibility/" | absURL }})

@@ -1,13 +1,10 @@
 ---
 id: jb-password-manager-friendly
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['identity-authentication']
 imageDecorative: true
 title: "How to: Password-Manager Friendly Login Forms"
 linkTitle: "How to: Password-Manager Friendly Login Forms"
 description: "Password Security | Use HTML features to create password-manager friendly login forms for a seamless user experience & enhanced web security"
+claim: "Login forms work well with password managers when inputs carry the right autocomplete values, length rules sit in pattern or passwordrules attributes, and the site offers /.well-known/change-password."
 excerpt: "In this article, I explore the importance of creating password-manager friendly login forms for a seamless user experience and enhanced web security."
 lead: "Boosting password security by making it easier for your users to use password managers"
 slug: password-security-manager-friendly
@@ -16,10 +13,8 @@ lastmod: 2025-06-08
 draft: false
 weight: 50
 image: effortless-login.webp
-categories: ["identity-access-management"]
 tags: ["password-security", "password-manager"]
-pinned: false
-homepage: false
+series: passwords
 ---
 
 Do you ever get tired of manually typing in your login credentials every time you need to access an online account? Luckily, there is a solution: password managers. These handy tools can automatically generate and store strong passwords, but they're only truly useful if  login forms are password-manager friendly. In this article, I explore how you can make your login forms more compatible with password managers to improve the user experience and enhance security. So, let's dive in and unlock the key to effortless login!

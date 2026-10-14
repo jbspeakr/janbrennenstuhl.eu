@@ -1,5 +1,30 @@
-{{ $kind := .Params.kind | default "page" }}
+{{/* One catalog record. Serialized by jsonify everywhere; never hand-built JSON. */}}
 {{ $license := dict "name" site.Params.license.name "url" site.Params.license.url "scope" "Original text; credited third-party media retain their own rights." }}
 {{ if eq .Params.license false }}{{ $license = dict "name" "Not specified" "url" "" "scope" "No reuse license specified for this page." }}{{ end }}
-{{ $source := "" }}{{ with .File }}{{ $source = printf "%s/src/commit/%s/content/%s" site.Params.sourceRepository (getenv "HUGO_PARAMS_SOURCE_REVISION" | default "main") .Path }}{{ end }}
-{{ return (dict "id" (.Params.id | default .RelPermalink) "title" .Title "description" (.Description | default site.Params.description) "canonical_url" .Permalink "markdown_url" (printf "%sindex.md" .Permalink) "kind" $kind "topics" (.Params.topics | default (slice)) "published" (.PublishDate.Format "2006-01-02T15:04:05Z07:00") "modified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00") "reviewed" (.Params.reviewed | default "") "review_status" (.Params.reviewStatus | default "not-reviewed") "status" (.Params.status | default "published") "author" site.Params.author "license" $license "source_url" $source "source_revision" (getenv "HUGO_PARAMS_SOURCE_REVISION" | default "working-tree")) }}
+{{ $rev := getenv "HUGO_PARAMS_SOURCE_REVISION" | default "working-tree" }}
+{{ $source := "" }}{{ with .File }}{{ $source = printf "%s/src/commit/%s/content/%s" site.Params.sourceRepository (cond (eq $rev "working-tree") "main" $rev) .Path }}{{ end }}
+{{ $state := partial "data/status.html" . }}
+{{ $series := "" }}{{ with partial "data/series.html" . }}{{ $series = .id }}{{ end }}
+{{ $hash := printf "%s\n%s\n%s\n%s" .Title .Description (.Lastmod.Format "2006-01-02") .RawContent | sha256 }}
+{{ $md := "" }}{{ with .OutputFormats.Get "markdown" }}{{ $md = .Permalink }}{{ end }}
+{{ return dict
+  "id" (partial "data/id.html" .)
+  "title" .Title
+  "description" (.Description | default site.Params.description)
+  "claim" (.Params.claim | default "")
+  "canonical_url" .Permalink
+  "markdown_url" $md
+  "kind" (partial "data/kind.html" .)
+  "topics" (partial "data/topics.html" .)
+  "series" $series
+  "published" (.PublishDate.Format "2006-01-02T15:04:05Z07:00")
+  "modified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+  "reviewed" $state.reviewed
+  "review_status" $state.review_status
+  "status" $state.status
+  "author" site.Params.author
+  "license" $license
+  "content_hash" (printf "sha256:%s" $hash)
+  "source_url" $source
+  "source_revision" $rev
+}}

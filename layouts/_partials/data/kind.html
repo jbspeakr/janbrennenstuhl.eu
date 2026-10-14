@@ -1,0 +1,3 @@
+{{/* Content kind derived from the section unless set explicitly. */}}
+{{ $kinds := dict "post" "essay" "knowledge-base" "guide" "projects" "project" "talks" "talk" }}
+{{ return (or .Params.kind (index $kinds .Section) "page") }}

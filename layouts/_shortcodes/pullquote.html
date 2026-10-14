@@ -1,0 +1,2 @@
+{{- $id := .Get "id" -}}{{- $text := trim .Inner " \n" | markdownify | plainify -}}
+<blockquote class="pullquote"{{ with $id }} id="q-{{ . }}"{{ end }}><p>{{ trim .Inner " \n" | markdownify }}</p>{{ with $id }}<footer><a class="finding-id" href="#q-{{ . }}">#q-{{ . }}</a> <button type="button" class="link-button" data-quote="{{ $text }}" data-quote-url="{{ $.Page.Permalink }}#q-{{ . }}" hidden>Copy quote with link</button></footer>{{ end }}</blockquote>

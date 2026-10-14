@@ -1,36 +1,30 @@
 ---
 id: jb-jwt-vs-oauth
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['identity-authentication']
 imageDecorative: true
 title: "JWT vs OAuth 2.0: Understanding the Key Differences"
 linkTitle: "JWT vs OAuth 2.0: Understanding the Key Differences"
 description: "Learn the key differences between JWT and OAuth 2.0 from our expert guide on JWT vs OAuth. Understand which one to choose for authentication."
+claim: "OAuth 2.0 is an authorization framework for delegated access and JWT is a token format, so the two complement each other, and OpenID Connect combines them."
 excerpt: "The interplay of tokens and protocols has fundamentally transformed how we authenticate, authorize, and securely communicate data over the Internet. Two important players in this realm are JSON Web Tokens (JWT) and OAuth 2.0. Though they serve different purposes, there's often confusion about their functionalities and application. How do they differ? Can one replace the other?"
 lead: "JSON Web Token as Stateless Bearer Tokens"
 slug: "jwt-vs-oauth"
-toc: true
 aliases: []
 date: 2023-05-24
 lastmod: 2023-05-28
 draft: false
 weight: 50
 image: jwt-vs-oauth.webp
-categories: ["identity-access-management"]
 tags: ["jwt", "oidc", "oauth2"]
-pinned: false
-homepage: false
 keywords: "jwt vs oauth"
+series: jwt
 ---
 
 ## TL;DR
 
 - **OAuth 2.0** is an open standard that describes an authorization framework. It allows a third-party application to access a user’s resources without user credentials.
 - **JWT** (JSON Web Tokens) is a standard that describes a JSON-based token format used to securely transfer information between two parties across an insecure environment.
-- **Combining OAuth 2.0 and JWT:** JWT can be integral to the [OAuth 2.0 framework]({{< ref "/tags/oauth2/" >}} "OAuth 2.0 in Action") . In fact, JWT has often been used as the bearer token in OAuth 2.0 implementations.
-- **OpenID Connect (OIDC):** Modern authentication and authorization mechanisms leverage the OAuth 2.0 fundamentals with JWT tokens by following [OpenID Connect]({{< ref "/tags/oidc/" >}} "OpenID Connect: Streamlining User Authentication & Identity") protocols.
+- **Combining OAuth 2.0 and JWT:** JWT can be integral to the [OAuth 2.0 framework]({{< ref "/topics/identity-authentication/" >}} "OAuth 2.0 in Action") . In fact, JWT has often been used as the bearer token in OAuth 2.0 implementations.
+- **OpenID Connect (OIDC):** Modern authentication and authorization mechanisms leverage the OAuth 2.0 fundamentals with JWT tokens by following [OpenID Connect]({{< ref "/topics/identity-authentication/" >}} "OpenID Connect: Streamlining User Authentication & Identity") protocols.
 
 ## Introduction to JWT vs OAuth 2.0
 

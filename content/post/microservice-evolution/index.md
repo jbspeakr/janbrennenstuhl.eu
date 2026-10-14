@@ -1,12 +1,9 @@
 ---
 id: jb-microservice-evolution
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['software-engineering']
 imageDecorative: true
 title: "Evolution of a Microservice: A Git History Visualisation"
 description: "Keeping microservices micro is a must if you want to benefit from them. How to visualize git histories and what you can learn from it. Devops ✓ Git ✓ Gource ✓"
+claim: "Microservices keep their benefits only if teams cut them down regularly: one service grew from 5k to 15k lines of code in a year and shrank back to about 5k after a split."
 excerpt: "Keeping microservices micro is a must if you want to benefit from them. I take a deep dive into the evolution of a microservice …"
 lead: "A deep dive into the evolution of a microservice, from its inception as a small, independent module to its growth into a complex kraken"
 slug: microservice-evolution
@@ -15,10 +12,7 @@ lastmod: 2023-04-21
 draft: false
 weight: 50
 image: microservice-evolution-software-architecture.webp
-categories: ["software-engineering"]
 tags: ["git"]
-pinned: false
-homepage: false
 ---
 
 Microservices have revolutionized the way we develop and deploy software applications. But with great power comes great complexity. As microservices become more and more ubiquitous, developers must grapple with new challenges, such as managing dependencies, ensuring scalability, and maintaining consistency across services. In this article, I take a deep dive into the evolution of a microservice, from its inception as a small, independent module to its growth into a complex kraken…

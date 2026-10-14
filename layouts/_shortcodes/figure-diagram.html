@@ -1,0 +1,7 @@
+{{- $src := .Get "src" }}{{ $r := .Page.Resources.Get $src }}{{ if not $r }}{{ errorf "figure-diagram: missing %q at %s" $src .Position }}{{ end -}}
+{{- $id := .Get "id" | default (urlize (.Get "caption")) -}}
+<figure class="figure diagram-figure" id="fig-{{ $id }}">
+  <div class="diagram-inline" role="img" aria-label="{{ .Get "alt" }}">{{ $r.Content | safeHTML }}</div>
+  <figcaption>{{ .Get "caption" | markdownify }}</figcaption>
+  <div class="what-it-shows"><p class="callout-title">What this shows</p>{{ .Inner | markdownify }}</div>
+</figure>

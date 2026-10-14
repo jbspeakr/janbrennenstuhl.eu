@@ -1,0 +1,10 @@
+{{- $id := .Get "id" }}{{ if not $id }}{{ errorf "finding: id required at %s" .Position }}{{ end -}}
+{{- $text := trim .Inner " \n" -}}
+{{- $url := printf "%s#f-%s" .Page.Permalink $id -}}
+{{- $card := partial "finding-card.html" (dict "page" .Page "id" $id "text" ($text | markdownify | plainify | htmlUnescape) "source" (.Get "source")) -}}
+{{- .Page.Store.SetInMap "findings" $id (dict "id" (printf "f-%s" $id) "text" ($text | markdownify | plainify) "url" $url "source" (.Get "source" | default "") "source_url" (.Get "url" | default "") "card" $card.Permalink "order" .Ordinal) -}}
+{{- with .Get "url" }}{{ $.Page.Store.SetInMap "citations" . (dict "@type" "CreativeWork" "name" ($.Get "source" | default .) "url" .) }}{{ end -}}
+<figure class="finding" id="f-{{ $id }}">
+  <blockquote><p>{{ $text | markdownify }}</p></blockquote>
+  <figcaption><a class="finding-id" href="#f-{{ $id }}">#f-{{ $id }}</a>{{ with .Get "source" }} <span>Source: {{ if $.Get "url" }}<a href="{{ $.Get "url" }}" class="ext"><cite>{{ . }}</cite></a>{{ else }}<cite>{{ . }}</cite>{{ end }}</span>{{ end }} <button type="button" class="link-button" data-quote="{{ $text | markdownify | plainify }}" data-quote-url="{{ $url }}" hidden>Copy quote with link</button> <a class="finding-card" href="{{ $card.RelPermalink }}">Share card<span class="sr-only"> for finding {{ $id }} (PNG)</span></a></figcaption>
+</figure>

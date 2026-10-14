@@ -1,0 +1,7 @@
+{{- /* Flattened h2/h3 headings in document order: [{id, title, level}]. */ -}}
+{{- $out := slice -}}
+{{- range .Fragments.Headings }}{{ range .Headings }}
+  {{- if .ID }}{{ $out = $out | append (dict "id" .ID "title" (.Title | plainify | htmlUnescape) "level" .Level) }}{{ end -}}
+  {{- range .Headings }}{{ if .ID }}{{ $out = $out | append (dict "id" .ID "title" (.Title | plainify | htmlUnescape) "level" .Level) }}{{ end }}{{ range .Headings }}{{ if .ID }}{{ $out = $out | append (dict "id" .ID "title" (.Title | plainify | htmlUnescape) "level" .Level) }}{{ end }}{{ end }}{{ end -}}
+{{- end }}{{ end -}}
+{{- return $out -}}

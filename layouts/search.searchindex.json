@@ -1,0 +1,15 @@
+{{- /* Full-text search index shared by /search/ and the command palette. */ -}}
+{{- $items := slice -}}
+{{- range partialCached "eligible.html" . "all" -}}
+  {{- $html := string .Content | replaceRE `<button[^>]*>.*?</button>` "" | replaceRE `<a class="(?:heading-anchor|finding-id)"[^>]*>.*?</a>` "" -}}
+  {{- $sections := slice -}}
+  {{- range $part := after 1 (split (replaceRE `<h([23]) id="` "\x1e<h$1 id=\"" $html) "\x1e") -}}
+    {{- $m := findRESubmatch `^<h[23] id="([^"]+)"[^>]*>(.*?)</h[23]>` $part 1 -}}
+    {{- with $m }}{{ $sm := index . 0 -}}
+      {{- $title := index $sm 2 | replaceRE `<a class="heading-anchor".*$` "" | plainify | htmlUnescape | strings.TrimSpace -}}
+      {{- $sections = $sections | append (dict "id" (index $sm 1) "title" $title "text" (replaceRE `^<h[23][^>]*>.*?</h[23]>` "" $part | plainify | htmlUnescape | truncate 400 "")) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $items = $items | append (dict "id" (partial "data/id.html" .) "title" .Title "description" .Description "url" .RelPermalink "kind" (partial "data/kind.html" .) "topics" (partial "data/topics.html" .) "published" (.PublishDate.Format "2006-01-02") "content" ($html | plainify | htmlUnescape) "sections" $sections) -}}
+{{- end -}}
+{{- $items | jsonify -}}

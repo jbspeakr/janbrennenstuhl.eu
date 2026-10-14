@@ -1,0 +1,9 @@
+{{/* Series record with its ordered pages, or empty dict. */}}
+{{ $found := dict }}
+{{ with .Params.series }}{{ $sid := . }}
+  {{ range hugo.Data.series.series }}{{ if eq .id $sid }}
+    {{ $pages := (where site.RegularPages "Params.series" $sid).ByDate }}
+    {{ $found = merge . (dict "pages" $pages) }}
+  {{ end }}{{ end }}
+{{ end }}
+{{ return $found }}

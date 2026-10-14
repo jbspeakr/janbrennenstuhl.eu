@@ -4,7 +4,7 @@ import argparse,json,re
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError
 parser=argparse.ArgumentParser();parser.add_argument('--base',default='https://www.janbrennenstuhl.eu');args=parser.parse_args();base=args.base.rstrip('/')
-paths=['/','/2/','/agentic-identity-broker/','/agentic-identity-broker/index.md','/content-index.json','/search/index.json','/index.xml','/sitemap.xml','/llms.txt']
+paths=['/','/agentic-identity-broker/','/agentic-identity-broker/index.md','/catalog.json','/findings.json','/feed.json','/search/index.json','/index.xml','/sitemap.xml','/llms.txt','/llms-full.txt']
 for path in paths:
     with urlopen(Request(base+path,headers={'Cache-Control':'no-cache','Accept-Encoding':'identity'}),timeout=30) as response:
         body=response.read();headers=response.headers
@@ -13,9 +13,9 @@ for path in paths:
         age=re.search(r'(?:^|,)\s*max-age=(\d+)',control)
         if not (('no-cache' in control) or ('no-store' in control) or (age and int(age[1])==0)):raise SystemExit(f'{path}: mutable browser caching still unsafe: {control}')
         if path.endswith('.md') and 'text/markdown' not in headers.get('Content-Type',''):raise SystemExit(f'{path}: wrong MIME type')
-        if path=='/content-index.json':
+        if path=='/catalog.json':
             catalog=json.loads(body)
-            if catalog.get('schema_version')!='1.0':raise SystemExit('Catalog version mismatch')
+            if not str(catalog.get('schema_version','')).startswith('1.'):raise SystemExit('Catalog version mismatch')
         conditional={}
         if headers.get('ETag'):conditional['If-None-Match']=headers['ETag']
         elif headers.get('Last-Modified'):conditional['If-Modified-Since']=headers['Last-Modified']

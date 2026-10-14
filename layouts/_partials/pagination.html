@@ -1,2 +1,0 @@
-{{ $page := .page }}{{ $pager := .pager }}
-{{ if gt $pager.TotalPages 1 }}<nav class="pagination" aria-label="Pagination">{{ with $pager.Prev }}{{ $url := $page.RelPermalink }}{{ if gt .PageNumber 1 }}{{ $url = printf "%s%d/" $page.RelPermalink .PageNumber }}{{ end }}<a href="{{ $url }}">← Newer</a>{{ end }}<span>Page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}</span>{{ with $pager.Next }}<a href="{{ printf "%s%d/" $page.RelPermalink .PageNumber }}">Older →</a>{{ end }}</nav>{{ end }}

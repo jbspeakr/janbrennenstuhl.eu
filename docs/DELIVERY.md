@@ -2,65 +2,115 @@
 
 ## Build once, verify, publish
 
-The Forgejo workflow has three jobs. `verify` creates and retains a checksummed artifact for 90 days. `browser` tests that artifact without production credentials. `publish` runs only for a push to `main`, after both jobs succeed, verifies artifact checksums and source revision, and uploads those same bytes. Third-party actions are pinned to immutable revisions; artifact actions are Forgejo’s patched v4 variants.
+`.forgejo/workflows/deploy.yml` has four jobs:
 
-The workflow requests serialized, non-cancelled main-branch runs. Forgejo concurrency is best-effort; do not start a second deployment outside this workflow while one is running. A repeated older workflow must not be used as an accidental rollback.
+| Job | Runs on | Credentials | Does |
+| --- | --- | --- | --- |
+| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, `release.py` packages a checksummed artifact kept for 90 days |
+| `browser` | every push and PR | none | tests that same artifact: axe matrix, keyboard, no-JS, reflow, redirects, Markdown negotiation, Lighthouse lab gate |
+| `preview` | same-repo PRs, only if `vars.PREVIEW_HOST` is set | staging zone only | builds for the preview host and uploads to the staging storage zone |
+| `publish` | push to `main`, after `verify` and `browser` | production storage password | checks artifact checksums and revision, uploads the same bytes |
 
-Only the storage-zone password is used. The account-wide API key and pull-zone purge are no longer part of routine publishing. Assets upload before HTML/Markdown; feeds/catalogs follow, and the release manifest is last. Uploads retry transient failures and fail closed on errors. No remote files are deleted. This is ordered deployment, **not an atomic release switch**; HTML can briefly span two versions while uploading. Prior fingerprinted assets remain available.
+Third-party actions are pinned to commit SHAs. The workflow serializes runs per ref and never cancels an upload halfway. Forgejo concurrency is best-effort; do not start a second deployment outside this workflow.
 
-Required secrets: existing `STORAGE_NAME`, `STORAGE_PASSWORD`. Optional variable `BUNNY_STORAGE_HOST` selects the actual regional Storage endpoint (default `storage.bunnycdn.com`). Validate it against the existing zone’s region before the first deployment.
+Only the storage-zone password is used for production. The account-wide API key is not used by any job. Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
-Optional `INDEXNOW_KEY` is a **public repository variable**, not a credential: verification files are intentionally public. The build includes it in the artifact. After a successful upload, only catalog entries with changed content hashes are submitted. A failed/missing prior catalog skips notification; a notification failure does not turn a successful upload into a failed deployment. Move the existing secret value into this variable if retaining IndexNow.
+Secrets and variables:
 
-## Bunny settings that must be applied before release
+- `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job sees them.
+- `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
+- `INDEXNOW_KEY` (variable, optional): public IndexNow token. Hugo writes `<key>.txt`; after a successful upload only catalog entries whose `content_hash` changed are submitted.
+- `PREVIEW_HOST` (variable), `PREVIEW_STORAGE_NAME`, `PREVIEW_STORAGE_PASSWORD` (secrets): optional staging pull zone for PR previews. `deploy.py --preview` refuses to run if production variables are present. The preview is rebuilt with the preview base URL; it is a review copy, not the release artifact.
 
-Source code cannot configure the authenticated pull zone. A `_headers` file would not configure Bunny, so none is shipped. Apply and verify these rules in the actual pull zone:
+## Bunny pull zone configuration
 
-| Resource | Browser policy | Edge policy |
+Source code cannot configure the pull zone. Apply and verify these settings; `scripts/smoke.py` checks the observable parts after deployment.
+
+### Caching
+
+| Resource | Browser `Cache-Control` | Edge TTL |
 | --- | --- | --- |
-| HTML, redirects, Markdown, XML, JSON, `llms.txt`, `security.txt`, release manifest | `public, max-age=0, must-revalidate` (or equivalent revalidation) | Separately configured short TTL, initially 300 seconds |
-| Content-fingerprinted CSS/JS/images | `public, max-age=31536000, immutable` | Long TTL |
-| Unfingerprinted images, social cards, icons and manifests | Revalidation or a deliberately short lifetime | Short/moderate TTL |
+| HTML, `index.md`, `*.json`, `*.xml`, `llms.txt`, `llms-full.txt`, `robots.txt`, `/.well-known/*`, `release-manifest.json` | `public, max-age=0, must-revalidate` | 300 s |
+| Fingerprinted `/css/*.css`, `/js/*.js` (hash in the file name) and processed images (`*_hu_*`) | `public, max-age=31536000, immutable` | 1 year |
+| `/fonts/*` (version in the file name) | `public, max-age=31536000, immutable` | 1 year |
+| `social.png`, favicons, `site.webmanifest`, original bundle images | `public, max-age=86400` | 1 day |
 
-Do not classify every image as immutable: source-bundle URLs and `social.png` are mutable. Preserve existing HSTS, nosniff, referrer policy and frame protection. Enable appropriate compression and confirm the MIME types, especially `text/markdown; charset=utf-8`. Ensure ETag or Last-Modified validators yield 304 responses. A CDN purge cannot clear an already-fresh browser cache from the old 30-day policy; allow for that migration limitation explicitly.
+Enable Brotli and gzip. Make sure `ETag` or `Last-Modified` validators produce `304` responses. A CDN purge cannot clear browser caches filled under the old 30-day policy; expect that migration lag once.
 
-Configure the custom error page so nonexistent URLs return **404**, not a 200 fallback. Existing aliases are preserved as Hugo redirect pages; verify whether Bunny should replace these with HTTP 301/308 redirects. No blanket redirect claim is made by local tests.
+### MIME types
 
-Start CSP in report-only mode. A starting candidate for this no-analytics, no-embed build is:
+Set or verify:
+
+| Path | Content-Type |
+| --- | --- |
+| `*.md`, `llms-full.txt` (Markdown in a .txt) | `text/markdown; charset=utf-8` for `.md`, `text/plain; charset=utf-8` for `.txt` |
+| `feed.json`, `*/feed.json` | `application/feed+json; charset=utf-8` |
+| `/.well-known/api-catalog` (no extension) | `application/linkset+json` |
+| `/.well-known/tdmrep.json`, other `*.json` | `application/json; charset=utf-8` |
+| `*.woff2` | `font/woff2` |
+| `*.avif` | `image/avif` |
+
+`deploy.py` sends these types on upload as well.
+
+### Errors and redirects
+
+- Custom error page: `/404.html` with a real **404** status, not a 200 fallback.
+- Retired routes: `/redirects.json` lists every old URL (former home pagination, categories, tags, section pagination, front-matter aliases) with its new target. Create one Bunny edge rule per entry (or a few pattern rules) answering **301**. The HTML redirect pages in the artifact remain as a fallback for clients that reach the origin.
+- Root domain to `www`: unchanged.
+
+### Headers and CSP
+
+Keep HSTS, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin` and `frame-ancestors 'none'`. Add `Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()`.
+
+Start the CSP in **report-only** mode:
 
 ```
-default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+default-src 'self'; script-src 'self' 'sha256-jlmKXJZ3jnMj64vFnzpog3ykDyPyCGUz19bVoEK2YUA=' 'inline-speculation-rules'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
 ```
 
-Configure a real report destination if using reporting. Inspect legitimate violations, including author HTML and generated code, before enforcement. The theme initialization is external, so it does not require `unsafe-inline`. Do not silently expand allowlists.
+- The `sha256` source allows exactly one inline script: the theme and reading-settings snippet in `<head>` (`assets/js/theme.js`), inlined so it never waits for the stylesheet. `scripts/check.py` fails the build when the inline script changes and this hash is not updated here, so update the edge rule at the same time.
+- `'inline-speculation-rules'` allows the `<script type="speculationrules">` block that prerenders same-site pages on hover in Chromium.
+- No styles are inlined; critical CSS stays in the fingerprinted file so `style-src 'self'` holds (see docs/DESIGN.md for the LCP trade-off).
 
-## Dry run and live smoke checks
+Inspect real violations before enforcing. Do not expand the allowlists silently.
+
+### Markdown content negotiation
+
+Every page has a Markdown twin at `<url>index.md`. Two ways to serve it for `Accept: text/markdown` on the HTML URL:
+
+1. **Edge rule, recommended to start:** condition "Request header `Accept` contains `text/markdown`" and path ends in `/`; action "Redirect to `{{path}}index.md`" with status 302. Redirects from edge rules are not cached, and agents follow them.
+2. **Edge script:** `edge/negotiate.ts` (middleware on the www pull zone) rewrites the origin request to the twin and adds `Vary: Accept`. Middleware runs on cache misses only, so add an edge rule that **bypasses the cache** when `Accept` contains `text/markdown`; otherwise a twin could be cached under the HTML URL. Bundle `negotiate.ts` with `negotiate-core.ts` before upload (for example `deno bundle` or esbuild).
+
+`node --test tests/` covers the negotiation rule; `scripts/serve.py` behaves the same way locally.
+
+### Read-only MCP server
+
+`edge/mcp/` is a standalone Bunny Edge Script serving MCP at `https://mcp.janbrennenstuhl.eu/mcp` (suggested host). It is dual-era: MCP revision 2026-07-28 (stateless, per-request `_meta`, mirrored headers validated) and the `initialize` handshake for 2025-03-26 to 2025-11-25 clients. Tools: `search_site`, `get_entry`, `get_findings`, `list_topics`. It only fetches the site's own `search/index.json`, `catalog.json`, `findings.json` and Markdown twins, caches them for 5 minutes, and never fetches a URL taken from a request. No authentication: everything it serves is public. Set a rate limit on its pull zone. After deploying, add it to `static/.well-known/api-catalog`.
+
+## Dry run and live checks
 
 ```sh
 ./scripts/verify.sh
 npm run test:browser
-.venv/bin/python scripts/deploy.py --dry-run
-.venv/bin/python scripts/release.py
-.venv/bin/python scripts/check_release.py
+npm run test:lighthouse
+python3 scripts/deploy.py --dry-run
+python3 scripts/release.py
+python3 scripts/check_release.py
 ```
 
-After deploying, wait for the chosen edge TTL, then run:
+After deploying, wait for the edge TTL, then run `python3 scripts/smoke.py`. It checks mutable-cache policies, Markdown MIME, validators and 304s, the catalog version and a genuine 404. Also check compression, image format selection (AVIF/WebP), 301 status on a few retired routes, Markdown negotiation and the deployed revision by hand.
 
-```sh
-python3 scripts/smoke.py
-```
+## Rollback
 
-The read-only smoke command verifies mutable-cache policies, Markdown MIME, validators/304s, catalog version and genuine 404 status. Also inspect response compression, representative image selection, alias redirect status, and the deployed revision manually. No live hosting settings were changed during implementation.
+Download the **previous** retained `verified-site` artifact from Forgejo and extract it into an isolated directory. Compare its manifest with the intended rollback revision; do not rebuild an old commit with new dependencies. Dry-run `deploy.py --root <extracted>/public`, then re-upload those bytes through an explicitly operated main-branch run with the same ordering. There is deliberately no unguarded local production upload. Rehearse this against the staging zone before the first real release.
 
-## Rollback rehearsal
-
-Download the **previous** retained `verified-site` artifact from Forgejo and extract it into an isolated directory. Compare its manifest to the intended rollback revision; do not rebuild an old commit with new dependencies. Point the uploader’s `--root` at that extracted `public/` and dry-run. Re-upload its existing bytes through an explicitly operated main-branch release/rollback workflow with the same ordering; there is deliberately no unguarded local production-upload command. Confirm live revision, HTML, feeds and agent catalog after edge expiry.
-
-A real rollback still requires a rehearsal against an authorized staging zone. Local archive extraction and checksum verification only prove artifact integrity. Preserve prior hashed assets for at least the 90-day rollback-artifact window; pruning is a separate reviewed operation. Before removing any public content, replace retired mutable URLs with explicit redirects or tombstones—retaining old files is not a content-removal mechanism.
+Prior fingerprinted assets remain for at least the 90-day artifact window; pruning is a separate reviewed operation. Retiring a page needs a redirect or a tombstone; leaving old files in storage is not a removal mechanism.
 
 ## References
 
-- [Forgejo concurrency reference](https://forgejo.org/docs/latest/user/actions/reference/#concurrency)
-- [Forgejo artifact support](https://forgejo.org/docs/latest/user/actions/advanced-features/)
+- [Forgejo concurrency](https://forgejo.org/docs/latest/user/actions/reference/#concurrency)
 - [Bunny Storage upload API](https://bunny.net/docs/api-reference/storage/manage-files/upload-file)
-- [HTTP caching semantics](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
+- [Bunny Edge Scripting SDK](https://github.com/bunnyway/edge-script-sdk)
+- [MCP 2026-07-28: Streamable HTTP](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http)
+- [RFC 9727: api-catalog](https://www.rfc-editor.org/rfc/rfc9727)
+- [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)

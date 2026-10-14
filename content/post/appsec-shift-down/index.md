@@ -1,14 +1,10 @@
 ---
 id: jb-appsec-shift-down
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['agentic-engineering', 'application-security']
 imageDecorative: true
 title: "Shift Down: Why Agentic Engineering Demands Platform-Level Security"
 linkTitle: "Shift Down AppSec"
 description: "Agentic engineering amplifies architectural entropy at machine speed. The answer is not more security gates but fewer decisions: shift security down into platforms."
-excerpt: "Agentic engineering amplifies architectural entropy at machine speed. The answer is not more security gates but fewer decisions: shift security down into platforms."
+claim: "Coding agents multiply whatever patterns exist, so AppSec should build security into platform defaults that remove risky decisions, and keep scanning as the fallback."
 lead: "Shift-left distributed security responsibility. Shift-down removes the decisions that create risk in the first place. Agentic engineering makes this distinction urgent."
 slug: shift-down-appsec
 image: appsec-shift-down.webp
@@ -20,8 +16,15 @@ lastmod: 2026-06-14
 draft: false
 featured: true
 weight: 50
-categories: ["appsec"]
 tags: ["agentic-engineering", "sdlc", "platform-engineering"]
+series: agentic-appsec
+findings:
+  - id: shift-down-platform-defaults
+    text: "Shift-down security replaces per-team security decisions with platform defaults, such as one standard pipeline that verifies, tests, scans, signs and deploys every service."
+  - id: shift-down-webservice-resource
+    text: "A platform-owned `WebService` resource can deploy a hardened container from a managed base image with mutual TLS, workload identity and egress policies, leaving teams no Dockerfile, pipeline YAML or security context to misconfigure."
+  - id: shift-down-upgrade-once
+    text: "When security lives in the platform, fixing a vulnerability class means upgrading the platform once instead of patching hundreds of services individually."
 ---
 
 An organization with 500 engineering teams rarely has a single way to build, deploy, and operate services. It has a preferred path, a few tolerated exceptions, and a long tail of custom setups. Over time, local optimizations pile up on top of historical accidents. Now give every engineer multiple coding agents that produce code at machine speed. The inconsistency does not grow linearly. It compounds.

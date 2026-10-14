@@ -1,12 +1,9 @@
 ---
 id: jb-cloudformation-sucks
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['software-engineering']
 imageDecorative: true
 title: "Abusing JSON: Why AWS CloudFormation sucks?!"
 description: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist. Devops ✓ AWS ✗ JSON ✗"
+claim: "CloudFormation misuses JSON as a scripting language, which makes templates hard to read and maintain, and tools such as CFN-Sphere add YAML templates and stack dependency resolution on top."
 excerpt: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist …"
 slug: why-aws-cloudformation-sucks
 date: 2015-05-21
@@ -14,10 +11,7 @@ lastmod: 2025-06-22
 draft: false
 weight: 50
 image: aws-cloudformation-sucks.webp
-categories: ["software-engineering"]
 tags: ["operational-excellence", "aws"]
-pinned: false
-homepage: false
 ---
 
 [AWS CloudFormation](https://aws.amazon.com/cloudformation/) (CFN) is a file-based interface for provisioning AWS resources and in that way is Amazons answer on the '[Infrastructure as Code](http://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile)' paradigm. I am a huge fan of this approach and CFN is a big step into the right direction as it supports not just common DevOps ideas, by allowing devs to create, update and delete the operational infrastructure they need with their own tools (a text editor, version control and tests).

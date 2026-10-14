@@ -1,13 +1,10 @@
 ---
 id: jb-bunny-shield-review
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['application-security']
 imageDecorative: true
 title: "Bunny Shield Review: 3 Things Need Improvement"
 linkTitle: "Bunny Shield Review: 3 Things Need Improvement"
 description: "I tested Bunny Shield by Bunny.net – Three things that need attention: False positives, bot management & observability."
+claim: "Bunny Shield is easy to set up and has reasonable default rules, but it needs bot allowlisting, traceable WAF event logs and a fix for blocked Let's Encrypt HTTP-01 challenges."
 excerpt: "Bunny Shield is really easy to use and makes the most of your first experience. It's a solid start for an accessible WAF, but there are a few key improvements needed to make it a production-ready web security product."
 lead: "False positives, bot management & observability"
 slug: bunny-shield-review
@@ -16,7 +13,6 @@ lastmod: 2025-06-22
 draft: false
 weight: 50
 image: bunny-shield-preview-review.webp
-categories: ["appsec"]
 tags: ["eurostack", "operational-excellence"]
 
 links:
@@ -24,6 +20,7 @@ links:
     description: Looking for an European CDN? Join Team Bunny!
     website: https://bunny.net?ref=4pdc7xubq5
     image: /images/bunny.svg
+topics: [application-security, engineering-practice]
 ---
 
 Bunny.net launched the **Bunny Shield Preview** earlier this year. It's an integrated Web Application Firewall (WAF), DDoS mitigation and rate-limiting controls solution all bundled into their Content Delivery Network (CDN) platform. I've been testing it on a few real-world projects over the last few weeks to see how ready it is and how easy it is to use.

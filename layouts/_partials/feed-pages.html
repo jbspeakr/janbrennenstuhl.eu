@@ -1,0 +1,6 @@
+{{- /* Pages for a feed: all eligible on home; topic hubs filter by topic; the field guide orders by last change. */ -}}
+{{- $pages := partialCached "eligible.html" . "all" -}}
+{{- if .Params.topic }}{{ $t := .Params.topic }}{{ $f := slice }}{{ range $pages }}{{ if in (partial "data/topics.html" .) $t }}{{ $f = $f | append . }}{{ end }}{{ end }}{{ $pages = $f -}}
+{{- else if eq .Section "knowledge-base" }}{{ $pages = sort .RegularPagesRecursive "Lastmod" "desc" -}}
+{{- else if not .IsHome }}{{ $pages = .RegularPagesRecursive.ByDate.Reverse }}{{ end -}}
+{{- return $pages -}}

@@ -1,13 +1,10 @@
 ---
 id: jb-jwe-token
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['identity-authentication']
 imageDecorative: true
 title: "JSON Web Encryption: Exploring JWE Token"
 linkTitle: "JSON Web Encryption: Exploring JWE Token"
 description: "Explore the world of JWE token with this in-depth guide. Gain understanding of JSON Web Encryption standards."
+claim: "JWE keeps a JWT's payload confidential through authenticated encryption, but its security depends on careful algorithm choice, key management, token expiry and keeping sensitive data out of headers."
 excerpt: "Have you ever wondered about the intricacies of JSON Web Encryption Standards? Get ready to decode the enigma with this deep dive into JWE Tokens. Gain insightful knowledge and grasp common data security use cases."
 lead: "Encrypted JWTs: Understanding JSON Web Encryption"
 slug: jwe-token-json-web-encryption
@@ -16,15 +13,15 @@ lastmod: 2025-06-15
 draft: false
 weight: 50
 image: jwe-token-json-web-encryption.webp
-categories: ["identity-access-management"]
 tags: ["jwt", "oidc", "oauth2"]
+series: jwt
 ---
 
 ## TL;DR
 
-- JSON Web Encryption (JWE) is a standard for securing data transmission between parties, providing confidentiality, integrity, and authentication. It uses encryption to protect the payload of a [JSON Web Token (JWT)]({{< ref "/tags/jwt/" >}} "JWT Security: Best practices and when to use JSON Web Token") and supports both symmetric and asymmetric encryption techniques. It also allows creating nested JWTs, combining the advantages of JWE and JSON Web Signature (JWS).
+- JSON Web Encryption (JWE) is a standard for securing data transmission between parties, providing confidentiality, integrity, and authentication. It uses encryption to protect the payload of a [JSON Web Token (JWT)]({{< ref "/topics/tokens-jwt/" >}} "JWT Security: Best practices and when to use JSON Web Token") and supports both symmetric and asymmetric encryption techniques. It also allows creating nested JWTs, combining the advantages of JWE and JSON Web Signature (JWS).
 - A **JWE token** consists of five parts: the Protected Header, the Content Encryption Key, the Initialization Vector, the Ciphertext, and the Authentication Tag. It supports various encryption algorithms like RSA-OAEP, AES-GCM, and ECDH-ES and requires using authenticated encryption to ensure the token's integrity and confidentiality.
-- Modern authentication and authorization frameworks like OAuth2 and [OpenID Connect (OIDC)]({{< ref "/tags/oidc/" >}} "OpenID Connect: User Authentication & Identity") use **JWE tokens** as bearer tokens. Proper key management is crucial to maintain the security guarantees of JWE.
+- Modern authentication and authorization frameworks like OAuth2 and [OpenID Connect (OIDC)]({{< ref "/topics/identity-authentication/" >}} "OpenID Connect: User Authentication & Identity") use **JWE tokens** as bearer tokens. Proper key management is crucial to maintain the security guarantees of JWE.
 
 ## JSON Web Encryption (JWE) Token: A Comprehensive Guide
 
@@ -160,7 +157,7 @@ JWEs often appear as bearer tokens to authenticate and authorize access to prote
 
 ### JWE in OAuth2 and OIDC
 
-[OAuth2]({{< ref "/tags/oauth2/" >}} "Delegated Authorization with OAuth 2.0") and OpenID Connect (OIDC) are widely used authentication/ authorization protocols, often used for securing web APIs. They allow users to grant access to their resources without sharing their credentials with third-party applications. These protocols can use JWE Tokens to provide an additional layer of security by encrypting the access token. Enforcing clients to treat them as genuinely opaque tokens allows the token issuer (authorization server) to transport sensitive information like PII statelessly. At the same time, it also ensures that even if an attacker intercepts the token, they cannot read its contents without the **decryption key**.
+[OAuth2]({{< ref "/topics/identity-authentication/" >}} "Delegated Authorization with OAuth 2.0") and OpenID Connect (OIDC) are widely used authentication/ authorization protocols, often used for securing web APIs. They allow users to grant access to their resources without sharing their credentials with third-party applications. These protocols can use JWE Tokens to provide an additional layer of security by encrypting the access token. Enforcing clients to treat them as genuinely opaque tokens allows the token issuer (authorization server) to transport sensitive information like PII statelessly. At the same time, it also ensures that even if an attacker intercepts the token, they cannot read its contents without the **decryption key**.
 
 ### JWE for Data at Rest
 

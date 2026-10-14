@@ -1,17 +1,35 @@
-{{ if or .IsHome .IsBranch }}{{ $initialize := partial "pager.html" . }}{{ end }}
+{{- /* Render content first so shortcodes can register findings, citations and terms for the head. */ -}}
+{{- $_ := .Content -}}
+{{- $palette := resources.Get "js/palette.js" | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint -}}
 <!doctype html>
 <html lang="en-GB">
 <head>{{ partial "head.html" . }}</head>
-<body>
+<body class="k-{{ .Kind }} {{ with .Section }}s-{{ . }}{{ end }}">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header wrap">
-  <a class="brand" href="/" aria-label="Brennenstuhl on Security — home"><img src="/favicon.svg" width="36" height="36" alt=""><span>Brennenstuhl <span class="brand-sub">on Security</span></span></a>
-  <nav aria-label="Main navigation"><a href="/writing/" {{ if eq .RelPermalink "/writing/" }}aria-current="page"{{ end }}>Writing</a><a href="/knowledge-base/" {{ if eq .Section "knowledge-base" }}aria-current="true"{{ end }}>Knowledge</a><a href="/projects/" {{ if eq .Section "projects" }}aria-current="true"{{ end }}>Projects</a><a href="/about/" {{ if eq .RelPermalink "/about/" }}aria-current="page"{{ end }}>About</a><a href="/search/" {{ if eq .Layout "search" }}aria-current="page"{{ end }} aria-label="Search the archive">Search <span aria-hidden="true">↗</span></a></nav>
-  <label class="theme-control" hidden>Theme <select id="theme" aria-label="Color theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="/" aria-label="Brennenstuhl on Security, home"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="3" width="26" height="26" rx="7" class="bm-b"/><circle cx="11" cy="16" r="3.2" class="bm-n"/><circle cx="22" cy="16" r="3.2" class="bm-s"/><path d="M14.5 16h4" class="bm-f"/></svg><span class="brand-name">Brennenstuhl <span>on Security</span></span></a>
+    <nav class="primary" aria-label="Main">
+      {{- $cur := . }}
+      {{- range slice (slice "Writing" "/writing/" "post") (slice "Field Guide" "/knowledge-base/" "knowledge-base") (slice "Topics" "/topics/" "topics") (slice "Talks" "/talks/" "talks") (slice "Now" "/now/" "") (slice "About" "/about/" "") }}
+      {{- $active := or (eq $cur.RelPermalink (index . 1)) (and (index . 2) (eq $cur.Section (index . 2))) }}
+      <a href="{{ index . 1 }}"{{ if $active }} aria-current="{{ cond (eq $cur.RelPermalink (index . 1)) "page" "true" }}"{{ end }}>{{ index . 0 }}</a>
+      {{- end }}
+    </nav>
+    <div class="tools">
+      <a class="search-trigger" href="/search/" data-palette="{{ $palette.RelPermalink }}" data-topics="{{ $t := dict }}{{ range hugo.Data.topics.topic }}{{ $t = merge $t (dict .id .title) }}{{ end }}{{ $t | jsonify }}" aria-keyshortcuts="Meta+K Control+K"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>Search</span><kbd hidden>⌘K</kbd></a>
+      {{ partial "ui/reader-settings.html" . }}
+    </div>
+  </div>
 </header>
 <main id="main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
-<footer class="site-footer wrap"><div><a class="footer-name" href="/about/">Jan Brennenstuhl</a><p>Independent thinking on secure systems.<br>Written in Berlin. Made and hosted in the EU.</p></div><nav aria-label="Follow and explore"><a href="/index.xml">Subscribe via RSS ↗</a><a href="/talks/">Speaking</a><a href="/topics/">Explore topics</a><a href="/llms.txt">For agents</a><a href="https://infosec.exchange/@jbspeakr" rel="me">Mastodon</a></nav><nav aria-label="Legal"><a href="/imprint/">Imprint</a><a href="/privacy-policy/">Privacy</a><a href="/affiliate-disclaimer/">Independent views</a><a href="https://creativecommons.org/licenses/by/4.0/">Original writing · CC BY 4.0</a><a href="{{ site.Params.sourceRepository }}">Source on Codeberg ↗</a></nav></footer>
+{{ partial "ui/footer.html" . }}
 <div class="sr-only" id="feedback" role="status" aria-live="polite"></div>
-{{ $js := resources.Get "js/site.js" | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
-{{ if eq .Layout "search" }}{{ $search := resources.Get "js/search.js" | minify | fingerprint }}<script src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}" defer></script>{{ end }}
-</body></html>
+{{- $js := resources.Get "js/site.js" | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint }}
+<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{- range .Params.scripts }}{{ with resources.Get (printf "js/explainers/%s.js" .) }}{{ $x := . | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint }}
+<script type="module" src="{{ $x.RelPermalink }}" integrity="{{ $x.Data.Integrity }}"></script>{{ else }}{{ errorf "Unknown explainer script %q on %s" . $.Path }}{{ end }}{{ end }}
+{{- if eq .Layout "search" }}{{ $s := resources.Get "js/search.js" | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint }}
+<script type="module" src="{{ $s.RelPermalink }}" integrity="{{ $s.Data.Integrity }}"></script>{{ end }}
+</body>
+</html>

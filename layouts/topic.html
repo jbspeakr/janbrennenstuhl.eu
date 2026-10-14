@@ -1,1 +1,0 @@
-{{ define "main" }}<section class="wrap collection"><header><p class="eyebrow">Subject guide</p><h1>{{ .Title }}</h1><p class="lead">{{ .Description }}</p><div class="prose">{{ .Content }}</div></header>{{ range where (partial "eligible.html" .) "Params.topics" "intersect" (slice .Params.topic) }}{{ partial "row.html" . }}{{ end }}</section>{{ end }}

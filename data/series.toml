@@ -1,0 +1,22 @@
+# Multi-part writing. Pages join with `series = "<id>"` in front matter;
+# the navigator orders them by date.
+
+[[series]]
+id = "jwt"
+title = "JSON Web Tokens"
+description = "What JWTs are for, how the JOSE standards fit together, and how to use them without surprises."
+
+[[series]]
+id = "passwords"
+title = "Usable password security"
+description = "Password policies, length limits and login forms that work with password managers instead of against them."
+
+[[series]]
+id = "agentic-appsec"
+title = "AppSec for agentic engineering"
+description = "How coding agents change application security, and what security teams should build in response."
+
+[[series]]
+id = "whaling"
+title = "Whaling"
+description = "Phishing aimed at executives: how it works and how to train for it."

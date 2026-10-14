@@ -14,16 +14,16 @@ jobs:
       - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-      - name: Bootstrap pinned build dependencies
+      - name: Install pinned Hugo
         run: ./scripts/bootstrap.sh
-      - name: Verify complete artifact
+      - name: Build once and run every static gate
         env:
           INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }} # Intentionally public verification token
         run: ./scripts/verify.sh
       - name: Verify deployment ordering without credentials
-        run: .venv/bin/python scripts/deploy.py --dry-run
+        run: python3 scripts/deploy.py --dry-run
       - name: Package the verified release
-        run: .venv/bin/python scripts/release.py
+        run: python3 scripts/release.py
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
         with:
           name: verified-site
@@ -47,8 +47,34 @@ jobs:
         run: |
           npm ci --ignore-scripts
           npx playwright install --with-deps chromium
-      - name: Browser contracts
+      - name: Browser contracts (axe matrix, keyboard, no-JS, reflow, negotiation)
         run: npm run test:browser
+      - name: Lighthouse lab gate
+        run: CHROMIUM_EXECUTABLE="$(node -e "console.log(require('playwright').chromium.executablePath())")" npm run test:lighthouse
+  preview:
+    # Opt-in staging preview for same-repository pull requests. Separate zone and credentials;
+    # the production secrets are never referenced here. The preview is built for its own host.
+    if: github.event_name == 'pull_request' && vars.PREVIEW_HOST != '' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: [verify]
+    runs-on: codeberg-small
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Install pinned Hugo
+        run: ./scripts/bootstrap.sh
+      - name: Build for the preview host
+        run: |
+          HUGO=hugo; [ -x .tools/hugo ] && HUGO=.tools/hugo
+          HUGO_PARAMS_SOURCE_REVISION="$(git rev-parse HEAD)-preview" "$HUGO" --minify --baseURL "https://${{ vars.PREVIEW_HOST }}/"
+      - name: Upload to the staging zone
+        env:
+          BUNNY_PREVIEW_ZONE: ${{ secrets.PREVIEW_STORAGE_NAME }}
+          BUNNY_PREVIEW_PASSWORD: ${{ secrets.PREVIEW_STORAGE_PASSWORD }}
+          BUNNY_PREVIEW_HOST: ${{ vars.BUNNY_STORAGE_HOST }}
+        run: |
+          python3 scripts/deploy.py --preview
+          echo "Preview: https://${{ vars.PREVIEW_HOST }}/" >> "$GITHUB_STEP_SUMMARY"
   publish:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [verify, browser]

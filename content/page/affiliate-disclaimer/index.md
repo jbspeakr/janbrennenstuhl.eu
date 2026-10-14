@@ -4,19 +4,11 @@ description: "This is a private blog. I am not speaking for the company I work f
 date: 2023-05-06
 lastmod: 2025-06-09
 draft: false
-images: []
 slug: "affiliate-disclaimer"
 robots: "noindex, follow"
 sitemap_exclude: true
 license: false
 featured: true
-
-menu: 
-  main:
-    name: Disclaimer
-    weight: 6
-    params:
-      icon: briefcase-off
 ---
 
 Hi. Jan Brennenstuhl here. My goal with this blog is to help educate you on practically any field that touches software development and security engineering, but please understand I am sharing my individual expertise and perspective.

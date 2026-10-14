@@ -1,40 +1,79 @@
 ---
 id: jb-research-oidc-security
-kind: research
-status: published
-reviewStatus: not-reviewed
-topics: ['identity-authentication']
 imageDecorative: true
-title: "OIDC Security Research"
-linkTitle: "Threats & Attacks: Security Research on OpenId Connect (OIDC)"
-description: "Dive into OpenID Connect security, learn from security researchers, and enhance your knowledge on OIDC threats and attack scenarios."
-lead: "While OpenID Connect represents an important step forward in online security, it is not without risks and attack scenarios. From phishing attempts to session hijacking, cybercriminals continue to develop sophisticated techniques to exploit vulnerabilities. Unauthorized individuals could exploit poorly built OpenID systems, resulting in catastrophic data breaches. This highlights the significance of comprehending the complexities of OpenID Connect threats and attack scenarios. We may continue to use this valuable tool to improve our digital defenses while limiting potential hazards by remaining aware and extra vigilant."
+title: "Where do OpenID Connect implementations break?"
+linkTitle: "OpenID Connect security"
+description: "What 2 security analyses from Ruhr-University Bochum found about attacks on OpenID Connect clients and providers, and which checks prevent them."
+answer: "Mostly where tokens and redirects get checked: documented attacks on relying parties include token substitution, key confusion and replay, and attacks on providers include redirect URI manipulation, PKCE downgrade and sub claim spoofing. Certification doesn't rule these out, as a 2020 lab analysis of OpenID Certified implementations disclosed 12 flaws."
 date: 2023-05-15
-lastmod: 2023-05-15
+lastmod: 2026-10-13
 draft: false
 image: openid-connect-security.webp
-type: docs
-menu:
-  knowledge-base:
-    parent: "oidc"
-    identifier: "oidc-security"
 weight: 100
-toc: true
 slug: openid-connect-security-research
+topics: [identity-authentication]
+claim: "Testing 6 certified OpenID providers and 8 relying parties against 18 known attacks uncovered 12 implementation flaws."
+changes:
+  - date: 2026-10-13
+    note: "Rewritten as a field-guide entry: question title, short answer, key findings and evidence table. Study summaries kept and extended with numbers from the thesis abstract."
 ---
 
-## Security Analysis of Real-Life OpenID Connect Implementations
+## Key findings
 
-In this Master's thesis, Christian Fries presents a lab environment for developers and penetration-testers to unveil security flaws in real-world OpenID Connect Certified Service Provider and Identity Provider implementations. 
+{{< finding id="oidc-certified-12-flaws" source="Fries, Security Analysis of Real-Life OpenID Connect Implementations (Master's thesis, Ruhr-University Bochum, 2020)" url="https://www.nds.ruhr-uni-bochum.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf" >}}Testing 6 OpenID Certified identity providers and 8 service providers against 11 service provider attacks and 7 identity provider attacks uncovered 12 implementation flaws.{{< /finding >}}
 
-In addition, the paper describes common threats and attack scenarios including single- and cross-phase attacks on relying parties, like token substitution, key confusion and replay attacks. Also OpenID provider attacks, like message flow confusion, PKCE downgrade or sub claim spoofing are covered.  
+{{< finding id="oidc-spec-flaws" source="Mladenov and Mainka, OpenID Connect Security Considerations (Ruhr-University Bochum, 2017)" url="https://www.nds.ruhr-uni-bochum.de/media/ei/veroeffentlichungen/2017/01/13/OIDCSecurity_1.pdf" >}}Mladenov and Mainka classify session overwriting and IdP confusion as flaws in the OpenID Connect specification itself, separate from implementation bugs.{{< /finding >}}
 
-<b><a href="https://www.nds.ruhr-uni-bochum.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf" rel="noopener">→ Read the Paper</a></b> (.pdf)
+{{< finding id="oidc-attacker-needs-no-network" source="Mladenov and Mainka, OpenID Connect Security Considerations (Ruhr-University Bochum, 2017)" url="https://www.nds.ruhr-uni-bochum.de/media/ei/veroeffentlichungen/2017/01/13/OIDCSecurity_1.pdf" >}}The attacks in the OpenID Connect Security Considerations report work for a web attacker who sends ordinary HTTP requests and has no control over the network.{{< /finding >}}
 
-## OpenID Connect Security Considerations
+## Evidence
 
-This paper from security researchers of the Ruhr-University Bochum looked at OpenID Connect specification flaws and implementation issues opening up attack vectors. They outline common attack scenarios like session overwriting, redirect URI manipulation or token recipient confusion and give attack defense recommendations.
+{{< studies caption="OpenID Connect security studies" >}}
+{{< study title="Security Analysis of Real-Life OpenID Connect Implementations" org="Ruhr-University Bochum" year="2020" sample="6 identity providers, 8 service providers" method="Docker lab with PrOfESSOS, automatic and manual tests" url="https://www.nds.ruhr-uni-bochum.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf" >}}18 attack types tested; 12 implementation flaws disclosed.{{< /study >}}
+{{< study title="OpenID Connect Security Considerations" org="Ruhr-University Bochum" year="2017" sample="n/a" method="Technical report on specification and implementation flaws" url="https://www.nds.ruhr-uni-bochum.de/media/ei/veroeffentlichungen/2017/01/13/OIDCSecurity_1.pdf" >}}Catalogues attacks on clients and providers with defence recommendations.{{< /study >}}
+{{< /studies >}}
 
-This crisp technical report is definitely a great source of inspiration for everyone who plans to conduct any form of OIDC pen-testing.  
+## What to do
 
-<b><a href="https://www.nds.ruhr-uni-bochum.de/media/ei/veroeffentlichungen/2017/01/13/OIDCSecurity_1.pdf" rel="noopener">→ Read the Paper</a></b> (.pdf)
+### For engineers
+
+On the relying party:
+
+- Validate every {{< term "id-token" >}}: signature with a key from the expected issuer's key set, algorithm, issuer, audience, expiry and nonce. Signature manipulation, key confusion, token recipient confusion and replay attacks all exploit a missing check. My essays on [JWKS]({{< ref "/post/jwks" >}}) and [the purpose of JWT]({{< ref "/post/purpose-of-jwt" >}}) cover the token side.
+- Bind each login to the browser session that started it, and remember which identity provider you sent the user to. Session overwriting and IdP confusion exploit clients that don't.
+- Identify users by issuer and subject together, never by subject or email alone.
+
+On the OpenID provider:
+
+- Compare redirect URIs exactly against the registered values.
+- Enforce {{< term "pkce" >}} for clients that started with it, so an attacker can't downgrade the flow.
+- Accept each authorisation code once and only from the client it was issued to.
+
+### For product and UX
+
+- Treat "OpenID Certified" as a conformance signal, not a security audit. Fries tested certified implementations and still disclosed 12 flaws. When you choose a library or vendor, ask for penetration test results that cover these attack classes.
+- If your product offers several identity providers, show users which one they're signing in with. IdP confusion attacks rely on the client mixing them up.
+
+## The studies in detail
+
+### Security Analysis of Real-Life OpenID Connect Implementations
+
+In this Master's thesis from December 2020, Christian Fries presents a Docker-based lab environment for developers and penetration testers. The lab helps to find security flaws in real-world OpenID Connect Certified service provider and identity provider implementations, and it includes the PrOfESSOS tool for automatic tests. Fries selected 6 identity providers and 8 service providers that support the implicit and hybrid flows. He tested them against 11 service provider attacks and 7 identity provider attacks and disclosed 12 implementation flaws to the developers.
+
+The thesis also describes common threats and attack scenarios. These include single- and cross-phase attacks on relying parties, like token substitution, key confusion and replay attacks. It also covers attacks on OpenID providers, like message flow confusion, PKCE downgrade and sub claim spoofing.
+
+[Read the paper (PDF)](https://www.nds.ruhr-uni-bochum.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf)
+
+### OpenID Connect Security Considerations
+
+In this 2017 technical report, Vladislav Mladenov and Christian Mainka from Ruhr-University Bochum look at OpenID Connect specification flaws and implementation issues that open up attack vectors. They outline attack scenarios like session overwriting, redirect URI manipulation and token recipient confusion, and give recommendations for defending against them.
+
+This short technical report is a good source of ideas for anyone planning an OpenID Connect penetration test.
+
+[Read the paper (PDF)](https://www.nds.ruhr-uni-bochum.de/media/ei/veroeffentlichungen/2017/01/13/OIDCSecurity_1.pdf)
+
+## Related
+
+- [Step-up authentication with OpenID Connect]({{< ref "/post/stepup-authentication" >}})
+- [How do attackers take over accounts?]({{< ref "/knowledge-base/account-security/account-hijacking" >}})
+- [Glossary]({{< ref "/page/glossary" >}})

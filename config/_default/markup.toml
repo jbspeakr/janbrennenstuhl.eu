@@ -1,8 +1,16 @@
 [goldmark.renderer]
+# Some older entries still carry inline HTML (<mark>, <br>, task inputs). Content is author-owned.
 unsafe = true
+[goldmark.parser]
+autoHeadingIDType = "github"
+[goldmark.parser.attribute]
+block = true
+title = true
+[goldmark.extensions.passthrough]
+enable = false
 [tableOfContents]
 startLevel = 2
-endLevel = 4
+endLevel = 3
 ordered = false
 [highlight]
 noClasses = false

@@ -1,0 +1,4 @@
+{{/* Stable editorial ID: assigned in front matter, else derived once from the bundle path (not the title or slug). */}}
+{{ $id := .Params.id }}
+{{ if and (not $id) .File }}{{ $id = printf "jb-%s" (.File.Dir | strings.TrimSuffix "/" | replaceRE "^(post|page)/" "" | replaceRE "/" "-") }}{{ end }}
+{{ return (or $id .RelPermalink) }}

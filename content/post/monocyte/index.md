@@ -1,23 +1,16 @@
 ---
 id: jb-monocyte
-kind: essay
-status: published
-reviewStatus: not-reviewed
-topics: ['application-security']
 imageDecorative: true
 title: "AWS Monocyte: Let's Build a Cloud Immune System"
 description: "Monocyte: A AWS Immune System. Comply to EU regulations by finding and deleting AWS resources in regions outside of Europe with AWS Monocyte!"
-excerpt: "Monocyte: A AWS Immune System. Comply to EU regulations by finding and deleting AWS resources in regions outside of Europe with AWS Monocyte!"
+claim: "AWS Monocyte finds and deletes AWS resources in regions outside the EU, so companies can let teams run their own accounts and still enforce EU data rules, if only reactively."
 slug: aws-cloud-immune-system
 date: 2015-03-18
 lastmod: 2025-06-22
 draft: false
 weight: 50
 image: monocyte.webp
-categories: ["software-security"]
 tags: ["open-source", "aws", "operational-excellence"]
-pinned: false
-homepage: false
 ---
 
 With Ireland and Frankfurt being available as AWS regions nowadays, Amazon (more or less) tried to extinguish EU and especially German legal concerns regarding storage and processing of privacy-related data. However, for European companies it remains difficult to prevent (accidental) usage of services and resources outside the EU, as there is still no standardized way to restrict AWS-account rights on this region-level. Especially in open, [DevOps](https://en.wikipedia.org/wiki/DevOps)-inspired company cultures this becomes a major issue:

@@ -1,0 +1,131 @@
+{{- /*
+Trust Boundaries: a deterministic boundary diagram drawn from a page's primary topic and a hash
+of its identity. The topic picks the grammar (who talks to whom, which boundary, which threat);
+the hash varies positions, curvature and the plate number, so every page gets its own drawing.
+
+Context: dict "page" PAGE, optional "decorative" (bool, default true), "topic" (override),
+"name" (view-transition name), "class".
+Colours come from CSS custom properties, so the drawing follows the theme.
+*/ -}}
+{{- $p := .page -}}
+{{- $topics := partial "data/topics.html" $p -}}
+{{- $topic := .topic | default (index $topics 0) | default "engineering-practice" -}}
+{{- $seed := printf "%s|%s" (partial "data/id.html" $p) $p.Title -}}
+{{- $h := md5 $seed -}}
+{{- $hex := dict "0" 0 "1" 1 "2" 2 "3" 3 "4" 4 "5" 5 "6" 6 "7" 7 "8" 8 "9" 9 "a" 10 "b" 11 "c" 12 "d" 13 "e" 14 "f" 15 -}}
+{{- $n := slice -}}{{- range seq 0 31 -}}{{- $n = $n | append (index $hex (substr $h . 1)) -}}{{- end -}}
+{{- $uid := substr $h 0 6 -}}
+
+{{- /* Grammar per topic: nodes (label, x, kind), flows [from to label], boundaries, one threat. */ -}}
+{{- $g := dict -}}
+{{- if eq $topic "agentic-engineering" -}}
+  {{- $g = dict
+    "nodes" (slice (dict "l" "USER" "x" 130 "y" 0) (dict "l" "AGENT" "x" 420 "y" 0) (dict "l" "GATEWAY" "x" 760 "y" 0) (dict "l" "TOOL" "x" 1070 "y" 0) (dict "l" "BROKER" "x" 760 "y" 140))
+    "flows" (slice (slice 0 1 "intent") (slice 1 2 "agent token") (slice 2 4 "exchange") (slice 2 3 "scoped token"))
+    "bounds" (slice (dict "n" (slice 1) "l" "AGENT RUNTIME") (dict "n" (slice 2 4) "l" "PLATFORM"))
+    "threat" (dict "l" "INJECTION" "target" 1)
+    "caption" "Delegation" -}}
+{{- else if eq $topic "identity-authentication" -}}
+  {{- $g = dict
+    "nodes" (slice (dict "l" "USER" "x" 130 "y" 0) (dict "l" "CLIENT" "x" 450 "y" 0) (dict "l" "IDP" "x" 790 "y" -90) (dict "l" "API" "x" 1070 "y" 60))
+    "flows" (slice (slice 0 1 "sign in") (slice 1 2 "authorize") (slice 2 1 "id + access token") (slice 1 3 "bearer"))
+    "bounds" (slice (dict "n" (slice 2) "l" "ISSUER") (dict "n" (slice 3) "l" "RESOURCE"))
+    "threat" (dict "l" "REPLAY" "target" 3)
+    "caption" "Authentication" -}}
+{{- else if eq $topic "application-security" -}}
+  {{- $g = dict
+    "nodes" (slice (dict "l" "CODE" "x" 130 "y" 0) (dict "l" "PIPELINE" "x" 450 "y" 0) (dict "l" "PLATFORM" "x" 770 "y" 0) (dict "l" "PROD" "x" 1070 "y" 0))
+    "flows" (slice (slice 0 1 "commit") (slice 1 2 "verified build") (slice 2 3 "deploy"))
+    "bounds" (slice (dict "n" (slice 1 2) "l" "PAVED ROAD"))
+    "threat" (dict "l" "DEPENDENCY" "target" 1)
+    "caption" "Secure defaults" -}}
+{{- else if eq $topic "passwords" -}}
+  {{- $g = dict
+    "nodes" (slice (dict "l" "USER" "x" 150 "y" 0) (dict "l" "LOGIN" "x" 560 "y" 0) (dict "l" "HASH STORE" "x" 990 "y" 0) (dict "l" "MANAGER" "x" 150 "y" 140))
+    "flows" (slice (slice 0 1 "passphrase") (slice 3 1 "autofill") (slice 1 2 "verify hash"))
+    "bounds" (slice (dict "n" (slice 1 2) "l" "ACCOUNT SYSTEM"))
+    "threat" (dict "l" "STUFFING" "target" 1)
+    "caption" "Credentials" -}}
+{{- else if eq $topic "tokens-jwt" -}}
+  {{- $g = dict
+    "nodes" (slice (dict "l" "ISSUER" "x" 170 "y" 0) (dict "l" "HOLDER" "x" 600 "y" 0) (dict "l" "VERIFIER" "x" 1030 "y" 0))
+    "flows" (slice (slice 0 1 "signed JWT") (slice 1 2 "presents") (slice 0 2 "JWKS"))
+    "bounds" (slice (dict "n" (slice 0) "l" "SIGNING KEYS") (dict "n" (slice 2) "l" "VERIFY"))
+    "threat" (dict "l" "FORGED" "target" 2)
+    "caption" "Token flow" -}}
+{{- else -}}
+  {{- $g = dict
+    "nodes" (slice (dict "l" "CLIENT" "x" 130 "y" 0) (dict "l" "EDGE" "x" 440 "y" 0) (dict "l" "SERVICE" "x" 760 "y" 0) (dict "l" "DATA" "x" 1070 "y" 0))
+    "flows" (slice (slice 0 1 "request") (slice 1 2 "origin") (slice 2 3 "query"))
+    "bounds" (slice (dict "n" (slice 2 3) "l" "EU REGION"))
+    "threat" dict
+    "caption" "Systems" -}}
+{{- end -}}
+
+{{- /* Place nodes: base line plus hash jitter. */ -}}
+{{- $base := 250 -}}
+{{- $nodes := slice -}}
+{{- range $i, $node := $g.nodes -}}
+  {{- $jit := mul (sub (index $n $i) 7) 6 -}}
+  {{- $w := add (mul (len $node.l) 10) 34 -}}
+  {{- $nodes = $nodes | append (dict "l" $node.l "x" $node.x "y" (add (add $base $node.y) $jit) "w" $w "h" 44) -}}
+{{- end -}}
+
+{{- $names := slice }}{{ range $g.nodes }}{{ $names = $names | append (lower .l) }}{{ end -}}
+{{- $label := printf "%s diagram: %s, separated by trust boundaries" $g.caption (delimit $names ", " " and ") -}}
+{{- $decorative := true -}}{{- if isset . "decorative" -}}{{- $decorative = .decorative -}}{{- end -}}
+<svg class="diagram {{ .class }}" viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+  {{- if $decorative }} aria-hidden="true" focusable="false"{{ else }} role="img" aria-labelledby="dt-{{ $uid }}"{{ end }}
+  {{- with .name }} style="view-transition-name: {{ . | safeCSS }}"{{ end }}>
+{{- if not $decorative }}<title id="dt-{{ $uid }}">{{ $label }}</title>{{ end }}
+<defs><pattern id="dg-{{ $uid }}" width="24" height="24" patternUnits="userSpaceOnUse" x="{{ index $n 20 }}" y="{{ index $n 21 }}"><circle cx="2" cy="2" r="1.2" class="d-dot"/></pattern>
+<marker id="da-{{ $uid }}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+<rect width="1200" height="500" class="d-ground"/><rect width="1200" height="500" fill="url(#dg-{{ $uid }})"/>
+{{- /* Boundaries */ -}}
+{{- range $bi, $b := $g.bounds -}}
+  {{- $minx := 2000 }}{{ $miny := 2000 }}{{ $maxx := 0 }}{{ $maxy := 0 -}}
+  {{- range $b.n }}{{ $nd := index $nodes . -}}
+    {{- $minx = cond (lt (sub $nd.x (div $nd.w 2)) $minx) (sub $nd.x (div $nd.w 2)) $minx -}}
+    {{- $maxx = cond (gt (add $nd.x (div $nd.w 2)) $maxx) (add $nd.x (div $nd.w 2)) $maxx -}}
+    {{- $miny = cond (lt (sub $nd.y 22) $miny) (sub $nd.y 22) $miny -}}
+    {{- $maxy = cond (gt (add $nd.y 22) $maxy) (add $nd.y 22) $maxy -}}
+  {{- end -}}
+  {{- $pad := add 34 (mul (index $n (add 8 $bi)) 2) -}}
+  {{- $x := sub $minx $pad }}{{ $y := sub $miny (add $pad 14) }}{{ $w := add (sub $maxx $minx) (mul $pad 2) }}{{ $hh := add (sub $maxy $miny) (add (mul $pad 2) 14) }}
+<g class="d-boundary"><rect x="{{ $x }}" y="{{ $y }}" width="{{ $w }}" height="{{ $hh }}" rx="18"/><text x="{{ add $x 16 }}" y="{{ add $y 24 }}" class="d-blabel">{{ $b.l }}</text></g>
+{{- end -}}
+{{- /* Flows: S-curves between node edges; a reverse flow bends below. */ -}}
+{{- range $fi, $f := $g.flows -}}
+  {{- $a := index $nodes (index $f 0) }}{{ $b := index $nodes (index $f 1) -}}
+  {{- $d := "" }}{{ $lx := 0 }}{{ $ly := 0 -}}
+  {{- if eq $a.x $b.x -}}
+    {{- $sy := cond (lt $a.y $b.y) (add $a.y 22) (sub $a.y 22) }}{{ $ey := cond (lt $a.y $b.y) (sub $b.y 26) (add $b.y 26) -}}
+    {{- $d = printf "M%d %d L%d %d" $a.x $sy $b.x $ey }}{{ $lx = add $a.x 14 }}{{ $ly = div (add $sy $ey) 2 -}}
+  {{- else if lt $a.x $b.x -}}
+    {{- $sx := add $a.x (div $a.w 2) }}{{ $ex := sub $b.x (add (div $b.w 2) 6) -}}
+    {{- $lift := 0 }}{{ if gt (sub $b.x $a.x) 600 }}{{ $lift = sub -150 (mul (index $n (add 12 $fi)) 4) }}{{ end -}}
+    {{- $cx := div (sub $ex $sx) 2 -}}
+    {{- $d = printf "M%d %d C%d %d %d %d %d %d" $sx $a.y (add $sx $cx) (add $a.y $lift) (sub $ex $cx) (add $b.y $lift) $ex $b.y -}}
+    {{- $lx = div (add $sx $ex) 2 }}{{ $ly = sub (add (div (add $a.y $b.y) 2) (div (mul $lift 3) 4)) 12 -}}
+  {{- else -}}
+    {{- $sx := sub $a.x (div $a.w 2) }}{{ $ex := add $b.x (add (div $b.w 2) 6) }}{{ $dip := add 90 (mul (index $n (add 12 $fi)) 3) -}}
+    {{- $d = printf "M%d %d C%d %d %d %d %d %d" $a.x (add $a.y 22) $a.x (add $a.y $dip) $b.x (add $b.y $dip) $b.x (add $b.y 26) -}}
+    {{- $lx = div (add $a.x $b.x) 2 }}{{ $ly = add (div (add $a.y $b.y) 2) (sub $dip 6) -}}
+    {{- $_ := $sx }}{{ $_ = $ex -}}
+  {{- end }}
+<g class="d-flow" style="--i: {{ $fi }}"><path d="{{ $d }}" pathLength="1" marker-end="url(#da-{{ $uid }})"/><text x="{{ $lx }}" y="{{ $ly }}" text-anchor="middle" class="d-flabel">{{ index $f 2 }}</text></g>
+{{- end -}}
+{{- /* Threat: an attacker path that stops at the first boundary around its target. */ -}}
+{{- with $g.threat -}}{{- if .l -}}
+  {{- $t := index $nodes .target -}}
+  {{- $tx := add $t.x (mul (sub (index $n 16) 7) 8) }}{{ $ty := 58 -}}
+  {{- $stop := sub $t.y (add 84 (mul (index $n (add 8 0)) 2)) -}}
+<g class="d-threat"><text x="{{ $tx }}" y="{{ $ty }}" text-anchor="middle" class="d-tlabel">{{ .l }}</text><path d="M{{ $tx }} {{ add $ty 12 }} L{{ $t.x }} {{ $stop }}"/><path class="d-block" d="M{{ sub $t.x 9 }} {{ sub $stop 9 }} l18 18 m0 -18 l-18 18"/></g>
+{{- end }}{{- end -}}
+{{- /* Nodes on top. */ -}}
+{{- range $nodes }}
+<g class="d-node"><rect x="{{ sub .x (div .w 2) }}" y="{{ sub .y 22 }}" width="{{ .w }}" height="44" rx="10"/><text x="{{ .x }}" y="{{ add .y 5 }}" text-anchor="middle">{{ .l }}</text></g>
+{{- end }}
+<text x="40" y="470" class="d-plate">TB-{{ upper (substr $h 0 4) }} / {{ upper $g.caption }}</text>
+</svg>
+{{- /* end diagram */ -}}

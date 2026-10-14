@@ -1,8 +1,35 @@
-{{ define "main" }}{{ $pager := .Paginator }}<div class="wrap">
-{{ if eq $pager.PageNumber 1 }}
-<section class="hero"><div><p class="eyebrow">Jan Brennenstuhl / Security engineering</p><h1>Systems that make<br>the secure path <em>easy.</em></h1><p class="hero-lead">Application security, identity, and agentic engineering. Notes from building systems that people can trust.</p><a class="text-link" href="/about/">The person behind the writing <span aria-hidden="true">↗</span></a></div><div class="hero-art">{{ partial "art.html" . }}<span class="art-caption">A study in delegation & trust boundaries</span></div></section>
-{{ with site.GetPage site.Params.featured }}<section class="featured"><div><p class="eyebrow">Selected essay / {{ .Date.Format "January 2006" }}</p><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2></div><div><p>{{ .Params.lead | default .Description }}</p><a class="text-link" href="{{ .RelPermalink }}">Read the essay <span aria-hidden="true">↗</span></a><span class="reading-time">{{ .ReadingTime }} min read</span></div></section>{{ end }}
-<section class="topic-paths" aria-label="Explore subjects"><a href="/topics/agentic-engineering/"><span>01 /</span><h2>Agentic engineering</h2><p>Agents, platforms, and the engineering practices around them.</p><b aria-hidden="true">↗</b></a><a href="/topics/identity-authentication/"><span>02 /</span><h2>Identity & authentication</h2><p>Delegation, credentials, and usable account security.</p><b aria-hidden="true">↗</b></a><a href="/topics/application-security/"><span>03 /</span><h2>Application security</h2><p>Secure defaults and the systems that make them scale.</p><b aria-hidden="true">↗</b></a></section>
-{{ else }}<header class="collection"><p class="eyebrow">Writing / Archive</p><h1>From the archive · Page {{ $pager.PageNumber }}</h1></header>{{ end }}<section class="writing-list"><div class="section-heading"><h2>{{ if eq $pager.PageNumber 1 }}Recent writing{{ else }}From the archive{{ end }}</h2><a href="/writing/">All writing ↗</a></div>{{ range $pager.Pages }}{{ partial "row.html" . }}{{ end }}{{ partial "pagination.html" (dict "page" . "pager" $pager) }}</section>
-{{ if eq $pager.PageNumber 1 }}<aside class="endnote"><p class="eyebrow">Built in the open</p><h2>From ideas to running systems.</h2><p>Explore Agentic Identity Broker and the talks behind the work.</p><a class="text-link" href="/projects/">Projects ↗</a><a class="text-link" href="/talks/">Speaking ↗</a><a class="text-link" href="/index.xml">Follow via RSS ↗</a></aside>{{ end }}
-</div>{{ end }}
+{{ define "main" }}
+<section class="statement wrap">
+  <p class="eyebrow">Jan Brennenstuhl <span aria-hidden="true">/</span> Principal engineer, Berlin</p>
+  <h1>{{ site.Params.statement }}</h1>
+  <p class="statement-lead">Essays, a field guide and research notes on application security, identity, and the agents that now act on our behalf.</p>
+</section>
+{{ with site.GetPage site.Params.featured }}
+<section class="flagship" aria-labelledby="flagship-title">
+  <div class="flagship-art">{{ partial "diagram.html" (dict "page" . "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
+  <div class="wrap flagship-text">
+    <p class="eyebrow">Latest flagship <span aria-hidden="true">/</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2006" }}</time></p>
+    <h2 id="flagship-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="flagship-lead">{{ .Params.lead | default .Description }}</p>
+    <p class="meta">{{ .ReadingTime }} min read <span aria-hidden="true">·</span> <a class="arrow" href="{{ .RelPermalink }}">Read the essay</a></p>
+  </div>
+</section>
+{{ end }}
+{{ with site.GetPage "/page/now" }}{{ partial "ui/now-strip.html" . }}{{ end }}
+<section class="wrap index" aria-labelledby="index-title">
+  <header class="index-head">
+    <h2 id="index-title">Index</h2>
+    <p>Every essay, grouped by topic. <a href="/writing/">Chronological list</a> <span aria-hidden="true">·</span> <a href="/search/">Search</a> <span aria-hidden="true">·</span> <a href="/index.xml">RSS</a></p>
+  </header>
+  {{ partial "ui/topic-index.html" (where (partialCached "eligible.html" . "all") "Section" "post") }}
+</section>
+{{ with site.GetPage "/knowledge-base" }}
+<section class="wrap guide-teaser" aria-labelledby="guide-title">
+  <header class="index-head">
+    <h2 id="guide-title">Field guide</h2>
+    <p>{{ .Description }} <a href="{{ .RelPermalink }}">All entries</a> <span aria-hidden="true">·</span> <a href="/glossary/">Glossary</a></p>
+  </header>
+  <ol class="entries">{{ range first 6 (sort .RegularPagesRecursive "Lastmod" "desc") }}{{ partial "row.html" . }}{{ end }}</ol>
+</section>
+{{ end }}
+{{ end }}

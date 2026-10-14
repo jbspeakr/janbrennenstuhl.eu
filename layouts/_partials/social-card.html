@@ -1,0 +1,22 @@
+{{- /* 1200×630 social card from the topic's diagram plate and the title, rendered by Hugo at build time. */ -}}
+{{- $card := "" -}}
+{{- $eligible := in (partial "eligible.html" .) . -}}
+{{- $topic := "home" -}}
+{{- if .Params.topic }}{{ $topic = .Params.topic }}{{ else if $eligible }}{{ $topic = index (partial "data/topics.html" .) 0 | default "home" }}{{ end -}}
+{{- if or .IsHome $eligible .Params.topic -}}
+  {{- $base := resources.Get (printf "cards/%s.png" $topic) | default (resources.Get "cards/home.png") -}}
+  {{- $font := resources.Get "fonts/Geist-Bold-card.ttf" -}}
+  {{- $mono := resources.Get "fonts/GeistMono-Medium-card.ttf" -}}
+  {{- $title := .Title | default site.Params.statement -}}
+  {{- if .IsHome }}{{ $title = site.Params.statement }}{{ end -}}
+  {{- $size := 64 }}{{ if gt (len $title) 60 }}{{ $size = 54 }}{{ end }}{{ if gt (len $title) 95 }}{{ $size = 46 }}{{ end -}}
+  {{- $label := "JANBRENNENSTUHL.EU" -}}
+  {{- with partial "data/topic.html" $topic }}{{ $label = printf "%s  /  %s" $label (upper .title) }}{{ end -}}
+  {{- $filters := slice
+    (images.Text $title (dict "font" $font "size" $size "linespacing" (int (mul $size 0.18)) "x" 72 "y" 330 "color" "#eef1f6"))
+    (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" "#f0b23e"))
+  -}}
+  {{- $target := printf "%ssocial.png" (strings.TrimPrefix "/" .RelPermalink) -}}
+  {{- $card = $base | images.Filter $filters | resources.Copy $target -}}
+{{- end -}}
+{{- return $card -}}

@@ -1,8 +1,13 @@
-description = "Essays and research on application security, identity, and agentic engineering by Jan Brennenstuhl."
+description = "Essays, field-guide entries and research notes on application security, identity, and agentic engineering by Jan Brennenstuhl."
+statement = "Security that makes the secure path the easy one."
 author = "Jan Brennenstuhl"
-mainSections = ["post"]
+authorURL = "/about/"
 featured = "/post/agentic-identity-broker"
 sourceRepository = "https://codeberg.org/brennenstuhl/janbrennenstuhl.eu"
+mastodon = "https://infosec.exchange/@jbspeakr"
+# Posts older than this on fast-moving topics show an "older guidance" note unless reviewed.
+outdatedAfterYears = 5
+fastMovingTopics = ["identity-authentication", "tokens-jwt", "passwords", "application-security"]
 [license]
 name = "CC BY 4.0"
 url = "https://creativecommons.org/licenses/by/4.0/"

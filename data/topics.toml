@@ -1,0 +1,45 @@
+# The six topics. Order is display order. A page's topics come from its
+# front-matter `topics` if set, otherwise from its tags through `tags` below.
+# Descriptions are written for people; they also feed llms.txt and topic feeds.
+
+[[topic]]
+id = "agentic-engineering"
+title = "Agentic engineering"
+short = "Agents"
+description = "Building software with coding agents, and giving agents scoped, revocable authority over the tools they use."
+tags = ["agentic-engineering", "coding-agents"]
+
+[[topic]]
+id = "identity-authentication"
+title = "Identity & auth"
+short = "Identity"
+description = "OpenID Connect, OAuth, passkeys and step-up: who is acting, on whose behalf, and how strongly that was proven."
+tags = ["oidc", "oauth2", "passkeys", "passwordless"]
+
+[[topic]]
+id = "application-security"
+title = "AppSec"
+short = "AppSec"
+description = "Secure defaults, platform-level controls and the attacks they have to hold against, from phishing to supply chains."
+tags = ["sdlc", "supply-chain-protection", "platform-engineering", "defensive-security", "threat-detection", "data-breach", "offensive-security", "phishing", "social-engineering"]
+
+[[topic]]
+id = "passwords"
+title = "Passwords"
+short = "Passwords"
+description = "Password policies that people can follow, systems that do not punish password managers, and the attacks on reused credentials."
+tags = ["password-security", "password-manager", "brute-force"]
+
+[[topic]]
+id = "tokens-jwt"
+title = "Tokens & JWT"
+short = "Tokens"
+description = "JSON Web Tokens and the JOSE family: what tokens are for, how they are signed, encrypted and verified, and where they go wrong."
+tags = ["jwt"]
+
+[[topic]]
+id = "engineering-practice"
+title = "Engineering practice"
+short = "Engineering"
+description = "Notes from running software: cloud infrastructure, European hosting, tooling and the occasional migration."
+tags = ["java", "python", "git", "aws", "operational-excellence", "eurostack", "jamstack"]

@@ -1,0 +1,9 @@
+{{- with partial "data/series.html" . }}{{ $s := . }}
+<nav class="series-nav" id="series" aria-labelledby="series-title">
+  <h2 id="series-title">Series: {{ .title }}</h2>
+  <p>{{ .description }}</p>
+  <ol>{{ range .pages }}<li><a href="{{ .RelPermalink }}"{{ if eq . $ }} aria-current="page"{{ end }}>{{ .Title }}</a> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Year }}</time></li>{{ end }}</ol>
+  {{- $prev := "" }}{{ $next := "" }}{{ $found := false }}{{ range .pages }}{{ if $found }}{{ if not $next }}{{ $next = . }}{{ end }}{{ else if eq . $ }}{{ $found = true }}{{ else }}{{ $prev = . }}{{ end }}{{ end }}
+  <p class="series-step">{{ with $prev }}<a rel="prev" href="{{ .RelPermalink }}">Previous: {{ .Title }}</a>{{ end }}{{ with $next }}<a rel="next" href="{{ .RelPermalink }}">Next: {{ .Title }}</a>{{ end }}</p>
+</nav>
+{{- end }}

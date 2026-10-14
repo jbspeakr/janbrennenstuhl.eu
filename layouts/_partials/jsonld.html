@@ -1,0 +1,45 @@
+{{- /* Structured data as one serialized @graph. Validated by scripts/check.py. */ -}}
+{{- $p := .page -}}
+{{- $person := "about/#person" | absURL -}}
+{{- $knows := slice "Application security" "OAuth 2.0" "OpenID Connect" "JSON Web Tokens" "Passwords and authentication" "Agent identity" "Agentic engineering" -}}
+{{- $graph := slice
+  (dict "@type" "Person" "@id" $person "name" site.Params.author "url" ("about/" | absURL) "jobTitle" "Principal Engineer"
+    "knowsAbout" $knows "sameAs" (slice site.Params.mastodon "https://github.com/jbspeakr" "https://www.linkedin.com/in/brennenstuhl/" "https://bsky.app/profile/janbrennenstuhl.eu"))
+  (dict "@type" "WebSite" "@id" ("#website" | absURL) "url" site.BaseURL "name" site.Title "inLanguage" "en-GB" "publisher" (dict "@id" $person)
+    "license" site.Params.license.url)
+-}}
+{{- $kind := partial "data/kind.html" $p -}}
+{{- $type := "WebPage" -}}
+{{- if or $p.IsHome $p.IsSection }}{{ $type = "CollectionPage" }}{{ else if eq $p.RelPermalink "/about/" }}{{ $type = "ProfilePage" }}{{ end -}}
+{{- $webpage := dict "@type" $type "@id" $p.Permalink "url" $p.Permalink "name" ($p.Title | default site.Title) "description" ($p.Description | default site.Params.description) "inLanguage" "en-GB" "isPartOf" (dict "@id" ("#website" | absURL)) -}}
+{{- if eq $type "ProfilePage" }}{{ $webpage = merge $webpage (dict "mainEntity" (dict "@id" $person)) }}{{ end -}}
+{{- /* Breadcrumbs: home, then the section or topic hub, then the page. */ -}}
+{{- if not $p.IsHome -}}
+  {{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL) -}}
+  {{- with $p.Parent }}{{ if and (not .IsHome) (ne .Section "post") (ne .Section "page") }}{{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink) }}{{ end }}{{ end -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" $p.Title "item" $p.Permalink) -}}
+  {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumbs" $p.Permalink) "itemListElement" $crumbs) -}}
+  {{- $webpage = merge $webpage (dict "breadcrumb" (dict "@id" (printf "%s#breadcrumbs" $p.Permalink))) -}}
+{{- end -}}
+{{- $graph = $graph | append $webpage -}}
+{{- if and $p.IsPage (in (slice "essay" "guide" "talk" "project") $kind) -}}
+  {{- $about := slice }}{{ range partial "data/topics.html" $p }}{{ with partial "data/topic.html" . }}{{ $about = $about | append (dict "@type" "Thing" "name" .title "url" (printf "topics/%s/" .id | absURL)) }}{{ end }}{{ end -}}
+  {{- $atype := dict "essay" "BlogPosting" "guide" "TechArticle" "talk" "PresentationDigitalDocument" "project" "SoftwareSourceCode" -}}
+  {{- $art := dict "@type" (index $atype $kind) "@id" (printf "%s#article" $p.Permalink) "headline" $p.Title "name" $p.Title "description" ($p.Description | default site.Params.description)
+    "url" $p.Permalink "mainEntityOfPage" (dict "@id" $p.Permalink) "author" (dict "@id" $person) "publisher" (dict "@id" $person)
+    "datePublished" ($p.PublishDate.Format "2006-01-02T15:04:05Z07:00") "dateModified" ($p.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+    "inLanguage" "en-GB" "identifier" (partial "data/id.html" $p) "about" $about -}}
+  {{- if ne $p.Params.license false }}{{ $art = merge $art (dict "license" site.Params.license.url) }}{{ end -}}
+  {{- with .card }}{{ $art = merge $art (dict "image" .Permalink) }}{{ end -}}
+  {{- if in (slice "essay" "guide") $kind }}{{ $art = merge $art (dict "wordCount" $p.WordCount) }}{{ end -}}
+  {{- with $p.Params.tags }}{{ $art = merge $art (dict "keywords" (delimit . ", ")) }}{{ end -}}
+  {{- with partial "data/series.html" $p }}{{ $art = merge $art (dict "isPartOf" (dict "@type" "CreativeWorkSeries" "name" .title "url" (printf "%s#series" $p.Permalink))) }}{{ end -}}
+  {{- with $p.Store.Get "citations" }}{{ $cites := slice }}{{ range $k, $v := . }}{{ $cites = $cites | append $v }}{{ end }}{{ $art = merge $art (dict "citation" $cites) }}{{ end -}}
+  {{- with $p.Params.reviewed }}{{ $art = merge $art (dict "lastReviewed" (time.Format "2006-01-02" .)) }}{{ end -}}
+  {{- $graph = $graph | append $art -}}
+{{- end -}}
+{{- with $p.Store.Get "definedTerms" -}}
+  {{- $terms := slice }}{{ range $k, $v := . }}{{ $terms = $terms | append $v }}{{ end -}}
+  {{- $graph = $graph | append (dict "@type" "DefinedTermSet" "@id" (printf "%s#terms" $p.Permalink) "name" $p.Title "url" $p.Permalink "hasDefinedTerm" $terms) -}}
+{{- end -}}
+{{- return dict "@context" "https://schema.org" "@graph" $graph -}}
