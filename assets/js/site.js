@@ -2,28 +2,23 @@ const root = document.documentElement;
 const feedback = document.querySelector('#feedback');
 const announce = message => { feedback.textContent = ''; requestAnimationFrame(() => { feedback.textContent = message; }); };
 
-// Reading settings: theme, text size, line spacing. Stored locally only.
-const reader = document.querySelector('.reader');
-if (reader) {
-  let state = {};
-  try { state = JSON.parse(localStorage.getItem('jb-reader') || '{}'); } catch (_) { /* session only */ }
-  const apply = () => {
-    for (const [key, attr, def] of [['theme', 'theme', 'system'], ['size', 'size', 'm'], ['leading', 'leading', 'm']]) {
-      const value = state[key] || def;
-      if (value === def) delete root.dataset[attr]; else root.dataset[attr] = value;
-      const input = reader.querySelector(`input[name="${key}"][value="${value}"]`);
-      if (input) input.checked = true;
-    }
+// Theme toggle: follows the system until the reader picks light or dark. Stored locally only.
+const toggle = document.querySelector('.theme-toggle');
+if (toggle) {
+  const system = matchMedia('(prefers-color-scheme: dark)');
+  const current = () => root.dataset.theme || (system.matches ? 'dark' : 'light');
+  const label = () => {
+    toggle.dataset.current = current();
+    toggle.setAttribute('aria-label', `Switch to ${current() === 'dark' ? 'light' : 'dark'} theme`);
   };
-  apply();
-  reader.hidden = false;
-  reader.addEventListener('change', event => {
-    state[event.target.name] = event.target.value;
-    apply();
-    try { localStorage.setItem('jb-reader', JSON.stringify(state)); } catch (_) { /* session only */ }
+  label();
+  toggle.hidden = false;
+  system.addEventListener('change', label);
+  toggle.addEventListener('click', () => {
+    root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
+    label();
+    try { localStorage.setItem('jb-reader', JSON.stringify({ theme: root.dataset.theme })); } catch (_) { /* session only */ }
   });
-  document.addEventListener('click', event => { if (reader.open && !reader.contains(event.target)) reader.open = false; });
-  reader.addEventListener('keydown', event => { if (event.key === 'Escape' && reader.open) { reader.open = false; reader.querySelector('summary').focus(); } });
 }
 
 // Copy actions: links, citations, quotes with their anchor URL, code blocks.

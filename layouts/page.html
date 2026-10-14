@@ -4,7 +4,7 @@
 <div class="progress" aria-hidden="true"></div>
 <article class="article k-{{ $kind }}">
   <header class="article-header">
-    <div class="article-art">{{ partial "diagram.html" (dict "page" . "decorative" false "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
+    <div class="article-art">{{ partial "diagram.html" (dict "page" . "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
     <div class="wrap article-head">
       {{ partial "ui/eyebrow.html" . }}
       <h1>{{ .Title }}</h1>

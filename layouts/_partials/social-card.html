@@ -13,8 +13,8 @@
   {{- $label := "JANBRENNENSTUHL.EU" -}}
   {{- with partial "data/topic.html" $topic }}{{ $label = printf "%s  /  %s" $label (upper .title) }}{{ end -}}
   {{- $filters := slice
-    (images.Text $title (dict "font" $font "size" $size "linespacing" (int (mul $size 0.18)) "x" 72 "y" 330 "color" "#eef1f6"))
-    (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" "#f0b23e"))
+    (images.Text $title (dict "font" $font "size" $size "linespacing" (int (mul $size 0.18)) "x" 72 "y" 330 "color" "#dfe1e5"))
+    (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" "#e2a4ae"))
   -}}
   {{- $target := printf "%ssocial.png" (strings.TrimPrefix "/" .RelPermalink) -}}
   {{- $card = $base | images.Filter $filters | resources.Copy $target -}}

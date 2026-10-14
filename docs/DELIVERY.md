@@ -65,10 +65,10 @@ Keep HSTS, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-wh
 Start the CSP in **report-only** mode:
 
 ```
-default-src 'self'; script-src 'self' 'sha256-jlmKXJZ3jnMj64vFnzpog3ykDyPyCGUz19bVoEK2YUA=' 'inline-speculation-rules'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+default-src 'self'; script-src 'self' 'sha256-+NwRjFyY6BzX2UjjxcyVMxBG+2hfhj+c+tBYxY1v9T8=' 'inline-speculation-rules'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
 ```
 
-- The `sha256` source allows exactly one inline script: the theme and reading-settings snippet in `<head>` (`assets/js/theme.js`), inlined so it never waits for the stylesheet. `scripts/check.py` fails the build when the inline script changes and this hash is not updated here, so update the edge rule at the same time.
+- The `sha256` source allows exactly one inline script: the theme snippet in `<head>` (`assets/js/theme.js`), inlined so it never waits for the stylesheet. `scripts/check.py` fails the build when the inline script changes and this hash is not updated here, so update the edge rule at the same time.
 - `'inline-speculation-rules'` allows the `<script type="speculationrules">` block that prerenders same-site pages on hover in Chromium.
 - No styles are inlined; critical CSS stays in the fingerprinted file so `style-src 'self'` holds (see docs/DESIGN.md for the LCP trade-off).
 

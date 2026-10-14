@@ -17,10 +17,10 @@ const topics = ['agentic-engineering', 'identity-authentication', 'application-s
     await page.goto(topic === 'home' ? `${base}/` : `${base}/topics/${topic}/`);
     const svg = await page.locator(topic === 'home' ? '.flagship-art svg.diagram' : '.hub-header svg.diagram').evaluate(e => e.outerHTML);
     await page.setContent(`<!doctype html><html data-theme="dark"><head><link rel="stylesheet" href="${base}/css/${css}"><style>
-      body{margin:0;width:1200px;height:630px;overflow:hidden;background:#080d16;position:relative}
-      .art{position:absolute;inset:-70px 0 auto 0;opacity:.75}.art svg{width:1200px;height:500px}
-      .fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0,transparent 190px,#080d16 300px)}
-      .bar{position:absolute;left:72px;top:540px;width:56px;height:4px;background:#ffb113}
+      body{margin:0;width:1200px;height:630px;overflow:hidden;background:#16191c;position:relative}
+      .art{position:absolute;inset:-40px 0 auto 0;opacity:.7}.art svg{width:1200px;height:400px}.art .d-ground{fill:#16191c}
+      .fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0,transparent 170px,#16191c 290px)}
+      .bar{position:absolute;left:72px;top:540px;width:40px;height:2px;background:#e2a4ae}
     </style></head><body><div class="art">${svg.replace(/style="view-transition-name:[^"]*"/, '')}</div><div class="fade"></div><div class="bar"></div></body></html>`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(root, `assets/cards/${topic}.png`) });
     console.log(`assets/cards/${topic}.png`);

@@ -34,7 +34,7 @@ Field-guide entries are question-led: `answer`, key findings as `finding` shortc
 
 ## Design contract
 
-See `docs/DESIGN.md`. Dark-first OKLCH tokens with an equal light theme; Geist and Geist Mono self-hosted; one accent (signal amber) per view; generated boundary diagrams; nothing below 13px; visible focus; reduced-motion support; everything usable without JavaScript.
+See `docs/DESIGN.md`. Dark-first OKLCH tokens with an equal light theme; Geist and Geist Mono self-hosted; calm graphite tones with one soft accent (rose, from the site icon) per view; generated flow drawings; nothing below 13px; visible focus; reduced-motion support; everything usable without JavaScript.
 
 Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 30 kB, preloaded font ≤ 35 kB, inline diagram ≤ 6 kB, zero third-party requests. Test 360/768/1440 px in both themes and reflow at 320 px. Passing tests is not design approval.
 

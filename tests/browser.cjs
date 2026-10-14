@@ -71,15 +71,16 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('dialog.palette[open]').count(), 0, 'Escape closes the palette');
 
-    // Reading settings persist across reloads and reset to system.
-    await page.locator('.reader summary').click();
-    await page.locator('input[name="theme"][value="light"]').check();
-    await page.locator('input[name="size"][value="l"]').check();
+    // Theme toggle switches to the other theme, persists across reloads, and names its next action.
+    const toggle = page.locator('.theme-toggle');
+    const shown = await toggle.getAttribute('data-current');
+    const next = shown === 'dark' ? 'light' : 'dark';
+    await toggle.click();
     await page.reload();
-    assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
-    assert.equal(await page.locator('html').getAttribute('data-size'), 'l');
-    await page.locator('.reader summary').click();
-    await page.locator('input[name="theme"][value="system"]').check();
+    assert.equal(await page.locator('html').getAttribute('data-theme'), next);
+    assert.equal(await toggle.getAttribute('aria-label'), `Switch to ${shown} theme`);
+    await page.evaluate(() => localStorage.removeItem('jb-reader'));
+    await page.reload();
     assert.equal(await page.locator('html').getAttribute('data-theme'), null);
 
     // Search page: legacy query parameter, empty result, history.
@@ -130,7 +131,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
     const catalog = JSON.parse(fs.readFileSync('public/catalog.json', 'utf8'));
     await page.goto(origin + '/search/');
     assert.equal(await page.locator('#search-fallback .row').count(), catalog.items.length, 'No-JS search lists every entry');
-    assert.equal(await page.locator('.reader').isVisible(), false, 'Reader settings need JavaScript and stay hidden');
+    assert.equal(await page.locator('.theme-toggle').isVisible(), false, 'The theme toggle needs JavaScript and stays hidden');
     await page.goto(origin + '/knowledge-base/oidc/jwt-anatomy/');
     assert.ok((await page.locator('.explainer-static').textContent()).includes('Header'), 'Explainer has a static explanation');
 
@@ -140,7 +141,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
     assert.match(await md.text(), /^---\nauthor: Jan Brennenstuhl/);
 
     fs.writeFileSync('test-results/browser.json', JSON.stringify({ checks, interactions: 'passed', noJavaScript: 'passed', reflow: 'passed' }, null, 2));
-    console.log(`${checks.length} page/width/theme checks passed; keyboard, palette, reader settings, search history, explainers, reflow, text spacing, redirects, 404, no-JS and Markdown negotiation passed.`);
+    console.log(`${checks.length} page/width/theme checks passed; keyboard, palette, theme toggle, search history, explainers, reflow, text spacing, redirects, 404, no-JS and Markdown negotiation passed.`);
   } finally {
     if (browser) await browser.close();
     server.kill();

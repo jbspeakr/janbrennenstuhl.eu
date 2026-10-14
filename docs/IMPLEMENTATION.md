@@ -13,9 +13,9 @@ Implements phases 1–4 of the modernization plan (13 October 2026) on the `mode
 ## Phase 2: Trust Boundaries
 
 - Dark-first OKLCH tokens with an equal light theme, Geist and Geist Mono self-hosted with metric-matched fallback, nothing under 13px. Contrast for every text pair is in `docs/DESIGN.md`.
-- The generated boundary diagram for every page, by topic grammar and title hash, inline and theme-aware; draws in once, static under reduced motion; carries across navigation with view transitions.
+- The generated flow drawing for every page: composition and hue from a hash of the page's identity, no labels, inline and theme-aware; the highlighted path draws in once, static under reduced motion; carries across navigation with view transitions.
 - New home (statement, flagship, Now strip, topic-grouped index), article template (diagram header, key findings, sticky TOC with reading progress, series navigator, cite block), field-guide entry template, topic hubs, writing, Now, talks with a speaker bio, accessibility statement, 404 with search.
-- ⌘K / Ctrl+K command palette, reader settings (theme, size, line height), speculation rules, print styles.
+- ⌘K / Ctrl+K command palette, light/dark theme toggle, speculation rules, print styles.
 - Social cards rendered by Hugo from per-topic diagram plates.
 
 **Not done:** the plan's mock-first step. I built the design directly and reviewed screenshots at 360 and 1440px in both themes; your sign-off on the actual pages replaces the mocks. No headshot exists in the repository (`jbspeakr.webp` is an illustration), so the speaker block shows one only when `params.headshot` is set. Sidenotes were not built: no current article uses footnotes.
@@ -41,7 +41,7 @@ Corrections made while rewriting (worth your review): a dead Google-hosted PDF r
 ## Evidence (local, 14 October 2026)
 
 - `scripts/check.py`: 171 HTML files, 52 catalog entries, 70 findings, 96 redirects, all gates pass. Compressed CSS 7.6 kB, article JS 1.4 kB, preloaded font 26.4 kB, essay HTML around 12 kB.
-- `npm run test:browser`: 42 page × width × theme combinations (home, essay, field guide, explainer, search, topic, glossary at 360/768/1440 in light and dark) with zero axe WCAG 2.2 A/AA violations and no horizontal overflow; skip link, palette keyboard use and its own axe check, reader settings persistence, search history, the three explainers, 320px reflow, text spacing, 404 status, old-route redirect, no-JS reading and search, Markdown negotiation.
+- `npm run test:browser`: 42 page × width × theme combinations (home, essay, field guide, explainer, search, topic, glossary at 360/768/1440 in light and dark) with zero axe WCAG 2.2 A/AA violations and no horizontal overflow; skip link, palette keyboard use and its own axe check, theme toggle persistence, search history, the three explainers, 320px reflow, text spacing, 404 status, old-route redirect, no-JS reading and search, Markdown negotiation.
 - `npm run test:lighthouse` (Lighthouse 13.5.0, simulated mobile, gzip, median of 3): performance, accessibility, best practices and SEO 100 on home, essay and field-guide entry; CLS 0; TBT 0; LCP 1.35–1.5 s (target 1.2 s; see the CSP trade-off in `docs/DESIGN.md`).
 - `node --test tests/`: 10 MCP and negotiation tests. `python3 -m unittest`: release ordering, IndexNow and MIME tests.
 
