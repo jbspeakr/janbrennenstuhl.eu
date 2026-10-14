@@ -1,5 +1,5 @@
 ---
-title: "Identity & auth"
+title: "Identity & Auth"
 description: "OpenID Connect, OAuth, passkeys and step-up: who is acting, on whose behalf, and how strongly that was proven."
 topic: identity-authentication
 weight: 2

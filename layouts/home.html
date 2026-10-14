@@ -1,6 +1,6 @@
 {{ define "main" }}
 <section class="statement wrap">
-  <p class="eyebrow">Jan Brennenstuhl <span aria-hidden="true">/</span> Principal engineer, Berlin</p>
+  <p class="eyebrow">Jan Brennenstuhl <span aria-hidden="true">/</span> Principal Engineer, Berlin</p>
   <h1>{{ site.Params.statement }}</h1>
   <p class="statement-lead">Essays, a field guide and research notes on application security, identity, and the agents that now act on our behalf.</p>
 </section>
@@ -8,7 +8,7 @@
 <section class="flagship" aria-labelledby="flagship-title">
   <div class="flagship-art">{{ partial "diagram.html" (dict "page" . "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
   <div class="wrap flagship-text">
-    <p class="eyebrow">Latest flagship <span aria-hidden="true">/</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2006" }}</time></p>
+    <p class="eyebrow">Latest Flagship <span aria-hidden="true">/</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2006" }}</time></p>
     <h2 id="flagship-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     <p class="flagship-lead">{{ .Params.lead | default .Description }}</p>
     <p class="meta">{{ .ReadingTime }} min read <span aria-hidden="true">·</span> <a class="arrow" href="{{ .RelPermalink }}">Read the essay</a></p>

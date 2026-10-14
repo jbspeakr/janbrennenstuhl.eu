@@ -1,5 +1,5 @@
 ---
-title: "Engineering practice"
+title: "Engineering Practice"
 description: "Notes from running software: cloud infrastructure, European hosting, tooling and the occasional migration."
 topic: engineering-practice
 weight: 6

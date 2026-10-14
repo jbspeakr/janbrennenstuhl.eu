@@ -6,11 +6,17 @@
     </div>
     <nav aria-label="Follow">
       <h2>Follow</h2>
-      <a href="/index.xml">RSS feed</a><a href="/feed.json">JSON Feed</a><a href="{{ site.Params.mastodon }}" rel="me">Mastodon</a><a href="/knowledge-base/index.xml">Field guide changes</a>
+      <a href="/index.xml">All writing (RSS)</a><a href="/feed.json">All writing (JSON Feed)</a><a href="/knowledge-base/index.xml">Field Guide entries (RSS)</a><a href="{{ site.Params.mastodon }}" rel="me">Mastodon</a>
     </nav>
     <nav aria-label="For agents">
       <h2>For agents</h2>
-      <a href="/llms.txt">llms.txt</a><a href="/llms-full.txt">llms-full.txt</a><a href="/catalog.json">Catalog</a><a href="/findings.json">Findings</a>
+      <ul class="footer-files">
+        <li><a href="/llms.txt">llms.txt</a> <span>Short index: one line and a Markdown link per entry</span></li>
+        <li><a href="/llms-full.txt">llms-full.txt</a> <span>Every entry in full, as one Markdown file</span></li>
+        <li><a href="/catalog.json">catalog.json</a> <span>Metadata per entry: dates, topics, licence</span></li>
+        <li><a href="/findings.json">findings.json</a> <span>Quotable findings with their sources</span></li>
+      </ul>
+      <a href="/agents/">How agents can use this site</a>
     </nav>
     <nav aria-label="Site">
       <h2>Site</h2>

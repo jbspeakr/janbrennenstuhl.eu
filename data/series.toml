@@ -8,12 +8,12 @@ description = "What JWTs are for, how the JOSE standards fit together, and how t
 
 [[series]]
 id = "passwords"
-title = "Usable password security"
+title = "Usable Password Security"
 description = "Password policies, length limits and login forms that work with password managers instead of against them."
 
 [[series]]
 id = "agentic-appsec"
-title = "AppSec for agentic engineering"
+title = "AppSec for Agentic Engineering"
 description = "How coding agents change application security, and what security teams should build in response."
 
 [[series]]

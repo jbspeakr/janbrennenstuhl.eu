@@ -2,8 +2,8 @@
 {{- with .Params.findings }}
 <section class="key-findings" aria-labelledby="key-findings">
   <h2 id="key-findings">Key findings</h2>
-  <ol>{{ range . }}
-    <li id="f-{{ .id }}"><p>{{ .text | markdownify }}</p><p class="finding-tools"><a class="finding-id" href="#f-{{ .id }}">#f-{{ .id }}</a> <button type="button" class="link-button" data-quote="{{ .text | plainify }}" data-quote-url="{{ $.Permalink }}#f-{{ .id }}" hidden>Copy quote with link</button> {{ with partial "finding-card.html" (dict "page" $ "id" .id "text" (.text | markdownify | plainify | htmlUnescape) "source" $.Title) }}<a class="finding-card" href="{{ .RelPermalink }}">Share card<span class="sr-only"> (PNG)</span></a>{{ end }}</p></li>{{ end }}
+  <ol>{{ range . }}{{ $quote := .text | markdownify | plainify }}
+    <li id="f-{{ .id }}"><p>{{ .text | markdownify }}</p>{{ partial "ui/finding-tools.html" (dict "page" $ "id" .id "quote" $quote "card" (partial "finding-card.html" (dict "page" $ "id" .id "text" ($quote | htmlUnescape) "source" $.Title))) }}</li>{{ end }}
   </ol>
 </section>
 {{- end }}

@@ -37,8 +37,17 @@
     <h1>{{ .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
   </header>
-  <div class="prose">{{ .Content }}</div>
-  {{ if eq .RelPermalink "/about/" }}{{ partial "ui/cite.html" . }}{{ end }}
+  <div class="article-layout page-layout">
+    <aside class="toc page-aside" aria-label="{{ if eq $kind "profile" }}Profile{{ else }}On this page{{ end }}">
+      {{- if eq $kind "profile" }}{{ partial "ui/profile.html" . }}
+      {{- else }}
+      {{- if ge (len .Fragments.Headings) 1 }}{{ with .TableOfContents }}
+      <details class="toc-box"><summary>On this page</summary>{{ . }}</details>{{ end }}{{ end }}
+      <p class="toc-links"><span>Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2 January 2006" }}</time></span>{{ with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown</a>{{ end }}</p>
+      {{- end }}
+    </aside>
+    <div class="prose">{{ .Content }}</div>
+  </div>
 </article>
 {{- end -}}
 {{ end }}

@@ -4,14 +4,14 @@
 
 [[topic]]
 id = "agentic-engineering"
-title = "Agentic engineering"
+title = "Agentic Engineering"
 short = "Agents"
 description = "Building software with coding agents, and giving agents scoped, revocable authority over the tools they use."
 tags = ["agentic-engineering", "coding-agents"]
 
 [[topic]]
 id = "identity-authentication"
-title = "Identity & auth"
+title = "Identity & Auth"
 short = "Identity"
 description = "OpenID Connect, OAuth, passkeys and step-up: who is acting, on whose behalf, and how strongly that was proven."
 tags = ["oidc", "oauth2", "passkeys", "passwordless"]
@@ -39,7 +39,7 @@ tags = ["jwt"]
 
 [[topic]]
 id = "engineering-practice"
-title = "Engineering practice"
+title = "Engineering Practice"
 short = "Engineering"
 description = "Notes from running software: cloud infrastructure, European hosting, tooling and the occasional migration."
 tags = ["java", "python", "git", "aws", "operational-excellence", "eurostack", "jamstack"]

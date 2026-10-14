@@ -1,0 +1,14 @@
+{{- /* About page sidebar: portrait, who and where, what Jan writes about and where to follow. */ -}}
+<div class="profile">
+  {{- with .Resources.GetMatch "jan-brennenstuhl.*" }}
+  <figure class="profile-portrait">{{ partial "picture.html" (dict "resource" . "alt" "Portrait of Jan Brennenstuhl" "eager" true "sizes" "(min-width: 70rem) 15rem, 12rem") }}</figure>
+  {{- end }}
+  <dl class="profile-facts">
+    <div><dt>Role</dt><dd>Principal Engineer, Application Security</dd></div>
+    <div><dt>Based in</dt><dd>Berlin, Germany</dd></div>
+    {{- with partial "data/topics.html" . }}
+    <div><dt>Writes about</dt><dd>{{ range $i, $id := . }}{{ with partial "data/topic.html" $id }}{{ if $i }}, {{ end }}<a href="/topics/{{ .id }}/">{{ .title }}</a>{{ end }}{{ end }}</dd></div>
+    {{- end }}
+    <div><dt>Follow</dt><dd><a href="{{ site.Params.mastodon }}" rel="me">Mastodon</a>, <a href="/index.xml">RSS feed</a></dd></div>
+  </dl>
+</div>

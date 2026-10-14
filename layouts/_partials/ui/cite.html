@@ -6,11 +6,13 @@
 {{- $state := partial "data/status.html" . -}}
 <footer class="cite" id="cite" aria-labelledby="cite-title">
   <h2 id="cite-title">Cite this</h2>
-  <dl>
-    <div><dt>Plain</dt><dd><p>{{ $plain }}</p><button type="button" class="link-button" data-copy="{{ $plain }}" hidden>Copy</button></dd></div>
-    <div><dt>APA</dt><dd><p>{{ $apa }}</p><button type="button" class="link-button" data-copy="{{ $apa }}" hidden>Copy</button></dd></div>
-    <div><dt>BibTeX</dt><dd><pre tabindex="0" aria-label="BibTeX citation"><code>{{ $bib }}</code></pre><button type="button" class="link-button" data-copy="{{ $bib }}" hidden>Copy</button></dd></div>
-  </dl>
+  <p class="cite-plain">{{ $plain }} <button type="button" class="text-button" data-copy="{{ $plain }}" aria-label="Copy citation" hidden>Copy</button></p>
+  <details class="cite-formats"><summary>APA and BibTeX</summary>
+    <dl>
+      <div><dt>APA</dt><dd><p>{{ $apa }} <button type="button" class="text-button" data-copy="{{ $apa }}" aria-label="Copy APA citation" hidden>Copy</button></p></dd></div>
+      <div><dt>BibTeX</dt><dd><pre tabindex="0" aria-label="BibTeX citation"><code>{{ $bib }}</code></pre><button type="button" class="text-button" data-copy="{{ $bib }}" hidden>Copy BibTeX</button></dd></div>
+    </dl>
+  </details>
   <p class="cite-meta">
     {{- with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown version</a> <span aria-hidden="true">·</span> {{ end -}}
     ID <code>{{ partial "data/id.html" . }}</code> <span aria-hidden="true">·</span>

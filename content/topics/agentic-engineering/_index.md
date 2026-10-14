@@ -1,5 +1,5 @@
 ---
-title: "Agentic engineering"
+title: "Agentic Engineering"
 description: "Building software with coding agents, and giving agents scoped, revocable authority over the tools they use."
 topic: agentic-engineering
 weight: 1

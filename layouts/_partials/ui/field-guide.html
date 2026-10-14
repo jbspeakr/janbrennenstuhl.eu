@@ -1,6 +1,6 @@
 {{- $root := eq .RelPermalink "/knowledge-base/" -}}
 <header class="wrap page-header guide-header">
-  <p class="eyebrow">{{ if $root }}Reference{{ else }}<a href="/knowledge-base/">Field guide</a>{{ end }}</p>
+  <p class="eyebrow">{{ if $root }}Reference{{ else }}<a href="/knowledge-base/">Field Guide</a>{{ end }}</p>
   <h1>{{ .Title }}</h1>
   {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
 </header>
