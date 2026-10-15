@@ -99,7 +99,7 @@
   @media (max-width: 26rem) { .brand-name span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } }
 
   .site-footer { border-top: 1px solid var(--rule); background: var(--ground-2); margin-top: 6rem; padding: 3rem var(--gutter) calc(2rem + env(safe-area-inset-bottom, 0px)); font-size: var(--small); color: var(--ink-2); }
-  .footer-grid { max-width: 78rem; margin-inline: auto; display: grid; gap: 2rem; grid-template-columns: 2fr repeat(3, 1fr); }
+  .footer-grid { max-width: calc(78rem - 2 * var(--gutter)); margin-inline: auto; display: grid; gap: 2rem; grid-template-columns: 2fr repeat(3, 1fr); }
   .footer-grid h2 { font-size: var(--small); color: var(--ink); font-weight: 600; margin-bottom: 0.5rem; }
   .footer-grid nav a { display: block; text-decoration: none; padding-block: 0.15rem; }
   .footer-grid nav a:hover { color: var(--ink); text-decoration: underline; }
@@ -109,7 +109,7 @@
   .footer-files span { display: block; font-size: var(--tiny); line-height: 1.4; }
   .footer-grid nav > a[href="/agents/"] { color: var(--ink); text-decoration: underline; }
   .footer-statement { font-size: 1.125rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.6rem; max-width: 24ch; }
-  .license { max-width: 78rem; margin: 2.5rem auto 0; }
+  .license { max-width: calc(78rem - 2 * var(--gutter)); margin: 2.5rem auto 0; }
   @media (max-width: 52rem) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > div:first-child { grid-column: 1 / -1; } }
 }
 
@@ -153,7 +153,7 @@
   .now-strip li a:hover, .now-list li a:hover { text-decoration: underline; }
   .now-strip p, .now-list p { font-size: var(--small); color: var(--ink-2); margin-top: 0.25rem; line-height: 1.5; }
   .label { font-size: var(--tiny); color: var(--ink-2); display: block; margin-bottom: 0.2rem; }
-  .now-list { margin-block: 2rem 2.5rem; }
+  .now-list { margin-block: 0 2.5rem; max-width: var(--measure); }
   @media (max-width: 40rem) { .now-strip .wrap { grid-template-columns: 1fr; } }
 
   .index, .guide-teaser { margin-top: clamp(3rem, 6vw, 5rem); }
@@ -178,6 +178,7 @@
   /* Pages and articles */
   .page, .page-header { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
   .page-header { margin-bottom: 2rem; }
+  .page .page-header { padding-top: 0; }
   .page-header h1, .article-head h1 { font-size: clamp(2rem, 1.5rem + 2vw, 3.1rem); letter-spacing: -0.025em; line-height: 1.1; font-weight: 600; max-width: 24ch; margin-block: 0.6rem 1rem; }
   .page .prose, .page-header .lead { max-width: var(--measure); }
   .page-layout { margin-top: 0; }

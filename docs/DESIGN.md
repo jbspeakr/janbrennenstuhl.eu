@@ -70,7 +70,7 @@ Social cards reuse it: `assets/cards/<topic>.png` are the topic drawings rendere
 ## Layout
 
 - **Home:** statement, flagship essay with full-width diagram, the Now strip, the index of all essays grouped by topic (table of contents, not cards), latest field-guide entries.
-- **Article:** drawing, eyebrow (kind / topics / series), title, lead or short answer, byline with published, updated and reviewed dates; sticky table of contents on wide screens (collapsed above the text on narrow ones); key findings; body; series navigator; cite block (plain citation with a copy action; APA and BibTeX collapsed); related.
+- **Article:** drawing, eyebrow (kind / topics / series), title, lead or short answer, byline with published, updated and reviewed dates. On wide screens the head shares the article grid: the byline stacks in the contents column, and eyebrow, title and lead sit over the text column. Sticky table of contents on wide screens (collapsed above the text on narrow ones); key findings; body; series navigator; cite block (plain citation with a copy action; APA and BibTeX collapsed); related.
 - **Field-guide entry:** question title, short answer, key findings as `finding` blocks with anchors and quiet actions (link, copy quote with link, save the 1200×630 image), evidence table, what to do for engineers and for product/UX, details, review status and change log.
 - **Pages** (about, imprint, accessibility …): the article grid. The side column holds the table of contents, the update date and the Markdown link; on the about page it holds the portrait and short facts.
 - **Code:** filename caption, line highlighting via Hugo options, copy button, scrollable focusable region, palette-matched highlighting.
