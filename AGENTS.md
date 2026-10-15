@@ -41,3 +41,14 @@ Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 3
 ## Release contract
 
 Read `docs/DELIVERY.md` before touching deployment. No production credentials in PR jobs; publish only from `main`; never rebuild between verification and deployment; never delete remote files during upload; no account-wide Bunny API key. The inline theme script is allowed by a CSP hash documented in `docs/DELIVERY.md`; `check.py` fails until the doc and the edge match the build. Edge caching, MIME, 301s, negotiation, rollback and screen-reader checks are release gates that local tests cannot certify.
+
+## Adding content
+
+Use the archetypes; never hand-copy front matter from another page.
+
+- Essay: `hugo new content post/<slug>`
+- Field-guide entry: `hugo new content knowledge-base/<area>/<slug>` (areas: account-security, oidc, agent-identity)
+- Talk: `hugo new content talks/<slug>`
+- Project: `hugo new content projects/<slug>`
+
+Then fill in the fields marked in the file, replace `CHANGE-ME` finding IDs with permanent unique IDs, remove `draft: true`, and run `./scripts/verify.sh`. See docs/CONTENT-CONTRACT.md for the rules.
