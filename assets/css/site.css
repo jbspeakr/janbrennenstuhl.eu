@@ -196,9 +196,15 @@
   .article-head { padding-top: clamp(1.75rem, 4vw, 3rem); }
   .answer { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.3rem); line-height: 1.5; max-width: 48ch; border-left: 2px solid var(--signal); padding-left: 1rem; }
   .answer-label { display: block; font-size: var(--small); font-weight: 600; color: var(--signal); margin-bottom: 0.25rem; }
-  .byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--rule); max-width: var(--measure); font-size: var(--small); font-variant-numeric: tabular-nums; }
+  .byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--rule); font-size: var(--small); font-variant-numeric: tabular-nums; }
   .byline a { color: var(--ink); }
   .byline .reviewed { color: var(--green); }
+  /* Wide: the head shares the article grid, byline in the contents column, title over the text */
+  @media (min-width: 70rem) {
+    .article-header .article-head { display: grid; grid-template-columns: 15rem minmax(0, 1fr); column-gap: 4rem; }
+    .article-header .article-head > * { grid-column: 2; }
+    .article-header .byline { grid-column: 1; grid-row: 1 / span 3; align-self: start; flex-direction: column; gap: 0.2rem; margin-top: 0; padding-top: 0; border-top: 0; }
+  }
 
   .article-layout { display: grid; gap: 2rem 4rem; grid-template-columns: minmax(0, 1fr); margin-top: clamp(2rem, 5vw, 3.5rem); }
   @media (min-width: 70rem) {
