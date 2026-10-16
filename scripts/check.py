@@ -24,7 +24,9 @@ SITE = "https://www.janbrennenstuhl.eu"
 HOST = "www.janbrennenstuhl.eu"
 
 # Compressed budgets in bytes (docs/DESIGN.md).
-BUDGET = {"css": 15_000, "js_article": 8_000, "html_article": 30_000, "font_preload": 35_000, "diagram": 6_000}
+BUDGET = {"css": 15_000, "js_article": 8_000, "html_article": 30_000, "font_preload": 35_000, "diagram": 6_000, "search_index": 200_000}
+# The only third-party script allowed on any page (docs/DECISIONS.md): Plausible analytics.
+ALLOWED_SCRIPT_HOSTS = {"plausible.io"}
 
 errors: list[str] = []
 warnings: list[str] = []
@@ -204,6 +206,9 @@ for path, page in pages.items():
         check("alt" in img, f"Image without alt {route}: {img.get('src')}")
     for script in page.find("script"):
         check(not script.get("src", "").startswith(("http:", "https:", "//")), f"Third-party script {route}")
+    for body in page.find("body"):  # the analytics loader in site.js reads this attribute after the load event
+        analytics = body.get("data-analytics", "")
+        check(not analytics or urlsplit(analytics).hostname in ALLOWED_SCRIPT_HOSTS, f"Analytics host not allowed {route}: {analytics}")
     for link in page.find("link", rel="stylesheet"):
         check(not link.get("href", "").startswith(("http:", "https:", "//")), f"Third-party stylesheet {route}")
     check(len(page.ids) == len(set(page.ids)), f"Duplicate IDs {route}: {sorted({i for i in page.ids if page.ids.count(i) > 1})}")
@@ -396,9 +401,11 @@ article_js = sum(gz(p.read_bytes()) for p in js_dir.glob("*.js") if p.name.start
 check(article_js <= BUDGET["js_article"], f"Article JS budget: {article_js} B > {BUDGET['js_article']} B")
 font = (PUBLIC / "fonts/Geist-Variable-1.7.2.woff2").stat().st_size
 check(font <= BUDGET["font_preload"], f"Preloaded font budget: {font} B")
+search_index = gz((PUBLIC / "search/index.json").read_bytes())
+check(search_index <= BUDGET["search_index"], f"Search index budget: {search_index} B > {BUDGET['search_index']} B")
 
 print(f"Checked {len(pages)} HTML files, {len(items)} catalog entries, {len(findings)} findings, {len(redirects)} redirects.")
-print(f"Compressed: CSS {css} B, article JS {article_js} B, preloaded font {font} B.")
+print(f"Compressed: CSS {css} B, article JS {article_js} B, preloaded font {font} B, search index {search_index} B.")
 for warning in warnings:
     print("WARNING:", warning)
 if errors:

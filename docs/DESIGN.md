@@ -87,7 +87,8 @@ Compressed transfer, enforced by `scripts/check.py` (and Lighthouse in CI):
 | HTML per essay or guide entry | 30 kB | ~12 kB typical |
 | Preloaded font | 35 kB | 26.4 kB |
 | Inline diagram | 6 kB | ~2 kB |
-| Third-party requests | 0 | 0 |
+| Search index (`/search/index.json`, full text) | 200 kB | ~150 kB |
+| Third-party requests | 1: the deferred Plausible script on the production host (docs/DECISIONS.md) | 1 |
 
 ### LCP and the CSP
 

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":pinAllExceptPeerDependencies"],
+  "schedule": ["on the first day of the month"],
+  "labels": ["dependencies"],
+  "npm": { "rangeStrategy": "pin" },
+  "packageRules": [
+    { "matchManagers": ["npm"], "groupName": "browser QA (Playwright, axe, Lighthouse)" }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Hugo pin in .hugo-version; the checksum is refreshed by scripts/bump-hugo.sh",
+      "managerFilePatterns": ["/^\\.hugo-version$/"],
+      "matchStrings": ["^(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*$"],
+      "depNameTemplate": "gohugoio/hugo",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
+  ]
+}

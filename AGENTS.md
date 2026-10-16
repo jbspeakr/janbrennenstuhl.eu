@@ -36,7 +36,11 @@ Field-guide entries are question-led: `answer`, key findings as `finding` shortc
 
 See `docs/DESIGN.md`. Dark-first OKLCH tokens with an equal light theme; Geist and Geist Mono self-hosted; calm graphite tones with one soft accent (rose, from the site icon) per view; generated flow drawings; nothing below 13px; visible focus; reduced-motion support; everything usable without JavaScript.
 
-Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 30 kB, preloaded font ≤ 35 kB, inline diagram ≤ 6 kB, zero third-party requests. Test 360/768/1440 px in both themes and reflow at 320 px. Passing tests is not design approval.
+Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 30 kB, preloaded font ≤ 35 kB, inline diagram ≤ 6 kB, search index ≤ 200 kB, no third-party requests except the Plausible script (production host only; see `docs/DECISIONS.md`). Test 360/768/1440 px in both themes and reflow at 320 px. Passing tests is not design approval.
+
+## Decisions and launch
+
+`docs/DECISIONS.md` records settled questions (licence and training, analytics, newsletter, monitoring, review cadence); do not reopen them in a PR without saying so. `docs/LAUNCH.md` is the cutover checklist from the Stack site. `python3 scripts/review-queue.py` lists pages due for an editorial review; `python3 scripts/links.py` checks external links (run in CI monthly, local DNS filtering can give false failures).
 
 ## Release contract
 

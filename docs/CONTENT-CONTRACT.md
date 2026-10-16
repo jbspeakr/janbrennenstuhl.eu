@@ -41,6 +41,10 @@ Under `content/knowledge-base/<area>/<entry>/index.md`. One question per entry:
 - Record each meaningful revision in `changes: [{date, note}]`; it feeds the field guide's change feeds.
 - Numbers must come from the cited source. If a value is not in the source, write `n/a`.
 
+## Review cadence
+
+Decided in `docs/DECISIONS.md`. Field-guide entries are reviewed at least every twelve months; essays on fast-moving topics (`fastMovingTopics` in `config/_default/params.toml`) show the older-guidance notice five years after `date` or the last `reviewed`. `python3 scripts/review-queue.py` lists what is due, oldest first. A review means reading the entry against current sources, fixing what changed, then setting `reviewed:` to that day and adding a `changes` line for field-guide entries. `lastmod` moves only when the content changed. External sources are checked monthly by `scripts/links.py` (CI workflow `links`); replace a dead source with an archived copy or a DOI rather than dropping the claim.
+
 ## Shortcodes
 
 Each shortcode has an HTML template and a Markdown variant (`layouts/_partials/md/<name>.md`, used by the Markdown twin and `llms-full.txt`). A new shortcode needs both, plus a `.llmsfull.txt` wrapper.

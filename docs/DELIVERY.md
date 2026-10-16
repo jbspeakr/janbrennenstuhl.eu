@@ -65,10 +65,10 @@ Keep HSTS, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-wh
 Start the CSP in **report-only** mode:
 
 ```
-default-src 'self'; script-src 'self' 'sha256-+NwRjFyY6BzX2UjjxcyVMxBG+2hfhj+c+tBYxY1v9T8=' 'inline-speculation-rules'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+default-src 'self'; script-src 'self' https://plausible.io 'sha256-1dUuVM7OURbaW/lywnzsnTq+6GnIZ3efUSOx8oivojs=' 'inline-speculation-rules'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://plausible.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
 ```
 
-- The `sha256` source allows exactly one inline script: the theme snippet in `<head>` (`assets/js/theme.js`), inlined so it never waits for the stylesheet. `scripts/check.py` fails the build when the inline script changes and this hash is not updated here, so update the edge rule at the same time.
+- The `sha256` source allows exactly one inline script: the theme snippet in `<head>` (`assets/js/theme.js`, which also carries the Plausible queue stub), inlined so it never waits for the stylesheet. `https://plausible.io` in `script-src` and `connect-src` is for the analytics script (injected by `site.js` after the load event) and its beacon, the only third-party origin (docs/DECISIONS.md). `scripts/check.py` fails the build when the inline script changes and this hash is not updated here, so update the edge rule at the same time.
 - `'inline-speculation-rules'` allows the `<script type="speculationrules">` block that prerenders same-site pages on hover in Chromium.
 - No styles are inlined; critical CSS stays in the fingerprinted file so `style-src 'self'` holds (see docs/DESIGN.md for the LCP trade-off).
 
@@ -99,6 +99,10 @@ python3 scripts/check_release.py
 ```
 
 After deploying, wait for the edge TTL, then run `python3 scripts/smoke.py`. It checks mutable-cache policies, Markdown MIME, validators and 304s, the catalog version and a genuine 404. Also check compression, image format selection (AVIF/WebP), 301 status on a few retired routes, Markdown negotiation and the deployed revision by hand.
+
+## Dependencies
+
+Hugo moves with `scripts/bump-hugo.sh <version>`, which rewrites `.hugo-version` and the verified Linux checksum that `scripts/bootstrap.sh` enforces; verify and run the browser tests locally on the new version before opening the PR. Browser QA packages are exactly pinned in `package.json`; `renovate.json` describes a monthly grouped update for any Renovate runner attached to the repository. Actions stay pinned to commit SHAs. Cadence and reasoning: `docs/DECISIONS.md`.
 
 ## Rollback
 

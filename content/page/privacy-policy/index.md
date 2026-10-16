@@ -1,9 +1,9 @@
 ---
 title: "Privacy Policy: No Cookies & Privacy First"
-description: "No cookies, third-party analytics, or search-query collection. An optional theme preference stays in your browser."
+description: "No cookies and no search-query collection. Page views are counted by Plausible without personal data; an optional theme preference stays in your browser."
 lead: "A publication you can read without tracking scripts or an account."
 date: 2023-04-15
-lastmod: 2026-10-13
+lastmod: 2026-10-15
 draft: false
 robots: "noindex, follow"
 sitemap_exclude: true
@@ -21,7 +21,11 @@ license: false
 
 ## Reading and search
 
-This site does not load third-party analytics scripts or set cookies. Search runs in your browser after downloading a static index. Search terms are not sent to an analytics service. A query in the address bar is part of the page URL requested from the hosting service.
+This site sets no cookies. Search runs in your browser after downloading a static index. Search terms are not sent to an analytics service. A query in the address bar is part of the page URL requested from the hosting service.
+
+## Page-view counting
+
+The production site loads one script from [Plausible](https://plausible.io/data-policy), an EU-hosted analytics service. It counts page views and referrers without cookies, without a persistent identifier and without storing your IP address; the data is aggregated and cannot be traced to a person. Browsers that block the script lose nothing: every page works without it.
 
 ## Color preference
 

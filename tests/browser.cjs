@@ -18,6 +18,8 @@ const routes = [
 ];
 const launch = () => chromium.launch({ headless: true, ...(process.env.CHROMIUM_EXECUTABLE ? { executablePath: process.env.CHROMIUM_EXECUTABLE, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] } : {}) });
 const overflow = page => page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+// QA never calls the analytics host; the page must behave identically when the script is blocked.
+const offline = context => context.route('https://plausible.io/**', r => r.abort());
 
 (async () => {
   const server = spawn(process.env.PYTHON || 'python3', ['scripts/serve.py', port], { stdio: 'ignore' });
@@ -31,6 +33,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
     for (const width of [360, 768, 1440]) for (const theme of ['light', 'dark']) {
       browser = await launch();
       const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme: theme, reducedMotion: 'reduce' });
+      await offline(context);
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', e => errors.push(e.message));
@@ -50,6 +53,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
 
     browser = await launch();
     let context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await offline(context);
     let page = await context.newPage();
 
     // Keyboard: skip link, then the command palette.
@@ -107,6 +111,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
     // Narrow reflow and increased text spacing (WCAG 1.4.10, 1.4.12).
     await context.close();
     context = await browser.newContext({ viewport: { width: 320, height: 900 } });
+    await offline(context);
     page = await context.newPage();
     await page.goto(origin + '/agentic-identity-broker/');
     assert.equal(await overflow(page), false, '320px reflow');
@@ -123,6 +128,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
     // Without JavaScript everything is still reachable.
     await context.close();
     context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 360, height: 900 } });
+    await offline(context);
     page = await context.newPage();
     for (const path of ['/agentic-identity-broker/', '/search/', '/knowledge-base/oidc/jwt-anatomy/']) {
       await page.goto(origin + path);

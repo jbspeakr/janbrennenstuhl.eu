@@ -4,7 +4,7 @@
 <!doctype html>
 <html lang="en-GB">
 <head>{{ partial "head.html" . }}</head>
-<body class="k-{{ .Kind }} {{ with .Section }}s-{{ . }}{{ end }}">
+<body class="k-{{ .Kind }} {{ with .Section }}s-{{ . }}{{ end }}"{{ with site.Params.analytics.plausible }}{{ if hasPrefix site.BaseURL "https://www.janbrennenstuhl.eu" }} data-analytics="{{ . }}"{{ end }}{{ end }}>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="bar">

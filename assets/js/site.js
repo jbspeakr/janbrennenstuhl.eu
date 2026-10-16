@@ -91,3 +91,14 @@ if (trigger && 'HTMLDialogElement' in window) {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); open(); }
   });
 }
+
+// Plausible: the script URL is on <body> only in production builds (docs/DECISIONS.md). Injected after
+// the load event so it never competes with content; the queue stub in theme.js buffers early calls.
+const analytics = document.body.dataset.analytics;
+if (analytics) {
+  addEventListener('load', () => {
+    const script = document.createElement('script');
+    script.src = analytics; script.async = true;
+    document.head.append(script);
+  }, { once: true });
+}

@@ -51,6 +51,14 @@ jobs:
         run: npm run test:browser
       - name: Lighthouse lab gate
         run: CHROMIUM_EXECUTABLE="$(node -e "console.log(require('playwright').chromium.executablePath())")" npm run test:lighthouse
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
+        # Home, article and guide at 360/768/1440 px in both themes, for design review on the PR.
+        if: always()
+        with:
+          name: screenshots
+          path: test-results/*.png
+          retention-days: 30
+          if-no-files-found: warn
   preview:
     # Opt-in staging preview for same-repository pull requests. Separate zone and credentials;
     # the production secrets are never referenced here. The preview is built for its own host.

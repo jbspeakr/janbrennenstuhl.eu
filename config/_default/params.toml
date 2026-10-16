@@ -11,3 +11,8 @@ fastMovingTopics = ["identity-authentication", "tokens-jwt", "passwords", "appli
 [license]
 name = "CC BY 4.0"
 url = "https://creativecommons.org/licenses/by/4.0/"
+
+# Plausible (EU-hosted, cookie-free). Loaded only when the build's baseURL is the production host,
+# so previews and local builds never count. The one allowed third-party request (docs/DECISIONS.md).
+[analytics]
+plausible = "https://plausible.io/js/pa-lwYmB-AXA--rNMvzyMeuT.js"
