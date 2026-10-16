@@ -4,7 +4,7 @@
 {{- $knows := slice "Application security" "OAuth 2.0" "OpenID Connect" "JSON Web Tokens" "Passwords and authentication" "Agent identity" "Agentic engineering" -}}
 {{- $graph := slice
   (dict "@type" "Person" "@id" $person "name" site.Params.author "url" ("about/" | absURL) "jobTitle" "Principal Engineer"
-    "knowsAbout" $knows "sameAs" (slice site.Params.mastodon "https://github.com/jbspeakr" "https://www.linkedin.com/in/brennenstuhl/" "https://bsky.app/profile/janbrennenstuhl.eu"))
+    "knowsAbout" $knows "sameAs" (slice site.Params.mastodon site.Params.github site.Params.linkedin site.Params.bluesky))
   (dict "@type" "WebSite" "@id" ("#website" | absURL) "url" site.BaseURL "name" site.Title "inLanguage" "en-GB" "publisher" (dict "@id" $person)
     "license" site.Params.license.url)
 -}}

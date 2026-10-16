@@ -3,25 +3,25 @@
     <div>
       <p class="footer-statement">{{ site.Params.statement }}</p>
       <p>Jan Brennenstuhl writes about application security, identity and agentic engineering. Written in Berlin, hosted in the EU.</p>
-    </div>
-    <nav aria-label="Follow">
-      <h2>Follow</h2>
-      <a href="/index.xml">All writing (RSS)</a><a href="/feed.json">All writing (JSON Feed)</a><a href="/knowledge-base/index.xml">Field Guide entries (RSS)</a><a href="{{ site.Params.mastodon }}" rel="me">Mastodon</a>
-    </nav>
-    <nav aria-label="For agents">
-      <h2>For agents</h2>
-      <ul class="footer-files">
-        <li><a href="/llms.txt">llms.txt</a> <span>Short index: one line and a Markdown link per entry</span></li>
-        <li><a href="/llms-full.txt">llms-full.txt</a> <span>Every entry in full, as one Markdown file</span></li>
-        <li><a href="/catalog.json">catalog.json</a> <span>Metadata per entry: dates, topics, licence</span></li>
-        <li><a href="/findings.json">findings.json</a> <span>Quotable findings with their sources</span></li>
+      <ul class="footer-social" aria-label="Follow">
+        <li><a href="{{ site.Params.mastodon }}" rel="me">{{ partial "ui/icon.html" "brand-mastodon" }}<span>Mastodon</span></a></li>
+        <li><a href="{{ site.Params.bluesky }}" rel="me">{{ partial "ui/icon.html" "brand-bluesky" }}<span>Bluesky</span></a></li>
+        <li><a href="{{ site.Params.github }}" rel="me">{{ partial "ui/icon.html" "brand-github" }}<span>GitHub</span></a></li>
+        <li><a href="{{ site.Params.linkedin }}" rel="me">{{ partial "ui/icon.html" "brand-linkedin" }}<span>LinkedIn</span></a></li>
+        <li><a href="/index.xml" type="application/rss+xml">{{ partial "ui/icon.html" "rss" }}<span>RSS feed</span></a></li>
       </ul>
-      <a href="/agents/">How agents can use this site</a>
-    </nav>
+    </div>
     <nav aria-label="Site">
       <h2>Site</h2>
-      <a href="/glossary/">Glossary</a><a href="/accessibility/">Accessibility</a><a href="/imprint/">Imprint</a><a href="/privacy-policy/">Privacy</a><a href="/affiliate-disclaimer/">Independence</a><a href="{{ site.Params.sourceRepository }}">Source</a>
+      <a href="/about/">About</a><a href="/glossary/">Glossary</a><a href="/accessibility/">Accessibility</a><a href="{{ site.Params.sourceRepository }}">Source</a>
+    </nav>
+    <nav aria-label="Legal">
+      <h2>Legal</h2>
+      <a href="/imprint/">Imprint</a><a href="/privacy-policy/">Privacy</a><a href="/affiliate-disclaimer/">Independence</a>
     </nav>
   </div>
-  <p class="license">Original writing is licensed <a href="{{ site.Params.license.url }}">CC BY 4.0</a> unless an entry says otherwise. Credited third-party media keep their own rights.</p>
+  <div class="footer-meta">
+    <p>Original writing is licensed <a href="{{ site.Params.license.url }}">CC BY 4.0</a> unless an entry says otherwise.</p>
+    <p class="footer-agents">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/llms-full.txt">llms-full.txt</a>, <a href="/catalog.json">catalog.json</a>, <a href="/findings.json">findings.json</a>, <a href="/feed.json">feed.json</a>. <a href="/agents/">How to use this site</a>.</p>
+  </div>
 </footer>
