@@ -26,13 +26,13 @@ Optional:
 | `series` | A series ID from `data/series.toml`; adds the series navigator. |
 | `topics` | Overrides the topics derived from tags (see `data/topics.toml`). |
 | `lastmod` | A meaningful content change. Not a rebuild, not a metadata tweak. |
-| `reviewed` | Date of an actual editorial review of the advice. Sets `review_status: reviewed`. Never set it without a review. |
+| `reviewed` | Date of an actual editorial review of the advice after publication. Never set it without a review. Essays, talks and projects count as reviewed on publication (`review_basis: publication`, dated to the publish date); a later `reviewed` replaces that (`review_basis: editorial`). Field-guide entries stay `not-reviewed` until one is set. |
 | `status` | `archived` or `superseded` (with `supersededBy`); default `published`. |
 | `image`, `imageAlt` | Shown only when informative (`imageAlt` set and not `imageDecorative`). Every article gets the generated diagram anyway. |
 | `scripts` | Interactive explainers to load, e.g. `[jwt]` for `assets/js/explainers/jwt.js`. |
 | `license: false` | No CC BY grant for this page. |
 
-Derived, never written by hand: `kind` from the section (`post` → essay, `knowledge-base` → guide, `projects` → project, `talks` → talk), `id` from the bundle path (`post/x` → `jb-x`, `knowledge-base/a/b` → `jb-knowledge-base-a-b`) unless an `id` is already assigned, `topics` from tags, review status from `reviewed`. **Existing `id` values are permanent**; never change one because a title or slug changed.
+Derived, never written by hand: `kind` from the section (`post` → essay, `knowledge-base` → guide, `projects` → project, `talks` → talk), `id` from the bundle path (`post/x` → `jb-x`, `knowledge-base/a/b` → `jb-knowledge-base-a-b`) unless an `id` is already assigned, `topics` from tags, review status and basis from `reviewed` and the kind. **Existing `id` values are permanent**; never change one because a title or slug changed.
 
 ## Field-guide entries
 

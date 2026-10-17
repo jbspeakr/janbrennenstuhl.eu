@@ -17,7 +17,7 @@
     {{- with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown version</a> <span aria-hidden="true">·</span> {{ end -}}
     ID <code>{{ partial "data/id.html" . }}</code> <span aria-hidden="true">·</span>
     {{ if ne .Params.license false }}<a href="{{ site.Params.license.url }}">CC BY 4.0</a>{{ else }}No reuse license specified{{ end }} <span aria-hidden="true">·</span>
-    {{ with $state.reviewed }}Reviewed {{ time.Format "2 January 2006" . }}{{ else }}Not yet reviewed{{ end }} <span aria-hidden="true">·</span>
+    {{ if ne $state.review_basis "publication" }}{{ with $state.reviewed }}Reviewed {{ time.Format "2 January 2006" . }}{{ else }}Not yet reviewed{{ end }} <span aria-hidden="true">·</span>{{ end }}
     <a href="/imprint/">Send a correction</a>
   </p>
   {{- with .Params.changes }}

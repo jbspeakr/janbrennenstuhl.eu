@@ -8,7 +8,7 @@
 
 - URL: {{ .Permalink }}
 - Type: {{ partial "data/kind.html" . }}; topics: {{ delimit (partial "data/topics.html" .) ", " }}
-- Published: {{ .PublishDate.Format "2006-01-02" }}; modified: {{ .Lastmod.Format "2006-01-02" }}; reviewed: {{ $s.reviewed | default "not yet reviewed" }}
+- Published: {{ .PublishDate.Format "2006-01-02" }}; modified: {{ .Lastmod.Format "2006-01-02" }}; reviewed: {{ with $s.reviewed }}{{ . }}{{ if eq $s.review_basis "publication" }} (on publication){{ end }}{{ else }}not yet reviewed{{ end }}
 {{ with .Params.answer }}
 **Short answer:** {{ . }}
 {{ else }}

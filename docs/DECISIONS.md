@@ -58,6 +58,9 @@ switch to a chunked index (Pagefind) instead of trimming bodies.
 - Field-guide entries are reviewed at least every twelve months; essays on fast-moving topics show
   the older-guidance notice after five years unless reviewed. `python3 scripts/review-queue.py`
   lists what is due. A review sets `reviewed:` and, for field-guide entries, a `changes` line.
+- Essays, talks and projects are written and published by Jan, so publication is their first
+  review: they show no review label until a later review (17 October 2026). Field-guide
+  entries were rewritten in a new form and stay unreviewed until Jan signs each one off.
 - Old essays are not retired. The notice and the topic index handle age; a post is archived
   (`status: archived`) only when its advice is wrong, and superseded (`status: superseded`,
   `supersededBy`) when a newer page replaces it.

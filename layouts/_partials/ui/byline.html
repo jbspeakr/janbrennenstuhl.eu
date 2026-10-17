@@ -3,6 +3,6 @@
   <a href="/about/" rel="author">{{ site.Params.author }}</a>
   <span>Published <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2 January 2006" }}</time></span>
   {{- if ne (.Lastmod.Format "2006-01-02") (.PublishDate.Format "2006-01-02") }}<span>Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2 January 2006" }}</time></span>{{ end }}
-  {{- with $state.reviewed }}<span class="reviewed">Reviewed <time datetime="{{ time.Format "2006-01-02" . }}">{{ time.Format "2 January 2006" . }}</time></span>{{ end }}
+  {{- if eq $state.review_basis "editorial" }}{{ with $state.reviewed }}<span class="reviewed">Reviewed <time datetime="{{ time.Format "2006-01-02" . }}">{{ time.Format "2 January 2006" . }}</time></span>{{ end }}{{ end }}
   {{- if in (slice "essay" "guide") (partial "data/kind.html" .) }}<span>{{ .ReadingTime }} min read</span>{{ end }}
 </p>

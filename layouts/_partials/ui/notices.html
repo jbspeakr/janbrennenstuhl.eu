@@ -1,6 +1,6 @@
 {{- $state := partial "data/status.html" . -}}
 {{- if eq $state.status "archived" }}<p class="notice">Archived. This is kept for reference; check current documentation before applying it.</p>
 {{- else if eq $state.status "superseded" }}<p class="notice">Superseded. {{ with site.GetPage .Params.supersededBy }}Read <a href="{{ .RelPermalink }}">{{ .Title }}</a> instead.{{ end }}</p>
-{{- else if $state.outdated }}<p class="notice">Written in {{ .Date.Year }} and not reviewed since. Security guidance in this area moves quickly; check current standards before relying on specifics.</p>
+{{- else if $state.outdated }}<p class="notice">{{ if eq $state.review_basis "editorial" }}Last reviewed in {{ (time.AsTime $state.reviewed).Year }}.{{ else }}Written in {{ .Date.Year }} and not reviewed since.{{ end }} Security guidance in this area moves quickly; check current standards before relying on specifics.</p>
 {{- end }}
 {{- if and (eq (partial "data/kind.html" .) "guide") (eq $state.review_status "not-reviewed") }}<p class="notice">This field-guide entry has not been reviewed in its new form yet. The studies are summarized as published; no review date is implied.</p>{{ end }}

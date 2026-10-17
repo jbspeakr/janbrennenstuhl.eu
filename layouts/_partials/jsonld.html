@@ -35,7 +35,7 @@
   {{- with $p.Params.tags }}{{ $art = merge $art (dict "keywords" (delimit . ", ")) }}{{ end -}}
   {{- with partial "data/series.html" $p }}{{ $art = merge $art (dict "isPartOf" (dict "@type" "CreativeWorkSeries" "name" .title "url" (printf "%s#series" $p.Permalink))) }}{{ end -}}
   {{- with $p.Store.Get "citations" }}{{ $cites := slice }}{{ range $k, $v := . }}{{ $cites = $cites | append $v }}{{ end }}{{ $art = merge $art (dict "citation" $cites) }}{{ end -}}
-  {{- with $p.Params.reviewed }}{{ $art = merge $art (dict "lastReviewed" (time.Format "2006-01-02" .)) }}{{ end -}}
+  {{- with (partial "data/status.html" $p).reviewed }}{{ $art = merge $art (dict "lastReviewed" .) }}{{ end -}}
   {{- $graph = $graph | append $art -}}
 {{- end -}}
 {{- with $p.Store.Get "definedTerms" -}}

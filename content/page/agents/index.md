@@ -20,7 +20,7 @@ Everything on this site is written for people first, and every page is also avai
 
 ## Citing
 
-Findings and headings have permanent anchors such as `#f-pw-reuse-43-51pct`. Link the canonical HTML URL with the anchor, not the Markdown twin. The catalog's `reviewed` field is empty until an entry has had an editorial review; a recent build or modification date does not mean the advice was checked again.
+Findings and headings have permanent anchors such as `#f-pw-reuse-43-51pct`. Link the canonical HTML URL with the anchor, not the Markdown twin. The catalog's `reviewed` field gives the date of the last review and `review_basis` what it was: `publication` for essays, talks and projects, which the author reviewed when publishing them, or `editorial` for a later review against current sources. Field-guide entries have an empty `reviewed` until their first editorial review. A recent build or modification date does not mean the advice was checked again.
 
 ## Reuse policy
 
