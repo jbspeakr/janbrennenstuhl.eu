@@ -23,7 +23,7 @@ npm run test:edge                   # MCP server and negotiation unit tests
 - Output formats (config/_default/config.toml): `index.md` twins, `llms.txt`, `llms-full.txt`, `catalog.json`, `findings.json`, `feed.json`, `search/index.json`, `redirects.json`.
 - `data/`: `topics.toml` (six topics and tag mapping), `series.toml`, `glossary.toml`, `redirects.toml`.
 - `assets/css/site.css`: tokens, layout, both themes, print. `assets/js/`: `site.js` (shared), `palette.js` and `search.js` (on demand), `explainers/*` (per page).
-- `edge/`: Bunny Edge Scripts for Markdown negotiation and the read-only MCP server.
+- `edge/`: `rules.toml` (edge rules synced by `scripts/edge_rules.py`), Bunny Edge Scripts for Markdown negotiation and the read-only MCP server.
 - `scripts/check.py`: release gates. `tests/fixtures/baseline-routes.json`: the 147 original routes and heading anchors; never weaken it to hide a regression.
 
 ## Content contract
@@ -44,7 +44,7 @@ Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 3
 
 ## Release contract
 
-Read `docs/DELIVERY.md` before touching deployment. No production credentials in PR jobs; publish only from `main`; never rebuild between verification and deployment; never delete remote files during upload; no account-wide Bunny API key. The inline theme script is allowed by a CSP hash documented in `docs/DELIVERY.md`; `check.py` fails until the doc and the edge match the build. Edge caching, MIME, 301s, negotiation, rollback and screen-reader checks are release gates that local tests cannot certify.
+Read `docs/DELIVERY.md` before touching deployment. No production credentials in PR jobs; publish only from `main`; never rebuild between verification and deployment; never delete remote files during upload; the account-wide Bunny API key is used only by the edge-rule sync step in `publish`. Edge rules (headers, CSP, caching, MIME, redirects) are generated from `edge/rules.toml` and `/redirects.json` by `scripts/edge_rules.py`; never edit `[repo] ` rules in the Bunny dashboard. The inline theme script is allowed by a CSP hash in `edge/rules.toml`; `check.py` fails until it matches the build. Edge caching, MIME, 301s, negotiation, rollback and screen-reader checks are release gates that local tests cannot certify.
 
 ## Adding content
 

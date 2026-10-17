@@ -7,7 +7,8 @@ description: "Discover JWTs as one-time tokens in secure authentication. Explore
 claim: "You can make a JWT single-use without a token store by signing it with server-side state that the operation changes, such as the current password hash in a password reset."
 excerpt: "I delve into the transformative potential of JWTs as one-time tokens, exploring their advantages, implementation considerations, and real-world use cases."
 lead: "Self-contained JWTs can be used as one time tokens. A quick guide on single-use JWT."
-slug: howto-single-use-jwt
+slug: single-use-jwt
+aliases: ["/howto-single-use-jwt/"]
 date: 2016-12-30
 lastmod: 2025-06-01
 draft: false

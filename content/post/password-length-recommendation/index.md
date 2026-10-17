@@ -7,7 +7,8 @@ description: "A comprehensive password guide with max password length recommenda
 claim: "Length matters more than complexity: use unique passwords of at least 12 to 16 characters, and services should not cap passwords below 64 characters."
 excerpt: "What's the ideal password length? Are there official password guidelines? Find industry best-practises and essential tips for better password quality in this comprehensive guide on strong password composition."
 lead: "Is there a max password length recommendation? Are short passwords putting your web security at risk?"
-slug: max-password-length-recommendation
+slug: max-password-length
+aliases: ["/max-password-length-recommendation/"]
 date: 2023-05-04
 lastmod: 2025-06-15
 draft: false

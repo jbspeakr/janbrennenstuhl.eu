@@ -10,9 +10,11 @@ title: "An exact and useful title"
 description: "One plain sentence for search results, feeds and llms.txt."
 date: 2026-10-13
 tags: ["oidc", "passkeys"]
-slug: an-existing-or-new-slug      # posts and pages only; keep existing slugs forever
+slug: a-short-keyword-slug         # posts, pages and field-guide entries
 ---
 ```
+
+Slugs are short and keyword-led: two or three words, no `howto`, `what-is` or filler. Renaming a published slug keeps the old URL as a front-matter alias (`aliases: ["/old-slug/"]`), which becomes a 301 in `/redirects.json`; never drop an alias. Heading anchors must survive the rename, `scripts/check.py` follows the alias to verify them.
 
 Optional:
 

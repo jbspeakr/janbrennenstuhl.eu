@@ -7,7 +7,8 @@ description: "Password Security | Use HTML features to create password-manager f
 claim: "Login forms work well with password managers when inputs carry the right autocomplete values, length rules sit in pattern or passwordrules attributes, and the site offers /.well-known/change-password."
 excerpt: "In this article, I explore the importance of creating password-manager friendly login forms for a seamless user experience and enhanced web security."
 lead: "Boosting password security by making it easier for your users to use password managers"
-slug: password-security-manager-friendly
+slug: password-manager-friendly
+aliases: ["/password-security-manager-friendly/"]
 date: 2023-04-23
 lastmod: 2025-06-08
 draft: false

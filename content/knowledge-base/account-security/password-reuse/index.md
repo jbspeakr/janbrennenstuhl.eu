@@ -5,7 +5,8 @@ title: "How common is password reuse?"
 linkTitle: "Password reuse"
 description: "What 5 studies from 2007 to 2018 measured about password reuse, and what engineers and product teams can do about it."
 answer: "Very common: one study estimates that 43-51% of users reuse the same password across sites, and an in situ study found exact or partial reuse in about 60% of unique passwords. An attacker who holds a user's password from one site can guess that user's password elsewhere far more easily."
-slug: password-reuse-studies-security
+slug: password-reuse
+aliases: ["/knowledge-base/account-security/password-reuse-studies-security/"]
 date: 2023-04-27
 lastmod: 2026-10-13
 draft: false

@@ -22,6 +22,8 @@ jobs:
         run: ./scripts/verify.sh
       - name: Verify deployment ordering without credentials
         run: python3 scripts/deploy.py --dry-run
+      - name: Generate edge rules without credentials
+        run: python3 scripts/edge_rules.py > edge-rules.json
       - name: Package the verified release
         run: python3 scripts/release.py
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
@@ -29,6 +31,13 @@ jobs:
           name: verified-site
           path: releases/*.tar.gz
           retention-days: 90
+          if-no-files-found: error
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
+        # The rules the publish job would sync, for review on the PR.
+        with:
+          name: edge-rules
+          path: edge-rules.json
+          retention-days: 30
           if-no-files-found: error
   browser:
     runs-on: codeberg-small
@@ -108,3 +117,14 @@ jobs:
           FORGEJO_EVENT_NAME: ${{ github.event_name }}
           FORGEJO_REF: ${{ github.ref }}
         run: python3 scripts/deploy.py
+      # After the upload, so redirect targets and new inline-script hashes exist when the rules change.
+      # Opt-in: set the variable BUNNY_SYNC_EDGE_RULES to "true" once the hand-made rules that
+      # edge/rules.toml replaces are deleted (docs/DELIVERY.md).
+      - name: Sync Bunny edge rules (headers, CSP, caching, MIME, redirects)
+        if: vars.BUNNY_SYNC_EDGE_RULES == 'true'
+        env:
+          BUNNY_API_KEY: ${{ secrets.ACCOUNT_API_KEY }}
+          BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
+          FORGEJO_EVENT_NAME: ${{ github.event_name }}
+          FORGEJO_REF: ${{ github.ref }}
+        run: python3 scripts/edge_rules.py --apply

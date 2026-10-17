@@ -10,7 +10,7 @@ const origin = `http://127.0.0.1:${port}`;
 const routes = [
   ['home', '/'],
   ['article', '/agentic-identity-broker/'],
-  ['guide', '/knowledge-base/account-security/password-reuse-studies-security/'],
+  ['guide', '/knowledge-base/account-security/password-reuse/'],
   ['explainer', '/knowledge-base/oidc/jwt-anatomy/'],
   ['search', '/search/?q=password&kind=guide'],
   ['topic', '/topics/agentic-engineering/'],

@@ -7,7 +7,8 @@ description: "Maximize Login Security with Long Passwords and Secure Hashing. Le
 claim: "Login systems should accept long passwords from users and password managers, hash them with Argon2id or scrypt, and still set an explicit maximum length to prevent hashing denial of service."
 excerpt: "Discover why supporting long passwords is crucial in today's digital landscape, the benefits of increased password entropy, and practical tips to smoothly implement these changes. Stay ahead of cyber threats and foster user trust with a fortified login system. Dive in and break the barriers to a more secure future!"
 lead: "Don't compromise on your login system's security!"
-slug: long-password-login-system
+slug: long-password-support
+aliases: ["/long-password-login-system/"]
 date: 2023-05-06
 lastmod: 2025-06-08
 draft: false

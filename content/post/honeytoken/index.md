@@ -7,7 +7,8 @@ description: "Threat Detection: Discover the power of Honeytoken in credential b
 claim: "Fake customer accounts with plausible credentials, planted in the user database and watched by the identity provider, alert a security team when attackers use breached data, though they cannot prevent attacks."
 excerpt: "Discover the power of Honeytoken in credential breach detection, and learn how they bolster defenses against authentication attacks from cybercriminals by improving threat detection."
 lead: "A simple, yet powerful approach to threat detection and malicious activity intelligence"
-slug: honeytoken-accounts-credential-breach
+slug: honeytoken
+aliases: ["/honeytoken-accounts-credential-breach/"]
 date: 2023-04-29
 lastmod: 2023-05-31
 draft: false

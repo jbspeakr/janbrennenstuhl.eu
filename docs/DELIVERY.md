@@ -6,27 +6,37 @@
 
 | Job | Runs on | Credentials | Does |
 | --- | --- | --- | --- |
-| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, `release.py` packages a checksummed artifact kept for 90 days |
+| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact kept for 90 days |
 | `browser` | every push and PR | none | tests that same artifact: axe matrix, keyboard, no-JS, reflow, redirects, Markdown negotiation, Lighthouse lab gate |
 | `preview` | same-repo PRs, only if `vars.PREVIEW_HOST` is set | staging zone only | builds for the preview host and uploads to the staging storage zone |
-| `publish` | push to `main`, after `verify` and `browser` | production storage password | checks artifact checksums and revision, uploads the same bytes |
+| `publish` | push to `main`, after `verify` and `browser` | production storage password; account API key for the edge-rule sync | checks artifact checksums and revision, uploads the same bytes, then syncs the edge rules |
 
 Third-party actions are pinned to commit SHAs. The workflow serializes runs per ref and never cancels an upload halfway. Forgejo concurrency is best-effort; do not start a second deployment outside this workflow.
 
-Only the storage-zone password is used for production. The account-wide API key is not used by any job. Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
+Uploads use only the storage-zone password. The account API key is used by one step, the edge-rule sync in `publish`, because Bunny has no scoped key for edge rules (docs/DECISIONS.md). Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
 Secrets and variables:
 
 - `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job sees them.
+- `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync. Only its step in `publish` sees the key, and `edge_rules.py --apply` refuses to run outside a main-branch push.
+- `BUNNY_SYNC_EDGE_RULES` (variable): set to `true` to enable the sync (see below).
 - `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
 - `INDEXNOW_KEY` (variable, optional): public IndexNow token. Hugo writes `<key>.txt`; after a successful upload only catalog entries whose `content_hash` changed are submitted.
 - `PREVIEW_HOST` (variable), `PREVIEW_STORAGE_NAME`, `PREVIEW_STORAGE_PASSWORD` (secrets): optional staging pull zone for PR previews. `deploy.py --preview` refuses to run if production variables are present. The preview is rebuilt with the preview base URL; it is a review copy, not the release artifact.
 
 ## Bunny pull zone configuration
 
-Source code cannot configure the pull zone. Apply and verify these settings; `scripts/smoke.py` checks the observable parts after deployment.
+Edge rules are code. `edge/rules.toml` holds security headers, CSP, caching and MIME types; `scripts/edge_rules.py` adds the Markdown negotiation rule and one 301 rule per redirect target from the built `/redirects.json`, then the `publish` job syncs them after the upload. Managed rules carry the description prefix `[repo] `; the sync creates, updates and deletes only those and leaves hand-made rules alone. Run `python3 scripts/edge_rules.py` to see the rules without changing anything.
+
+Bunny allows 50 edge rules per pull zone by default, hand-made ones included (about 47 are managed today; every renamed page with a new target adds one). The dry run fails a PR that goes over `maxRules`, and the sync refuses to run if hand-made rules would push the zone over it. Ask Bunny support to raise the limit, then update `maxRules`.
+
+Enabling the sync, once: delete the hand-made rules that `edge/rules.toml` replaces (security headers, `Cache-Control`, redirects; the old site also sends `X-XSS-Protection` and `Referrer-Policy: strict-origin`), add `ACCOUNT_API_KEY` and `BUNNY_PULL_ZONE_ID`, set `BUNNY_SYNC_EDGE_RULES=true`, and run `publish`. Then run `scripts/smoke.py`. Rehearse on the staging zone first: `edge_rules.py --apply --host <preview host>` with the staging pull zone ID runs from a laptop; for the production host the script only runs on a main-branch push.
+
+Zone settings that are not edge rules stay manual: Brotli and gzip, validators, the 404 page, the root-domain redirect. `scripts/smoke.py` checks the observable parts after deployment, including a 301 for every entry in `/redirects.json`.
 
 ### Caching
+
+The values below are in `edge/rules.toml`; change them there.
 
 | Resource | Browser `Cache-Control` | Edge TTL |
 | --- | --- | --- |
@@ -39,7 +49,7 @@ Enable Brotli and gzip. Make sure `ETag` or `Last-Modified` validators produce `
 
 ### MIME types
 
-Set or verify:
+Edge rules from `edge/rules.toml` set:
 
 | Path | Content-Type |
 | --- | --- |
@@ -55,20 +65,14 @@ Set or verify:
 ### Errors and redirects
 
 - Custom error page: `/404.html` with a real **404** status, not a 200 fallback.
-- Retired routes: `/redirects.json` lists every old URL (former home pagination, categories, tags, section pagination, front-matter aliases) with its new target. Create one Bunny edge rule per entry (or a few pattern rules) answering **301**. The HTML redirect pages in the artifact remain as a fallback for clients that reach the origin.
+- Retired routes: `/redirects.json` lists every old URL (former home pagination, categories, tags, section pagination, front-matter aliases) with its new target. The synced edge rules answer each with a **301**, one rule per target; patterns include the host, so `/1/` never matches `/knowledge-base/account-security/1/`. The HTML redirect pages in the artifact remain as a fallback for clients that reach the origin. Old `…/index.md` twins of renamed pages are not redirected.
 - Root domain to `www`: unchanged.
 
 ### Headers and CSP
 
-Keep HSTS, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin` and `frame-ancestors 'none'`. Add `Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()`.
+`edge/rules.toml` sets HSTS, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()`, `X-Frame-Options: DENY` (enforces `frame-ancestors 'none'` while the CSP is report-only) and the CSP, which starts in **report-only** mode (`[csp] header`).
 
-Start the CSP in **report-only** mode:
-
-```
-default-src 'self'; script-src 'self' https://plausible.io 'sha256-1dUuVM7OURbaW/lywnzsnTq+6GnIZ3efUSOx8oivojs=' 'inline-speculation-rules'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://plausible.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
-```
-
-- The `sha256` source allows exactly one inline script: the theme snippet in `<head>` (`assets/js/theme.js`, which also carries the Plausible queue stub), inlined so it never waits for the stylesheet. `https://plausible.io` in `script-src` and `connect-src` is for the analytics script (injected by `site.js` after the load event) and its beacon, the only third-party origin (docs/DECISIONS.md). `scripts/check.py` fails the build when the inline script changes and this hash is not updated here, so update the edge rule at the same time.
+- The `sha256` source allows exactly one inline script: the theme snippet in `<head>` (`assets/js/theme.js`, which also carries the Plausible queue stub), inlined so it never waits for the stylesheet. `https://plausible.io` in `script-src` and `connect-src` is for the analytics script (injected by `site.js` after the load event) and its beacon, the only third-party origin (docs/DECISIONS.md). `scripts/check.py` fails the build when an inline script has no hash in `edge/rules.toml` or a hash there is no longer used; the next publish syncs the change.
 - `'inline-speculation-rules'` allows the `<script type="speculationrules">` block that prerenders same-site pages on hover in Chromium.
 - No styles are inlined; critical CSS stays in the fingerprinted file so `style-src 'self'` holds (see docs/DESIGN.md for the LCP trade-off).
 
@@ -78,7 +82,7 @@ Inspect real violations before enforcing. Do not expand the allowlists silently.
 
 Every page has a Markdown twin at `<url>index.md`. Two ways to serve it for `Accept: text/markdown` on the HTML URL:
 
-1. **Edge rule, recommended to start:** condition "Request header `Accept` contains `text/markdown`" and path ends in `/`; action "Redirect to `{{path}}index.md`" with status 302. Redirects from edge rules are not cached, and agents follow them.
+1. **Edge rule, synced by default:** condition "Request header `Accept` contains `text/markdown`" and URL ends in `/`; action "Redirect to `{{path}}index.md`" with status 302. Redirects from edge rules are not cached, and agents follow them. Unlike the edge script it ignores q-values.
 2. **Edge script:** `edge/negotiate.ts` (middleware on the www pull zone) rewrites the origin request to the twin and adds `Vary: Accept`. Middleware runs on cache misses only, so add an edge rule that **bypasses the cache** when `Accept` contains `text/markdown`; otherwise a twin could be cached under the HTML URL. Bundle `negotiate.ts` with `negotiate-core.ts` before upload (for example `deno bundle` or esbuild).
 
 `node --test tests/` covers the negotiation rule; `scripts/serve.py` behaves the same way locally.
@@ -98,7 +102,7 @@ python3 scripts/release.py
 python3 scripts/check_release.py
 ```
 
-After deploying, wait for the edge TTL, then run `python3 scripts/smoke.py`. It checks mutable-cache policies, Markdown MIME, validators and 304s, the catalog version and a genuine 404. Also check compression, image format selection (AVIF/WebP), 301 status on a few retired routes, Markdown negotiation and the deployed revision by hand.
+After deploying, wait for the edge TTL, then run `python3 scripts/smoke.py`. It checks mutable-cache policies, Markdown MIME, validators and 304s, the catalog version and a genuine 404. Also check compression, image format selection (AVIF/WebP), Markdown negotiation and the deployed revision by hand.
 
 ## Dependencies
 
@@ -115,6 +119,7 @@ Prior fingerprinted assets remain for at least the 90-day artifact window; pruni
 - [Forgejo concurrency](https://forgejo.org/docs/latest/user/actions/reference/#concurrency)
 - [Bunny Storage upload API](https://bunny.net/docs/api-reference/storage/manage-files/upload-file)
 - [Bunny Edge Scripting SDK](https://github.com/bunnyway/edge-script-sdk)
+- [Bunny edge rule API](https://docs.bunny.net/api-reference/core/pull-zone/addupdate-edge-rule) and [CDN limits](https://docs.bunny.net/cdn/limits)
 - [MCP 2026-07-28: Streamable HTTP](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http)
 - [RFC 9727: api-catalog](https://www.rfc-editor.org/rfc/rfc9727)
 - [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)

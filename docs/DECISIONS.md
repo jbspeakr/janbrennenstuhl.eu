@@ -35,11 +35,15 @@ failure modes are a bad deploy (caught by the verify and browser jobs before pub
 `scripts/smoke.py` after it) or a Bunny outage (not ours to watch). Rules out: uptime pingers,
 certificate-expiry checks, a CSP report collector for now.
 
-## Bunny configuration as code (15 October 2026)
+## Bunny configuration as code (17 October 2026, replaces "Deferred" of 15 October)
 
-**Deferred.** Pull-zone rules, cache settings, 301s and the CSP are configured by hand from
-`docs/DELIVERY.md`. That document is the source of truth; keep it exact. Revisit once the edge
-configuration has changed twice.
+**Edge rules are generated and synced from CI.** Renaming slugs added redirects with every rename,
+and hand-made rules drift from the build (CSP hash, redirects). `edge/rules.toml` and the built
+`/redirects.json` are the source of truth; `scripts/edge_rules.py --apply` syncs them in the
+`publish` job after the upload, the same way rucksackrebellen does. The cost: Bunny has no scoped key
+for edge rules, so the account API key is now a repository secret, exposed to that one step on
+main-branch pushes only. Accepted by Jan. Rules out: hand-editing managed (`[repo] `) rules in the
+dashboard, an account key in any other job. Zone settings that are not edge rules stay manual.
 
 ## Search index (15 October 2026)
 

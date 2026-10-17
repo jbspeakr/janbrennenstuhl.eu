@@ -7,7 +7,8 @@ description: "Looking for a European alternative to replace Github or Netlify? D
 claim: "A static JAMstack site can run entirely on European providers: Codeberg for code and Forgejo Actions deployment, Bunny CDN for hosting, and Plausible for cookie-free analytics."
 excerpt: "Discover my European JAMstack setup! Learn how I migrated my projects away from GitHub & Netlify to European alternatives for enhanced privacy, performance, and peace of mind."
 lead: "Looking for a European alternative to replace Github or Netlify? Don't look further! Learn what EU service providers I use to power my JAMstack."
-slug: european-jamstack-migration
+slug: european-jamstack
+aliases: ["/european-jamstack-migration/"]
 date: 2025-07-06
 lastmod: 2025-07-06
 draft: false

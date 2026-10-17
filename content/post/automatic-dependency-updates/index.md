@@ -6,7 +6,8 @@ linkTitle: "latest Is Not a Security Strategy"
 description: "Automatic dependency updates spread compromised packages faster than humans can react. Version pinning, provenance verification, and repository proxies turn blind trust into controlled trust."
 claim: "Automatic dependency updates push compromised packages into builds within hours, so teams should pin exact versions, enforce release-age cooldowns, and upgrade on their own schedule after review."
 lead: "Past and present supply chain compromises prove that automatic dependency updates are attack amplifiers. Here is what controlled trust looks like in practice."
-slug: automatic-dependency-updates
+slug: dependency-updates
+aliases: ["/automatic-dependency-updates/"]
 image: automatic-dependency-updates.webp
 imageCredit:
   name: "Tim Mossholder"

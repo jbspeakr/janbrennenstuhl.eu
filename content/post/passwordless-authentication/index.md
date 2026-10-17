@@ -7,7 +7,8 @@ description: "Discover the world of passwordless authentication and how it's tra
 claim: "Passwordless login through biometrics, security keys or passkeys is more secure and easier to use than passwords, though organizations must invest in infrastructure and win user acceptance."
 excerpt: "Imagine a world where forgotten passwords and frustrating login experiences are a thing of the past, where accessing your online accounts is as simple as unlocking your phone. Welcome to the future of passwordless authentication and passkeys."
 lead: "Kill'em dumb passwords!"
-slug: passkeys-passwordless-authentication
+slug: passwordless-authentication
+aliases: ["/passkeys-passwordless-authentication/"]
 date: 2023-05-07
 lastmod: 2025-06-09
 draft: false

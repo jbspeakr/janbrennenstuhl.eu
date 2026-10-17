@@ -5,7 +5,8 @@ title: "Python Docopt: Convert Tuple List to Dictionary"
 description: "Python Docopt: How to convert a list of tuples into a dictionary in Python. A quick and easy solution for beautiful command-line interfaces …"
 claim: "With docopt you can turn a comma-separated option such as key1.value1,key1.value2 into a dictionary of lists by splitting it into tuples and collecting them in a defaultdict(list)."
 excerpt: "How to convert a list of tuples into a dictionary in Python. A quick and easy solution for beautiful command-line interfaces …"
-slug: howto-convert-tuplelist-dictionary
+slug: python-tuples-to-dict
+aliases: ["/howto-convert-tuplelist-dictionary/"]
 date: 2015-04-28
 lastmod: 2023-04-15
 draft: false

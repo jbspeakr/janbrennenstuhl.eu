@@ -5,7 +5,8 @@ title: "How do you protect accounts from stolen credentials?"
 linkTitle: "Compromised credentials"
 description: "What 3 studies found about breached credentials, credential stuffing and privacy-preserving breach checks, and how to apply it."
 answer: "Check usernames and passwords against breach data with a privacy-preserving protocol, and add risk signals such as known devices and locations to the login decision. Breached credentials show up in about 1.5% of logins on the web, and in one study 7-25% of exposed passwords matched the victim's Google account."
-slug: compromised-credentials-stuffing
+slug: credential-stuffing
+aliases: ["/knowledge-base/account-security/compromised-credentials-stuffing/"]
 date: 2023-04-21
 lastmod: 2026-10-13
 draft: false

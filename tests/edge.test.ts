@@ -8,11 +8,11 @@ import { markdownPath, prefersMarkdown } from "../edge/negotiate-core.ts";
 const fixtures: Record<string, unknown> = {
   "/search/index.json": [
     { id: "jb-guide-token-exchange", title: "How does OAuth 2.0 Token Exchange keep provider tokens away from agents?", description: "RFC 8693", url: "/knowledge-base/agent-identity/token-exchange/", kind: "guide", topics: ["agentic-engineering"], published: "2026-10-13", content: "token exchange gateway broker", sections: [{ id: "how-it-works", title: "How it works", text: "the gateway exchanges" }] },
-    { id: "jb-jwks", title: "Mastering JWKS", description: "keys", url: "/jwks-json-web-key-set/", kind: "essay", topics: ["tokens-jwt"], published: "2023-06-02", content: "json web key set", sections: [] },
+    { id: "jb-jwks", title: "Mastering JWKS", description: "keys", url: "/jwks/", kind: "essay", topics: ["tokens-jwt"], published: "2023-06-02", content: "json web key set", sections: [] },
   ],
-  "/catalog.json": { topics: [{ id: "tokens-jwt", title: "Tokens & JWT" }], items: [{ id: "jb-jwks", canonical_url: "https://www.janbrennenstuhl.eu/jwks-json-web-key-set/", markdown_url: "https://www.janbrennenstuhl.eu/jwks-json-web-key-set/index.md", topics: ["tokens-jwt"] }] },
+  "/catalog.json": { topics: [{ id: "tokens-jwt", title: "Tokens & JWT" }], items: [{ id: "jb-jwks", canonical_url: "https://www.janbrennenstuhl.eu/jwks/", markdown_url: "https://www.janbrennenstuhl.eu/jwks/index.md", topics: ["tokens-jwt"] }] },
   "/findings.json": { items: [{ id: "f-x", text: "Reuse is common", article: "Reuse", article_id: "jb-a", url: "https://www.janbrennenstuhl.eu/a/#f-x" }] },
-  "/jwks-json-web-key-set/index.md": "---\nid: jb-jwks\n---\n# Mastering JWKS\n",
+  "/jwks/index.md": "---\nid: jb-jwks\n---\n# Mastering JWKS\n",
 };
 const load = async (path: string) => { if (!(path in fixtures)) throw new Error("missing " + path); return fixtures[path]; };
 
@@ -92,7 +92,7 @@ test("content negotiation prefers Markdown only when asked for it", () => {
   assert.equal(prefersMarkdown("text/markdown, text/html;q=0.8"), true);
   assert.equal(prefersMarkdown("text/html,application/xhtml+xml,*/*;q=0.8"), false);
   assert.equal(prefersMarkdown("text/html, text/markdown;q=0.5"), false);
-  assert.equal(markdownPath(new Request("https://x/jwks-json-web-key-set/", { headers: { Accept: "text/markdown" } })), "/jwks-json-web-key-set/index.md");
+  assert.equal(markdownPath(new Request("https://x/jwks/", { headers: { Accept: "text/markdown" } })), "/jwks/index.md");
   assert.equal(markdownPath(new Request("https://x/feed.json", { headers: { Accept: "text/markdown" } })), null);
 });
 

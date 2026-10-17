@@ -7,7 +7,8 @@ description: "Exploring a backup and recovery strategy for AWS DynamoDB, for opt
 claim: "You can back up DynamoDB tables with nightly Data Pipeline exports to S3, use a Lambda function to restage them into a test environment, and restore from the same backups."
 excerpt: "In this article, I outline a DynamoDB backup and recovery strategy based on Datapipelines, S3 & AWS Lambdas."
 lead: "Orchestrating AWS DynamoDB with Datapipelines, S3 & AWS Lambdas"
-slug: aws-dynamodb-backup-recovery
+slug: dynamodb-backup
+aliases: ["/aws-dynamodb-backup-recovery/"]
 date: 2016-01-18
 lastmod: 2025-06-08
 draft: false

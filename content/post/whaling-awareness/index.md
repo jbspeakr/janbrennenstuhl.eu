@@ -7,8 +7,8 @@ description: "Protect your business from whaling cyber attacks with our comprehe
 claim: "Whaling defense combines regular awareness training and simulations with SPF, DKIM and DMARC, two-factor email login, and payment policies that require out-of-band verification and two sign-offs."
 excerpt: "In this comprehensive guide I talk about key concepts of cybersecurity awareness training and defensive measures in context of whale phishing. Learn how AI and ML can support whaling prevention and understand why knowledge is our strongest weapon, and vigilance our constant ally."
 lead: "Phishing Training & Prevention Tips"
-slug: "what-is-whaling-cyber-awareness"
-aliases: []
+slug: whaling-awareness
+aliases: ["/what-is-whaling-cyber-awareness/"]
 date: 2023-05-23
 lastmod: 2025-03-25
 draft: false

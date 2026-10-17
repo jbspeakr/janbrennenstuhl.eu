@@ -5,7 +5,8 @@ title: "Abusing JSON: Why AWS CloudFormation sucks?!"
 description: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist. Devops ✓ AWS ✗ JSON ✗"
 claim: "CloudFormation misuses JSON as a scripting language, which makes templates hard to read and maintain, and tools such as CFN-Sphere add YAML templates and stack dependency resolution on top."
 excerpt: "Infrastructure as code is great but AWS Cloudformation is not! Learn why JSON-based Cloudformation is bad and what alternatives exist …"
-slug: why-aws-cloudformation-sucks
+slug: aws-cloudformation
+aliases: ["/why-aws-cloudformation-sucks/"]
 date: 2015-05-21
 lastmod: 2025-06-22
 draft: false

@@ -8,7 +8,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 
 const port = process.env.PORT || '8000';
 const origin = `http://127.0.0.1:${port}`;
-const routes = ['/', '/agentic-identity-broker/', '/knowledge-base/account-security/password-reuse-studies-security/'];
+const routes = ['/', '/agentic-identity-broker/', '/knowledge-base/account-security/password-reuse/'];
 const server = spawn(process.env.PYTHON || 'python3', ['scripts/serve.py', port], { stdio: 'ignore' });
 const chrome = await chromeLauncher.launch({ chromePath: process.env.CHROMIUM_EXECUTABLE, chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'] });
 const results = [];

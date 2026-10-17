@@ -167,13 +167,24 @@ def is_redirect(page: Page) -> bool:
     return any(attrs.get("http-equiv", "").lower() == "refresh" for attrs in page.find("meta"))
 
 
+def redirect_target(page: Page) -> str:
+    refresh = next(a for a in page.find("meta") if a.get("http-equiv", "").lower() == "refresh")
+    return refresh.get("content", "").split("url=", 1)[-1]
+
+
 # --- Baseline routes and heading anchors ---------------------------------------------------------
 baseline = json.loads((ROOT / "tests/fixtures/baseline-routes.json").read_text())
 for route, old in baseline.items():
     path = PUBLIC / route.lstrip("/")
     check(path in pages, f"Lost route {route}")
     if path in pages and old["headings"]:
-        check(not is_redirect(pages[path]), f"Route with headings became a redirect: {route}")
+        # A renamed page keeps its old route as a 301 (front-matter alias); fragments survive the
+        # redirect, so the anchors must exist on the page it points to.
+        if is_redirect(pages[path]):
+            path = target_of(redirect_target(pages[path]))
+            check(path in pages and not is_redirect(pages[path]), f"Route with headings must redirect to a page: {route}")
+            if path not in pages:
+                continue
         ids = set(pages[path].ids)
         for heading in old["headings"]:
             check(heading in ids, f"Lost heading anchor {route}#{heading}")
@@ -183,8 +194,7 @@ article_types = {"BlogPosting", "TechArticle", "Article"}
 for path, page in pages.items():
     route = route_of(path)
     if is_redirect(page):
-        refresh = next(a for a in page.find("meta") if a.get("http-equiv", "").lower() == "refresh")
-        dest = refresh.get("content", "").split("url=", 1)[-1]
+        dest = redirect_target(page)
         if local(dest):
             check(target_of(dest).exists(), f"Redirect {route} points to missing {dest}")
         continue
@@ -360,10 +370,11 @@ check(len(rss.findall("./channel/item")) == len(items), "Home RSS should carry e
 for desc in rss.iter("description"):
     check(' href="/' not in (desc.text or "") and ' src="/' not in (desc.text or ""), "Relative URL in RSS content")
 
-# --- CSP: every inline script must be allowed by a hash documented for the edge ----------------------
+# --- CSP: inline scripts and the hashes the edge allows must match exactly ---------------------------
 import base64
 import hashlib
-delivery = (ROOT / "docs/DELIVERY.md").read_text()
+import tomllib
+script_src = tomllib.loads((ROOT / "edge/rules.toml").read_text())["csp"]["directives"]["script-src"].split()
 inline_hashes = set()
 for page in pages.values():
     for kind, blocks in page.scripts.items():
@@ -372,7 +383,9 @@ for page in pages.values():
                 if block.strip():
                     inline_hashes.add("'sha256-" + base64.b64encode(hashlib.sha256(block.encode()).digest()).decode() + "'")
 for digest in inline_hashes:
-    check(digest in delivery, f"Inline script hash {digest} is not in docs/DELIVERY.md; update the CSP there and at the edge")
+    check(digest in script_src, f"Inline script hash {digest} is not in script-src in edge/rules.toml")
+for digest in (s for s in script_src if s.startswith("'sha256-")):
+    check(digest in inline_hashes, f"Unused hash {digest} in script-src in edge/rules.toml; remove it")
 
 # --- No build-machine details in the artifact -----------------------------------------------------
 for path in PUBLIC.rglob("*"):

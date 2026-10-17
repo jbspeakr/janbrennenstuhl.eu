@@ -10,7 +10,8 @@ lastmod: 2026-10-13
 draft: false
 image: openid-connect-security.webp
 weight: 100
-slug: openid-connect-security-research
+slug: openid-connect-security
+aliases: ["/knowledge-base/oidc/openid-connect-security-research/"]
 topics: [identity-authentication]
 claim: "Testing 6 certified OpenID providers and 8 relying parties against 18 known attacks uncovered 12 implementation flaws."
 changes:

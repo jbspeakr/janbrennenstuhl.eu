@@ -5,7 +5,8 @@ title: "How to Migrate SVN to GIT with History?"
 description: "Version Control System (VCS) Migration: A short guide on how to migrate SVN to GIT while preserving source code authors and commit history."
 claim: "You can migrate an SVN repository to Git with its full history and authors by extracting the SVN authors into an authors file and running git svn clone -A authors.txt."
 excerpt: "A small step-by-step example on how to move your source code from SVN to GIT."
-slug: howto-convert-svn-git
+slug: svn-to-git
+aliases: ["/howto-convert-svn-git/"]
 date: 2015-04-15
 lastmod: 2025-06-01
 draft: false

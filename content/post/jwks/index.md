@@ -7,7 +7,8 @@ description: "Demystify JWKS with this simplified guide. Learn about JSON Web Ke
 claim: "A JSON Web Key Set lets an identity provider publish its public keys at one URL, so clients can verify JWT signatures locally and the issuer can rotate keys without redistributing them."
 excerpt: "Implementing JSON Web Key Sets (JWKS) is crucial for organizations that want to leverage modern, decentralized authentication and authorization protocols. In this article I discuss the purpose of JWKS, guide you though their technical specification and outline benefits as well as best-practices to securely exposing public key material."
 lead: "Securely Expose Public Key Material"
-slug: jwks-json-web-key-set
+slug: jwks
+aliases: ["/jwks-json-web-key-set/"]
 date: 2023-06-02
 lastmod: 2023-06-02
 draft: false

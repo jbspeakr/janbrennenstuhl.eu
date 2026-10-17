@@ -7,7 +7,8 @@ description: "Explore the world of JWE token with this in-depth guide. Gain unde
 claim: "JWE keeps a JWT's payload confidential through authenticated encryption, but its security depends on careful algorithm choice, key management, token expiry and keeping sensitive data out of headers."
 excerpt: "Have you ever wondered about the intricacies of JSON Web Encryption Standards? Get ready to decode the enigma with this deep dive into JWE Tokens. Gain insightful knowledge and grasp common data security use cases."
 lead: "Encrypted JWTs: Understanding JSON Web Encryption"
-slug: jwe-token-json-web-encryption
+slug: jwe
+aliases: ["/jwe-token-json-web-encryption/"]
 date: 2023-05-29
 lastmod: 2025-06-15
 draft: false

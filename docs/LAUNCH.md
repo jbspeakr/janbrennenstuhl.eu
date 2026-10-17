@@ -14,9 +14,10 @@ below "Publish" happens before everything above it is ticked.
       with the date.
 - [ ] `./scripts/verify.sh`, `npm run test:browser`, `npm run test:lighthouse` and
       `python3 scripts/links.py` green on the merge candidate.
-- [ ] Bunny: cache, MIME, 404 and 301 rules, headers and the report-only CSP from `docs/DELIVERY.md`
-      applied to the staging zone; `python3 scripts/smoke.py` against staging; rollback rehearsed
-      there once (`docs/DELIVERY.md`, "Rollback").
+- [ ] Bunny on the staging zone: 404 page and zone settings by hand, edge rules with
+      `BUNNY_API_KEY=… BUNNY_PULL_ZONE_ID=<staging> python3 scripts/edge_rules.py --apply --host <preview host>`;
+      `python3 scripts/smoke.py --base https://<preview host>`; rollback rehearsed there once
+      (`docs/DELIVERY.md`, "Rollback").
 - [ ] Content freeze on `main` from this point: no post edits until the cutover is done.
 - [ ] Save the current live site to the Wayback Machine (home, `/llms.txt`, a few posts) so the old
       rendering is retrievable.
@@ -24,15 +25,16 @@ below "Publish" happens before everything above it is ticked.
 ## Publish
 
 - [ ] Merge `modernize` into `main` with a merge commit (keeps both histories).
-- [ ] Apply the same Bunny rules to the production zone (`docs/DELIVERY.md`), then purge once.
+- [ ] Production zone: delete the hand-made header, cache and redirect rules, add `ACCOUNT_API_KEY` and
+      `BUNNY_PULL_ZONE_ID`, set `BUNNY_SYNC_EDGE_RULES=true` (`docs/DELIVERY.md`). Purge once after publish.
 - [ ] Watch the `publish` job; the upload order is assets, HTML and Markdown, feeds and catalogs,
       manifest.
 - [ ] `python3 scripts/smoke.py` against production after the edge TTL. By hand: compression,
-      AVIF/WebP selection, three retired routes return 301, `Accept: text/markdown` returns a twin.
+      AVIF/WebP selection, `Accept: text/markdown` returns a twin. `smoke.py` checks every 301.
 
 ## First hour
 
-- [ ] Every route in `tests/fixtures/baseline-routes.json` answers 200 on the live host
+- [ ] Every route in `tests/fixtures/baseline-routes.json` answers 200, or 301 to its renamed page, on the live host
       (`python3 scripts/smoke.py` covers this when run with the fixture).
 - [ ] Mastodon profile link verification still shows the green check (`rel="me"` moved into the new
       head partial).

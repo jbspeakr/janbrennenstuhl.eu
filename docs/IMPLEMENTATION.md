@@ -49,7 +49,7 @@ Corrections made while rewriting (worth your review): a dead Google-hosted PDF r
 
 1. Your design and content review, including the rewritten field-guide entries (none carries a review date) and the corrections above.
 2. A manual screen-reader pass with VoiceOver/Safari and NVDA/Firefox; the accessibility statement says this is pending.
-3. Bunny configuration from `docs/DELIVERY.md`: cache and MIME rules, 301s from `/redirects.json`, CSP report-only, negotiation, then the live smoke test and a rollback rehearsal on staging.
+3. Bunny configuration from `docs/DELIVERY.md`: zone settings by hand, edge rules (cache, MIME, 301s, CSP report-only, negotiation) synced by `scripts/edge_rules.py`, rehearsed on staging with the live smoke test and a rollback.
 4. Deploying the MCP edge script and adding it to the api-catalog, if you want it live.
 
 Resolved on 15 October 2026 (see `docs/DECISIONS.md` and `docs/LAUNCH.md`): CC BY 4.0 governs training, so the TDM reservation is gone; Plausible is back as the one allowed third-party script; no newsletter, webmentions or external monitoring; Bunny configuration as code and a CSP collector are deferred. Added: `scripts/review-queue.py` (editorial queue), `scripts/links.py` with a monthly `links` workflow, `scripts/bump-hugo.sh` and `renovate.json`, a search-index budget, screenshot artifacts from the browser job, and the HTW lecture as a talk.

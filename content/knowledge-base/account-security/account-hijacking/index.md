@@ -10,7 +10,8 @@ lastmod: 2026-10-13
 draft: false
 image: account-hijacking-attacks.webp
 weight: 90
-slug: "account-hijacking-attacks"
+slug: account-takeover
+aliases: ["/knowledge-base/account-security/account-hijacking-attacks/"]
 topics: [identity-authentication, application-security]
 claim: "At least 35 of 75 popular online services studied were vulnerable to account pre-hijacking attacks."
 changes:

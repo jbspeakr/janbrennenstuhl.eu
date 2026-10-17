@@ -5,7 +5,8 @@ title: "Do login challenges and risk scoring stop account takeover?"
 linkTitle: "Reinforced authentication"
 description: "What 4 studies found about login challenges, login risk scoring and defences against online password guessing."
 answer: "They are an important barrier if you pick the right challenge: device-based challenges blocked over 94% of phishing-rooted hijacking attempts at Google, while knowledge-based challenges stopped as few as 10%. The cost is friction, as 52% of legitimate users who got a challenge failed to sign in at first."
-slug: "reinforced-authentication-studies"
+slug: reinforced-authentication
+aliases: ["/knowledge-base/account-security/reinforced-authentication-studies/"]
 date: 2023-04-27
 lastmod: 2026-10-13
 draft: false
