@@ -3,8 +3,8 @@ id: jb-research-oidc-security
 imageDecorative: true
 title: "Where do OpenID Connect implementations break?"
 linkTitle: "OpenID Connect security"
-description: "What 2 security analyses from Ruhr-University Bochum found about attacks on OpenID Connect clients and providers, and which checks prevent them."
-answer: "Mostly where tokens and redirects get checked: documented attacks on relying parties include token substitution, key confusion and replay, and attacks on providers include redirect URI manipulation, PKCE downgrade and sub claim spoofing. Certification doesn't rule these out, as a 2020 lab analysis of OpenID Certified implementations disclosed 12 flaws."
+description: "The attacks that work against OpenID Connect clients and providers, documented by Ruhr-University Bochum, and the checks that prevent them."
+answer: "Implementations break mostly where tokens and redirects get checked. Documented attacks on relying parties include token substitution, key confusion and replay, and attacks on providers include redirect URI manipulation, PKCE downgrade and sub claim spoofing. Certification doesn't rule these out, as a 2020 lab analysis of OpenID Certified implementations disclosed 12 flaws."
 date: 2023-05-15
 lastmod: 2026-10-13
 draft: false
@@ -48,7 +48,7 @@ On the OpenID provider:
 
 - Compare redirect URIs exactly against the registered values.
 - Enforce {{< term "pkce" >}} for clients that started with it, so an attacker can't downgrade the flow.
-- Accept each authorisation code once and only from the client it was issued to.
+- Accept each authorization code once and only from the client it was issued to.
 
 ### For product and UX
 
@@ -68,8 +68,6 @@ The thesis also describes common threats and attack scenarios. These include sin
 ### OpenID Connect Security Considerations
 
 In this 2017 technical report, Vladislav Mladenov and Christian Mainka from Ruhr-University Bochum look at OpenID Connect specification flaws and implementation issues that open up attack vectors. They outline attack scenarios like session overwriting, redirect URI manipulation and token recipient confusion, and give recommendations for defending against them.
-
-This short technical report is a good source of ideas for anyone planning an OpenID Connect penetration test.
 
 [Read the paper (PDF)](https://www.nds.ruhr-uni-bochum.de/media/ei/veroeffentlichungen/2017/01/13/OIDCSecurity_1.pdf)
 

@@ -3,8 +3,8 @@ id: jb-research-password-reuse
 imageDecorative: true
 title: "How common is password reuse?"
 linkTitle: "Password reuse"
-description: "What 5 studies from 2007 to 2018 measured about password reuse, and what engineers and product teams can do about it."
-answer: "Very common: one study estimates that 43-51% of users reuse the same password across sites, and an in situ study found exact or partial reuse in about 60% of unique passwords. An attacker who holds a user's password from one site can guess that user's password elsewhere far more easily."
+description: "How much people reuse passwords, measured in studies from 2007 to 2018, and what engineers and product teams can do about it."
+answer: "Password reuse is very common. One study estimates that 43-51% of users reuse the same password across sites, and an in situ study found exact or partial reuse in about 60% of unique passwords. An attacker who holds a user's password from one site can guess that user's password elsewhere far more easily."
 slug: password-reuse
 aliases: ["/knowledge-base/account-security/password-reuse-studies-security/"]
 date: 2023-04-27
@@ -52,14 +52,14 @@ changes:
 
 ### For product and UX
 
-- Composition rules can backfire. Wash et al. found that people memorise a strong password for a site they log into often and then reuse it elsewhere. Read [password policy]({{< ref "/post/password-policy" >}}) before adding another character-class rule.
+- Composition rules can backfire. Wash et al. found that people memorize a strong password for a site they log into often and then reuse it elsewhere. Read [password policy]({{< ref "/post/password-policy" >}}) before adding another character-class rule.
 - Don't rely on a notification alone. Golla et al. conclude that "notifications alone appear insufficient in solving password reuse". Pair the message with a forced reset and a clear next step, such as using a password manager.
 
 ## The studies in detail
 
 ### Observing Passwords in Their Natural Habitat
 
-Researchers from Carnegie Mellon University, the International Computer Science Institute and Google instrumented the computers of 154 participants for an average of 147 days each. They wanted to analyse "password characteristics and behaviors across the full range of participants' web-based accounts".
+Researchers from Carnegie Mellon University, the International Computer Science Institute and Google instrumented the computers of 154 participants for an average of 147 days each. They wanted to analyze "password characteristics and behaviors across the full range of participants' web-based accounts".
 
 Among other things, the data showed "that the use of symbols and digits in passwords predicts increased likelihood of reuse, while increased password strength predicts decreased likelihood of reuse; that password reuse is more prevalent than previously believed, especially when partial reuse is taken into account". Of 1,578 unique passwords, 32% were exactly reused and about 60% showed some form of reuse.
 
@@ -75,7 +75,7 @@ That algorithm guessed 30% of transformed passwords within 100 attempts, compare
 
 ### Understanding Password Choices: How Frequently Entered Passwords are Re-used Across Websites
 
-Researchers from Michigan State University and Macalester College combined survey answers with the measured online behaviour of 134 participants over 6 weeks. They found "that people do tend to re-use each password on 1.7–3.4 different websites" and that "they reuse passwords that are more complex, and mostly they tend to re-use passwords that they have to enter frequently".
+Researchers from Michigan State University and Macalester College combined survey answers with the measured online behavior of 134 participants over 6 weeks. They found "that people do tend to re-use each password on 1.7–3.4 different websites" and that "they reuse passwords that are more complex, and mostly they tend to re-use passwords that they have to enter frequently".
 
 The most interesting observation is how accounts depend on each other, which shows the trouble with arbitrary password composition requirements:
 
@@ -92,8 +92,6 @@ Microsoft researchers measured the password use and reuse of over half a million
 ### Designing Password-Reuse Notifications
 
 When companies find stolen credentials and notice password reuse, they may require a password reset and notify affected users. Researchers from Germany and the USA ran 2 user studies in 2018 to learn how people react to such notifications. In the first, 180 respondents each saw 1 of 6 notifications that real companies had used, and fewer than a third reported an intention to change any passwords. In the second, 588 respondents saw 1 of 15 variations of a model notification. The authors discuss "best practices for password-reuse notifications and how notifications alone appear insufficient in solving password reuse".
-
-I recommend the paper to anyone who has to balance account security and usability.
 
 [Read the paper (PDF)](https://dl.acm.org/doi/pdf/10.1145/3243734.3243767)
 

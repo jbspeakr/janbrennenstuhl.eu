@@ -3,8 +3,8 @@ id: jb-research-password-policy
 imageDecorative: true
 title: "Do password strength meters work?"
 linkTitle: "Password strength meters"
-description: "What 5 studies found about password strength meters and strength estimation, and how to build a meter and policy that help."
-answer: "Only under the right conditions: in one study, meters produced stronger passwords when people changed passwords on important accounts and made no observable difference for an unimportant one. Many deployed meters also label weak passwords as strong, so a useful meter has to estimate how guessable a password really is."
+description: "When password strength meters change behavior, why many deployed meters mislead, and how to build a meter and policy that help."
+answer: "Meters work under the right conditions. In one study they produced stronger passwords when people changed passwords on important accounts, and made no observable difference for an unimportant one. Many deployed meters also label weak passwords as strong, so a useful meter has to estimate how guessable a password really is."
 date: 2023-05-03
 lastmod: 2026-10-13
 draft: false
@@ -24,7 +24,7 @@ changes:
 
 {{< finding id="meter-unimportant-no-effect" source="Egelman et al., Does My Password Go up to Eleven? (CHI 2013)" url="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/chi13b.pdf" >}}When people created a password for an unimportant account, meters made no observable difference because they reused weak passwords from similar low-risk accounts.{{< /finding >}}
 
-{{< finding id="meter-inconsistent-labels" source="de Carné de Carnavalet and Mannan, From Very Weak to Very Strong: Analyzing Password-Strength Meters (NDSS 2014)" url="https://xavier2dc.fr/papers/password-meters-ndss2014.pdf" >}}Password meters at popular web services gave highly inconsistent ratings for the same password and labelled many weak passwords as strong or even very strong.{{< /finding >}}
+{{< finding id="meter-inconsistent-labels" source="de Carné de Carnavalet and Mannan, From Very Weak to Very Strong: Analyzing Password-Strength Meters (NDSS 2014)" url="https://xavier2dc.fr/papers/password-meters-ndss2014.pdf" >}}Password meters at popular web services gave highly inconsistent ratings for the same password and labeled many weak passwords as strong or even very strong.{{< /finding >}}
 
 {{< finding id="meter-zxcvbn-1-5mb" source="Wheeler, zxcvbn: Low-Budget Password Strength Estimation (USENIX Security 2016)" url="https://www.usenix.org/system/files/conference/usenixsecurity16/sec16_paper_wheeler.pdf" >}}A strength estimator with 1.5 MB of compressed data can accurately estimate the best-known guessing attacks up to 10^5 guesses.{{< /finding >}}
 
@@ -66,13 +66,13 @@ A follow-up field experiment with 541 participants tested a different scenario: 
 
 ### Analyzing Password-Strength Meters
 
-Researchers from Concordia University tested 13 password meters from 11 popular web services, including Google, Yahoo! and PayPal, with nearly 4 million passwords from password dictionaries. They found highly inconsistent ratings for the same password across meters and many weak passwords labelled as strong or very strong. The study is from 2014, but I still see most of these problems on live sites. The authors argue that meter design deserves real expertise and research, and that, at least, "the current meters should avoid providing misleading strength outcomes, especially for weak passwords."
+Researchers from Concordia University tested 13 password meters from 11 popular web services, including Google, Yahoo! and PayPal, with nearly 4 million passwords from password dictionaries. They found highly inconsistent ratings for the same password across meters and many weak passwords labeled as strong or very strong. The study is from 2014, but I still see most of these problems on live sites. The authors argue that meter design deserves real expertise and research, and that, at least, "the current meters should avoid providing misleading strength outcomes, especially for weak passwords."
 
 [Read the paper (PDF)](https://xavier2dc.fr/papers/password-meters-ndss2014.pdf)
 
 ### Low-Budget Password Strength Estimation
 
-In this reference paper for the zxcvbn strength estimator from Dropbox, Daniel Lowe Wheeler shows that 1.5 MB of compressed storage is enough to accurately estimate the best-known guessing attacks up to 10^5 guesses. With 245 kB and 29 kB, zxcvbn covers 10^4 and 10^3 guesses respectively. The paper compares the estimator against 4 modern guessing attacks and presents it as a better replacement for composition requirements. zxcvbn is a useful base for any strength meter.
+In this reference paper for the zxcvbn strength estimator from Dropbox, Daniel Lowe Wheeler shows that 1.5 MB of compressed storage is enough to accurately estimate the best-known guessing attacks up to 10^5 guesses. With 245 kB and 29 kB, zxcvbn covers 10^4 and 10^3 guesses respectively. The paper compares the estimator against 4 modern guessing attacks and presents it as a better replacement for composition requirements.
 
 [Read the paper (PDF)](https://www.usenix.org/system/files/conference/usenixsecurity16/sec16_paper_wheeler.pdf)
 

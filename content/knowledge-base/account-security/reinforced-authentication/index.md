@@ -3,7 +3,7 @@ id: jb-research-reinforced-authentication
 imageDecorative: true
 title: "Do login challenges and risk scoring stop account takeover?"
 linkTitle: "Reinforced authentication"
-description: "What 4 studies found about login challenges, login risk scoring and defences against online password guessing."
+description: "Which login challenges stop account takeover, what they cost in friction, and how risk scoring picks the logins to challenge."
 answer: "They are an important barrier if you pick the right challenge: device-based challenges blocked over 94% of phishing-rooted hijacking attempts at Google, while knowledge-based challenges stopped as few as 10%. The cost is friction, as 52% of legitimate users who got a challenge failed to sign in at first."
 slug: reinforced-authentication
 aliases: ["/knowledge-base/account-security/reinforced-authentication-studies/"]
@@ -35,7 +35,7 @@ changes:
 
 {{< studies caption="Reinforced authentication studies" >}}
 {{< study title="Evaluating Login Challenges as a Defense Against Account Takeover" org="Google, New York University" year="2019" sample="Over 350,000 hijacking attempts; 1.2 million legitimate users" method="Case study of 14 challenge types at Google" url="https://damonmccoy.com/papers/loginchallenges.pdf" >}}Device-based challenges work best; 52% of legitimate users failed at first.{{< /study >}}
-{{< study title="StopGuessing: Using Guessed Passwords to Thwart Online Guessing" org="Carnegie Mellon University, Microsoft Research" year="n/a" sample="n/a" method="Open-source implementation and attack simulations" url="https://www.microsoft.com/en-us/research/uploads/prod/2018/06/stopGuessingTR.pdf" >}}Penalise failures with frequently guessed passwords and forgive typos.{{< /study >}}
+{{< study title="StopGuessing: Using Guessed Passwords to Thwart Online Guessing" org="Carnegie Mellon University, Microsoft Research" year="n/a" sample="n/a" method="Open-source implementation and attack simulations" url="https://www.microsoft.com/en-us/research/uploads/prod/2018/06/stopGuessingTR.pdf" >}}Penalize failures with frequently guessed passwords and forgive typos.{{< /study >}}
 {{< study title="Who Are You? A Statistical Approach to Measuring User Authenticity" org="LinkedIn, Ruhr-Universität Bochum, Università di Cagliari" year="2016" sample="LinkedIn login data and simulated attacks" method="Statistical classifier, prototype evaluation" url="https://www.ndss-symposium.org/wp-content/uploads/2017/09/who-are-you-statistical-approach-measuring-user-authenticity.pdf" >}}Recall of up to 89% at a 10% false-positive rate.{{< /study >}}
 {{< study title="Distinguishing Attacks from Legitimate Traffic at an Authentication Server" org="Microsoft Research" year="n/a" sample="n/a" method="Statistical estimation with sensitivity analysis" url="https://www.microsoft.com/en-us/research/uploads/prod/2018/06/distinguishingBotsFromLegit.pdf" >}}Estimating the bad-to-good traffic ratio avoids fixed lockout thresholds.{{< /study >}}
 {{< /studies >}}
@@ -46,7 +46,7 @@ changes:
 
 - Score every login on signals the user doesn't type, such as IP address history, device and browser. Freeman et al. reached a recall of up to 89% using IP and user-agent history.
 - Prefer device-based challenges, such as a prompt on a known device, over knowledge questions. Doerfler et al. measured a large gap between the two. My essay on [step-up authentication]({{< ref "/post/stepup-authentication" >}}) shows how to request a stronger factor only when the risk justifies it.
-- Count failed logins by how likely they are to be an attack. Penalise failures with frequently guessed passwords, protect accounts with weak passwords harder, and be lenient with typos. Tian et al. do this without storing anything that would expose accounts if leaked.
+- Count failed logins by how likely they are to be an attack. Penalize failures with frequently guessed passwords, protect accounts with weak passwords harder, and be lenient with typos. Tian et al. do this without storing anything that would expose accounts if leaked.
 - Breadth-first guessing spreads attempts thinly over many accounts, so per-account lockouts don't see it. Herley and Schechter estimate the share of attack traffic instead of relying on fixed thresholds. See [password spraying]({{< ref "/post/password-spraying" >}}) and [honeytokens]({{< ref "/post/honeytoken" >}}) for related detection.
 
 ### For product and UX

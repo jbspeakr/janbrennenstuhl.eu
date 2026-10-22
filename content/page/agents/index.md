@@ -27,6 +27,6 @@ Findings and headings have permanent anchors such as `#f-pw-reuse-43-51pct`. Lin
 Original writing is licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) unless a page says otherwise: quote it, summarize it and link it with attribution. Credited third-party images keep their own rights.
 
 - Search engines and agents fetching pages for a person's question are welcome. [`robots.txt`](/robots.txt) allows every crawler.
-- Training: the CC BY 4.0 licence already permits it, so there is no text-and-data-mining reservation. `robots.txt` says so with a `Content-Signal` line and [`/.well-known/tdmrep.json`](/.well-known/tdmrep.json) declares `tdm-reservation: 0`. Attribution remains the condition: name the author and link the source.
+- Training: the CC BY 4.0 license already permits it, so there is no text-and-data-mining reservation. `robots.txt` says so with a `Content-Signal` line and [`/.well-known/tdmrep.json`](/.well-known/tdmrep.json) declares `tdm-reservation: 0`. Attribution remains the condition: name the author and link the source.
 
 Questions or corrections: see the [imprint]({{< ref "/page/imprint" >}}).

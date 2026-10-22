@@ -6,7 +6,7 @@ id: jb-project-aib
 date: 2026-09-15
 topics: [agentic-engineering, identity-authentication]
 ---
-Agentic Identity Broker is an open-source project built by Magnus Jungsbluth and Jan Brennenstuhl. It keeps the user and the agent in authorization decisions and stores provider tokens outside the agent's context.
+Magnus Jungsbluth and I built the open-source Agentic Identity Broker. It keeps the user and the agent in authorization decisions and stores provider tokens outside the agent's context.
 
 ## Explore the project
 

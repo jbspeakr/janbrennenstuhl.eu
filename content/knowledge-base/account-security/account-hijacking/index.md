@@ -3,7 +3,7 @@ id: jb-research-account-hijacking
 imageDecorative: true
 title: "How do attackers take over accounts?"
 linkTitle: "Account hijacking"
-description: "What 2 studies found about account pre-hijacking at sign-up and the hack-for-hire market, and how to defend against both."
+description: "Two ways attackers take over accounts, pre-hijacking at sign-up and paid hack-for-hire phishing, and the controls that stop each."
 answer: "Some attackers prepare an account before the victim even signs up: at least 35 of 75 popular services studied were vulnerable to such pre-hijacking. Others are paid to break into a specific account and mostly use tailored phishing that can get past SMS two-factor authentication."
 date: 2023-04-21
 lastmod: 2026-10-13
@@ -59,7 +59,7 @@ changes:
 
 In this study, Avinash Sudhodanan and Andrew Paverd show that there is a whole class of **account pre-hijacking attacks**. The key point: "The distinctive feature of these attacks is that the attacker performs some action before the victim creates an account, which makes it trivial for the attacker to gain access after the victim has created/recovered the account."
 
-The authors assume a realistic attacker who knows only the victim's email address. They describe 5 attacks: Classic-Federated Merge, Unexpired Session, Trojan Identifier, Unexpired Email Change and Non-verifying IdP. Of 75 popular services they analysed, at least 35 were vulnerable to one or more of them. Some attacks were completely undetectable from the victim's point of view. The paper closes with security requirements that prevent these vulnerabilities.
+The authors assume a realistic attacker who knows only the victim's email address. They describe 5 attacks: Classic-Federated Merge, Unexpired Session, Trojan Identifier, Unexpired Email Change and Non-verifying IdP. Of 75 popular services they analyzed, at least 35 were vulnerable to one or more of them. Some attacks were completely undetectable from the victim's point of view. The paper closes with security requirements that prevent these vulnerabilities.
 
 [Read the paper (PDF)](https://arxiv.org/pdf/2205.10174.pdf)
 

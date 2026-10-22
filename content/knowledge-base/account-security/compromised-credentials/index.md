@@ -3,7 +3,7 @@ id: jb-research-compromised-credentials
 imageDecorative: true
 title: "How do you protect accounts from stolen credentials?"
 linkTitle: "Compromised credentials"
-description: "What 3 studies found about breached credentials, credential stuffing and privacy-preserving breach checks, and how to apply it."
+description: "How often breached credentials show up at login, how to check them without leaking the password, and which risk signals help."
 answer: "Check usernames and passwords against breach data with a privacy-preserving protocol, and add risk signals such as known devices and locations to the login decision. Breached credentials show up in about 1.5% of logins on the web, and in one study 7-25% of exposed passwords matched the victim's Google account."
 slug: credential-stuffing
 aliases: ["/knowledge-base/account-security/compromised-credentials-stuffing/"]
@@ -41,7 +41,7 @@ changes:
 
 ### For engineers
 
-- Check credentials against breach data at sign-up, password change and login. Use a protocol that never sends the password or its full hash to the checking service. Thomas et al. combine "computationally expensive hashing, k-anonymity, and private set intersection"; Li et al. show that a plain hash prefix leaks more than most teams assume.
+- Check credentials against breach data at sign-up, password change and login. Use a protocol that never sends the password or its full hash to the checking service. Thomas et al. combine "computationally expensive hashing, k-anonymity, and private set intersection"; Li et al. show how much a plain hash prefix can leak.
 - Don't decide a login on the password alone. Thomas et al. (2017) show that risk signals such as a user's historical geolocations and device profiles reduce the hijacking risk from stolen passwords. The [reinforced authentication entry]({{< ref "/knowledge-base/account-security/reinforced-authentication" >}}) collects studies on login risk scoring.
 - Watch for stuffing and spraying patterns across accounts, not only per account. See [password spraying]({{< ref "/post/password-spraying" >}}) and [honeytokens]({{< ref "/post/honeytoken" >}}) for detection ideas.
 
@@ -56,13 +56,13 @@ changes:
 
 "To prevent credential stuffing attacks, industry best practice now proactively checks if user credentials are present in known data breaches."
 
-For this paper, researchers from Cornell Tech and Cloudflare analysed existing compromised credential checking (C3) services such as HaveIBeenPwned and Google Password Checkup. They give the first formal description of C3 services, including operational requirements and threat models. Current services have the client share a short prefix of a password hash. The authors show that in some contexts this prefix makes remote guessing 12 times more effective. They then propose "two new protocols that provide stronger protection for users' passwords", implement them, and show that they remain practical to deploy.
+For this paper, researchers from Cornell Tech and Cloudflare analyzed existing compromised credential checking (C3) services such as HaveIBeenPwned and Google Password Checkup. They give the first formal description of C3 services, including operational requirements and threat models. Current services have the client share a short prefix of a password hash. The authors show that in some contexts this prefix makes remote guessing 12 times more effective. They then propose "two new protocols that provide stronger protection for users' passwords", implement them, and show that they remain practical to deploy.
 
 [Read the paper (PDF)](https://rist.tech.cornell.edu/papers/c3.pdf)
 
 ### Protecting accounts from credential stuffing with password breach alerting
 
-Researchers from Google and Stanford describe how Google's password breach alerting works under the hood, which constraints and hard requirements it meets, and which cryptographic protocols it uses. Their cloud service covered over 4 billion breached credentials, and a Chrome extension served as the first client.
+Researchers from Google and Stanford describe how Google's password breach alerting works, which constraints and hard requirements it meets, and which cryptographic protocols it uses. Their cloud service covered over 4 billion breached credentials, and a Chrome extension served as the first client.
 
 > "Our protocol relies on a combination of computationally expensive hashing, k-anonymity, and private set intersection. Our approach improves on existing protocols by taking into account both an adversarial client and server, while also minimizing the chance of false positives."
 

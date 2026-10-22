@@ -24,7 +24,7 @@ I work in Berlin as a principal engineer, focused on application security and on
 
 ## Building
 
-Most of my time goes into the [Agentic Identity Broker]({{< ref "/projects/agentic-identity-broker" >}}): delegation and consent infrastructure, so that an agent can act for a person without holding that person's credentials. The [retrospective]({{< ref "/post/agentic-identity-broker" >}}) covers what ten months of building it with coding agents taught me.
+Most of my time goes into the [Agentic Identity Broker]({{< ref "/projects/agentic-identity-broker" >}}): delegation and consent infrastructure, so that an agent can act for a person without holding that person's credentials. The [retrospective]({{< ref "/post/agentic-identity-broker" >}}) covers what 10 months of building it with coding agents taught me.
 
 ## Writing
 
@@ -32,6 +32,6 @@ I am turning the knowledge base into a [field guide]({{< ref "/knowledge-base" >
 
 ## Speaking
 
-Talk and lecture material lives on the [speaking page]({{< ref "/talks" >}}). If you organise an event on application security, identity or agents, the [about page]({{< ref "/page/jan-brennenstuhl" >}}) has a short bio.
+Talk and lecture material lives on the [speaking page]({{< ref "/talks" >}}). If you organize an event on application security, identity or agents, the [about page]({{< ref "/page/jan-brennenstuhl" >}}) has a short bio.
 
 This page follows the [now page](https://nownownow.com/about) idea. Last updated 13 October 2026.

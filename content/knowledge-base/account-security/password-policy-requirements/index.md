@@ -23,23 +23,6 @@ scripts: [password-policy]
 
 {{< finding id="nist-password-managers" source="NIST SP 800-63B-4, Section 3.1.1.2" url="https://pages.nist.gov/800-63-4/sp800-63b/authenticators/" >}}Verifiers shall allow password managers and autofill, should permit paste, and should accept passwords of at least 64 characters.{{< /finding >}}
 
-## Check your policy
-
-{{< explainer "password-policy" "Compare a policy with SP 800-63B-4" >}}
-The checker on this page compares the settings of a password policy with the requirements below. Without JavaScript, use the list as a checklist. "Shall" is a requirement, "should" a recommendation.
-
-- **Shall:** at least 15 characters for single-factor passwords; at least 8 if the password is only one factor of MFA.
-- **Should:** accept at least 64 characters, all printing ASCII characters, the space character and Unicode; count each Unicode code point as one character.
-- **Shall not:** impose composition rules, such as requiring digits, symbols or mixed case.
-- **Shall not:** require periodic password changes. **Shall:** force a change when there is evidence of compromise.
-- **Shall not:** offer password hints to unauthenticated users, or prompt for security questions when a password is chosen.
-- **Shall:** verify the whole password, never a truncated or partial one.
-- **Shall:** check new passwords against a blocklist, and tell the user why a password was rejected.
-- **Shall:** rate-limit failed authentication attempts.
-- **Shall:** allow password managers and autofill. **Should:** allow paste and offer to show the password.
-- **Shall:** store passwords salted and hashed with a suitable password hashing scheme, with a salt of at least 32 bits.
-{{< /explainer >}}
-
 ## Evidence
 
 {{< studies caption="Sources" >}}
@@ -61,6 +44,23 @@ The checker on this page compares the settings of a password policy with the req
 - Explain a rejection in plain words ("this password appears in known breaches") instead of listing rules after the fact. NIST requires a reason.
 - Drop scheduled password expiry. Forced changes are for evidence of compromise, which makes them rarer and easier to explain.
 - My [2023 password policy essay]({{< ref "/post/password-policy" >}}) recommended at least 12 characters. For passwords used on their own, the final SP 800-63B-4 now sets 15.
+
+## Check your policy
+
+{{< explainer "password-policy" "Compare a policy with SP 800-63B-4" >}}
+The checker on this page compares the settings of a password policy with the requirements below. Without JavaScript, use the list as a checklist. "Shall" is a requirement, "should" a recommendation.
+
+- **Shall:** at least 15 characters for single-factor passwords; at least 8 if the password is only one factor of MFA.
+- **Should:** accept at least 64 characters, all printing ASCII characters, the space character and Unicode; count each Unicode code point as one character.
+- **Shall not:** impose composition rules, such as requiring digits, symbols or mixed case.
+- **Shall not:** require periodic password changes. **Shall:** force a change when there is evidence of compromise.
+- **Shall not:** offer password hints to unauthenticated users, or prompt for security questions when a password is chosen.
+- **Shall:** verify the whole password, never a truncated or partial one.
+- **Shall:** check new passwords against a blocklist, and tell the user why a password was rejected.
+- **Shall:** rate-limit failed authentication attempts.
+- **Shall:** allow password managers and autofill. **Should:** allow paste and offer to show the password.
+- **Shall:** store passwords salted and hashed with a suitable password hashing scheme, with a salt of at least 32 bits.
+{{< /explainer >}}
 
 ## Related
 

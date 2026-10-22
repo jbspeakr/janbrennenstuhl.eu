@@ -3,8 +3,8 @@ id: jb-research-account-recovery
 imageDecorative: true
 title: "How secure are email-based password resets?"
 linkTitle: "Account recovery"
-description: "What a 2021 analysis of 366 websites found about email-based password reset flows, and which controls close the gaps."
-answer: "Often not very: in a 2021 study of 366 websites from the Alexa Top 5K, 72% of account recovery mechanisms had at least one implementation weakness. Common gaps were multiple valid reset tokens, missing change notifications and long-lived reset links."
+description: "Where email-based password reset flows go wrong, measured across 366 websites, and the controls that close each gap."
+answer: "In a 2021 study of 366 websites from the Alexa Top 5K, 72% of account recovery mechanisms had at least one implementation weakness. Common gaps were multiple valid reset tokens, missing change notifications and long-lived reset links."
 slug: account-recovery
 date: 2023-04-21
 lastmod: 2026-10-13
@@ -58,7 +58,7 @@ Treat recovery as a high-risk action that deserves the same scrutiny as login. [
 
 ### Security Analysis of Email-Based Password Reset Procedures
 
-An international group of researchers from the USA, Italy and Belgium analysed the email-based account recovery mechanisms of websites in the Alexa Top 5K. They manually registered accounts and triggered password recovery on sites from 3 popularity groups, ending up with 366 websites. They checked each site against 8 implementation controls derived from the OWASP guidelines.
+An international group of researchers from the USA, Italy and Belgium analyzed the email-based account recovery mechanisms of websites in the Alexa Top 5K. They manually registered accounts and triggered password recovery on sites from 3 popularity groups, ending up with 366 websites. They checked each site against 8 implementation controls derived from the OWASP guidelines.
 
 The paper describes a heterogeneous reality. 72% of the websites had at least one weakness, and only 13% followed the OWASP guidelines. 40% generated multiple valid tokens, 45% sent no notification after a password change, and 22% were vulnerable to login CSRF. The authors also outline concrete password-recovery attacks that can lead to account takeover.
 
