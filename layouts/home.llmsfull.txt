@@ -1,0 +1,18 @@
+# {{ site.Title }}: full corpus
+
+> Every entry on {{ site.BaseURL }} as Markdown, newest first. Original writing is CC BY 4.0 unless an entry says otherwise; cite the canonical URL given for each entry. Generated from the same source as the HTML.
+{{ range partialCached "eligible.html" . "all" }}{{ $s := partial "data/status.html" . }}
+================================================================================
+
+# {{ .Title }}
+
+- URL: {{ .Permalink }}
+- Type: {{ partial "data/kind.html" . }}; topics: {{ delimit (partial "data/topics.html" .) ", " }}
+- Published: {{ .PublishDate.Format "2006-01-02" }}; modified: {{ .Lastmod.Format "2006-01-02" }}; reviewed: {{ with $s.reviewed }}{{ . }}{{ if eq $s.review_basis "publication" }} (on publication){{ end }}{{ else }}not yet reviewed{{ end }}
+{{ with .Params.answer }}
+**Short answer:** {{ . }}
+{{ else }}
+{{ .Params.lead | default .Description }}
+{{ end }}
+{{ partial "md/body.md" . }}
+{{ end }}

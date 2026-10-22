@@ -1,7 +1,10 @@
 ---
+id: jb-bunny-root-redirect
+imageDecorative: true
 title: "Bunny CDN: How to redirect Root Domain to Subdomain"
 linkTitle: "Bunny CDN: Redirect Root Domain to Subdomain"
 description: "Bunny.net: Learn how to redirect a root domain to its www subdomain using Bunny DNS and Bunny CDN Edge Rules."
+claim: "With Bunny DNS you can redirect a root domain to its www subdomain using a redirect (RDR) record, or a pull zone or CNAME record combined with a 301 Edge Rule."
 excerpt: "In this article I share three approaches to redirect a root domain to its www subdomain using Bunny DNS and Bunny CDN Edge Rules."
 lead: "Three methods to seamless redirection using Bunny DNS"
 slug: bunny-cdn-domain-redirect
@@ -10,10 +13,7 @@ lastmod: 2025-06-22
 draft: false
 weight: 50
 image: bunnycdn-eurostack.webp
-categories: ["software-engineering"]
 tags: ["eurostack", "operational-excellence", "jamstack"]
-pinned: false
-homepage: false
 
 links:
   - title: "Go European: Host with Bunny CDN"

@@ -1,0 +1,3 @@
+{{- with .Params.links }}
+<aside class="links-box" aria-labelledby="links-title"><h2 id="links-title">Links</h2><ul>{{ range . }}<li><a href="{{ .website }}" rel="sponsored">{{ .title }}</a> {{ .description }}</li>{{ end }}</ul><p class="small">Affiliate link; see the <a href="/affiliate-disclaimer/">independence note</a>.</p></aside>
+{{- end }}

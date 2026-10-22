@@ -1,0 +1,7 @@
+{{- /* Article HTML for feeds, with root-relative URLs made absolute. */ -}}
+{{- $html := string .Content -}}
+{{- $html = replaceRE `(href|src)="/` (printf `$1="%s` site.BaseURL) $html -}}
+{{- $html = replaceRE `(srcset="|, )/` (printf `${1}%s` site.BaseURL) $html -}}
+{{- with .Params.answer }}{{ $html = printf "<p><strong>Short answer:</strong> %s</p>%s" (. | markdownify) $html }}{{ end -}}
+{{- with .Params.changes }}{{ $c := index (sort . "date" "desc") 0 }}{{ $html = printf "<p><em>Latest change (%s): %s</em></p>%s" (time.Format "2006-01-02" $c.date) ($c.note | markdownify) $html }}{{ end -}}
+{{- return $html -}}

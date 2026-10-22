@@ -1,0 +1,9 @@
+{{ define "main" }}
+<header class="wrap page-header"><h1>{{ .Title }}</h1><p class="lead">{{ .Description }} Also browse by <a href="/topics/">topic</a> or <a href="/search/">search</a>.</p></header>
+<div class="wrap">
+{{- $posts := where (partialCached "eligible.html" . "all") "Section" "post" }}
+{{- range $posts.GroupByDate "2006" }}
+  <section class="year" aria-labelledby="y-{{ .Key }}"><h2 id="y-{{ .Key }}">{{ .Key }}</h2><ol class="entries">{{ range .Pages }}{{ partial "row.html" . }}{{ end }}</ol></section>
+{{- end }}
+</div>
+{{ end }}

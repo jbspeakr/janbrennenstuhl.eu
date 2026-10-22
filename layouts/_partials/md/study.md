@@ -1,0 +1,1 @@
+| {{ with .Get "url" }}[{{ $.Get "title" }}]({{ . }}){{ else }}{{ .Get "title" }}{{ end }}{{ with .Get "org" }} ({{ . }}){{ end }} | {{ .Get "year" | default "n/a" }} | {{ .Get "sample" | default "n/a" }} | {{ .Get "method" | default "n/a" }} | {{ replace (trim .Inner " \n") "\n" " " }} |

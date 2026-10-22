@@ -1,0 +1,79 @@
+# Edge rules for the www pull zone. scripts/edge_rules.py turns this file and the built
+# /redirects.json into Bunny edge rules; the publish job syncs them (docs/DELIVERY.md).
+# Rules it manages carry the description prefix; rules added by hand in the dashboard are left alone.
+
+host = "www.janbrennenstuhl.eu"
+managedPrefix = "[repo] "
+# Bunny's default is 50 edge rules per pull zone, hand-made rules included. Support can raise it;
+# update this number when they do. The sync refuses to run past it.
+maxRules = 50
+
+[headers]
+"Strict-Transport-Security" = "max-age=31536000; includeSubDomains; preload"
+"X-Content-Type-Options" = "nosniff"
+"Referrer-Policy" = "strict-origin-when-cross-origin"
+"Permissions-Policy" = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+# Enforces frame-ancestors 'none' while the CSP is report-only.
+"X-Frame-Options" = "DENY"
+
+# Report-only until real violations have been inspected; then switch the header to
+# Content-Security-Policy. The sha256 source is the inline theme script (assets/js/theme.js);
+# scripts/check.py fails when the build's inline scripts and these hashes differ.
+# Do not expand the allowlists silently.
+[csp]
+header = "Content-Security-Policy-Report-Only"
+
+[csp.directives]
+"default-src" = "'self'"
+"script-src" = "'self' https://plausible.io 'sha256-1dUuVM7OURbaW/lywnzsnTq+6GnIZ3efUSOx8oivojs=' 'inline-speculation-rules'"
+"style-src" = "'self'"
+"img-src" = "'self' data:"
+"font-src" = "'self'"
+"connect-src" = "'self' https://plausible.io"
+"object-src" = "'none'"
+"base-uri" = "'self'"
+"frame-ancestors" = "'none'"
+"form-action" = "'self'"
+
+# Browser Cache-Control and edge TTL (seconds) by URL pattern. Bunny wildcards, matched against
+# the full URL. At most 25 patterns per rule, or 5 when the rule has an exclude list.
+[[cache]]
+name = "Documents"
+browser = "public, max-age=0, must-revalidate"
+edge = 300
+patterns = ["*/", "*.html", "*.md", "*.json", "*.xml", "*.txt", "*/.well-known/*"]
+
+[[cache]]
+name = "Fingerprinted assets and fonts"
+browser = "public, max-age=31536000, immutable"
+edge = 31536000
+patterns = ["*/css/*", "*/js/*", "*_hu_*", "*/fonts/*.woff2"]
+
+[[cache]]
+name = "Original images"
+browser = "public, max-age=86400"
+edge = 86400
+patterns = ["*.webp", "*.png", "*.avif", "*.jpg", "*.svg"]
+exclude = ["*_hu_*"]
+
+[[cache]]
+name = "Icons, manifest and documents"
+browser = "public, max-age=86400"
+edge = 86400
+patterns = ["*.ico", "*.webmanifest", "*.pdf", "*.gif"]
+
+[[mime]]
+type = "text/markdown; charset=utf-8"
+patterns = ["*.md"]
+
+[[mime]]
+type = "text/plain; charset=utf-8"
+patterns = ["*.txt"]
+
+[[mime]]
+type = "application/feed+json; charset=utf-8"
+patterns = ["*/feed.json"]
+
+[[mime]]
+type = "application/linkset+json"
+patterns = ["*/.well-known/api-catalog"]

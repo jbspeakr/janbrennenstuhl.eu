@@ -1,0 +1,1 @@
+<blockquote class="quote">{{ .Inner | markdownify }}{{ if or (.Get "source") (.Get "author") }}<footer>{{ with .Get "author" }}{{ . }}{{ if $.Get "source" }}, {{ end }}{{ end }}{{ with .Get "source" }}{{ if $.Get "url" }}<a href="{{ $.Get "url" }}"><cite>{{ . }}</cite></a>{{ else }}<cite>{{ . }}</cite>{{ end }}{{ end }}</footer>{{ end }}</blockquote>

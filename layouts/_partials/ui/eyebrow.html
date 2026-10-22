@@ -1,0 +1,6 @@
+{{- $kind := partial "data/kind.html" . -}}
+<p class="eyebrow">
+  <span>{{ partial "ui/kind-label.html" $kind }}</span>
+  {{- range partial "data/topics.html" . }}{{ with partial "data/topic.html" . }} <span aria-hidden="true">/</span> <a class="chip" href="/topics/{{ .id }}/">{{ .title }}</a>{{ end }}{{ end }}
+  {{- with partial "data/series.html" . }} <span aria-hidden="true">/</span> <a href="#series">Series: {{ .title }}</a>{{ end }}
+</p>

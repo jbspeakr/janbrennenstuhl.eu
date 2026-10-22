@@ -1,0 +1,23 @@
+# Monthly external-link check. Editorial, not a release gate: it never touches deployment and
+# needs no credentials. Run by hand from the Actions tab when preparing a review.
+name: links
+on:
+  schedule:
+    - cron: '17 6 3 * *'
+  workflow_dispatch:
+permissions: {}
+jobs:
+  links:
+    runs-on: codeberg-small
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Check every external link in content/ and data/
+        run: python3 scripts/links.py --report test-results/links.md
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
+        if: always()
+        with:
+          name: link-report
+          path: test-results/links.md
+          retention-days: 90

@@ -1,105 +1,130 @@
-name: Publish Blog
+name: Verify and publish
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-
-# Queue main pushes; never interrupt an upload halfway through.
+# Queue main pushes; never interrupt an ordered upload halfway through.
 concurrency:
   group: blog-${{ github.ref }}
   cancel-in-progress: false
-
 jobs:
-  # Runs for pushes and pull requests. Uses no secrets.
-  build:
+  verify:
     runs-on: codeberg-small
-    env:
-      HUGO_CACHEDIR: /tmp/hugo_cache
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-
-      - uses: https://code.forgejo.org/actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
+      - name: Install pinned Hugo
+        run: ./scripts/bootstrap.sh
+      - name: Build once and run every static gate
+        env:
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }} # Intentionally public verification token
+        run: ./scripts/verify.sh
+      - name: Verify deployment ordering without credentials
+        run: python3 scripts/deploy.py --dry-run
+      - name: Generate edge rules without credentials
+        run: python3 scripts/edge_rules.py > edge-rules.json
+      - name: Package the verified release
+        run: python3 scripts/release.py
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
         with:
-          go-version-file: go.mod
-
-      - name: Read Hugo version
-        id: hugo
-        run: echo "version=$(tr -d '[:space:]' < .hugo-version)" >> "$GITHUB_OUTPUT"
-
-      - name: Setup Hugo
-        uses: https://github.com/peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3.2.1
-        with:
-          hugo-version: ${{ steps.hugo.outputs.version }}
-          extended: true
-
-      - name: Restore Hugo cache
-        id: restore-cache
-        uses: https://code.forgejo.org/actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ./resources
-          key: brennenstuhl-hugo-resources-cache-
-          restore-keys: |
-            brennenstuhl-hugo-resources-cache-
-
-      - name: Build
-        run: hugo --minify
-
-      # Only main may write the cache, so a pull request cannot poison later builds.
-      - name: Save Hugo cache
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: https://code.forgejo.org/actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ./resources
-          key: ${{ steps.restore-cache.outputs.cache-primary-key }}${{ hashFiles('./resources/**/*') }}
-
-      # Tarball keeps dotfiles such as .well-known/ that artifact uploads may skip.
-      - name: Package site
-        run: tar -czf site.tar.gz -C public .
-
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        with:
-          name: site
-          path: site.tar.gz
-          retention-days: 14
+          name: verified-site
+          path: releases/*.tar.gz
+          retention-days: 90
           if-no-files-found: error
-
-  # Publishes the exact bytes built above, and only from main.
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [build]
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
+        # The rules the publish job would sync, for review on the PR.
+        with:
+          name: edge-rules
+          path: edge-rules.json
+          retention-days: 30
+          if-no-files-found: error
+  browser:
+    runs-on: codeberg-small
+    needs: [verify]
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # patched v4
+        with:
+          name: verified-site
+          path: releases
+      - name: Extract verified artifact
+        run: tar -xzf releases/*.tar.gz
+      - name: Install browser QA dependencies
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Browser contracts (axe matrix, keyboard, no-JS, reflow, negotiation)
+        run: npm run test:browser
+      - name: Lighthouse lab gate
+        run: CHROMIUM_EXECUTABLE="$(node -e "console.log(require('playwright').chromium.executablePath())")" npm run test:lighthouse
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # patched v4
+        # Home, article and guide at 360/768/1440 px in both themes, for design review on the PR.
+        if: always()
+        with:
+          name: screenshots
+          path: test-results/*.png
+          retention-days: 30
+          if-no-files-found: warn
+  preview:
+    # Opt-in staging preview for same-repository pull requests. Separate zone and credentials;
+    # the production secrets are never referenced here. The preview is built for its own host.
+    if: github.event_name == 'pull_request' && vars.PREVIEW_HOST != '' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: [verify]
     runs-on: codeberg-small
     steps:
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          name: site
-
-      - name: Unpack site
-        run: mkdir public && tar -xzf site.tar.gz -C public
-
-      - name: Setup IndexNow
-        # Generate files dynamically to prevent them from being leaked in public repositories.
-        run: echo ${{ secrets.INDEXNOW_KEY }} > public/${{ secrets.INDEXNOW_KEY }}.txt
-
-      - name: Deploy to BunnyCDN
-        uses: https://github.com/ayeressian/bunnycdn-storage-deploy@251c77f4b9e7e683ad00086de2bef5770c3386b2 # v2.4.5
+          persist-credentials: false
+      - name: Install pinned Hugo
+        run: ./scripts/bootstrap.sh
+      - name: Build for the preview host
+        run: |
+          HUGO=hugo; [ -x .tools/hugo ] && HUGO=.tools/hugo
+          HUGO_PARAMS_SOURCE_REVISION="$(git rev-parse HEAD)-preview" "$HUGO" --minify --baseURL "https://${{ vars.PREVIEW_HOST }}/"
+      - name: Upload to the staging zone
+        env:
+          BUNNY_PREVIEW_ZONE: ${{ secrets.PREVIEW_STORAGE_NAME }}
+          BUNNY_PREVIEW_PASSWORD: ${{ secrets.PREVIEW_STORAGE_PASSWORD }}
+          BUNNY_PREVIEW_HOST: ${{ vars.BUNNY_STORAGE_HOST }}
+        run: |
+          python3 scripts/deploy.py --preview
+          echo "Preview: https://${{ vars.PREVIEW_HOST }}/" >> "$GITHUB_STEP_SUMMARY"
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [verify, browser]
+    runs-on: codeberg-small
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          source: "public"
-          destination: ""
-          storageZoneName: "${{ secrets.STORAGE_NAME }}"
-          storagePassword: "${{ secrets.STORAGE_PASSWORD }}"
-          accessKey: "${{ secrets.ACCOUNT_API_KEY }}"
-          pullZoneId: "${{ secrets.ZONE_ID }}"
-          upload: "true"
-          remove: "true"
-          purgePullZone: "true"
-
-      - name: indexnow-action
-        uses: https://github.com/bojieyang/indexnow-action@cd6d1576582c1839b80dd71f418f172aa40d6552 # v2.1.0
+          persist-credentials: false
+      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # patched v4
         with:
-          sitemap-location: 'https://www.janbrennenstuhl.eu/sitemap.xml'
-          key: ${{ secrets.INDEXNOW_KEY }}
+          name: verified-site
+          path: releases
+      - name: Extract and check release integrity
+        run: |
+          tar -xzf releases/*.tar.gz
+          python3 scripts/check_release.py
+      - name: Publish the verified artifact
+        env:
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
+          BUNNY_STORAGE_ZONE: ${{ secrets.STORAGE_NAME }}
+          BUNNY_STORAGE_PASSWORD: ${{ secrets.STORAGE_PASSWORD }}
+          BUNNY_STORAGE_HOST: ${{ vars.BUNNY_STORAGE_HOST }}
+          FORGEJO_EVENT_NAME: ${{ github.event_name }}
+          FORGEJO_REF: ${{ github.ref }}
+        run: python3 scripts/deploy.py
+      # After the upload, so redirect targets and new inline-script hashes exist when the rules change.
+      # Opt-in: set the variable BUNNY_SYNC_EDGE_RULES to "true" once the hand-made rules that
+      # edge/rules.toml replaces are deleted (docs/DELIVERY.md).
+      - name: Sync Bunny edge rules (headers, CSP, caching, MIME, redirects)
+        if: vars.BUNNY_SYNC_EDGE_RULES == 'true'
+        env:
+          BUNNY_API_KEY: ${{ secrets.ACCOUNT_API_KEY }}
+          BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
+          FORGEJO_EVENT_NAME: ${{ github.event_name }}
+          FORGEJO_REF: ${{ github.ref }}
+        run: python3 scripts/edge_rules.py --apply

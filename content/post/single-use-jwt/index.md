@@ -1,23 +1,27 @@
 ---
+id: jb-single-use-jwt
+imageDecorative: true
 title: "Single-Use JWT: Unlocking the Power of Stateless One Time Token"
 linkTitle: "Single-Use JWT: The Power of Stateless One Time Token"
 description: "Discover JWTs as one-time tokens in secure authentication. Explore benefits, implementation, and real-world use cases. Explore Single-Use JWT!"
+claim: "You can make a JWT single-use without a token store by signing it with server-side state that the operation changes, such as the current password hash in a password reset."
 excerpt: "I delve into the transformative potential of JWTs as one-time tokens, exploring their advantages, implementation considerations, and real-world use cases."
 lead: "Self-contained JWTs can be used as one time tokens. A quick guide on single-use JWT."
-slug: howto-single-use-jwt
+slug: single-use-jwt
+aliases: ["/howto-single-use-jwt/"]
 date: 2016-12-30
 lastmod: 2025-06-01
 draft: false
 weight: 50
 image: jwt-one-time-token.webp
-categories: ["identity-access-management"]
 tags: ["jwt"]
 featured: true
+series: jwt
 ---
 
 ## Understanding JSON Web Tokens
 
-Welcome to the future of authentication! In a world where digital security is paramount, the need for robust and reliable authentication methods has never been more crucial. [JSON Web Tokens]({{< ref "/tags/jwt/" >}} "More about JWTs") are the new and fancy de-facto standard in the web. JWTs are the tool of choice when it comes to authentication in an stateless environment. That has two direct implications:
+Welcome to the future of authentication! In a world where digital security is paramount, the need for robust and reliable authentication methods has never been more crucial. [JSON Web Tokens]({{< ref "/topics/tokens-jwt/" >}} "More about JWTs") are the new and fancy de-facto standard in the web. JWTs are the tool of choice when it comes to authentication in an stateless environment. That has two direct implications:
 
 1. You should definitely go and get some proper introduction on [the purpose of JSON Web Tokens]({{< ref "/post/purpose-of-jwt/index.md" >}} "Stateful vs Stateless Authentication") and some insights on how they work. It's worth to know as JWTs are widely used for e.g. authentication against REST-APIs.
 2. As JWTs are still comparably fresh, hot and simply fancy in contrast to traditional bearer token, some people think they are some kind of holy grail and can be used to solve every possible use-case … and guess what: They are not!

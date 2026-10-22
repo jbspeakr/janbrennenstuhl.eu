@@ -1,0 +1,9 @@
+{{ define "main" }}
+<section class="wrap page notfound">
+  <p class="eyebrow">404 / Outside the Boundary</p>
+  <h1>This page is not here.</h1>
+  <p class="lead">The address may have changed, or the page never existed. Search, or start from the index.</p>
+  <form role="search" action="/search/" method="get" class="search-input"><label class="sr-only" for="nf-q">Search terms</label><input id="nf-q" name="q" type="search" placeholder="Search the site"><button type="submit">Search</button></form>
+  <p><a href="/">Home</a> <span aria-hidden="true">·</span> <a href="/writing/">All writing</a> <span aria-hidden="true">·</span> <a href="/knowledge-base/">Field guide</a></p>
+</section>
+{{ end }}

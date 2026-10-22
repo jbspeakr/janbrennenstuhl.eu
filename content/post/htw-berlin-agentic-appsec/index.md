@@ -1,8 +1,10 @@
 ---
+id: jb-htw-berlin-agentic-appsec
+imageDecorative: true
 title: "Guest Lecture at HTW Berlin: AppSec in the Age of Agentic Engineering"
 linkTitle: "HTW Berlin Guest Lecture"
 description: "My HTW Berlin guest lecture explains why agentic engineering moves AppSec toward harness design, platform constraints, and measurable risk."
-excerpt: "My HTW Berlin guest lecture explains why agentic engineering moves AppSec toward harness design, platform constraints, and measurable risk."
+claim: "AppSec teams should shape the harness, platform and risk model that coding agents work inside, because finding problems after the code is written cannot keep up with agents."
 lead: "HTW Berlin invited me to speak to its cybersecurity course about the AppSec challenges that coding agents make impossible to ignore."
 slug: new-appsec-operating-model
 image: htw-guest-lecture.webp
@@ -10,9 +12,16 @@ date: 2026-07-03
 lastmod: 2026-09-23
 draft: false
 weight: 50
-categories: ["appsec"]
 tags: ["agentic-engineering", "sdlc", "platform-engineering"]
 featured: false
+series: agentic-appsec
+findings:
+  - id: htw-in-session-feedback
+    text: "Security feedback should reach the coding agent while the task is still in its context, and tickets should be kept for failed in-session fixes and findings in deployed artifacts."
+  - id: htw-harness-control
+    text: "Google's New SDLC whitepaper estimates an agent at roughly 10% model and 90% harness, and the harness is where an AppSec team has the most control."
+  - id: htw-agent-sandbox
+    text: "Agent tasks should run in disposable sandboxes such as nono or Firecracker microVMs with short-lived, task-scoped credentials, because a warning in a rule file does not stop prompt injection."
 ---
 
 I recently gave a guest lecture to the cybersecurity course at Hochschule für Technik und Wirtschaft Berlin (HTW). The topic was application security (AppSec) in the age of agentic engineering, and how coding agents change the daily work of developers and AppSec teams.

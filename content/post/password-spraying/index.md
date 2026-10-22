@@ -1,7 +1,10 @@
 ---
+id: jb-password-spraying
+imageDecorative: true
 title: "Password Attack Guide: What is Password Spraying?"
 linkTitle: "Password Attack Guide: What is Password Spraying?"
 description: "Learn about password spraying, a common attack technique that hackers use to compromise accounts. Discover how it works & essential prevention strategies."
+claim: "Password spraying tries a few common passwords across many accounts to avoid lockouts, so defenders need failed-login monitoring, bot management and MFA, and passwordless login removes the target entirely."
 excerpt: "Discover the dark art of password spraying. Learn its inner workings and arm yourself with prevention tactics to safeguard your digital fortress. Defend against malicious attacks with this comprehensive guide."
 lead: "Learn the inner workings of password spraying attacks and safeguard your online accounts"
 slug: password-spraying
@@ -10,10 +13,7 @@ lastmod: 2023-05-11
 draft: false
 weight: 50
 image: password-spraying.webp
-categories: ["ethical-hacking"]
 tags: ["password-security", "brute-force", "offensive security"]
-pinned: true
-homepage: false
 keywords: "password spraying, password spray attack, what is password spraying, password spray, spraying attack"
 ---
 

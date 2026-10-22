@@ -1,23 +1,22 @@
 ---
+id: jb-whaling
+imageDecorative: true
 title: "Whaling Phishing: Definition and Prevention Strategies"
 linkTitle: "Whaling Phishing: Definition and Prevention Strategies"
 description: "Learn the definition of whaling phishing and effective prevention strategies. Stay protected from sophisticated cyber attacks with our expert guide."
+claim: "Whaling targets executives with researched, personalized phishing that technical controls alone do not stop, so organizations need awareness training and must verify unusual payment requests through a separate channel."
 excerpt: "Dive deep into the ocean of cyber security, exploring the insidious technique of whaling. Discover why understanding whaling in cyber security can make all the difference in safeguarding your organization from these crafty predators of the digital sea."
 lead: "A Hidden Danger Lurking Online"
-slug: "whaling-phishing-definition"
-aliases: [
-    "/whaling-cyber-security/"
-]
+slug: whaling-phishing
+aliases: ["/whaling-cyber-security/", "/whaling-phishing-definition/"]
 date: 2023-05-18
 lastmod: 2023-06-03
 draft: false
 weight: 50
 image: whaling-cyber-security.webp
-categories: ["ethical-hacking"]
 tags: ["phishing", "social-engineering", "offensive-security"]
-pinned: false
-homepage: false
 keywords: "whaling in cyber security, cyber whaling"
+series: whaling
 ---
 
 <mark>***Disclaimer:** This article involved collaboration with a GenAI tool for personal research. All content was reviewed and edited by myself. Feel free to report inaccuracies. Thanks.*</mark>

@@ -1,16 +1,19 @@
 ---
+id: jb-european-jamstack
+imageDecorative: true
 title: "Goodbye Big Tech: My European JAMstack Migration"
 linkTitle: "Goodbye Big Tech: My European JAMstack Migration"
 description: "Looking for a European alternative to replace Github or Netlify? Don't look further! Learn what EU service providers I use to power my JAMstack."
+claim: "A static JAMstack site can run entirely on European providers: Codeberg for code and Forgejo Actions deployment, Bunny CDN for hosting, and Plausible for cookie-free analytics."
 excerpt: "Discover my European JAMstack setup! Learn how I migrated my projects away from GitHub & Netlify to European alternatives for enhanced privacy, performance, and peace of mind."
 lead: "Looking for a European alternative to replace Github or Netlify? Don't look further! Learn what EU service providers I use to power my JAMstack."
-slug: european-jamstack-migration
+slug: european-jamstack
+aliases: ["/european-jamstack-migration/"]
 date: 2025-07-06
 lastmod: 2025-07-06
 draft: false
 weight: 50
 image: european-jamstack.webp
-categories: ["software-engineering"]
 tags: ["eurostack", "jamstack"]
 
 links:
@@ -53,7 +56,7 @@ Bunny's user interfaces are generally easy to use, and their prices are reasonab
 
 As JAMstack deployment essentially means triggering a static site generator build process and copying the resulting static files onto a file server or CDN, it was straightforward to replace Netlify builds with Forgejo Actions provided by Codeberg. The resulting [Forgejo Actions deployment config](https://codeberg.org/brennenstuhl/janbrennenstuhl.eu/src/branch/main/.forgejo/workflows/deploy.yml "My Forgejo Actions config") is almost identical to a Github Actions deploy job.
 
-*→ I began sharing some of my Bunny onboarding learnings as part of [my Eurostack posts]({{< ref "/tags/eurostack/_index.md" >}} "EuroStack & European Alternatives").*
+*→ I began sharing some of my Bunny onboarding learnings as part of [my Eurostack posts]({{< ref "/topics/engineering-practice/" >}} "EuroStack & European Alternatives").*
 
 ### Plausible Analytics: Privacy-First Insights
 

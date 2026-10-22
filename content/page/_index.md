@@ -1,3 +1,5 @@
 ---
-headless: true
+build:
+  render: never
+  list: always
 ---

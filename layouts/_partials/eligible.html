@@ -1,0 +1,4 @@
+{{/* Every substantive public page: what the catalog, llms.txt, feeds and search all agree on. Newest first. */}}
+{{ $pages := where site.RegularPages "Section" "in" (slice "post" "knowledge-base" "projects" "talks") }}
+{{ range slice "/page/jan-brennenstuhl" "/page/glossary" }}{{ with site.GetPage . }}{{ $pages = $pages | append . }}{{ end }}{{ end }}
+{{ return $pages.ByDate.Reverse }}

@@ -1,0 +1,53 @@
+{{ define "main" }}
+{{- $kind := partial "data/kind.html" . -}}
+{{- if in (slice "essay" "guide" "talk" "project") $kind -}}
+<div class="progress" aria-hidden="true"></div>
+<article class="article k-{{ $kind }}">
+  <header class="article-header">
+    <div class="article-art">{{ partial "diagram.html" (dict "page" . "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
+    <div class="wrap article-head">
+      {{ partial "ui/eyebrow.html" . }}
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.answer }}<p class="answer"><span class="answer-label">Short answer</span> {{ . | markdownify }}</p>{{ else }}{{ with .Params.lead | default .Description }}<p class="lead">{{ . }}</p>{{ end }}{{ end }}
+      {{ partial "ui/byline.html" . }}
+    </div>
+  </header>
+  <div class="wrap article-layout">
+    <aside class="toc" aria-label="On this page">
+      {{- if ge (len .Fragments.Headings) 1 }}{{ with .TableOfContents }}
+      <details class="toc-box"><summary>On this page</summary>{{ . }}</details>{{ end }}{{ end }}
+      <p class="toc-links">{{ with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown</a>{{ end }}<a href="#cite">Cite</a>{{ with partial "data/series.html" . }}<a href="#series">Series</a>{{ end }}</p>
+    </aside>
+    <div class="article-body">
+      {{ partial "ui/notices.html" . }}
+      {{ partial "ui/key-findings.html" . }}
+      {{ partial "ui/hero-image.html" . }}
+      <div class="prose" data-article-body>{{ partial "ui/content.html" . }}</div>
+      {{ partial "ui/links.html" . }}
+      {{ partial "ui/series-nav.html" . }}
+      {{ partial "ui/cite.html" . }}
+      {{ if eq $kind "guide" }}{{ partial "ui/guide-nav.html" . }}{{ end }}
+    </div>
+  </div>
+  {{ partial "ui/related.html" . }}
+</article>
+{{- else -}}
+<article class="wrap page">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </header>
+  <div class="article-layout page-layout">
+    <aside class="toc page-aside" aria-label="{{ if eq $kind "profile" }}Profile{{ else }}On this page{{ end }}">
+      {{- if eq $kind "profile" }}{{ partial "ui/profile.html" . }}
+      {{- else }}
+      {{- if ge (len .Fragments.Headings) 1 }}{{ with .TableOfContents }}
+      <details class="toc-box"><summary>On this page</summary>{{ . }}</details>{{ end }}{{ end }}
+      <p class="toc-links"><span>Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2 January 2006" }}</time></span>{{ with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown</a>{{ end }}</p>
+      {{- end }}
+    </aside>
+    <div class="prose">{{ .Content }}</div>
+  </div>
+</article>
+{{- end -}}
+{{ end }}

@@ -1,0 +1,16 @@
+{{ define "main" }}
+<article class="wrap page">
+  <header class="page-header"><h1>{{ .Title }}</h1></header>
+  <div class="article-layout page-layout">
+    <aside class="toc page-aside" aria-label="On this page">
+      {{- if ge (len .Fragments.Headings) 1 }}{{ with .TableOfContents }}
+      <details class="toc-box"><summary>On this page</summary>{{ . }}</details>{{ end }}{{ end }}
+      <p class="toc-links"><span>Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2 January 2006" }}</time></span>{{ with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown</a>{{ end }}</p>
+    </aside>
+    <div class="article-body">
+      <ul class="now-list">{{ range .Params.now }}<li><span class="label">{{ .label }}</span><a href="{{ .url }}">{{ .title }}</a><p>{{ .note }}</p></li>{{ end }}</ul>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </div>
+</article>
+{{ end }}

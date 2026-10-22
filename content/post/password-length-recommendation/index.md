@@ -1,18 +1,22 @@
 ---
+id: jb-password-length-recommendation
+imageDecorative: true
 title: "Max Password Length: A Secure Password Guide"
 linkTitle: "Max Password Length: A Secure Password Guide"
 description: "A comprehensive password guide with max password length recommendation to ensure your accounts stay safe and secure."
+claim: "Length matters more than complexity: use unique passwords of at least 12 to 16 characters, and services should not cap passwords below 64 characters."
 excerpt: "What's the ideal password length? Are there official password guidelines? Find industry best-practises and essential tips for better password quality in this comprehensive guide on strong password composition."
 lead: "Is there a max password length recommendation? Are short passwords putting your web security at risk?"
-slug: max-password-length-recommendation
+slug: max-password-length
+aliases: ["/max-password-length-recommendation/"]
 date: 2023-05-04
 lastmod: 2025-06-15
 draft: false
 weight: 50
 image: max-password-length-guide.webp
-categories: ["identity-access-management"]
 tags: ["password-security", "password-manager"]
 keywords: password length recommendations, max password length, recommended password length, minimum password length, maximum password length, nist password length
+series: passwords
 ---
 
 Today, digital security is more important than ever. With cyber threats on the rise, having strong, unique passwords is critical for protecting your accounts and data. Common sense among security researchers is, that longer passwords are more crucial than complicated ones. In this article, I'll go into detail about the max password length recommendation, how it affects your digital security, and how to generate the most secure passwords available.

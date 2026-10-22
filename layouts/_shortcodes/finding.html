@@ -1,0 +1,11 @@
+{{- $id := .Get "id" }}{{ if not $id }}{{ errorf "finding: id required at %s" .Position }}{{ end -}}
+{{- $text := trim .Inner " \n" -}}
+{{- $quote := $text | markdownify | plainify -}}
+{{- $url := printf "%s#f-%s" .Page.Permalink $id -}}
+{{- $card := partial "finding-card.html" (dict "page" .Page "id" $id "text" ($quote | htmlUnescape) "source" (.Get "source")) -}}
+{{- .Page.Store.SetInMap "findings" $id (dict "id" (printf "f-%s" $id) "text" $quote "url" $url "source" (.Get "source" | default "") "source_url" (.Get "url" | default "") "card" $card.Permalink "order" .Ordinal) -}}
+{{- with .Get "url" }}{{ $.Page.Store.SetInMap "citations" . (dict "@type" "CreativeWork" "name" ($.Get "source" | default .) "url" .) }}{{ end -}}
+<figure class="finding" id="f-{{ $id }}">
+  <blockquote><p>{{ $text | markdownify }}</p></blockquote>
+  <figcaption>{{ with .Get "source" }}<span class="finding-source">Source: {{ if $.Get "url" }}<a href="{{ $.Get "url" }}" class="ext"><cite>{{ . }}</cite></a>{{ else }}<cite>{{ . }}</cite>{{ end }}</span>{{ end }}{{ partial "ui/finding-tools.html" (dict "page" .Page "id" $id "quote" $quote "card" $card) }}</figcaption>
+</figure>

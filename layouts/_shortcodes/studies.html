@@ -1,0 +1,4 @@
+<div class="table-scroll studies" tabindex="0" role="region" aria-label="{{ .Get "caption" | default "Evidence" }}"><table>
+<caption>{{ .Get "caption" | default "Evidence" }}</caption>
+<thead><tr><th scope="col">Study</th><th scope="col">Year</th><th scope="col">Sample</th><th scope="col">Method</th><th scope="col">Finding</th></tr></thead>
+<tbody>{{ .Inner }}</tbody></table></div>

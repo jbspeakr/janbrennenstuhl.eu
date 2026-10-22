@@ -1,18 +1,17 @@
 ---
+id: jb-readme-1
+imageDecorative: true
 title: "Weak Crypto, Github SAML Attack & Twitter Security UX"
 linkTitle: "Weak Crypto, Github SAML Attack & Twitter Security UX"
-description: "Want to use JWT for password-reset or email activation? Turn app state into HMAC-keys to guarantee one-time use of JWTs! This is how it works …"
-excerpt: "Want to use JWT for password-reset or email activation? Turn app state into HMAC-keys to guarantee one-time use of JWTs! This is how it works …"
+description: "Reading notes from January 2017: weak cryptography in Google Keyczar, a critical SAML authentication bypass in GitHub Enterprise, and what a Twitter login alert gets wrong."
+claim: "GitHub Enterprise users should patch a critical SAML authentication bypass right away, and Twitter's login alert email shows how a badly worded security notification can work against users."
 slug: weak-google-crypto-github-saml
 date: 2017-01-15
 lastmod: 2025-06-08
 draft: false
 weight: 50
 image: readme-web-security-news.webp
-categories: ["appsec"]
 tags: ["ux-security", "offensive-security"]
-pinned: false
-homepage: false
 ---
 
 Finally, I managed to come up with a name for my regular reading tips series which will feature both, latest info around recent events & incidents (especially when it comes to identity and security topics) as well as long running articles I strongly advice to read... it's simply called **Readme**.

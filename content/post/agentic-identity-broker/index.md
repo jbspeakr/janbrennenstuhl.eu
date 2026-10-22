@@ -1,8 +1,11 @@
 ---
+id: jb-agentic-identity-broker
+imageDecorative: true
+heroArtwork: delegation
 title: "What I Learned Building an Identity Broker With Coding Agents"
 linkTitle: "Agentic Identity Broker Retrospective"
 description: "Lessons from 10 months of building the open-source Agentic Identity Broker with coding agents: Spec Kit, tests that tested nothing, 6 harness switches, and review."
-excerpt: "Lessons from 10 months of building the open-source Agentic Identity Broker with coding agents: Spec Kit, tests that tested nothing, 6 harness switches, and review."
+claim: "Coding agents can build security-critical software when people own the specs, the constitution and specs live in the repository, tests must fail first, and more agents review than write."
 lead: "Magnus Jungsbluth and I built the open-source Agentic Identity Broker with coding agents from the first prototype. Over 10 months, I switched agent harnesses 6 times and used 9 models, and most of my lessons are about specs, tests, and review."
 slug: agentic-identity-broker
 image: agentic-identity-broker.webp
@@ -11,8 +14,14 @@ lastmod: 2026-09-27
 draft: false
 featured: true
 weight: 50
-categories: ["software-engineering"]
 tags: ["agentic-engineering", "coding-agents", "open-source"]
+findings:
+  - id: aib-spec-first
+    text: "A Spec Kit constitution, feature specs and architecture decision records kept in the repository gave agents the same project knowledge through 6 harness switches and 9 models over 10 months."
+  - id: aib-tests-fail-first
+    text: "Early 2026 models regularly produced green test suites for broken behavior, so the broker's constitution requires red-green-refactor test-driven development and an end-to-end test for every spec."
+  - id: aib-review-base-branch
+    text: "Reviewing agent-written code takes more agents than writing it, and the broker's architecture review agent reads its rules from the base branch so a pull request cannot rewrite them."
 ---
 
 On 18 September 2026, Magnus Jungsbluth and I presented the [Agentic Identity Broker](https://agenticidentitybroker.dev/ "Agentic Identity Broker documentation") at [AGNTCon + MCPCon Europe](https://agntconmcpconeu26.sched.com/event/2RBAI "Economies of Scale for MCP and Agents: Why You Need an Identity Broker") in Amsterdam. We had published [its source code](https://github.com/zalando-incubator/agentic-identity-broker "Agentic Identity Broker source repository") under the MIT license 3 days earlier. The broker lets people in enterprise environments give an AI agent scoped, revocable access to services such as GitHub or Google without handing the agent their credentials.

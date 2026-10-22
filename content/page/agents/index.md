@@ -1,0 +1,32 @@
+---
+title: For agents
+slug: agents
+description: How software agents can find, read, quote and cite this site, and what the reuse policy is.
+date: 2026-10-13
+lastmod: 2026-10-13
+---
+
+Everything on this site is written for people first, and every page is also available in a form that software can read without parsing HTML.
+
+## Where to start
+
+- [`/llms.txt`](/llms.txt) lists every entry with a one-sentence claim and a link to its Markdown version.
+- [`/llms-full.txt`](/llms-full.txt) is the whole corpus as one Markdown file, newest first.
+- Every page has a Markdown twin: add `index.md` to its URL, for example [`/agentic-identity-broker/index.md`](/agentic-identity-broker/index.md). Requesting a page with `Accept: text/markdown` returns the same twin. Each HTML page links to its twin with `<link rel="alternate" type="text/markdown">`.
+- [`/catalog.json`](/catalog.json) holds IDs, canonical URLs, publication, modification and review dates, topics, license and a content hash for each entry.
+- [`/findings.json`](/findings.json) lists every quotable finding with its anchor URL, the source it rests on and the review status of the page.
+- [`/feed.json`](/feed.json) (JSON Feed 1.1) and [`/index.xml`](/index.xml) (RSS) carry full content. Each topic has its own feeds, for example [`/topics/passwords/feed.json`](/topics/passwords/feed.json).
+- [`/.well-known/api-catalog`](/.well-known/api-catalog) (RFC 9727) points to all of the above.
+
+## Citing
+
+Findings and headings have permanent anchors such as `#f-pw-reuse-43-51pct`. Link the canonical HTML URL with the anchor, not the Markdown twin. The catalog's `reviewed` field gives the date of the last review and `review_basis` what it was: `publication` for essays, talks and projects, which the author reviewed when publishing them, or `editorial` for a later review against current sources. Field-guide entries have an empty `reviewed` until their first editorial review. A recent build or modification date does not mean the advice was checked again.
+
+## Reuse policy
+
+Original writing is licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) unless a page says otherwise: quote it, summarize it and link it with attribution. Credited third-party images keep their own rights.
+
+- Search engines and agents fetching pages for a person's question are welcome. [`robots.txt`](/robots.txt) allows every crawler.
+- Training: the CC BY 4.0 license already permits it, so there is no text-and-data-mining reservation. `robots.txt` says so with a `Content-Signal` line and [`/.well-known/tdmrep.json`](/.well-known/tdmrep.json) declares `tdm-reservation: 0`. Attribution remains the condition: name the author and link the source.
+
+Questions or corrections: see the [imprint]({{< ref "/page/imprint" >}}).

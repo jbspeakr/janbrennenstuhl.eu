@@ -1,0 +1,7 @@
+{{- $alt := .PlainText -}}
+{{- if and (not $alt) (ne .Title "decorative") }}{{ errorf "Image without alt text in %s: %s (write alt text, or set title \"decorative\")" .Page.File.Path .Destination }}{{ end -}}
+{{- $r := "" }}{{ $u := urls.Parse .Destination }}{{ if not $u.IsAbs }}{{ $r = .Page.Resources.Get $u.Path }}{{ end -}}
+<figure class="figure">
+  {{- with $r }}{{ partial "picture.html" (dict "resource" . "alt" $alt) }}{{ else }}<img src="{{ .Destination | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">{{ end -}}
+  {{- with .Title }}{{ if ne . "decorative" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}{{ end -}}
+</figure>

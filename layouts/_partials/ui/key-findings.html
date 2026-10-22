@@ -1,0 +1,9 @@
+{{- /* Essays may list up to three key findings in front matter: findings: [{id, text}]. Each gets a stable anchor. */ -}}
+{{- with .Params.findings }}
+<section class="key-findings" aria-labelledby="key-findings">
+  <h2 id="key-findings">Key findings</h2>
+  <ol>{{ range . }}{{ $quote := .text | markdownify | plainify }}
+    <li id="f-{{ .id }}"><p>{{ .text | markdownify }}</p>{{ partial "ui/finding-tools.html" (dict "page" $ "id" .id "quote" $quote "card" (partial "finding-card.html" (dict "page" $ "id" .id "text" ($quote | htmlUnescape) "source" $.Title))) }}</li>{{ end }}
+  </ol>
+</section>
+{{- end }}

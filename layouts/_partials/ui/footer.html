@@ -1,0 +1,27 @@
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-statement">{{ site.Params.statement }}</p>
+      <p>Jan Brennenstuhl writes about application security, identity and agentic engineering. Written in Berlin, hosted in the EU.</p>
+      <ul class="footer-social" aria-label="Follow">
+        <li><a href="{{ site.Params.mastodon }}" rel="me">{{ partial "ui/icon.html" "brand-mastodon" }}<span>Mastodon</span></a></li>
+        <li><a href="{{ site.Params.bluesky }}" rel="me">{{ partial "ui/icon.html" "brand-bluesky" }}<span>Bluesky</span></a></li>
+        <li><a href="{{ site.Params.github }}" rel="me">{{ partial "ui/icon.html" "brand-github" }}<span>GitHub</span></a></li>
+        <li><a href="{{ site.Params.linkedin }}" rel="me">{{ partial "ui/icon.html" "brand-linkedin" }}<span>LinkedIn</span></a></li>
+        <li><a href="/index.xml" type="application/rss+xml">{{ partial "ui/icon.html" "rss" }}<span>RSS feed</span></a></li>
+      </ul>
+    </div>
+    <nav aria-label="Site">
+      <h2>Site</h2>
+      <a href="/about/">About</a><a href="/glossary/">Glossary</a><a href="/accessibility/">Accessibility</a><a href="{{ site.Params.sourceRepository }}">Source</a>
+    </nav>
+    <nav aria-label="Legal">
+      <h2>Legal</h2>
+      <a href="/imprint/">Imprint</a><a href="/privacy-policy/">Privacy</a><a href="/affiliate-disclaimer/">Independence</a>
+    </nav>
+  </div>
+  <div class="footer-meta">
+    <p>Original writing is licensed <a href="{{ site.Params.license.url }}">CC BY 4.0</a> unless an entry says otherwise.</p>
+    <p class="footer-agents">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/llms-full.txt">llms-full.txt</a>, <a href="/catalog.json">catalog.json</a>, <a href="/findings.json">findings.json</a>, <a href="/feed.json">feed.json</a>. <a href="/agents/">How to use this site</a>.</p>
+  </div>
+</footer>

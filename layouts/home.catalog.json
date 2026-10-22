@@ -1,0 +1,7 @@
+{{- $items := slice -}}
+{{- range partialCached "eligible.html" . "all" -}}
+  {{- $sections := slice }}{{ $p := . }}{{ range partial "data/sections.html" . }}{{ $sections = $sections | append (dict "id" .id "title" .title "url" (printf "%s#%s" $p.Permalink .id)) }}{{ end -}}
+  {{- $items = $items | append (merge (partial "metadata.html" .) (dict "sections" $sections "findings" (len (partial "data/findings.html" .)))) -}}
+{{- end -}}
+{{- $topics := slice }}{{ range hugo.Data.topics.topic }}{{ $topics = $topics | append (dict "id" .id "title" .title "description" .description "url" (printf "topics/%s/" .id | absURL)) }}{{ end -}}
+{{- dict "schema_version" "1.2" "topics" $topics "site" site.BaseURL "title" site.Title "author" site.Params.author "license" site.Params.license.url "llms" ("llms.txt" | absURL) "findings" ("findings.json" | absURL) "items" $items | jsonify (dict "indent" "") -}}

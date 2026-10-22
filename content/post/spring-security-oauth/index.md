@@ -1,6 +1,9 @@
 ---
+id: jb-spring-security-oauth
+imageDecorative: true
 title: "On Making Spring Security OAuth RFC-compliant"
 description: "Open-Source Contribution | I fixed a small HTTP header extractor in Spring Security OAuth. Here's what happened & what I learned."
+claim: "Contributing a small fix to a long-lived library such as Spring Security OAuth means fitting its old Java version, minimal dependencies and backward compatibility, and it teaches you the underlying RFCs."
 excerpt: "On Fixing Spring Security OAuth: I fixed a small HTTP header extractor for the Spring Security OAuth open source project recently. Here's what happened & what I learned..."
 slug: spring-security-oauth-rfc
 date: 2017-02-01
@@ -8,10 +11,7 @@ lastmod: 2017-02-16
 draft: false
 weight: 50
 image: open-source-inspiration.webp
-categories: ["appsec"]
 tags: ["open-source", "java", "oauth2"]
-pinned: false
-homepage: false
 ---
 
 Often supporting open source software is just fixing one tiny thing you stumbled upon. However, getting ready and diving into even the smallest piece of source-code can lead to surprising results. I fixed a small HTTP header extractor for the [Spring Security OAuth](https://github.com/spring-projects/spring-security-oauth) project recently. Here's what happened.

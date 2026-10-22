@@ -1,22 +1,26 @@
 ---
+id: jb-jwks
+imageDecorative: true
 title: "Mastering JWKS: JSON Web Key Sets Explained"
 linkTitle: "Mastering JWKS: JSON Web Key Sets Explained"
 description: "Demystify JWKS with this simplified guide. Learn about JSON Web Key Sets, their purpose, and how to implement them successfully. Master JWKS now!"
+claim: "A JSON Web Key Set lets an identity provider publish its public keys at one URL, so clients can verify JWT signatures locally and the issuer can rotate keys without redistributing them."
 excerpt: "Implementing JSON Web Key Sets (JWKS) is crucial for organizations that want to leverage modern, decentralized authentication and authorization protocols. In this article I discuss the purpose of JWKS, guide you though their technical specification and outline benefits as well as best-practices to securely exposing public key material."
 lead: "Securely Expose Public Key Material"
-slug: jwks-json-web-key-set
+slug: jwks
+aliases: ["/jwks-json-web-key-set/"]
 date: 2023-06-02
 lastmod: 2023-06-02
 draft: false
 weight: 50
 image: "jwks-json-web-key-sets.webp"
-categories: ["identity-access-management"]
 tags: ["jwt", "oidc"]
+series: jwt
 ---
 
 ## TL;DR
 - JWKS (JSON Web Key Set) is a tool for standardizing the representation and management of cryptographic keys via a JSON object.
-- The technology, defined in RFC 7517, enables client-local [JWT (JSON Web Tokens)]({{< ref "/tags/jwt/" >}} "JWT Security: Best practices and when to use JSON Web Token") verification and is integral for decentralized authentication protocols such as OpenID Connect and [OAuth2]({{< ref "/tags/oauth2/" >}} "OAuth 2.0 in Action").
+- The technology, defined in RFC 7517, enables client-local [JWT (JSON Web Tokens)]({{< ref "/topics/tokens-jwt/" >}} "JWT Security: Best practices and when to use JSON Web Token") verification and is integral for decentralized authentication protocols such as OpenID Connect and [OAuth2]({{< ref "/topics/identity-authentication/" >}} "OAuth 2.0 in Action").
 - Implementing JWKS simplifies key management, eases key rotation, and secures key distribution across multiple servers.
 
 ## Technical Specifications of JWK and JWKS

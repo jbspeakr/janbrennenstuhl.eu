@@ -1,0 +1,17 @@
+{{- /* 1200×630 card for one finding: the claim, its source and its anchor URL. Context: dict page, id, text, source. */ -}}
+{{- $p := .page -}}
+{{- $topic := index (partial "data/topics.html" $p) 0 | default "home" -}}
+{{- $base := resources.Get (printf "cards/%s.png" $topic) | default (resources.Get "cards/home.png") -}}
+{{- $font := resources.Get "fonts/Geist-Bold-card.ttf" }}{{ $mono := resources.Get "fonts/GeistMono-Medium-card.ttf" -}}
+{{- $text := printf "“%s”" .text -}}
+{{- $size := 46 }}{{ if gt (len $text) 140 }}{{ $size = 38 }}{{ end }}{{ if gt (len $text) 220 }}{{ $size = 32 }}{{ end -}}
+{{- $source := .source | default $p.Title -}}
+{{- if gt (len $source) 80 }}{{ $source = printf "%s…" (substr $source 0 78) }}{{ end -}}
+{{- $filters := slice
+  (images.Brightness -50)
+  (images.Text $text (dict "font" $font "size" $size "linespacing" (int (mul $size 0.22)) "x" 72 "y" 96 "color" "#eef1f6"))
+  (images.Text (printf "Source: %s" $source) (dict "font" $mono "size" 20 "x" 72 "y" 488 "color" "#aab2be"))
+  (images.Text (printf "janbrennenstuhl.eu  #f-%s" .id) (dict "font" $mono "size" 20 "x" 72 "y" 566 "color" "#f0b23e"))
+-}}
+{{- $card := $base | images.Filter $filters | resources.Copy (printf "%sf-%s.png" (strings.TrimPrefix "/" $p.RelPermalink) .id) -}}
+{{- return $card -}}

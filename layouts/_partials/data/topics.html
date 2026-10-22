@@ -1,0 +1,8 @@
+{{/* Topic IDs for a page: explicit front-matter `topics` win, otherwise derived from tags via data/topics.toml. */}}
+{{ $ids := slice }}
+{{ with .Params.topics }}{{ $ids = . }}{{ else }}
+  {{ range .Params.tags }}{{ $tag := urlize . }}
+    {{ range hugo.Data.topics.topic }}{{ if and (in .tags $tag) (not (in $ids .id)) }}{{ $ids = $ids | append .id }}{{ end }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $ids }}

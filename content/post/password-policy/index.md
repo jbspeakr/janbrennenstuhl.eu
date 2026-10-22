@@ -1,19 +1,21 @@
 ---
+id: jb-password-policy
+imageDecorative: true
 title: "How to Design a Strong & Usable Password Policy"
 linkTitle: "How to Design a Strong & Usable Password Policy"
 description: "Account Security ➢ Learn how to create a secure and user-friendly password policy that strikes the perfect balance between web security and user experience"
+claim: "A strong, usable password policy requires at least 12 characters, checks guessability, blocks common and breached passwords, and drops composition rules and forced password changes."
 excerpt: "In this article, I’ll explore the key components of a strong password policy based on state-of-the-art research and provide practical tips for striking a balance between security and usability."
 lead: "A Modern Approach to Password Security & Login Experience"
-slug: password-strength-policy-guide
+slug: password-policy
+aliases: ["/password-strength-policy-guide/"]
 date: 2023-04-26
 lastmod: 2025-06-09
 draft: false
 weight: 50
 image: modern-password-policies.webp
-categories: ["identity-access-management"]
 tags: ["password-security", "ux-security"]
-pinned: false
-homepage: false
+series: passwords
 ---
 
 ## Importance of Password Policy Best Practices

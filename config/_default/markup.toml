@@ -1,26 +1,20 @@
-# Markdown renderer configuration
 [goldmark.renderer]
+# Some older entries still carry inline HTML (<mark>, <br>, task inputs). Content is author-owned.
 unsafe = true
-
+[goldmark.parser]
+autoHeadingIDType = "github"
+[goldmark.parser.attribute]
+block = true
+title = true
 [goldmark.extensions.passthrough]
-enable = true
-
-# LaTeX math support
-# https://gohugo.io/content-management/mathematics/
-[goldmark.extensions.passthrough.delimiters]
-block = [['\[', '\]'], ['$$', '$$']]
-inline = [['\(', '\)']]
-
+enable = false
 [tableOfContents]
-endLevel = 4
-ordered = true
 startLevel = 2
-
+endLevel = 3
+ordered = false
 [highlight]
 noClasses = false
 codeFences = true
-guessSyntax = true
-lineNoStart = 1
-lineNos = true
-lineNumbersInTable = true
+guessSyntax = false
+lineNos = false
 tabWidth = 4

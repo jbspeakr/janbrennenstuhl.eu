@@ -1,0 +1,18 @@
+{{- /* Rendered on the glossary page; also registers DefinedTerm records for JSON-LD. One section per letter. */ -}}
+{{- $page := . -}}
+{{- $terms := sort hugo.Data.glossary.term "term" -}}
+{{- $letters := slice }}{{ range $terms }}{{ $l := upper (substr .term 0 1) }}{{ if not (in $letters $l) }}{{ $letters = $letters | append $l }}{{ end }}{{ end -}}
+{{- range $letters }}{{ $letter := . }}
+<section class="terms" aria-labelledby="letter-{{ lower $letter }}">
+  <h2 class="letter" id="letter-{{ lower $letter }}">{{ $letter }}</h2>
+  <dl>
+  {{- range $terms }}{{ if eq (upper (substr .term 0 1)) $letter }}
+    <div class="term-entry" id="{{ .id }}">
+      <dt><dfn>{{ .term }}</dfn>{{ with .expansion }} <span class="expansion">{{ . }}</span>{{ end }} <a class="heading-anchor" href="#{{ .id }}" aria-label="Link to {{ .term }}">#</a></dt>
+      <dd>{{ .definition | markdownify }}{{ with .see }}<p class="see">See: {{ range $i, $s := . }}{{ if $i }}, {{ end }}{{ with site.GetPage $s }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ else }}{{ errorf "glossary: unknown page %q" $s }}{{ end }}{{ end }}</p>{{ end }}</dd>
+    </div>
+    {{- $page.Store.SetInMap "definedTerms" .id (dict "@type" "DefinedTerm" "@id" (printf "%s#%s" $page.Permalink .id) "name" .term "alternateName" (.expansion | default "") "description" (.definition | markdownify | plainify) "url" (printf "%s#%s" $page.Permalink .id) "inDefinedTermSet" (printf "%s#terms" $page.Permalink)) }}
+  {{- end }}{{ end }}
+  </dl>
+</section>
+{{- end }}

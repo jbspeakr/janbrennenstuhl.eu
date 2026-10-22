@@ -1,17 +1,21 @@
 ---
+id: jb-purpose-of-jwt
+imageDecorative: true
 title: "The Purpose of JWT: Stateless Authentication"
 description: "Establish stateless authentication with JWT. Uncover fundamental ideas of JSON Web Token, security concepts & commonpitfalls to avoid in this concise guide."
+claim: "The purpose of JWT is stateless authentication: signed, self-contained tokens let services verify identity locally without a central session store, at the cost of hard revocation and token theft risk."
 excerpt: "JSON Web Token (JWT) allow you to establish stateless authentication. I explain why this is important and what's the fundamental difference to stateful authentication."
 lead: "Discover the secrets of Stateless Authentication with JWT"
-slug: purpose-jwt-stateless-authentication
+slug: jwt-stateless-authentication
+aliases: ["/purpose-jwt-stateless-authentication/"]
 date: 2017-04-28
 lastmod: 2025-06-22
 draft: false
 weight: 50
 image: stateless-authentication.webp
-categories: ["identity-access-management"]
 tags: ["jwt", "oauth2", "oidc"]
 featured: true
+series: jwt
 ---
 
 The demand for reliable and effective authentication methods has increased in the modern, distributed, and fast-paced digital world. Stateless authentication solutions are being used by developers and identity providers to deliver secure and scalable single sign-on solutions. JSON Web Token (JWT) are the new fancy kids around the block when it comes to transporting proofs of identity within an untrusted environment like the web. 

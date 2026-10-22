@@ -1,0 +1,8 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $external := and $u.IsAbs (ne $u.Host "www.janbrennenstuhl.eu") (in (slice "http" "https") $u.Scheme) -}}
+{{- $href := .Destination -}}
+{{- if and (not $u.IsAbs) (not (hasPrefix .Destination "#")) (not (hasPrefix .Destination "/")) (not (hasPrefix .Destination "mailto:")) (not (hasPrefix .Destination "HAHAHUGOSHORTCODE")) -}}
+  {{- with .Page.Resources.Get $u.Path }}{{ $href = .RelPermalink }}{{ else }}{{ errorf "Broken relative link %q in %s" .Destination .Page.File.Path }}{{ end -}}
+{{- end -}}
+<a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} class="ext"{{ end }}>{{ .Text }}</a>
+{{- /* chomp */ -}}

@@ -1,0 +1,14 @@
+{
+  "name": "janbrennenstuhl-eu-qa",
+  "private": true,
+  "scripts": {
+    "test:browser": "node tests/browser.cjs",
+    "test:lighthouse": "node tests/lighthouse.mjs",
+    "test:edge": "node --test tests/"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "lighthouse": "13.5.0",
+    "playwright": "1.56.1"
+  }
+}

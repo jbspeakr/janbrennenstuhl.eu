@@ -1,8 +1,10 @@
 ---
+id: jb-appsec-agentic-engineering
+imageDecorative: true
 title: "AppSec in the Age of Agentic Engineering"
 linkTitle: "AppSec in the Age of Agentic Engineering"
 description: "How AppSec teams can keep up with coding agents: fix findings inside the agent loop, ship security tooling to agents, and manage risk with SRE and platform teams."
-excerpt: "How AppSec teams can keep up with coding agents: fix findings inside the agent loop, ship security tooling to agents, and manage risk with SRE and platform teams."
+claim: "AppSec teams keep up with coding agents by fixing findings inside the agent loop, shipping security tooling to agents, and managing risk budgets together with SRE and platform teams."
 lead: "Coding agents write code faster than security teams can triage the findings. AppSec teams that build tooling, automate remediation at scale, and measure risk together with SRE and platform teams are in the best position to keep up."
 slug: appsec-agentic-engineering
 image: agentic-engineering-appsec.webp
@@ -14,8 +16,15 @@ lastmod: 2026-09-24
 draft: false
 featured: true
 weight: 50
-categories: ["appsec"]
 tags: ["agentic-engineering", "sdlc"]
+series: agentic-appsec
+findings:
+  - id: appsec-agentic-backlog
+    text: "In Edgescan's 2025 report, enterprises with more than 1,000 employees still had 45.4% of the vulnerabilities discovered within 12 months open, and the high and critical findings most likely to be exploited took 115.7 days on average to fix."
+  - id: appsec-agentic-risk-budget
+    text: "A risk budget sets how long a high-risk, reachable vulnerability may stay open in production before it burns the service's error budget, and reachability analysis keeps a CVE in dead code from counting."
+  - id: appsec-agentic-sandbox-first
+    text: "The first step is to sandbox the coding agents engineers already run and replace their long-lived credentials with short-lived, task-scoped ones, because the exposure exists as soon as an agent runs on an engineer's machine."
 ---
 
 In agentic engineering, engineers hand tasks to coding agents that write code, run it, and fix their own mistakes in fast loops. Bartosz Ocytko recently mapped [where agentic engineering is heading](https://ocytko.net/posts/quo-vadis-agentic-engineering/ "Quo Vadis, Agentic Engineering?"), from a surge of commits on GitHub to bottlenecks in verification, open source, and compute. Most security tooling and processes weren't built for that volume of change. While reading his piece, I kept coming back to 1 question: what does this shift mean for application security (AppSec)?

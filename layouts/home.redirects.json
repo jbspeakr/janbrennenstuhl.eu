@@ -1,0 +1,12 @@
+{{- /* Publishes a redirect page for every retired route and lists all redirects (data file plus page aliases) for the edge 301 rules. */ -}}
+{{- /* Optional public IndexNow verification file (a public token, not a secret). */ -}}
+{{- with getenv "HUGO_INDEXNOW_KEY" }}{{ if not (findRE `^[A-Za-z0-9-]{8,128}$` .) }}{{ errorf "Invalid IndexNow key" }}{{ end }}{{ $_ := (resources.FromString (printf "%s.txt" .) (printf "%s\n" .)).Publish }}{{ end -}}
+{{- $list := slice -}}
+{{- range hugo.Data.redirects.redirect -}}
+  {{- $to := .to | absURL -}}
+  {{- $html := printf "<!doctype html><html lang=\"en-GB\"><head><title>%s</title><link rel=\"canonical\" href=\"%s\"><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex\"><meta http-equiv=\"refresh\" content=\"0; url=%s\"></head><body><p>Moved to <a href=\"%s\">%s</a>.</p></body></html>" $to $to $to $to $to -}}
+  {{- $_ := (resources.FromString (printf "%sindex.html" (strings.TrimPrefix "/" .from)) $html).Publish -}}
+  {{- $list = $list | append (dict "from" .from "to" .to "status" 301) -}}
+{{- end -}}
+{{- range site.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $list = $list | append (dict "from" (printf "/%s/" (strings.Trim . "/")) "to" $to "status" 301) }}{{ end }}{{ end -}}
+{{- dict "description" "Retired routes. The CDN should answer these with HTTP 301; the HTML redirect pages are a fallback." "redirects" $list | jsonify -}}

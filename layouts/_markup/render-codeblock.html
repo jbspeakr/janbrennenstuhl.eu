@@ -1,0 +1,7 @@
+{{- $opts := dict }}{{ if not (transform.CanHighlight .Type) }}{{ $opts = dict "type" "text" }}{{ end -}}
+{{- $result := transform.HighlightCodeBlock . $opts -}}
+{{- $lang := .Type | default "text" -}}
+<figure class="code" data-lang="{{ $lang }}">
+  {{- with .Attributes.filename }}<figcaption class="code-file"><span class="sr-only">File: </span>{{ . }}</figcaption>{{ end -}}
+  <div class="highlight"><pre tabindex="0" aria-label="{{ with .Attributes.filename }}{{ . }}{{ else }}Code{{ with $.Type }} ({{ . }}){{ end }}{{ end }}" class="chroma"><code data-lang="{{ $lang }}">{{ $result.Inner }}</code></pre></div>
+</figure>

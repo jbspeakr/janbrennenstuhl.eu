@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section class="wrap search-page">
+  <header class="page-header"><h1>{{ .Title }}</h1><p class="lead">{{ .Description }} Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> anywhere for quick search.</p></header>
+  <form id="search-form" role="search" action="/search/" method="get">
+    <label for="query">Search terms</label>
+    <div class="search-input"><input id="query" name="q" type="search" placeholder="Try passkeys, delegation or JWKS" autocomplete="off"><button type="submit">Search</button></div>
+    <div class="filters">
+      <label>Type <select name="kind" id="kind"><option value="">All types</option><option value="essay">Essays</option><option value="guide">Field guide</option><option value="talk">Talks</option><option value="project">Projects</option></select></label>
+      <label>Topic <select name="topic" id="topic"><option value="">All topics</option>{{ range hugo.Data.topics.topic }}<option value="{{ .id }}">{{ .title }}</option>{{ end }}</select></label>
+    </div>
+  </form>
+  <p id="search-status" role="status" aria-live="polite">Enter a phrase to search, or browse everything below.</p>
+  <ol id="search-results" class="entries"></ol>
+  <div id="search-fallback"><h2>Everything, newest first</h2><ol class="entries">{{ range partialCached "eligible.html" . "all" }}{{ partial "row.html" . }}{{ end }}</ol></div>
+</section>
+{{ end }}

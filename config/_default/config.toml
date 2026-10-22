@@ -1,28 +1,67 @@
-# Change baseurl before deploy
-baseurl = "https://www.janbrennenstuhl.eu"
-locale = "en-gb"
+baseURL = "https://www.janbrennenstuhl.eu/"
 title = "Brennenstuhl on Security"
-
-# Theme i18n support
-# Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
+locale = "en-GB"
 defaultContentLanguage = "en"
+enableRobotsTXT = false
+# Topics are derived from tags (see data/topics.toml), not a Hugo taxonomy.
+# Old tag and category routes are kept as redirects (data/redirects.toml).
+disableKinds = ["taxonomy", "term"]
+refLinksErrorLevel = "ERROR"
+timeZone = "Europe/Berlin"
 
-# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
-# This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage = false
+[frontmatter]
+lastmod = ["lastmod", "date"]
 
-# Change it to your Disqus shortname before using
-# disqusShortname = "hugo-theme-stack"
+[security.funcs]
+getenv = ["^HUGO_"]
 
-[pagination]
-pagerSize = 5
-path = ""
+[mediaTypes."application/feed+json"]
+suffixes = ["json"]
+[mediaTypes."application/linkset+json"]
+suffixes = ["json"]
 
+[outputFormats.markdown]
+mediaType = "text/markdown"
+baseName = "index"
+isPlainText = true
+rel = "alternate"
 [outputFormats.llms]
 mediaType = "text/plain"
 baseName = "llms"
 isPlainText = true
 notAlternative = true
+[outputFormats.llmsfull]
+mediaType = "text/plain"
+baseName = "llms-full"
+isPlainText = true
+notAlternative = true
+[outputFormats.catalog]
+mediaType = "application/json"
+baseName = "catalog"
+isPlainText = true
+notAlternative = true
+[outputFormats.findings]
+mediaType = "application/json"
+baseName = "findings"
+isPlainText = true
+notAlternative = true
+[outputFormats.searchindex]
+mediaType = "application/json"
+baseName = "index"
+isPlainText = true
+notAlternative = true
+[outputFormats.redirects]
+mediaType = "application/json"
+baseName = "redirects"
+isPlainText = true
+notAlternative = true
+[outputFormats.jsonfeed]
+mediaType = "application/feed+json"
+baseName = "feed"
+isPlainText = true
+rel = "alternate"
 
 [outputs]
-home = ["HTML", "RSS", "llms"]
+home = ["html", "rss", "jsonfeed", "llms", "llmsfull", "catalog", "findings", "redirects"]
+section = ["html", "rss", "jsonfeed", "markdown"]
+page = ["html", "markdown"]

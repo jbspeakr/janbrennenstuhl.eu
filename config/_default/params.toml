@@ -1,135 +1,22 @@
-# Pages placed under these sections will be shown on homepage and archive page.
-mainSections = ["post"]
-# Output page's full content in RSS.
-rssFullContent = true
-favicon = "img/favicon.svg"
+description = "Essays, field-guide entries and research notes on application security, identity, and agentic engineering by Jan Brennenstuhl."
+statement = "Security that makes the secure path the easy one."
+author = "Jan Brennenstuhl"
+authorURL = "/about/"
+featured = "/post/agentic-identity-broker"
+sourceRepository = "https://codeberg.org/brennenstuhl/janbrennenstuhl.eu"
+mastodon = "https://infosec.exchange/@jbspeakr"
+fediverseCreator = "@jbspeakr@infosec.exchange"
+bluesky = "https://bsky.app/profile/janbrennenstuhl.eu"
+github = "https://github.com/jbspeakr"
+linkedin = "https://www.linkedin.com/in/brennenstuhl/"
+# Posts older than this on fast-moving topics show an "older guidance" note unless reviewed.
+outdatedAfterYears = 5
+fastMovingTopics = ["identity-authentication", "tokens-jwt", "passwords", "application-security"]
+[license]
+name = "CC BY 4.0"
+url = "https://creativecommons.org/licenses/by/4.0/"
 
-[footer]
-since = 2015
-customText = "Made and hosted in the EU 🇪🇺"
-
-[dateFormat]
-published = "2006-01-02"
-lastUpdated = "2006-01-02"
-
-[sidebar]
-emoji = "🔐"
-subtitle = "Exploring application security with a foible for agentic engineering and identities."
-avatar = "img/favicon.svg"
-
-[article]
-headingAnchor = true
-math = false
-readingTime = true
-
-[article.license]
-enabled = true
-default = "CC BY 4.0"
-
-## Widgets
-[[widgets.homepage]]
-type = "search"
-
-[[widgets.homepage]]
-type = "categories"
-
-[widgets.homepage.params]
-limit = 10
-
-[[widgets.homepage]]
-type = "tag-cloud"
-
-[widgets.homepage.params]
-limit = 10
-
-[[widgets.page]]
-type = "toc"
-
-[opengraph.twitter]
-site = ""
-card = "summary_large_image"
-
-[colorScheme]
-toggle = true
-default = "auto"
-
-[imageProcessing.thumbnail]
-enabled = true
-
-[imageProcessing.content]
-enabled = true
-
-## Comments
-[comments]
-enabled = false
-provider = "disqus"
-
-[comments.disqusjs]
-shortname = ""
-apiUrl = ""
-apiKey = ""
-admin = ""
-adminLabel = ""
-
-[comments.utterances]
-repo = ""
-issueTerm = "pathname"
-label = ""
-
-[comments.remark42]
-host = ""
-site = ""
-locale = ""
-
-[comments.vssue]
-platform = ""
-owner = ""
-repo = ""
-clientId = ""
-clientSecret = ""
-autoCreateIssue = false
-
-[comments.waline]
-serverURL = ""
-lang = ""
-visitor = ""
-avatar = ""
-emoji = ["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"]
-requiredMeta = ["name", "email", "url"]
-placeholder = ""
-
-[comments.waline.locale]
-admin = "Admin"
-
-[comments.twikoo]
-envId = ""
-region = ""
-path = ""
-lang = ""
-
-[comments.cactus]
-defaultHomeserverUrl = "https://matrix.cactus.chat:8448"
-serverName = "cactus.chat"
-siteName = ""
-
-[comments.giscus]
-repo = ""
-repoID = ""
-category = ""
-categoryID = ""
-mapping = ""
-lightTheme = ""
-darkTheme = ""
-reactionsEnabled = 1
-emitMetadata = 0
-
-[comments.gitalk]
-owner = ""
-admin = ""
-repo = ""
-clientID = ""
-clientSecret = ""
-
-[comments.cusdis]
-host = ""
-id = ""
+# Plausible (EU-hosted, cookie-free). Loaded only when the build's baseURL is the production host,
+# so previews and local builds never count. The one allowed third-party request (docs/DECISIONS.md).
+[analytics]
+plausible = "https://plausible.io/js/pa-lwYmB-AXA--rNMvzyMeuT.js"

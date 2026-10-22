@@ -1,3 +1,10 @@
+# janbrennenstuhl.eu crawler policy (see https://www.janbrennenstuhl.eu/agents/)
+# Original writing is CC BY 4.0. Search, user-triggered AI retrieval and training are all
+# permitted under that licence; attribution is the condition. /.well-known/tdmrep.json
+# states the same (no text-and-data-mining reservation).
+
 User-agent: *
-Disallow:
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
 Sitemap: https://www.janbrennenstuhl.eu/sitemap.xml

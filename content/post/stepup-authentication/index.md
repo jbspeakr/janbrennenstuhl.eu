@@ -1,7 +1,10 @@
 ---
+id: jb-stepup-authentication
+imageDecorative: true
 title: "Step-Up Authentication: Elevating Security with OpenID Connect (OIDC)"
 linkTitle: "Enhancing Security: A Guide to Step-Up Authentication"
 description: "Delve into this guide on Step-Up Authentication using OpenID Connect. Learn to balance security with friction & how to elevate authentication levels."
+claim: "Step-up authentication asks for extra factors only for sensitive actions, and OpenID Connect relying parties can request it from the identity provider with the max_age and acr_values parameters."
 excerpt: "Discover how Step-Up Authentication and OpenID Connect (OIDC) join forces to revolutionize online security, offering a seamless user experience while fortifying digital identity protection like never before."
 lead: "Finding a balance between security and friction"
 slug: step-up-authentication
@@ -10,10 +13,7 @@ lastmod: 2023-06-03
 draft: false
 weight: 50
 image: step-up-authentication.webp
-categories: ["identity-access-management"]
 tags: ["oidc", "passwordless", "defensive-security", "ux-security"]
-pinned: true
-homepage: false
 keywords: "step up authentication, adaptive challenges, adaptive challenge, adaptive authorization, adaptive authentication"
 ---
 

@@ -1,0 +1,10 @@
+{{- /* Article HTML with glossary acronyms linked and expanded on first use (paragraph text only, never in code, links or headings). */ -}}
+{{- $html := string .Content -}}
+{{- if and (in (slice "essay" "guide") (partial "data/kind.html" .)) (ne .Params.glossary false) -}}
+  {{- range hugo.Data.glossary.term }}{{ if .autolink }}{{ $t := . }}
+    {{- $pattern := printf `(<p>[^<]*?)\b%s\b` (.abbr | default .term) -}}
+    {{- $repl := printf `${1}<a class="term" href="/glossary/#%s"><abbr title="%s">%s</abbr></a>` .id (.expansion | default .term | htmlEscape) (.abbr | default .term) -}}
+    {{- $html = replaceRE $pattern $repl $html 1 -}}
+  {{- end }}{{ end -}}
+{{- end -}}
+{{- $html | safeHTML -}}

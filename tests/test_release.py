@@ -1,0 +1,78 @@
+import importlib.util, unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+root = Path(__file__).resolve().parents[1]
+
+
+def module(name):
+    spec = importlib.util.spec_from_file_location(name, root / 'scripts' / f'{name}.py')
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+deploy = module('deploy')
+edge_rules = module('edge_rules')
+indexnow = module('indexnow')
+
+
+class Release(unittest.TestCase):
+    def test_assets_upload_before_documents_and_manifest_last(self):
+        with TemporaryDirectory() as directory:
+            r = Path(directory)
+            for name in ['index.html', 'catalog.json', 'index.xml', 'main.123.css', 'image.webp', 'index.md', 'release-manifest.json']:
+                (r / name).write_text('fixture')
+            order = [p.name for p in deploy.upload_order(r)]
+            self.assertLess(order.index('main.123.css'), order.index('index.html'))
+            self.assertLess(order.index('image.webp'), order.index('index.html'))
+            self.assertLess(order.index('index.md'), order.index('catalog.json'))
+            self.assertEqual(order[-1], 'release-manifest.json')
+
+    def test_indexnow_submits_only_changed_entries(self):
+        before = {'items': [{'id': 'one', 'content_hash': 'old'}]}
+        current = {'items': [{'id': 'one', 'content_hash': 'old', 'canonical_url': 'https://example.test/one/'},
+                             {'id': 'two', 'content_hash': 'new', 'canonical_url': 'https://example.test/two/'}]}
+        self.assertEqual(indexnow.changed_urls(before, current), ['https://example.test/two/'])
+
+    def test_mime_types_for_agent_files(self):
+        self.assertEqual(deploy.mime(Path('index.md')), 'text/markdown; charset=utf-8')
+        self.assertEqual(deploy.mime(Path('.well-known/api-catalog')), 'application/linkset+json')
+        self.assertEqual(deploy.mime(Path('feed.json')), 'application/feed+json; charset=utf-8')
+
+
+    def test_edge_rules_group_redirects_by_target_within_bunny_limits(self):
+        config = {'host': 'example.test', 'managedPrefix': '[repo] ', 'maxRules': 50,
+                  'headers': {'X-Content-Type-Options': 'nosniff'},
+                  'csp': {'header': 'Content-Security-Policy-Report-Only', 'directives': {'default-src': "'self'"}},
+                  'cache': [{'name': 'Images', 'browser': 'public, max-age=86400', 'edge': 86400,
+                             'patterns': ['*.webp'], 'exclude': ['*_hu_*']}],
+                  'mime': []}
+        redirects = [{'from': f'/tags/t{i}/', 'to': '/topics/a/', 'status': 301} for i in range(30)]
+        redirects.append({'from': '/1/', 'to': '/', 'status': 301})
+        rules = edge_rules.build(config, redirects)
+        to_a = [r for r in rules if r['ActionParameter1'] == 'https://example.test/topics/a/']
+        self.assertEqual([r['Description'] for r in to_a], ['[repo] Redirect to /topics/a/ (1/2)', '[repo] Redirect to /topics/a/ (2/2)'])
+        for r in rules:
+            self.assertLessEqual(len(r['Triggers']), 5)
+            self.assertTrue(all(len(t['PatternMatches']) <= 5 for t in r['Triggers']))
+        root = next(r for r in rules if r['ActionParameter1'] == 'https://example.test/')
+        self.assertEqual(root['Triggers'][0]['PatternMatches'], ['*://example.test/1/'])
+        images = next(r for r in rules if r['Description'] == '[repo] Cache: Images')
+        self.assertEqual((images['TriggerMatchingType'], images['Triggers'][1]['PatternMatchingType']), (1, 2))
+        headers = rules[0]
+        self.assertEqual(headers['ExtraActions'][0]['ActionParameter1'], 'Content-Security-Policy-Report-Only')
+        config['maxRules'] = 3
+        with self.assertRaises(SystemExit):
+            edge_rules.build(config, redirects)
+
+    def test_edge_rules_compare_like_the_api_echoes_them(self):
+        ours = edge_rules.url_rule('[repo] x', edge_rules.action(5, 'A', 'b'), ['*'])
+        echoed = {**ours, 'Guid': 'g', 'OrderIndex': 3, 'ActionParameter3': '', 'ExtraActions': None,
+                  'Triggers': [{**ours['Triggers'][0], 'Parameter1': ''}]}
+        self.assertEqual(edge_rules.comparable(ours), edge_rules.comparable(echoed))
+        self.assertNotEqual(edge_rules.comparable(ours), edge_rules.comparable({**echoed, 'ActionParameter2': 'c'}))
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -6,3 +6,9 @@ resources
 .DS_Store
 *.zip
 _prompts.md
+.venv/
+.tools/
+releases/
+__pycache__/
+node_modules/
+test-results/

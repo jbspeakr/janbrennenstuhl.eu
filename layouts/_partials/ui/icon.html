@@ -1,0 +1,5 @@
+{{- /* Inline a Tabler outline icon from assets/icons by name. Decorative: the link text carries the meaning. */ -}}
+{{- with resources.Get (printf "icons/%s.svg" .) -}}
+{{- $paths := replaceRE `(?s)^.*?<path stroke="none"[^>]*/>(.*)</svg>\s*$` "$1" .Content -}}
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{{ $paths | safeHTML }}</svg>
+{{- else }}{{ errorf "ui/icon: no icon named %q in assets/icons" . }}{{ end -}}

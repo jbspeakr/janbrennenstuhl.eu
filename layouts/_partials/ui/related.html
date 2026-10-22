@@ -1,0 +1,9 @@
+{{- $related := slice -}}
+{{- range .Params.related }}{{ with site.GetPage . }}{{ $related = $related | append . }}{{ end }}{{ end -}}
+{{- if not $related }}{{ $series := partial "data/series.html" . }}{{ range (partialCached "eligible.html" . "all").Related . }}{{ if and (lt (len $related) 3) (not (in ($series.pages | default slice) .)) }}{{ $related = $related | append . }}{{ end }}{{ end }}{{ end -}}
+{{- with $related }}
+<section class="wrap related" aria-labelledby="related-title">
+  <h2 id="related-title">Continue reading</h2>
+  <ol class="entries">{{ range . }}{{ partial "row.html" . }}{{ end }}</ol>
+</section>
+{{- end }}

@@ -1,0 +1,35 @@
+{{ define "main" }}
+<section class="statement wrap">
+  <p class="eyebrow">Jan Brennenstuhl <span aria-hidden="true">/</span> Principal Engineer, Berlin</p>
+  <h1>{{ site.Params.statement }}</h1>
+  <p class="statement-lead">Essays, a field guide and research notes on application security, identity, and the agents that now act on our behalf.</p>
+</section>
+{{ with site.GetPage site.Params.featured }}
+<section class="flagship" aria-labelledby="flagship-title">
+  <div class="flagship-art">{{ partial "diagram.html" (dict "page" . "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
+  <div class="wrap flagship-text">
+    <p class="eyebrow">Latest Flagship <span aria-hidden="true">/</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2006" }}</time></p>
+    <h2 id="flagship-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="flagship-lead">{{ .Params.lead | default .Description }}</p>
+    <p class="meta">{{ .ReadingTime }} min read <span aria-hidden="true">·</span> <a class="arrow" href="{{ .RelPermalink }}">Read the essay</a></p>
+  </div>
+</section>
+{{ end }}
+{{ with site.GetPage "/page/now" }}{{ partial "ui/now-strip.html" . }}{{ end }}
+<section class="wrap index" aria-labelledby="index-title">
+  <header class="index-head">
+    <h2 id="index-title">Index</h2>
+    <p>Every essay, grouped by topic. <a href="/writing/">Chronological list</a> <span aria-hidden="true">·</span> <a href="/search/">Search</a> <span aria-hidden="true">·</span> <a href="/index.xml">RSS</a></p>
+  </header>
+  {{ partial "ui/topic-index.html" (where (partialCached "eligible.html" . "all") "Section" "post") }}
+</section>
+{{ with site.GetPage "/knowledge-base" }}
+<section class="wrap guide-teaser" aria-labelledby="guide-title">
+  <header class="index-head">
+    <h2 id="guide-title">Field guide</h2>
+    <p>{{ .Description }} <a href="{{ .RelPermalink }}">All entries</a> <span aria-hidden="true">·</span> <a href="/glossary/">Glossary</a></p>
+  </header>
+  <ol class="entries">{{ range first 6 (sort .RegularPagesRecursive "Lastmod" "desc") }}{{ partial "row.html" . }}{{ end }}</ol>
+</section>
+{{ end }}
+{{ end }}

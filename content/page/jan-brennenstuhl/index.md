@@ -1,4 +1,6 @@
 ---
+id: jb-author
+kind: profile
 title: "About Jan Brennenstuhl"
 description: "Jan Brennenstuhl is a principal engineer focused on application security, agentic engineering, and the intersection of security, usability, and automation."
 date: 2021-04-08
@@ -9,18 +11,12 @@ slug: "about"
 aliases: ["jan-brennenstuhl"]
 license: false
 featured: true
-
-menu: 
-  main:
-    name: "About me"
-    weight: 2
-    params:
-      icon: user
+topics: [application-security, identity-authentication, agentic-engineering]
 ---
 
-Hi. My name is Jan Brennenstuhl, I live and work in Berlin Germany, where I was born and raised. I am a product-minded software engineer, security enthusiast & clean code artist with a huge interest in [interdisciplinary software development](/tags/sdlc/) and engineering leadership. I am a big fan of cycling sports, coffee & <a href="https://www.rucksackrebellen.de" title="Rucksackrebellen Wander-Blog">hiking</a>.
+Hi. My name is Jan Brennenstuhl, I live and work in Berlin Germany, where I was born and raised. I am a product-minded software engineer, security enthusiast & clean code artist with a huge interest in [interdisciplinary software development](/topics/application-security/) and engineering leadership. I am a big fan of cycling sports, coffee & <a href="https://www.rucksackrebellen.de" title="Rucksackrebellen Wander-Blog">hiking</a>.
 
-I currently work in Berlin as principal engineer, focused on application security and making [agentic engineering](/tags/agentic-engineering/) more secure and efficient. I spent years building and operating identity solutions used by millions of customers — balancing UX and security in high-stakes revenue funnels — and have since moved into the broader AppSec space, where I'm most interested in the intersection of security, usability, and automation.
+I currently work in Berlin as principal engineer, focused on application security and making [agentic engineering](/topics/agentic-engineering/) more secure and efficient. I spent years building and operating identity solutions used by millions of customers — balancing UX and security in high-stakes revenue funnels — and have since moved into the broader AppSec space, where I'm most interested in the intersection of security, usability, and automation.
 
 I've worked as software engineer and lead on e-commerce funnels, rule engines, cloud strategies, IAM and SSO solutions, REST APIs, system integrations, technology research, legacy migrations, decommissioning projects and modularizing monolithic systems — various things, mostly in e-commerce and security. I practiced software archaeology more than I set up greenfield web services.
 

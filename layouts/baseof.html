@@ -1,0 +1,35 @@
+{{- /* Render content first so shortcodes can register findings, citations and terms for the head. */ -}}
+{{- $_ := .Content -}}
+{{- $palette := resources.Get "js/palette.js" | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint -}}
+<!doctype html>
+<html lang="en-GB">
+<head>{{ partial "head.html" . }}</head>
+<body class="k-{{ .Kind }} {{ with .Section }}s-{{ . }}{{ end }}"{{ with site.Params.analytics.plausible }}{{ if hasPrefix site.BaseURL "https://www.janbrennenstuhl.eu" }} data-analytics="{{ . }}"{{ end }}{{ end }}>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="/" aria-label="Brennenstuhl on Security, home"><svg class="brand-mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><circle cx="256" cy="256" r="256" fill="#212529"/><path fill="#fe296f" transform="translate(51.2 51.2) scale(.8) matrix(2.45888 0 0 2.45888 -129.388 -631.874)" d="m99.133 409.472c-1.44 6.048-2.016 11.52-2.016 16.416 0 23.04 13.824 36.864 40.32 36.864 61.056 0 78.912-63.648 78.912-97.344 0-36.576-13.824-49.248-33.984-49.248-5.76 0-11.808.864-23.616 8.064l13.824-64.8-42.624 5.76zm88.128-45.216c0 30.24-14.976 70.56-33.696 70.56-10.368 0-15.264-4.896-15.264-13.248 0-2.016.288-4.32.864-6.624l15.84-73.152c3.168-3.744 12.96-5.184 16.992-5.184 10.368 0 15.264 13.536 15.264 27.648z"/></svg><span class="brand-name">Brennenstuhl <span>on Security</span></span></a>
+    <nav class="primary" aria-label="Main">
+      {{- $cur := . }}
+      {{- range slice (slice "Writing" "/writing/" "post") (slice "Field Guide" "/knowledge-base/" "knowledge-base") (slice "Topics" "/topics/" "topics") (slice "Talks" "/talks/" "talks") (slice "Now" "/now/" "") (slice "About" "/about/" "") }}
+      {{- $active := or (eq $cur.RelPermalink (index . 1)) (and (index . 2) (eq $cur.Section (index . 2))) }}
+      <a href="{{ index . 1 }}"{{ if $active }} aria-current="{{ cond (eq $cur.RelPermalink (index . 1)) "page" "true" }}"{{ end }}>{{ index . 0 }}</a>
+      {{- end }}
+    </nav>
+    <div class="tools">
+      <a class="search-trigger" href="/search/" data-palette="{{ $palette.RelPermalink }}" data-topics="{{ $t := dict }}{{ range hugo.Data.topics.topic }}{{ $t = merge $t (dict .id .title) }}{{ end }}{{ $t | jsonify }}" aria-keyshortcuts="Meta+K Control+K"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>Search</span><kbd hidden>⌘K</kbd></a>
+      {{ partial "ui/theme-toggle.html" . }}
+    </div>
+  </div>
+</header>
+<main id="main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
+{{ partial "ui/footer.html" . }}
+<div class="sr-only" id="feedback" role="status" aria-live="polite"></div>
+{{- $js := resources.Get "js/site.js" | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint }}
+<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{- range .Params.scripts }}{{ with resources.Get (printf "js/explainers/%s.js" .) }}{{ $x := . | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint }}
+<script type="module" src="{{ $x.RelPermalink }}" integrity="{{ $x.Data.Integrity }}"></script>{{ else }}{{ errorf "Unknown explainer script %q on %s" . $.Path }}{{ end }}{{ end }}
+{{- if eq .Layout "search" }}{{ $s := resources.Get "js/search.js" | js.Build (dict "minify" true "target" "es2020" "format" "esm") | fingerprint }}
+<script type="module" src="{{ $s.RelPermalink }}" integrity="{{ $s.Data.Integrity }}"></script>{{ end }}
+</body>
+</html>

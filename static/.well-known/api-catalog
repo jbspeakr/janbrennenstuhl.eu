@@ -1,0 +1,19 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.janbrennenstuhl.eu/.well-known/api-catalog",
+      "item": [
+        { "href": "https://www.janbrennenstuhl.eu/catalog.json", "type": "application/json", "title": "Content catalog" },
+        { "href": "https://www.janbrennenstuhl.eu/findings.json", "type": "application/json", "title": "Quotable findings" },
+        { "href": "https://www.janbrennenstuhl.eu/search/index.json", "type": "application/json", "title": "Full-text search index" },
+        { "href": "https://www.janbrennenstuhl.eu/feed.json", "type": "application/feed+json", "title": "JSON Feed" },
+        { "href": "https://www.janbrennenstuhl.eu/index.xml", "type": "application/rss+xml", "title": "RSS feed" },
+        { "href": "https://www.janbrennenstuhl.eu/llms.txt", "type": "text/plain", "title": "llms.txt" }
+      ]
+    },
+    {
+      "anchor": "https://www.janbrennenstuhl.eu/catalog.json",
+      "service-doc": [{ "href": "https://www.janbrennenstuhl.eu/agents/", "type": "text/html" }]
+    }
+  ]
+}

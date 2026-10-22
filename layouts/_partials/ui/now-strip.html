@@ -1,0 +1,8 @@
+<section class="now-strip" aria-labelledby="now-title">
+  <div class="wrap">
+    <h2 id="now-title"><a href="{{ .RelPermalink }}">Now</a></h2>
+    <ul>{{ range .Params.now }}
+      <li><span class="label">{{ .label }}</span><a href="{{ .url }}">{{ .title }}</a><p>{{ .note }}</p></li>{{ end }}
+    </ul>
+  </div>
+</section>

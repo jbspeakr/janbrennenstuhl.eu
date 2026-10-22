@@ -1,0 +1,8 @@
+{{- $items := slice -}}
+{{- range partialCached "eligible.html" . "all" }}{{ $p := . -}}
+  {{- $state := partial "data/status.html" . -}}
+  {{- range partial "data/findings.html" . -}}
+    {{- $items = $items | append (merge . (dict "article" $p.Title "article_url" $p.Permalink "article_id" (partial "data/id.html" $p) "reviewed" $state.reviewed "review_status" $state.review_status "review_basis" $state.review_basis "license" (cond (eq $p.Params.license false) "" site.Params.license.url))) -}}
+  {{- end -}}
+{{- end -}}
+{{- dict "schema_version" "1.0" "site" site.BaseURL "description" "Quotable findings with stable anchor URLs. Cite the url field." "items" $items | jsonify -}}

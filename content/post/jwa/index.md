@@ -1,19 +1,21 @@
 ---
+id: jb-jwa
+imageDecorative: true
 title: "What is JWA? A Deep Dive into JSON Web Algorithms"
 linkTitle: "What is JWA? A Deep Dive into JSON Web Algorithms"
 description: "JSON Web Algorithms (JWA) power all JWT use cases. Learn how to decode JWA short names, what algorithms there are and why JWA matters for OpenID Connect."
+claim: "JWA defines the algorithms behind every JWT: HMAC suits setups with one issuer and verifier, while RSA and ECDSA let OpenID Connect clients verify tokens without central introspection."
 excerpt: "The JSON Web Algorithms (JWA) standard provides definitions for several cryptographic algorithms. These algorithms enable a variety of purposes. In this article I'll introduce you to the essential ideas of JWA and outline how it helps to power e.g. OpenID Connect (OIDC)."
 lead: "Algorithms for Modern Identity & Access Management (IAM)"
-slug: jwa-json-web-algorithms
+slug: jwa
+aliases: ["/jwa-json-web-algorithms/"]
 date: 2023-06-08
 lastmod: 2025-06-22
 draft: false
 weight: 50
 image: json-web-algorithms-jwa.webp
-categories: ["identity-access-management"]
 tags: ["jwt"]
-pinned: false
-homepage: false
+series: jwt
 ---
 
 ## Definition of JWA

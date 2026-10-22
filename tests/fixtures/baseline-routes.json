@@ -1,0 +1,1209 @@
+{
+  "/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": true
+  },
+  "/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/3/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/4/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/404.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/404.html",
+    "headings": [],
+    "redirect": false
+  },
+  "/5/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/6/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/7/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/about/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/about/",
+    "headings": [],
+    "redirect": false
+  },
+  "/affiliate-disclaimer/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/affiliate-disclaimer/",
+    "headings": [],
+    "redirect": false
+  },
+  "/agentic-identity-broker/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/agentic-identity-broker/",
+    "headings": [
+      "why-we-started-with-agent-identity",
+      "we-used-spec-kit-from-the-first-day",
+      "early-models-wrote-tests-that-tested-nothing",
+      "i-wrote-skills-for-the-libraries-the-models-didnt-know",
+      "why-i-switched-harnesses-6-times",
+      "review-takes-more-agents-than-writing",
+      "what-we-havent-solved-yet"
+    ],
+    "redirect": false
+  },
+  "/application-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/application-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/application-security/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/application-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/application-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/application-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/appsec-agentic-engineering/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/appsec-agentic-engineering/",
+    "headings": [
+      "findings-pile-up-faster-than-teams-fix-them",
+      "move-security-feedback-into-the-agent-loop",
+      "build-and-ship-security-tooling",
+      "security-skills-and-machine-readable-policy",
+      "local-scanners-and-review-agents",
+      "sandboxes-and-short-lived-credentials",
+      "threat-modeling-and-offensive-testing",
+      "partner-with-sre-and-platform-teams",
+      "where-to-start"
+    ],
+    "redirect": false
+  },
+  "/archives/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/archives/",
+    "headings": [],
+    "redirect": false
+  },
+  "/assertj-null-not-blank/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/assertj-null-not-blank/",
+    "headings": [],
+    "redirect": false
+  },
+  "/automatic-dependency-updates/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/automatic-dependency-updates/",
+    "headings": [
+      "the-trust-problem",
+      "what-controlled-trust-looks-like",
+      "pin-versions",
+      "enforce-release-age-cooldowns",
+      "control-upgrade-cadence",
+      "verify-provenance-but-do-not-trust-it-alone",
+      "deploy-repository-proxies",
+      "use-reachability-aware-scanning",
+      "reduce-dependency-surface-area",
+      "controlled-trust-not-blind-trust"
+    ],
+    "redirect": false
+  },
+  "/aws-cloud-immune-system/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/aws-cloud-immune-system/",
+    "headings": [
+      "aws--ybiyri",
+      "a-cloud-immune-system"
+    ],
+    "redirect": false
+  },
+  "/aws-dynamodb-backup-recovery/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/aws-dynamodb-backup-recovery/",
+    "headings": [
+      "dynamodb-threat-scenario",
+      "dynamodb-w-aws-datapipeline--lambda"
+    ],
+    "redirect": false
+  },
+  "/bunny-cdn-domain-redirect/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/bunny-cdn-domain-redirect/",
+    "headings": [
+      "option-1-redirect-record-rdr",
+      "option-2-pull-zone-record-pz",
+      "option-3-canonical-name-record-cname",
+      "dedicated-edge-rule",
+      "summary"
+    ],
+    "redirect": false
+  },
+  "/bunny-shield-review/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/bunny-shield-review/",
+    "headings": [
+      "what-bunny-shield-gets-right",
+      "initial-user-experience--setup-simplicity",
+      "default-security-coverage",
+      "what-bunny-shield-needs-to-improve",
+      "certificate-renewal-blocked-by-waf",
+      "no-bot-allowlisting-for-good-bots-like-ahrefs-or-semrush",
+      "limited-logging-and-visibility-into-waf-events",
+      "missing-waf-error-code-lookup-tool",
+      "final-thoughts-promising-foundations-but-still-in-beta",
+      "got-feedback-or-similar-experiences"
+    ],
+    "redirect": false
+  },
+  "/ethical-hacking/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/ethical-hacking/",
+    "headings": [],
+    "redirect": true
+  },
+  "/ethical-hacking/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/ethical-hacking/",
+    "headings": [],
+    "redirect": false
+  },
+  "/european-jamstack-migration/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/european-jamstack-migration/",
+    "headings": [
+      "what-is-jamstack",
+      "my-european-jamstack",
+      "codeberg-my-new-home-for-code",
+      "bunny-cdn-fast-and-european-hosting",
+      "plausible-analytics-privacy-first-insights",
+      "jamstack-migration--service-responsibilities",
+      "faq",
+      "why-is-it-important-to-switch-to-european-alternatives-for-personal-projects-even-if-they-dont-handle-highly-sensitive-data",
+      "are-there-any-performance-trade-offs-when-switching-from-us-based-providers-like-netlify-to-european-alternatives",
+      "what-are-potential-challenges-when-migrating-existing-jamstack-projects-from-netlifys-build-process-to-codebergs-forgejo-actions",
+      "what-other-european-jamstack-services-or-categories-should-be-considered-for-a-fully-european-setup",
+      "what-are-the-main-benefits-of-open-source-principles-for-users-of-providers-like-codeberg-compared-to-proprietary-platforms"
+    ],
+    "redirect": false
+  },
+  "/fido-passkeys/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/fido-passkeys/",
+    "headings": [
+      "introduction-to-fido2--passkeys",
+      "phishing-resistant-passwordless-authentication",
+      "public-key-cryptography",
+      "biometrics",
+      "passkeys-controversies",
+      "possession--biometrics-over-knowledge",
+      "device-lock-in",
+      "vendor-lock-in",
+      "proprietary-only",
+      "100-trust-in-big-tech",
+      "conclusion",
+      "faqs",
+      "what-is-fido2",
+      "how-do-fido2-passkeys-work",
+      "what-are-the-benefits-of-fido2-passkeys",
+      "what-are-the-potential-drawbacks-of-fido2-passkeys",
+      "can-i-use-fido2-passkeys-on-multiple-devices"
+    ],
+    "redirect": false
+  },
+  "/github-license-checker/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/github-license-checker/",
+    "headings": [
+      "github--licenses",
+      "github-license-checker"
+    ],
+    "redirect": false
+  },
+  "/honeytoken-accounts-credential-breach/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/honeytoken-accounts-credential-breach/",
+    "headings": [
+      "the-need-for-honeytoken-accounts",
+      "threat-detection--credential-breaches",
+      "what-are-honeytoken-accounts-and-how-do-they-work",
+      "types-of-honey-tokens",
+      "fake-email-addresses",
+      "fake-database-records",
+      "fake-executable-files",
+      "how-to-create-a-honeytoken-account",
+      "how-to-detect-threats-with-honeytoken-accounts",
+      "frequently-asked-questions-faqs",
+      "what-is-a-honeypot-vs-honey-token",
+      "can-honeytokens-prevent-supply-chain-attacks",
+      "how-can-honeytokens-help-security-teams"
+    ],
+    "redirect": false
+  },
+  "/howto-convert-svn-git/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/howto-convert-svn-git/",
+    "headings": [
+      "converting-svn-to-git-w-history--authors"
+    ],
+    "redirect": false
+  },
+  "/howto-convert-tuplelist-dictionary/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/howto-convert-tuplelist-dictionary/",
+    "headings": [],
+    "redirect": false
+  },
+  "/howto-single-use-jwt/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/howto-single-use-jwt/",
+    "headings": [
+      "understanding-json-web-tokens",
+      "what-are-json-web-tokens",
+      "the-power-of-json-web-token",
+      "what-is-a-one-time-use-token",
+      "advantages-of-single-use-token-validation",
+      "implementing-one-time-jwt-token",
+      "generating-and-validating-tokens",
+      "user-experience-and-usability-challenges",
+      "security-issues--risks",
+      "embracing-the-future-of-stateless-one-time-tokens"
+    ],
+    "redirect": false
+  },
+  "/identity-access-management/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/identity-access-management/",
+    "headings": [],
+    "redirect": true
+  },
+  "/identity-access-management/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/identity-access-management/",
+    "headings": [],
+    "redirect": false
+  },
+  "/identity-access-management/3/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/identity-access-management/",
+    "headings": [],
+    "redirect": false
+  },
+  "/identity-access-management/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/identity-access-management/",
+    "headings": [],
+    "redirect": false
+  },
+  "/imprint/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/imprint/",
+    "headings": [],
+    "redirect": false
+  },
+  "/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/",
+    "headings": [],
+    "redirect": false
+  },
+  "/jan-brennenstuhl/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/about/",
+    "headings": [],
+    "redirect": true
+  },
+  "/jwa-json-web-algorithms/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/jwa-json-web-algorithms/",
+    "headings": [
+      "definition-of-jwa",
+      "anatomy-of-json-web-algorithms",
+      "different-types-of-json-web-algorithms",
+      "understanding-the-symmetric-key-algorithms",
+      "delving-into-asymmetric-key-algorithms",
+      "practical-applications-of-jwa",
+      "conclusion"
+    ],
+    "redirect": false
+  },
+  "/jwe-token-json-web-encryption/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/jwe-token-json-web-encryption/",
+    "headings": [
+      "tldr",
+      "json-web-encryption-jwe-token-a-comprehensive-guide",
+      "the-structure-of-an-encrypted-jwt",
+      "support-for-symmetric-and-asymmetric-encryption-algorithms",
+      "nested-jwts",
+      "working-with-different-jwe-algorithms",
+      "jwe-with-aes-algorithms",
+      "jwe-with-rsa-algorithms",
+      "jwe-with-elliptic-curve-algorithms",
+      "authenticated-encryption-algorithms",
+      "jwe-token-generation-process",
+      "encryption-algorithm-choosing-the-right-one-for-your-needs",
+      "generating-keys-private-key-vs-secret-key",
+      "complete-jose-header",
+      "encryption--serialization-creating-valid-jwe-tokens",
+      "jwe-token-decryption-process",
+      "decoding-the-jwe-compact-serialization",
+      "key-decryption",
+      "payload-decryption",
+      "security-considerations",
+      "authentication-tag-and-additional-authenticated-data",
+      "leaky-headers",
+      "key-management-and-token-expiry",
+      "weak-algorithms",
+      "comparison-of-jwe-and-other-json-security-standards",
+      "jwe-vs-jwt",
+      "jwe-vs-jws-json-web-signature",
+      "jwe-vs-jwk-json-web-key",
+      "practical-applications-of-jwe-tokens",
+      "bearer-token-a-powerful-authentication-and-authorization-tool",
+      "jwe-in-oauth2-and-oidc",
+      "jwe-for-data-at-rest",
+      "conclusion",
+      "frequently-asked-questions-faqs"
+    ],
+    "redirect": false
+  },
+  "/jwks-json-web-key-set/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/jwks-json-web-key-set/",
+    "headings": [
+      "tldr",
+      "technical-specifications-of-jwk-and-jwks",
+      "what-is-json-web-key-jwk",
+      "what-is-json-web-key-set-jwks",
+      "locate-json-web-key-sets",
+      "benefits-of-using-jwks",
+      "easy-management-of-keys-with-jwk-sets",
+      "simplified-key-rotation-process-using-jwks",
+      "compatibility-with-various-protocols-and-applications",
+      "best-practices--security-considerations",
+      "use-transport-layer-security",
+      "make-sure-jwks-is-correct-and-current",
+      "validate-the-signatures-of-incoming-jwts-using-jwks",
+      "consider-rotating-your-jwks-keys-periodically",
+      "conclusion-the-importance-of-using-json-web-key-sets"
+    ],
+    "redirect": false
+  },
+  "/jwt-vs-oauth/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/jwt-vs-oauth/",
+    "headings": [
+      "tldr",
+      "introduction-to-jwt-vs-oauth-20",
+      "what-is-oauth2",
+      "what-is-jwt",
+      "when-to-use-oauth-20-vs-when-to-use-jwt",
+      "combining-oauth-20-and-jwt-how-to-use-them-together",
+      "jwt-as-bearer-token",
+      "advantages-of-using-jwt-with-oauth-20",
+      "which-bearer-token-format-is-right-for-you",
+      "jwt--oauth2--openid-connect-oidc",
+      "conclusion-choosing-between-jwt-and-oauth2"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/",
+    "headings": [],
+    "redirect": true
+  },
+  "/knowledge-base/account-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/knowledge-base/account-security/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/account-hijacking-attacks/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/account-hijacking-attacks/",
+    "headings": [
+      "account-pre-hijacking-attacks-security-failures-in-user-account-creation",
+      "hack-for-hire-exploring-the-emerging-market-for-account-hijacking"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/account-recovery/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/account-recovery/",
+    "headings": [
+      "security-analysis-of-email-based-password-reset-procedures"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/compromised-credentials-stuffing/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/compromised-credentials-stuffing/",
+    "headings": [
+      "protocols-for-checking-compromised-credentials",
+      "protecting-accounts-from-credential-stuffing-with-password-breach-alerting",
+      "data-breaches-phishing-or-malware-understanding-the-risks-of-stolen-credentials"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/password-reuse-studies-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/password-reuse-studies-security/",
+    "headings": [
+      "observing-passwords-in-their-natural-habitat",
+      "the-tangled-web-of-password-reuse",
+      "understanding-password-choices-how-frequently-entered-passwords-are-re-used-across-websites",
+      "a-large-scale-study-of-web-password-habits",
+      "designing-password-reuse-notifications"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/password-strength-meter/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/password-strength-meter/",
+    "headings": [
+      "impact-of-password-meters-on-password-selection",
+      "analyzing-password-strength-meters",
+      "low-budget-password-strength-estimation",
+      "modeling-password-guessability-using-neural-networks",
+      "practical-recommendations-for-stronger-more-usable-passwords"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/account-security/reinforced-authentication-studies/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/account-security/reinforced-authentication-studies/",
+    "headings": [
+      "evaluating-login-challenges-as-a-defense-against-account-takeover",
+      "using-guessed-passwords-to-thwart-online-guessing",
+      "a-statistical-approach-to-measuring-user-authenticity",
+      "distinguishing-attacks-from-legitimate-traffic-at-an-authentication-server"
+    ],
+    "redirect": false
+  },
+  "/knowledge-base/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/",
+    "headings": [],
+    "redirect": false
+  },
+  "/knowledge-base/oidc/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/oidc/",
+    "headings": [],
+    "redirect": true
+  },
+  "/knowledge-base/oidc/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/oidc/",
+    "headings": [],
+    "redirect": false
+  },
+  "/knowledge-base/oidc/openid-connect-security-research/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/knowledge-base/oidc/openid-connect-security-research/",
+    "headings": [
+      "security-analysis-of-real-life-openid-connect-implementations",
+      "openid-connect-security-considerations"
+    ],
+    "redirect": false
+  },
+  "/long-password-login-system/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/long-password-login-system/",
+    "headings": [
+      "the-importance-of-password-security",
+      "the-rise-of-long-passwords",
+      "password-maximum-length-limitations",
+      "common-password-max-length-limits",
+      "maximum-password-length-why-do-length-limits-exist",
+      "the-consequences-of-short-password-limits",
+      "the-benefits-of-long-passwords",
+      "secure-password-enhanced-security-through-entropy",
+      "resistance-to-brute-force-attacks",
+      "encouraging-the-use-of-password-managers",
+      "how-to-support-long-passwords-in-your-login-system",
+      "updating-your-database-and-storage",
+      "adapting-to-longer-password-storage",
+      "the-importance-of-secure-hashing",
+      "transitioning-existing-user-data",
+      "implementing-front-end-changes",
+      "adapting-user-interface-elements",
+      "enabling-client-side-input-validation",
+      "encouraging-strong-password-practices",
+      "password-manager-support",
+      "back-end-considerations",
+      "implementing-server-side-password-validation",
+      "ensuring-backward-compatibility",
+      "long-password-denial-of-service",
+      "testing--monitoring-your-updated-system",
+      "best-practices-for-long-password-support",
+      "adopting-a-balanced-password-policy",
+      "regularly-reviewing--updating-security-measures",
+      "staying-informed-about-new-threats--trends",
+      "summary",
+      "frequently-asked-questions-faqs"
+    ],
+    "redirect": false
+  },
+  "/max-password-length-recommendation/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/max-password-length-recommendation/",
+    "headings": [
+      "password-length-recommendations",
+      "a-look-into-password-length",
+      "the-nist-guidelines",
+      "why-no-max-length",
+      "so-whats-the-ideal-length",
+      "creating-strong-passwords",
+      "complex-passwords--the-importance-of-unpredictability",
+      "passphrases-a-password-manager-alternative",
+      "use-a-password-manager",
+      "common-password-pitfalls",
+      "short-passwords",
+      "reusing-passwords",
+      "writing-passwords-down",
+      "ignoring-two-factor-authentication",
+      "faqs",
+      "what-is-the-max-password-length-recommendation",
+      "how-does-password-length-affect-security--brute-force-attacks",
+      "what-is-a-passphrase--how-is-it-different-from-a-password",
+      "why-should-i-avoid-reusing-passwords",
+      "what-is-a-password-manager-and-how-can-it-help-me",
+      "conclusion",
+      "additional-tips-for-strengthening-your-password-security"
+    ],
+    "redirect": false
+  },
+  "/microservice-evolution/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/microservice-evolution/",
+    "headings": [
+      "microservices-self-contained-systems--integrated-applications",
+      "microservices-dont-letem-grow",
+      "tldr---take-a-radical-approach"
+    ],
+    "redirect": false
+  },
+  "/new-appsec-operating-model/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/new-appsec-operating-model/",
+    "headings": [
+      "fixing-findings-is-the-new-bottleneck",
+      "the-harness-is-the-control-plane",
+      "shift-security-down-into-the-platform",
+      "give-risk-an-operational-budget",
+      "the-coding-agent-is-an-attack-surface",
+      "what-i-asked-the-students-to-learn"
+    ],
+    "redirect": false
+  },
+  "/passkeys-passwordless-authentication/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/passkeys-passwordless-authentication/",
+    "headings": [
+      "passwordless-authentication-a-new-era-of-security",
+      "what-is-passwordless-authentication",
+      "passwordless-authentication-vs-mfa",
+      "why-is-passwordless-authentication-important",
+      "how-does-passwordless-authentication-work",
+      "types-of-passwordless-authentication-methods",
+      "biometric-authentication-factors",
+      "one-time-passcodes-otp",
+      "hardware-tokens",
+      "software-tokens",
+      "magic-links",
+      "the-challenges-of-passwordless-authentication",
+      "infrastructure-changes",
+      "user-acceptance",
+      "passwordless-authentication-in-action",
+      "fido2-web-authentication-webauthn",
+      "apple-face-id--touch-id",
+      "google-passwordless",
+      "microsoft-windows-hello",
+      "the-rise-of-passwordless-authentication-startups",
+      "passwordless-authentication-faqs",
+      "is-passwordless-authentication-safe--truly-secure",
+      "how-can-i-implement-passwordless-authentication-in-my-organization",
+      "can-i-still-use-two-factor-authentication-2fa-with-passwordless-authentication",
+      "what-happens-if-i-lose-my-hardware-token-or-registered-device",
+      "how-does-passwordless-authentication-affect-user-privacy",
+      "are-there-any-drawbacks-to-passwordless-authentication",
+      "passkeys-the-future-of-passwordless-authentication",
+      "what-are-passkeys",
+      "conclusion"
+    ],
+    "redirect": false
+  },
+  "/password-security-manager-friendly/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/password-security-manager-friendly/",
+    "headings": [
+      "what-is-a-password-manager",
+      "understanding-the-limitations-of-traditional-login-forms",
+      "best-practices-for-designing-password-manager-friendly-login-forms",
+      "improving-accessibility-with-password-manager-friendly-login-forms",
+      "increasing-security-with-password-manager-friendly-login-forms",
+      "conclusion"
+    ],
+    "redirect": false
+  },
+  "/password-spraying/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/password-spraying/",
+    "headings": [
+      "introduction-to-password-attacks",
+      "what-is-password-spraying",
+      "the-motivation-behind-password-spraying-attacks",
+      "how-password-spraying-works",
+      "targeting-multiple-accounts",
+      "common-passwords--dictionary-attack",
+      "the-use-of-bots--automation-in-password-spraying",
+      "password-spraying-vs-brute-force-attack",
+      "password-spraying-vs-credential-stuffing",
+      "password-spraying-vs-dictionary-attack",
+      "real-world-examples-of-password-spraying",
+      "how-a-password-spraying-attack-affects-your-customers",
+      "detecting-password-spraying-attacks",
+      "sudden-spike-in-failed-login-attempts",
+      "unusual-account-activity",
+      "password-spraying-prevention",
+      "ip-blocking--geo-blocking",
+      "bot-management",
+      "intermediary-challenges",
+      "strong-password-policies-and-best-practices",
+      "passwordless-authentication",
+      "enable-multi-factor-authentication-mfa",
+      "the-ongoing-battle-against-password-attacks",
+      "frequently-asked-questions-faqs",
+      "can-password-spraying-be-easily-detected",
+      "how-can-i-protect-my-personal-accounts-from-password-spraying-attacks",
+      "are-there-any-tools-available-to-help-detect-and-prevent-password-spraying",
+      "what-should-i-do-if-i-suspect-password-spraying-compromised-my-account",
+      "is-it-possible-to-prevent-a-password-spraying-attack"
+    ],
+    "redirect": false
+  },
+  "/password-strength-policy-guide/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/password-strength-policy-guide/",
+    "headings": [
+      "importance-of-password-policy-best-practices",
+      "key-components-of-a-modern-password-policy",
+      "why-arbitrary-password-policies-are-bad",
+      "stop-password-complexity-requirements",
+      "best-practices-for-implementing-a-password-security-policy",
+      "minimum-password-length",
+      "minimum-password-strength",
+      "password-blocklists",
+      "conclusion",
+      "10-dos--donts-for-an-effective-password-strength-policy",
+      "frequently-asked-questions-faq",
+      "do-password-meters-discourage-users-from-using-complex-passwords",
+      "should-password-meters-take-into-account-the-likelihood-of-a-password-being-guessed-by-an-attacker",
+      "should-i-use-a-blacklist-of-commonly-used-passwords-to-prevent-users-from-using-weak-passwords",
+      "should-i-use-a-password-manager-to-create-and-store-strong-passwords",
+      "is-it-safe-to-use-the-same-password-for-multiple-accounts"
+    ],
+    "redirect": false
+  },
+  "/privacy-policy/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/privacy-policy/",
+    "headings": [
+      "website-visitors",
+      "information-we-collect-and-what-we-use-it-for"
+    ],
+    "redirect": false
+  },
+  "/purpose-jwt-stateless-authentication/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/purpose-jwt-stateless-authentication/",
+    "headings": [
+      "stateless-sessions-thanks-to-json-web-token",
+      "what-is-jwt",
+      "definition",
+      "components-of-jwt-tokens",
+      "the-need-for-stateless-authentication",
+      "stateful-authentication",
+      "stateless-authentication",
+      "stateful-vs-stateless",
+      "how-jwt-enables-stateless-authentication",
+      "token-based-authentication",
+      "json-web-signature-jws",
+      "pros-and-cons-of-stateless-authentication-with-jwt",
+      "advantages",
+      "disadvantages",
+      "understanding-jwt-workflow",
+      "token-creation",
+      "token-verification",
+      "token-expiration",
+      "use-cases-for-jwt",
+      "security-concerns--considerations",
+      "best-practices-for-jwt-implementation",
+      "conclusion",
+      "faqs",
+      "what-is-the-main-purpose-of-using-jwt-in-stateless-authentication",
+      "how-can-i-prevent-jwt-theft",
+      "can-i-use-jwt-for-authorization-as-well-as-authentication",
+      "do-i-need-to-store-jwt-session-data-in-a-database",
+      "how-do-i-handle-jwt-expiration"
+    ],
+    "redirect": false
+  },
+  "/search/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/search/",
+    "headings": [],
+    "redirect": false
+  },
+  "/shift-down-appsec/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/shift-down-appsec/",
+    "headings": [
+      "shift-left-distributes-responsibility-shift-down-removes-decisions",
+      "agentic-engineering-makes-this-urgent",
+      "platforms-as-security-architecture",
+      "appsec-moves-from-enforcement-to-architecture",
+      "the-paradox-less-freedom-more-productivity",
+      "where-this-leaves-appsec-teams"
+    ],
+    "redirect": false
+  },
+  "/software-engineering/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/software-engineering/",
+    "headings": [],
+    "redirect": true
+  },
+  "/software-engineering/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/software-engineering/",
+    "headings": [],
+    "redirect": false
+  },
+  "/software-engineering/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/software-engineering/",
+    "headings": [],
+    "redirect": false
+  },
+  "/software-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/software-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/software-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/software-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/spring-security-oauth-rfc/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/spring-security-oauth-rfc/",
+    "headings": [
+      "i-fixed-something-for-me",
+      "i-fixed-something-for-someone-else",
+      "i-learned-more-about-library-maintenance",
+      "i-learned-more-about-http-headers",
+      "the-simplest-piece-of-work-can-lead-you-anywhere"
+    ],
+    "redirect": false
+  },
+  "/step-up-authentication/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/step-up-authentication/",
+    "headings": [
+      "what-is-step-up-authentication",
+      "the-rationale-behind-step-up-authentication",
+      "step-up-authentication-vs-single-factor-authentication",
+      "step-up-authentication-vs-multi-factor-authentication",
+      "step-up-authentication-vs-adaptive-authentication",
+      "how-step-up-authentication-works",
+      "implementing-step-up-authentication",
+      "step-up-authentication-with-openid-connect",
+      "forced-re-authentication-methods",
+      "authentication-context-class-reference-acr",
+      "authentication-level-elevation",
+      "conclusion",
+      "frequently-asked-questions-faqs",
+      "what-are-the-minimum-requirements-to-implement-step-up-authentication",
+      "how-does-step-up-authentication-improve-user-experience",
+      "how-can-step-up-authentication-prevent-data-breaches"
+    ],
+    "redirect": false
+  },
+  "/tags/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/3/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/4/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/5/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/6/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/agentic-engineering/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/agentic-engineering/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/agentic-engineering/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/agentic-engineering/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/aws/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/aws/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/aws/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/aws/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/brute-force/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/brute-force/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/brute-force/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/brute-force/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/coding-agents/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/coding-agents/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/coding-agents/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/coding-agents/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/data-breach/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/data-breach/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/data-breach/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/data-breach/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/defensive-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/defensive-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/defensive-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/defensive-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/eurostack/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/eurostack/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/eurostack/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/eurostack/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/git/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/git/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/git/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/git/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/jamstack/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/jamstack/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/jamstack/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/jamstack/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/java/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/java/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/java/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/java/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/jwt/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/jwt/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/jwt/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/jwt/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/jwt/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/jwt/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/oauth2/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/oauth2/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/oauth2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/oauth2/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/offensive-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/offensive-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/offensive-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/offensive-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/oidc/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/oidc/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/oidc/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/oidc/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/open-source/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/open-source/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/open-source/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/open-source/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/open-source/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/open-source/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/operational-excellence/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/operational-excellence/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/operational-excellence/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/operational-excellence/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/passkeys/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/passkeys/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/passkeys/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/passkeys/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/password-manager/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/password-manager/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/password-manager/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/password-manager/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/password-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/password-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/password-security/2/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/password-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/password-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/password-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/passwordless/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/passwordless/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/passwordless/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/passwordless/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/phishing/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/phishing/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/phishing/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/phishing/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/platform-engineering/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/platform-engineering/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/platform-engineering/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/platform-engineering/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/python/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/python/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/python/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/python/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/sdlc/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/sdlc/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/sdlc/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/sdlc/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/social-engineering/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/social-engineering/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/social-engineering/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/social-engineering/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/supply-chain-protection/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/supply-chain-protection/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/supply-chain-protection/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/supply-chain-protection/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/threat-detection/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/threat-detection/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/threat-detection/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/threat-detection/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/usable-security/1/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/usable-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/tags/usable-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/usable-security/",
+    "headings": [],
+    "redirect": false
+  },
+  "/tags/ux-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/tags/usable-security/",
+    "headings": [],
+    "redirect": true
+  },
+  "/weak-google-crypto-github-saml/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/weak-google-crypto-github-saml/",
+    "headings": [
+      "weak-crypto-in-google-cloud-platform",
+      "github-saml-vulnerability",
+      "bad-security-ux-at-twitter"
+    ],
+    "redirect": false
+  },
+  "/whaling-cyber-security/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/whaling-phishing-definition/",
+    "headings": [],
+    "redirect": true
+  },
+  "/whaling-phishing-definition/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/whaling-phishing-definition/",
+    "headings": [
+      "spear-phishing-vs-whaling-attacks-in-cybersecurity",
+      "whale-phishing-a-personalized-approach-to-spear-phishing",
+      "the-risks-of-spear-phishing-attacks",
+      "how-whaling-works",
+      "targeting-the-top",
+      "social-engineering-tactics",
+      "impersonation",
+      "whaling-attack-examples",
+      "ceo-fraud",
+      "high-profile-whaling-attacks",
+      "strategies-for-preventing-whaling-cyber-attacks",
+      "implement-employee-training-programs",
+      "establish-best-practices-for-email-communication",
+      "profile-target-audiences",
+      "protecting-against-whaling-phishing-attacks",
+      "potential-impact-of-whaling-phishing-on-organizations",
+      "financial-losses",
+      "reputational-damage",
+      "compromised-sensitive-data",
+      "conclusion-understanding-the-risks-of-whaling-phishing-attacks",
+      "frequently-asked-questions-faqs"
+    ],
+    "redirect": false
+  },
+  "/what-is-whaling-cyber-awareness/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/what-is-whaling-cyber-awareness/",
+    "headings": [
+      "what-is-whaling-cyber-awareness",
+      "security-awareness-why-it-matters",
+      "technologies-and-strategies-for-whaling-prevention",
+      "defensive-technologies-anti-spoofing-secure-email-gateways-and-ai-based-solutions",
+      "proactive-measures-two-factor-authentication-secure-communication-channels",
+      "incident-response-planning-preparation-for-whaling-attacks",
+      "make-dmarc-a-part-of-your-whaling-cyber-awareness-agenda",
+      "robust-compliance-policies",
+      "defense-strategies-for-individuals",
+      "the-future-of-whaling-and-cyber-awareness",
+      "predicting-future-trends-in-whaling-the-changing-landscape",
+      "the-role-of-ai-and-machine-learning-in-whaling-defense",
+      "a-machine-learning-approach-to-phishing-detection-and-defense",
+      "the-importance-of-ongoing-cyber-awareness-training-and-education",
+      "ai-driven-cybersecurity",
+      "frequently-asked-questions-faqs"
+    ],
+    "redirect": false
+  },
+  "/why-aws-cloudformation-sucks/index.html": {
+    "canonical": "https://www.janbrennenstuhl.eu/why-aws-cloudformation-sucks/",
+    "headings": [
+      "json-lang-wtf",
+      "cfn-sphere"
+    ],
+    "redirect": false
+  }
+}

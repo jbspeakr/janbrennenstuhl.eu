@@ -1,0 +1,43 @@
+{{ define "main" }}
+{{- $eligible := partialCached "eligible.html" . "all" -}}
+{{- if .Params.topic -}}
+{{- $t := partial "data/topic.html" .Params.topic -}}
+{{- $pages := slice }}{{ range $eligible }}{{ if in (partial "data/topics.html" .) $t.id }}{{ $pages = $pages | append . }}{{ end }}{{ end -}}
+<header class="hub-header">
+  <div class="article-art">{{ partial "diagram.html" (dict "page" . "seed" $t.id) }}</div>
+  <div class="wrap article-head">
+    <p class="eyebrow"><a href="/topics/">Topic</a> <span aria-hidden="true">/</span> {{ len $pages }} entries</p>
+    <h1>{{ .Title }}</h1>
+    <p class="lead">{{ .Description }}</p>
+  </div>
+</header>
+<div class="wrap hub">
+  <div class="prose hub-intro">{{ .Content }}</div>
+  <p class="feeds">Follow this topic: <a href="{{ .RelPermalink }}index.xml">RSS</a> <span aria-hidden="true">·</span> <a href="{{ .RelPermalink }}feed.json">JSON Feed</a> <span aria-hidden="true">·</span> <a href="{{ .RelPermalink }}index.md">Markdown</a></p>
+  {{- $groups := slice (dict "id" "essays" "title" "Essays" "pages" (where $pages "Section" "post")) (dict "id" "guide" "title" "Field guide" "pages" (where $pages "Section" "knowledge-base")) (dict "id" "work" "title" "Talks and projects" "pages" (where $pages "Section" "in" (slice "talks" "projects"))) }}
+  {{- range $groups }}{{ if .pages }}
+  <section class="hub-group" aria-labelledby="g-{{ .id }}">
+    <h2 id="g-{{ .id }}">{{ .title }}</h2>
+    <ol class="entries">{{ range .pages }}{{ partial "row.html" . }}{{ end }}</ol>
+  </section>
+  {{- end }}{{ end }}
+</div>
+{{- else if eq .RelPermalink "/topics/" -}}
+<header class="wrap page-header"><h1>{{ .Title }}</h1><p class="lead">{{ .Description }}</p></header>
+<div class="wrap topic-cards">
+  {{- range hugo.Data.topics.topic }}{{ $t := . }}{{ with site.GetPage (printf "/topics/%s" .id) }}
+  {{- $count := 0 }}{{ range $eligible }}{{ if in (partial "data/topics.html" .) $t.id }}{{ $count = add $count 1 }}{{ end }}{{ end }}
+  <a class="topic-card" href="{{ .RelPermalink }}">{{ partial "diagram.html" (dict "page" . "seed" $t.id "class" "mini") }}<span class="topic-card-text"><span class="topic-card-title">{{ $t.title }}</span><span>{{ $t.description }}</span><span class="count">{{ $count }} entries</span></span></a>
+  {{- end }}{{ end }}
+</div>
+{{- else if eq .Section "knowledge-base" -}}
+{{ partial "ui/field-guide.html" . }}
+{{- else -}}
+<header class="wrap page-header"><h1>{{ .Title }}</h1>{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}</header>
+<div class="wrap">
+  {{- if eq .Section "talks" }}{{ partial "ui/speaker.html" . }}{{ end }}
+  <div class="prose">{{ .Content }}</div>
+  <ol class="entries">{{ range .RegularPages.ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</ol>
+</div>
+{{- end -}}
+{{ end }}

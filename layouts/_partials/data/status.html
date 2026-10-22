@@ -1,0 +1,18 @@
+{{/* Editorial status and review fields with honest defaults: a missing review date never implies freshness.
+     Essays, talks and projects are written and published by the author, so publication is their first review
+     (basis "publication", dated to the publish date). Field-guide entries need an explicit `reviewed`. */}}
+{{ $status := .Params.status | default "published" }}
+{{ $kind := partial "data/kind.html" . }}
+{{ $reviewed := "" }}{{ $basis := "" }}
+{{ with .Params.reviewed }}{{ $reviewed = time.Format "2006-01-02" . }}{{ $basis = "editorial" }}
+{{ else }}{{ if in (slice "essay" "talk" "project") $kind }}{{ $reviewed = .PublishDate.Format "2006-01-02" }}{{ $basis = "publication" }}{{ end }}
+{{ end }}
+{{ $review := .Params.reviewStatus | default (cond (ne $reviewed "") "reviewed" "not-reviewed") }}
+{{ $outdated := false }}
+{{ if eq $kind "essay" }}
+  {{ $since := cond (ne $reviewed "") (time.AsTime $reviewed) .Date }}
+  {{ $age := sub now.Year $since.Year }}
+  {{ $fast := false }}{{ range partial "data/topics.html" . }}{{ if in site.Params.fastMovingTopics . }}{{ $fast = true }}{{ end }}{{ end }}
+  {{ $outdated = and $fast (ge $age site.Params.outdatedAfterYears) }}
+{{ end }}
+{{ return dict "status" $status "review_status" $review "reviewed" $reviewed "review_basis" $basis "outdated" $outdated }}
