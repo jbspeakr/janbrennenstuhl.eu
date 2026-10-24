@@ -43,7 +43,7 @@ Corrections made while rewriting (worth your review): a dead Google-hosted PDF r
 - `scripts/check.py`: 171 HTML files, 52 catalog entries, 70 findings, 96 redirects, all gates pass. Compressed CSS 7.6 kB, article JS 1.4 kB, preloaded font 26.4 kB, essay HTML around 12 kB.
 - `npm run test:browser`: 42 page × width × theme combinations (home, essay, field guide, explainer, search, topic, glossary at 360/768/1440 in light and dark) with zero axe WCAG 2.2 A/AA violations and no horizontal overflow; skip link, palette keyboard use and its own axe check, theme toggle persistence, search history, the three explainers, 320px reflow, text spacing, 404 status, old-route redirect, no-JS reading and search, Markdown negotiation.
 - `npm run test:lighthouse` (Lighthouse 13.5.0, simulated mobile, gzip, median of 3): performance, accessibility, best practices and SEO 100 on home, essay and field-guide entry; CLS 0; TBT 0; LCP 1.35–1.5 s (target 1.2 s; see the CSP trade-off in `docs/DESIGN.md`).
-- `node --test tests/`: 10 MCP and negotiation tests. `python3 -m unittest`: release ordering, IndexNow and MIME tests.
+- `npm run test:edge`: 10 MCP and negotiation tests. `python3 -m unittest`: release ordering, IndexNow and MIME tests.
 
 ## Still open before release
 

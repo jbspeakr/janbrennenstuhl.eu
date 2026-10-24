@@ -12,4 +12,6 @@ rm -rf public
 HUGO_PARAMS_SOURCE_REVISION="$revision" HUGO_INDEXNOW_KEY="${INDEXNOW_KEY:-}" "$HUGO" --minify --gc --cleanDestinationDir "$@"
 python3 scripts/check.py
 python3 -m unittest discover -s tests -p 'test_*.py'
-if command -v node >/dev/null; then node --test tests/; else echo 'Node not found: edge-script tests skipped' >&2; fi
+# Name the test files: under Node 22–25 `node --test tests/` runs the directory itself and dies
+# with MODULE_NOT_FOUND. Node 22.18+/23.6+ strips the TypeScript types on its own.
+if command -v node >/dev/null; then node --test tests/*.test.*; else echo 'Node not found: edge-script tests skipped' >&2; fi

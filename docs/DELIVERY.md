@@ -85,7 +85,7 @@ Every page has a Markdown twin at `<url>index.md`. Two ways to serve it for `Acc
 1. **Edge rule, synced by default:** condition "Request header `Accept` contains `text/markdown`" and URL ends in `/`; action "Redirect to `{{path}}index.md`" with status 302. Redirects from edge rules are not cached, and agents follow them. Unlike the edge script it ignores q-values.
 2. **Edge script:** `edge/negotiate.ts` (middleware on the www pull zone) rewrites the origin request to the twin and adds `Vary: Accept`. Middleware runs on cache misses only, so add an edge rule that **bypasses the cache** when `Accept` contains `text/markdown`; otherwise a twin could be cached under the HTML URL. Bundle `negotiate.ts` with `negotiate-core.ts` before upload (for example `deno bundle` or esbuild).
 
-`node --test tests/` covers the negotiation rule; `scripts/serve.py` behaves the same way locally.
+`npm run test:edge` covers the negotiation rule; `scripts/serve.py` behaves the same way locally.
 
 ### Read-only MCP server
 

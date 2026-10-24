@@ -1,4 +1,4 @@
-// Unit tests for the edge scripts. Run: node --test tests/ (Node 23.6+ strips TypeScript types).
+// Unit tests for the edge scripts. Run: npm run test:edge (Node 22.18+/23.6+ strips TypeScript types).
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
