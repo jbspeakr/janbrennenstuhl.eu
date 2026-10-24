@@ -10,7 +10,9 @@ const port = process.env.PORT || '8000';
 const origin = `http://127.0.0.1:${port}`;
 const routes = ['/', '/agentic-identity-broker/', '/knowledge-base/account-security/password-reuse/'];
 const server = spawn(process.env.PYTHON || 'python3', ['scripts/serve.py', port], { stdio: 'ignore' });
-const chrome = await chromeLauncher.launch({ chromePath: process.env.CHROMIUM_EXECUTABLE, chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'] });
+// Container-safe flags, as in tests/browser.cjs: Lighthouse starts Chrome through chrome-launcher,
+// which — unlike Playwright — does not pass --disable-dev-shm-usage, and a small /dev/shm kills it.
+const chrome = await chromeLauncher.launch({ chromePath: process.env.CHROMIUM_EXECUTABLE, chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] });
 const results = [];
 let failed = false;
 try {
