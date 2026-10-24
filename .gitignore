@@ -9,6 +9,7 @@ _prompts.md
 .venv/
 .tools/
 releases/
+edge-rules.json
 __pycache__/
 node_modules/
 test-results/
