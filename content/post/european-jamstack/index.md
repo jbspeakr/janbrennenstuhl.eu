@@ -10,7 +10,7 @@ lead: "Looking for a European alternative to replace Github or Netlify? Don't lo
 slug: european-jamstack
 aliases: ["/european-jamstack-migration/"]
 date: 2025-07-06
-lastmod: 2025-07-06
+lastmod: 2026-10-25
 draft: false
 weight: 50
 image: european-jamstack.webp
@@ -24,6 +24,10 @@ links:
 ---
 
 I recently migrated my personal JAMstack projects from Github and Netlify to European alternatives. In this article, I'll share which European service providers I went for and why I sleep much better now. Before we begin, though, let's quickly review what we mean when we use the term *JAMstack*!
+
+{{< callout title="Update, October 2026: this blog now lives on GitHub" >}}
+I moved the source of this blog from Codeberg to [GitHub](https://github.com/jbspeakr/janbrennenstuhl.eu "My blog sources on GitHub"), and GitHub Actions now runs the deployment. In July 2026, Codeberg's members voted to [exclude LLM-heavy projects](https://blog.codeberg.org/protecting-our-floss-commons-from-llms.html "Codeberg: Protecting our FLOSS commons from LLMs") from the platform: projects that LLM agents create autonomously, projects written and maintained with heavy use of LLMs, and projects closely tied to the LLM ecosystem. I write and maintain this blog with a lot of help from coding agents, so it belongs in that group. I respect Codeberg's decision. Bunny CDN and Plausible Analytics stay as described below.
+{{< /callout >}}
 
 ## What is JAMstack?
 
@@ -46,7 +50,7 @@ For code hosting and deployment, I opted for [Codeberg](https://codeberg.org "Co
 
 Codeberg.org offers a familiar interface for anyone used to Github and Github Actions. It is incredibly reassuring to know that my code resides on a community-driven and open-source platform rather than a "Big Tech" for-profit one. 
 
-*→ [The source files of this blog](https://codeberg.org/brennenstuhl/janbrennenstuhl.eu "My blog sources on Codeberg") are public.*
+*→ The source files of this blog have moved to [GitHub](https://github.com/jbspeakr/janbrennenstuhl.eu "My blog sources on GitHub"). The update at the top of this article explains why.*
 
 ### Bunny CDN: Fast and European Hosting
 
