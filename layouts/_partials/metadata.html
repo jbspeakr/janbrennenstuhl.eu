@@ -2,7 +2,7 @@
 {{ $license := dict "name" site.Params.license.name "url" site.Params.license.url "scope" "Original text; credited third-party media retain their own rights." }}
 {{ if eq .Params.license false }}{{ $license = dict "name" "Not specified" "url" "" "scope" "No reuse license specified for this page." }}{{ end }}
 {{ $rev := getenv "HUGO_PARAMS_SOURCE_REVISION" | default "working-tree" }}
-{{ $source := "" }}{{ with .File }}{{ $source = printf "%s/src/commit/%s/content/%s" site.Params.sourceRepository (cond (eq $rev "working-tree") "main" $rev) .Path }}{{ end }}
+{{ $source := "" }}{{ with .File }}{{ $source = printf "%s/blob/%s/content/%s" site.Params.sourceRepository (cond (eq $rev "working-tree") "main" $rev) .Path }}{{ end }}
 {{ $state := partial "data/status.html" . }}
 {{ $series := "" }}{{ with partial "data/series.html" . }}{{ $series = .id }}{{ end }}
 {{ $hash := printf "%s\n%s\n%s\n%s" .Title .Description (.Lastmod.Format "2006-01-02") .RawContent | sha256 }}

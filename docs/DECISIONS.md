@@ -72,4 +72,4 @@ switch to a chunked index (Pagefind) instead of trimming bodies.
   release is at least two weeks old, at most quarterly unless a fix is needed.
 - Browser QA packages are pinned exactly; `renovate.json` groups them into one monthly PR if a
   Renovate runner is attached to the repository. Nothing in `package.json` ships to readers.
-- Forgejo actions stay pinned to commit SHAs with the tag in a comment.
+- GitHub Actions stay pinned to commit SHAs with the tag in a comment.

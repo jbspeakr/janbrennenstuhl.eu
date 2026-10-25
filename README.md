@@ -1,6 +1,6 @@
 # Brennenstuhl on Security
 
-The source of [janbrennenstuhl.eu](https://www.janbrennenstuhl.eu): Jan Brennenstuhl's essays, field guide and research notes on application security, identity, passwords, tokens and agentic engineering. Built with Hugo, hosted on Bunny in the EU, maintained on Codeberg.
+The source of [janbrennenstuhl.eu](https://www.janbrennenstuhl.eu): Jan Brennenstuhl's essays, field guide and research notes on application security, identity, passwords, tokens and agentic engineering. Built with Hugo, hosted on Bunny in the EU, maintained on GitHub.
 
 ## Build
 

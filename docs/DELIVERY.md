@@ -2,7 +2,7 @@
 
 ## Build once, verify, publish
 
-`.forgejo/workflows/deploy.yml` has four jobs:
+`.github/workflows/deploy.yml` has four jobs:
 
 | Job | Runs on | Credentials | Does |
 | --- | --- | --- | --- |
@@ -11,7 +11,7 @@
 | `preview` | same-repo PRs, only if `vars.PREVIEW_HOST` is set | staging zone only | builds for the preview host and uploads to the staging storage zone |
 | `publish` | push to `main`, after `verify` and `browser` | production storage password; account API key for the edge-rule sync | checks artifact checksums and revision, uploads the same bytes, then syncs the edge rules |
 
-Third-party actions are pinned to commit SHAs. The workflow serializes runs per ref and never cancels an upload halfway. Forgejo concurrency is best-effort; do not start a second deployment outside this workflow.
+Third-party actions are pinned to commit SHAs. The workflow serializes runs per ref and never cancels an upload halfway. Do not start a second deployment outside this workflow.
 
 Uploads use only the storage-zone password. The account API key is used by one step, the edge-rule sync in `publish`, because Bunny has no scoped key for edge rules (docs/DECISIONS.md). Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
@@ -110,13 +110,13 @@ Hugo moves with `scripts/bump-hugo.sh <version>`, which rewrites `.hugo-version`
 
 ## Rollback
 
-Download the **previous** retained `verified-site` artifact from Forgejo and extract it into an isolated directory. Compare its manifest with the intended rollback revision; do not rebuild an old commit with new dependencies. Dry-run `deploy.py --root <extracted>/public`, then re-upload those bytes through an explicitly operated main-branch run with the same ordering. There is deliberately no unguarded local production upload. Rehearse this against the staging zone before the first real release.
+Download the **previous** retained `verified-site` artifact from GitHub Actions and extract it into an isolated directory. Compare its manifest with the intended rollback revision; do not rebuild an old commit with new dependencies. Dry-run `deploy.py --root <extracted>/public`, then re-upload those bytes through an explicitly operated main-branch run with the same ordering. There is deliberately no unguarded local production upload. Rehearse this against the staging zone before the first real release.
 
 Prior fingerprinted assets remain for at least the 90-day artifact window; pruning is a separate reviewed operation. Retiring a page needs a redirect or a tombstone; leaving old files in storage is not a removal mechanism.
 
 ## References
 
-- [Forgejo concurrency](https://forgejo.org/docs/latest/user/actions/reference/#concurrency)
+- [GitHub Actions concurrency](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#concurrency)
 - [Bunny Storage upload API](https://bunny.net/docs/api-reference/storage/manage-files/upload-file)
 - [Bunny Edge Scripting SDK](https://github.com/bunnyway/edge-script-sdk)
 - [Bunny edge rule API](https://docs.bunny.net/api-reference/core/pull-zone/addupdate-edge-rule) and [CDN limits](https://docs.bunny.net/cdn/limits)

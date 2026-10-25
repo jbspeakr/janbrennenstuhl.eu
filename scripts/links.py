@@ -2,7 +2,7 @@
 """External link check for the content tree (standard library only).
 
 The release gate (scripts/check.py) validates internal links; this script covers the external
-sources the field guide and essays cite. It is run monthly by .forgejo/workflows/links.yml and by hand
+sources the field guide and essays cite. It is run monthly by .github/workflows/links.yml and by hand
 before an editorial review. Not a release gate: link rot is an editorial task, not a build failure.
 
 Exit 1 when any link fails. `--report <path>` writes a Markdown report. Local DNS filters can block
