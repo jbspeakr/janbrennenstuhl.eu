@@ -66,7 +66,7 @@ Edge rules from `edge/rules.toml` set:
 
 - Custom error page: `/404.html` with a real **404** status, not a 200 fallback.
 - Retired routes: `/redirects.json` lists every old URL (former home pagination, categories, tags, section pagination, front-matter aliases) with its new target. The synced edge rules answer each with a **301**, one rule per target; patterns include the host, so `/1/` never matches `/knowledge-base/account-security/1/`. The HTML redirect pages in the artifact remain as a fallback for clients that reach the origin. Old pagination URLs (`/2/`, `/tags/x/1/`) get only that HTML page, no edge rule: they were never linked, and the zone has 50 rules. Old `…/index.md` twins of renamed pages are not redirected.
-- Directory URLs: `/about` and `/about/index.html` **301** to `/about/`, one regex rule per directory depth up to `directoryDepth` (plus `/index.html` to `/`). Segments starting with a dot, so `/.well-known/*`, never match.
+- Directory URLs: `/about/index.html` and `/about` **301** to `/about/` at any depth (`%{Url.Directory}`), keeping a query string on the `index.html` redirect. Extensionless `/.well-known/*` files are excluded by URL.
 - Root domain, the zone's `*.b-cdn.net` hostname and `jbspeakr.cc` (with `www`) to `www.janbrennenstuhl.eu`: one managed **301** rule (`canonicalFrom` in `edge/rules.toml`), so only one edge domain is ever indexed.
 
 ### Headers and CSP
