@@ -9,7 +9,7 @@ required=$(cat .hugo-version)
 revision=$(git rev-parse HEAD)
 if [[ -n $(git status --porcelain) ]]; then revision="${revision}-dirty"; fi
 rm -rf public
-HUGO_PARAMS_SOURCE_REVISION="$revision" HUGO_INDEXNOW_KEY="${INDEXNOW_KEY:-}" "$HUGO" --minify --gc --cleanDestinationDir "$@"
+HUGO_PARAMS_SOURCE_REVISION="$revision" "$HUGO" --minify --gc --cleanDestinationDir "$@"
 python3 scripts/check.py
 python3 -m unittest discover -s tests -p 'test_*.py'
 # Name the test files: under Node 22–25 `node --test tests/` runs the directory itself and dies

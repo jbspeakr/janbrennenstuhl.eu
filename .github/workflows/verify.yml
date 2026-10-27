@@ -20,8 +20,6 @@ jobs:
       - name: Install pinned Hugo
         run: ./scripts/bootstrap.sh
       - name: Build once and run every static gate
-        env:
-          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }} # Hard to guess; Hugo writes <key>.txt into the build
         run: ./scripts/verify.sh
       - name: Verify deployment ordering without credentials
         run: python3 scripts/deploy.py --dry-run

@@ -1,6 +1,4 @@
 {{- /* Publishes a redirect page for every retired route and lists all redirects (data file plus page aliases) for the edge 301 rules. */ -}}
-{{- /* Optional public IndexNow verification file (a public token, not a secret). */ -}}
-{{- with getenv "HUGO_INDEXNOW_KEY" }}{{ if not (findRE `^[A-Za-z0-9-]{8,128}$` .) }}{{ errorf "Invalid IndexNow key" }}{{ end }}{{ $_ := (resources.FromString (printf "%s.txt" .) (printf "%s\n" .)).Publish }}{{ end -}}
 {{- $list := slice -}}
 {{- range hugo.Data.redirects.redirect -}}
   {{- $to := .to | absURL -}}

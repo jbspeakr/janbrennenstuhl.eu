@@ -6,7 +6,7 @@ Two workflows split verification from release. `.github/workflows/verify.yml` ru
 
 | Job | Runs on | Credentials | Does |
 | --- | --- | --- | --- |
-| `verify` | every push and PR | `INDEXNOW_KEY` only (baked into the build) | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact kept for 90 days |
+| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact kept for 90 days |
 | `browser` | every push and PR | none | tests that same artifact: axe matrix, keyboard, no-JS, reflow, redirects, Markdown negotiation, Lighthouse lab gate |
 | `preview` | same-repo PRs, only if `vars.PREVIEW_HOST` is set | staging zone only | builds for the preview host and uploads to the staging storage zone |
 | `publish` (publish.yml) | after `Verify` succeeds on a push to `main` | production storage password; account API key for the edge-rule sync | checks artifact checksums and revision, uploads the same bytes, then syncs the edge rules |
@@ -15,13 +15,13 @@ Third-party actions are pinned to commit SHAs. Verify serializes runs per ref; P
 
 Uploads use only the storage-zone password. The account API key is used by one step, the edge-rule sync in `publish`, because Bunny has no scoped key for edge rules (docs/DECISIONS.md). Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
-Secrets and variables: the production ones (`STORAGE_*`, `ACCOUNT_API_KEY`, `BUNNY_*`) belong to the `production` environment, which only the `publish` job uses. `INDEXNOW_KEY` and the `PREVIEW_*` values are repository-level, because `verify` and `preview` run without an environment.
+Secrets and variables: the production ones (`STORAGE_*`, `ACCOUNT_API_KEY`, `BUNNY_*`, `INDEXNOW_KEY`) belong to the `production` environment, which only the `publish` job uses. So does `INDEXNOW_KEY`. The `PREVIEW_*` values are repository-level, because `preview` runs without an environment.
 
 - `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job in publish.yml sees them.
 - `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync. Only its step in `publish` sees the key, and `edge_rules.py --apply` refuses to run outside a main-branch push.
 - `BUNNY_SYNC_EDGE_RULES` (variable): set to `true` to enable the sync (see below).
 - `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
-- `INDEXNOW_KEY` (secret, optional): IndexNow key. It is served at `/<key>.txt` but kept out of the repository and logs so it cannot be guessed. Hugo writes `<key>.txt`; after a successful upload only catalog entries whose `content_hash` changed are submitted.
+- `INDEXNOW_KEY` (production environment secret, optional): IndexNow key. It is served at `/<key>.txt` but kept out of the repository, the build and the logs so it cannot be guessed. `deploy.py` uploads `<key>.txt` after the artifact, outside the release manifest; after a successful upload only catalog entries whose `content_hash` changed are submitted.
 - `PREVIEW_HOST` (variable), `PREVIEW_STORAGE_NAME`, `PREVIEW_STORAGE_PASSWORD` (secrets): optional staging pull zone for PR previews. `deploy.py --preview` refuses to run if production variables are present. The preview is rebuilt with the preview base URL; it is a review copy, not the release artifact.
 
 ## Bunny pull zone configuration
