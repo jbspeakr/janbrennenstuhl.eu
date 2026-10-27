@@ -15,7 +15,7 @@ Third-party actions are pinned to commit SHAs. Verify serializes runs per ref; P
 
 Uploads use only the storage-zone password. The account API key is used by one step, the edge-rule sync in `publish`, because Bunny has no scoped key for edge rules (docs/DECISIONS.md). Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
-Secrets and variables:
+Secrets and variables: the production ones (`STORAGE_*`, `ACCOUNT_API_KEY`, `BUNNY_*`) belong to the `production` environment, which only the `publish` job uses. `INDEXNOW_KEY` and the `PREVIEW_*` values are repository-level, because `verify` and `preview` run without an environment.
 
 - `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job in publish.yml sees them.
 - `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync. Only its step in `publish` sees the key, and `edge_rules.py --apply` refuses to run outside a main-branch push.
