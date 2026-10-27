@@ -2,22 +2,22 @@
 
 ## Build once, verify, publish
 
-`.github/workflows/deploy.yml` has four jobs:
+Two workflows split verification from release. `.github/workflows/verify.yml` runs `verify`, `browser` and `preview` on every push and PR and holds no production credentials. `.github/workflows/publish.yml` runs `publish` only after a successful `Verify` run for a push to `main` in this repository. It is triggered by `workflow_run`, so GitHub always runs the copy on `main`: a pull request cannot change what publishes or reach the production secrets.
 
 | Job | Runs on | Credentials | Does |
 | --- | --- | --- | --- |
-| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact kept for 90 days |
+| `verify` | every push and PR | `INDEXNOW_KEY` only (baked into the build) | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact kept for 90 days |
 | `browser` | every push and PR | none | tests that same artifact: axe matrix, keyboard, no-JS, reflow, redirects, Markdown negotiation, Lighthouse lab gate |
 | `preview` | same-repo PRs, only if `vars.PREVIEW_HOST` is set | staging zone only | builds for the preview host and uploads to the staging storage zone |
-| `publish` | push to `main`, after `verify` and `browser` | production storage password; account API key for the edge-rule sync | checks artifact checksums and revision, uploads the same bytes, then syncs the edge rules |
+| `publish` (publish.yml) | after `Verify` succeeds on a push to `main` | production storage password; account API key for the edge-rule sync | checks artifact checksums and revision, uploads the same bytes, then syncs the edge rules |
 
-Third-party actions are pinned to commit SHAs. The workflow serializes runs per ref and never cancels an upload halfway. Do not start a second deployment outside this workflow.
+Third-party actions are pinned to commit SHAs. Verify serializes runs per ref; Publish serializes all releases and never cancels an upload halfway. Do not start a second deployment outside this workflow.
 
 Uploads use only the storage-zone password. The account API key is used by one step, the edge-rule sync in `publish`, because Bunny has no scoped key for edge rules (docs/DECISIONS.md). Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
 Secrets and variables:
 
-- `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job sees them.
+- `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job in publish.yml sees them.
 - `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync. Only its step in `publish` sees the key, and `edge_rules.py --apply` refuses to run outside a main-branch push.
 - `BUNNY_SYNC_EDGE_RULES` (variable): set to `true` to enable the sync (see below).
 - `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
