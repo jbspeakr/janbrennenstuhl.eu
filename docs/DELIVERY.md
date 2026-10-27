@@ -21,7 +21,7 @@ Secrets and variables:
 - `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync. Only its step in `publish` sees the key, and `edge_rules.py --apply` refuses to run outside a main-branch push.
 - `BUNNY_SYNC_EDGE_RULES` (variable): set to `true` to enable the sync (see below).
 - `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
-- `INDEXNOW_KEY` (variable, optional): public IndexNow token. Hugo writes `<key>.txt`; after a successful upload only catalog entries whose `content_hash` changed are submitted.
+- `INDEXNOW_KEY` (secret, optional): IndexNow key. It is served at `/<key>.txt` but kept out of the repository and logs so it cannot be guessed. Hugo writes `<key>.txt`; after a successful upload only catalog entries whose `content_hash` changed are submitted.
 - `PREVIEW_HOST` (variable), `PREVIEW_STORAGE_NAME`, `PREVIEW_STORAGE_PASSWORD` (secrets): optional staging pull zone for PR previews. `deploy.py --preview` refuses to run if production variables are present. The preview is rebuilt with the preview base URL; it is a review copy, not the release artifact.
 
 ## Bunny pull zone configuration

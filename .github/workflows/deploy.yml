@@ -20,7 +20,7 @@ jobs:
         run: ./scripts/bootstrap.sh
       - name: Build once and run every static gate
         env:
-          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }} # Intentionally public verification token
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }} # Hard to guess; Hugo writes <key>.txt into the build
         run: ./scripts/verify.sh
       - name: Verify deployment ordering without credentials
         run: python3 scripts/deploy.py --dry-run
@@ -112,7 +112,7 @@ jobs:
           python3 scripts/check_release.py
       - name: Publish the verified artifact
         env:
-          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           BUNNY_STORAGE_ZONE: ${{ secrets.STORAGE_NAME }}
           BUNNY_STORAGE_PASSWORD: ${{ secrets.STORAGE_PASSWORD }}
           BUNNY_STORAGE_HOST: ${{ vars.BUNNY_STORAGE_HOST }}
