@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Upload an already verified artifact to Bunny Storage. Never deletes remote files."""
 from __future__ import annotations
-import argparse,hashlib,json,mimetypes,os,re,sys,time
+import argparse,hashlib,json,mimetypes,os,re,sys,tempfile,time
 from pathlib import Path
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError,URLError
@@ -57,15 +57,21 @@ def main():
     if host!='storage.bunnycdn.com' and not re.fullmatch(r'[a-z0-9-]+\.storage\.bunnycdn\.com',host):raise SystemExit('Invalid Bunny Storage host')
     if not re.fullmatch(r'[A-Za-z0-9_-]+',zone):raise SystemExit('Invalid storage zone')
     index_key=os.environ.get('INDEXNOW_KEY','')
+    verification_key=index_key
     previous={}
     if index_key:
-        if not (root/(index_key+'.txt')).is_file():raise SystemExit('IndexNow key missing from verified artifact')
+        if not re.fullmatch(r'[A-Za-z0-9-]{8,128}',index_key):raise SystemExit('Invalid IndexNow key')
         try:
             with urlopen(Request('https://www.janbrennenstuhl.eu/catalog.json',headers={'Cache-Control':'no-cache'}),timeout=30) as response:previous=json.load(response)
         except (HTTPError,URLError,ValueError):
             print('Previous catalog unavailable; changed-URL notification will be skipped.')
             index_key=''
     for path in files:upload_file(path,root,host,zone,key)
+    if verification_key:
+        # The verification file stays out of the artifact so the key never reaches verify or PR builds.
+        with tempfile.TemporaryDirectory() as tmp:
+            keyfile=Path(tmp)/f'{verification_key}.txt';keyfile.write_text(verification_key+'\n')
+            upload_file(keyfile,Path(tmp),host,zone,key)
     if index_key:
         from indexnow import notify
         try:notify(previous,json.loads((root/'catalog.json').read_text()),index_key)
