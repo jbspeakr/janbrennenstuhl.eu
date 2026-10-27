@@ -58,3 +58,12 @@ jobs:
           FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
           FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
         run: python3 scripts/edge_rules.py --apply
+      # Last, so the edge refetches everything once the new files and rules are in place.
+      # deploy.py never deletes, so the purge is what makes the edge drop the old copies.
+      - name: Purge the pull zone
+        env:
+          BUNNY_API_KEY: ${{ secrets.ACCOUNT_API_KEY }}
+          BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
+          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
+          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+        run: python3 scripts/purge.py
