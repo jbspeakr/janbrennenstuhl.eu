@@ -10,6 +10,9 @@ maxRules = 50
 
 # Hosts that 301 to https://<host> with the same path, so only one edge domain is ever indexed:
 # the root domain, the zone's Bunny hostname and the old jbspeakr.cc domain. One rule, matched on the full URL.
+# Deepest page directory (/knowledge-base/<area>/<page>/). /a and /a/index.html 301 to /a/ up to here.
+directoryDepth = 3
+
 canonicalFrom = ["janbrennenstuhl.eu", "*.b-cdn.net", "jbspeakr.cc", "www.jbspeakr.cc"]
 
 [headers]

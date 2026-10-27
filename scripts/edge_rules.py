@@ -65,6 +65,16 @@ def build(config, redirects):
                       extra=[action(SET_RESPONSE_HEADER, k, v) for k, v in more])]
     rules.append(url_rule(prefix + "Canonical host", action(REDIRECT, f"https://{host}{{{{path}}}}", "301"),
                           [f"*://{h}/*" for h in config["canonicalFrom"]]))
+    # /about and /about/index.html 301 to /about/, one rule per directory depth because the target
+    # is rebuilt from path segments. Segments starting with a dot (.well-known) never match.
+    h = re.escape(host)
+    rules.append(url_rule(prefix + "Directory URL: /index.html", action(REDIRECT, f"https://{host}/", "301"),
+                          [f"pattern:^https?://{h}/index\\.html$"]))
+    for depth in range(1, config["directoryDepth"] + 1):
+        segments = "%{Path.0}" if depth == 1 else f"%{{Path.0-{depth - 1}}}"
+        rules.append(url_rule(f"{prefix}Directory URL: depth {depth}", action(REDIRECT, f"https://{host}/{segments}/", "301"),
+                              [f"pattern:^https?://{h}/(?:[^/.][^/]*/){{{depth - 1}}}[^/.]+(?:/index\\.html)?$"],
+                              ["*/.well-known/*"]))
     for c in config["cache"]:
         rules.append(url_rule(f"{prefix}Cache: {c['name']}", action(SET_RESPONSE_HEADER, "Cache-Control", c["browser"]),
                               c["patterns"], c.get("exclude", ()), [action(OVERRIDE_CACHE_TIME, str(c["edge"]))]))

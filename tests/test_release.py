@@ -1,4 +1,4 @@
-import importlib.util, unittest
+import importlib.util, re, unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -47,7 +47,7 @@ class Release(unittest.TestCase):
                   'csp': {'header': 'Content-Security-Policy-Report-Only', 'directives': {'default-src': "'self'"}},
                   'cache': [{'name': 'Images', 'browser': 'public, max-age=86400', 'edge': 86400,
                              'patterns': ['*.webp'], 'exclude': ['*_hu_*']}],
-                  'mime': [], 'canonicalFrom': ['example.test.invalid']}
+                  'mime': [], 'canonicalFrom': ['example.test.invalid'], 'directoryDepth': 2}
         redirects = [{'from': f'/tags/t{i}/', 'to': '/topics/a/', 'status': 301} for i in range(30)]
         redirects.append({'from': '/1/', 'to': '/', 'status': 301})
         rules = edge_rules.build(config, redirects)
@@ -56,8 +56,14 @@ class Release(unittest.TestCase):
         for r in rules:
             self.assertLessEqual(len(r['Triggers']), 5)
             self.assertTrue(all(len(t['PatternMatches']) <= 5 for t in r['Triggers']))
-        root = next(r for r in rules if r['ActionParameter1'] == 'https://example.test/')
+        root = next(r for r in rules if r['Description'] == '[repo] Redirect to /')
         self.assertEqual(root['Triggers'][0]['PatternMatches'], ['*://example.test/1/'])
+        depth2 = next(r for r in rules if r['Description'] == '[repo] Directory URL: depth 2')
+        self.assertEqual(depth2['ActionParameter1'], 'https://example.test/%{Path.0-1}/')
+        pattern = re.compile(depth2['Triggers'][0]['PatternMatches'][0].removeprefix('pattern:'))
+        self.assertTrue(pattern.match('https://example.test/a/b') and pattern.match('https://example.test/a/b/index.html'))
+        self.assertFalse(pattern.match('https://example.test/a/b/') or pattern.match('https://example.test/.well-known/traffic-advice')
+                         or pattern.match('https://example.test/a/b.css'))
         images = next(r for r in rules if r['Description'] == '[repo] Cache: Images')
         self.assertEqual((images['TriggerMatchingType'], images['Triggers'][1]['PatternMatchingType']), (1, 2))
         headers = rules[0]
