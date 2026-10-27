@@ -26,7 +26,7 @@ below "Publish" happens before everything above it is ticked.
 
 - [ ] Merge `modernize` into `main` with a merge commit (keeps both histories).
 - [ ] Production zone: delete the hand-made header, cache and redirect rules, add `ACCOUNT_API_KEY` and
-      `BUNNY_PULL_ZONE_ID`, set `BUNNY_SYNC_EDGE_RULES=true` (`docs/DELIVERY.md`). Purge once after publish.
+      `BUNNY_PULL_ZONE_ID`, set `BUNNY_SYNC_EDGE_RULES=true` (`docs/DELIVERY.md`). Publish purges the pull zone itself.
 - [ ] Watch the `publish` job; the upload order is assets, HTML and Markdown, feeds and catalogs,
       manifest.
 - [ ] `python3 scripts/smoke.py` against production after the edge TTL. By hand: compression,

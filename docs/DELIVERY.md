@@ -18,7 +18,7 @@ Uploads use only the storage-zone password. The account API key is used by one s
 Secrets and variables: the production ones (`STORAGE_*`, `ACCOUNT_API_KEY`, `BUNNY_*`, `INDEXNOW_KEY`) belong to the `production` environment, which only the `publish` job uses. So does `INDEXNOW_KEY`. The `PREVIEW_*` values are repository-level, because `preview` runs without an environment.
 
 - `STORAGE_NAME`, `STORAGE_PASSWORD` (secrets): production storage zone. Only the `publish` job in publish.yml sees them.
-- `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync. Only its step in `publish` sees the key, and `edge_rules.py --apply` refuses to run outside a main-branch push.
+- `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync and the purge. Only those two steps in `publish` see the key, and both `edge_rules.py --apply` and `purge.py` refuse to run outside a main-branch push. `deploy.py` never deletes or purges, so the last `publish` step purges the whole pull zone; without it the edge keeps serving old copies until their cache time runs out.
 - `BUNNY_SYNC_EDGE_RULES` (variable): set to `true` to enable the sync (see below).
 - `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
 - `INDEXNOW_KEY` (production environment secret, optional): IndexNow key. It is served at `/<key>.txt` but kept out of the repository, the build and the logs so it cannot be guessed. `deploy.py` uploads `<key>.txt` after the artifact, outside the release manifest; after a successful upload only catalog entries whose `content_hash` changed are submitted.
