@@ -35,6 +35,8 @@ try {
     if (summary.lcp > 1600) problems.push(`LCP ${Math.round(summary.lcp)} ms`);
     if (summary.cls > 0.02) problems.push(`CLS ${summary.cls}`);
     console.log(route, JSON.stringify(summary), problems.length ? `FAIL: ${problems.join(', ')}` : 'ok');
+    // Also as a CI annotation, which shows in the PR checks without opening the log.
+    if (process.env.GITHUB_ACTIONS) console.log(`::${problems.length ? 'error' : 'notice'} title=Lighthouse ${route}::${problems.length ? `FAIL: ${problems.join(', ')}` : 'ok'} ${JSON.stringify(summary)}`);
     if (problems.length) failed = true;
   }
   mkdirSync('test-results', { recursive: true });
