@@ -42,4 +42,13 @@ for r in redirects:
         location=error.headers.get('Location','')
         if error.code!=r['status'] or urlsplit(location).path!=r['to']:raise SystemExit(f"{r['from']}: {error.code} to {location}, expected {r['status']} to {r['to']}")
 print(f'{len(redirects)} redirects OK')
+# Directory URLs without the slash, or with index.html, 301 to the slash form; .well-known files are served as is.
+for source,target in (('/about','/about/'),('/about/index.html','/about/'),('/knowledge-base/oidc','/knowledge-base/oidc/'),('/index.html','/')):
+    try:
+        with opener.open(base+source,timeout=30) as response:raise SystemExit(f'{source}: returned {response.status}, expected 301')
+    except HTTPError as error:
+        if error.code!=301 or urlsplit(error.headers.get('Location','')).path!=target:raise SystemExit(f"{source}: {error.code} to {error.headers.get('Location')}, expected 301 to {target}")
+with opener.open(base+'/.well-known/traffic-advice',timeout=30) as response:
+    if 'application/trafficadvice+json' not in response.headers.get('Content-Type',''):raise SystemExit('/.well-known/traffic-advice: wrong MIME type')
+print('Directory URL redirects OK')
 print('Live mutable-cache, MIME, conditional retrieval, 404 and redirect checks passed.')

@@ -21,7 +21,7 @@ API = "https://api.bunny.net"
 
 # Enums from Bunny's core OpenAPI spec (EdgeRuleActionType, TriggerTypes, TriggerMatchingTypes).
 REDIRECT, OVERRIDE_CACHE_TIME, SET_RESPONSE_HEADER = 1, 3, 5
-URL, REQUEST_HEADER = 0, 1
+URL, REQUEST_HEADER, EXTENSION, QUERY_STRING = 0, 1, 3, 6
 ANY, ALL, NONE = 0, 1, 2
 # https://docs.bunny.net/cdn/limits
 MAX_TRIGGERS, MAX_PATTERNS = 5, 5
@@ -63,6 +63,19 @@ def build(config, redirects):
     (first, first_value), *more = headers.items()
     rules = [url_rule(prefix + "Security headers", action(SET_RESPONSE_HEADER, first, first_value), ["*"],
                       extra=[action(SET_RESPONSE_HEADER, k, v) for k, v in more])]
+    rules.append(url_rule(prefix + "Canonical host", action(REDIRECT, f"https://{host}{{{{path}}}}", "301"),
+                          [f"*://{h}/*" for h in config["canonicalFrom"]]))
+    # Directory URLs: /a/index.html and /a 301 to /a/ at any depth. Query strings survive the
+    # index.html redirect; /.well-known files (no extension) are never touched.
+    base, no_query = f"https://{host}%{{Url.Directory}}", trigger(["?*=*"], QUERY_STRING, NONE)
+    index_html = trigger(["*/index.html*"])
+    rules.append(rule(prefix + "Directory URL: index.html", action(REDIRECT, base, "301"), [index_html, no_query], ALL))
+    rules.append(rule(prefix + "Directory URL: index.html with query",
+                      action(REDIRECT, base + "?%{Request.QueryString}", "301"),
+                      [index_html, trigger(["?*=*"], QUERY_STRING)], ALL))
+    rules.append(rule(prefix + "Directory URL: trailing slash", action(REDIRECT, base + "%{Url.FileName}/", "301"),
+                      [trigger(["*/", *(f"*://{h}/.well-known*" for h in [host, *config["canonicalFrom"]] if "*" not in h)], matching=NONE),
+                       trigger(["{{empty}}"], EXTENSION), no_query], ALL))
     for c in config["cache"]:
         rules.append(url_rule(f"{prefix}Cache: {c['name']}", action(SET_RESPONSE_HEADER, "Cache-Control", c["browser"]),
                               c["patterns"], c.get("exclude", ()), [action(OVERRIDE_CACHE_TIME, str(c["edge"]))]))

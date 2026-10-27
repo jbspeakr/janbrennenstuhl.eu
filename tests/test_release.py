@@ -47,7 +47,7 @@ class Release(unittest.TestCase):
                   'csp': {'header': 'Content-Security-Policy-Report-Only', 'directives': {'default-src': "'self'"}},
                   'cache': [{'name': 'Images', 'browser': 'public, max-age=86400', 'edge': 86400,
                              'patterns': ['*.webp'], 'exclude': ['*_hu_*']}],
-                  'mime': []}
+                  'mime': [], 'canonicalFrom': ['example.test.invalid']}
         redirects = [{'from': f'/tags/t{i}/', 'to': '/topics/a/', 'status': 301} for i in range(30)]
         redirects.append({'from': '/1/', 'to': '/', 'status': 301})
         rules = edge_rules.build(config, redirects)
@@ -56,8 +56,12 @@ class Release(unittest.TestCase):
         for r in rules:
             self.assertLessEqual(len(r['Triggers']), 5)
             self.assertTrue(all(len(t['PatternMatches']) <= 5 for t in r['Triggers']))
-        root = next(r for r in rules if r['ActionParameter1'] == 'https://example.test/')
+        root = next(r for r in rules if r['Description'] == '[repo] Redirect to /')
         self.assertEqual(root['Triggers'][0]['PatternMatches'], ['*://example.test/1/'])
+        slash = next(r for r in rules if r['Description'] == '[repo] Directory URL: trailing slash')
+        self.assertEqual(slash['ActionParameter1'], 'https://example.test%{Url.Directory}%{Url.FileName}/')
+        self.assertEqual([t['Type'] for t in slash['Triggers']], [0, 3, 6])
+        self.assertIn('*://example.test/.well-known*', slash['Triggers'][0]['PatternMatches'])
         images = next(r for r in rules if r['Description'] == '[repo] Cache: Images')
         self.assertEqual((images['TriggerMatchingType'], images['Triggers'][1]['PatternMatchingType']), (1, 2))
         headers = rules[0]

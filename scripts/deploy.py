@@ -19,6 +19,7 @@ def upload_order(root):
 
 def mime(path):
     if path.name=='api-catalog':return 'application/linkset+json'
+    if path.name=='traffic-advice':return 'application/trafficadvice+json'
     if path.name=='feed.json':return 'application/feed+json; charset=utf-8'
     return {'.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.json':'application/json; charset=utf-8','.woff2':'font/woff2','.avif':'image/avif','.webp':'image/webp'}.get(path.suffix,mimetypes.guess_type(path.name)[0] or 'application/octet-stream')
 
