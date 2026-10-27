@@ -81,3 +81,7 @@ patterns = ["*/feed.json"]
 [[mime]]
 type = "application/linkset+json"
 patterns = ["*/.well-known/api-catalog"]
+
+[[mime]]
+type = "application/trafficadvice+json"
+patterns = ["*/.well-known/traffic-advice"]
