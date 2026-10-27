@@ -1,0 +1,58 @@
+# Releases the artifact that verify.yml built and tested. Runs only after a successful Verify run
+# for a push to main in this repository. workflow_run always uses this file from main, so a pull
+# request cannot change what publishes or reach the production secrets.
+name: Publish
+on:
+  workflow_run:
+    workflows: [Verify]
+    types: [completed]
+permissions:
+  contents: read
+  actions: read # download the artifact from the Verify run
+# Queue releases; never interrupt an ordered upload halfway through.
+concurrency:
+  group: blog-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: verified-site
+          path: releases
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - name: Extract and check release integrity
+        run: |
+          tar -xzf releases/*.tar.gz
+          python3 scripts/check_release.py
+      - name: Publish the verified artifact
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          BUNNY_STORAGE_ZONE: ${{ secrets.STORAGE_NAME }}
+          BUNNY_STORAGE_PASSWORD: ${{ secrets.STORAGE_PASSWORD }}
+          BUNNY_STORAGE_HOST: ${{ vars.BUNNY_STORAGE_HOST }}
+          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
+          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+        run: python3 scripts/deploy.py
+      # After the upload, so redirect targets and new inline-script hashes exist when the rules change.
+      # Opt-in: set the variable BUNNY_SYNC_EDGE_RULES to "true" once the hand-made rules that
+      # edge/rules.toml replaces are deleted (docs/DELIVERY.md).
+      - name: Sync Bunny edge rules (headers, CSP, caching, MIME, redirects)
+        if: vars.BUNNY_SYNC_EDGE_RULES == 'true'
+        env:
+          BUNNY_API_KEY: ${{ secrets.ACCOUNT_API_KEY }}
+          BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
+          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
+          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+        run: python3 scripts/edge_rules.py --apply
