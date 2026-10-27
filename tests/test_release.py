@@ -47,7 +47,7 @@ class Release(unittest.TestCase):
                   'csp': {'header': 'Content-Security-Policy-Report-Only', 'directives': {'default-src': "'self'"}},
                   'cache': [{'name': 'Images', 'browser': 'public, max-age=86400', 'edge': 86400,
                              'patterns': ['*.webp'], 'exclude': ['*_hu_*']}],
-                  'mime': []}
+                  'mime': [], 'canonicalFrom': ['example.test.invalid']}
         redirects = [{'from': f'/tags/t{i}/', 'to': '/topics/a/', 'status': 301} for i in range(30)]
         redirects.append({'from': '/1/', 'to': '/', 'status': 301})
         rules = edge_rules.build(config, redirects)

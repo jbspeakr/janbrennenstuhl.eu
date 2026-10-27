@@ -63,6 +63,8 @@ def build(config, redirects):
     (first, first_value), *more = headers.items()
     rules = [url_rule(prefix + "Security headers", action(SET_RESPONSE_HEADER, first, first_value), ["*"],
                       extra=[action(SET_RESPONSE_HEADER, k, v) for k, v in more])]
+    rules.append(url_rule(prefix + "Canonical host", action(REDIRECT, f"https://{host}{{{{path}}}}", "301"),
+                          [f"*://{h}/*" for h in config["canonicalFrom"]]))
     for c in config["cache"]:
         rules.append(url_rule(f"{prefix}Cache: {c['name']}", action(SET_RESPONSE_HEADER, "Cache-Control", c["browser"]),
                               c["patterns"], c.get("exclude", ()), [action(OVERRIDE_CACHE_TIME, str(c["edge"]))]))

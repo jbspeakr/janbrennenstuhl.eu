@@ -8,6 +8,10 @@ managedPrefix = "[repo] "
 # update this number when they do. The sync refuses to run past it.
 maxRules = 50
 
+# Hosts that 301 to https://<host> with the same path, so only one edge domain is ever indexed:
+# the root domain and the zone's Bunny hostname. One rule, matched on the full URL.
+canonicalFrom = ["janbrennenstuhl.eu", "*.b-cdn.net"]
+
 [headers]
 "Strict-Transport-Security" = "max-age=31536000; includeSubDomains; preload"
 "X-Content-Type-Options" = "nosniff"
