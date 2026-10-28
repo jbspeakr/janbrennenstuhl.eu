@@ -158,15 +158,15 @@
   .now-list { margin-block: 0 2.5rem; max-width: var(--measure); }
   @media (max-width: 40rem) { .now-strip .wrap { grid-template-columns: 1fr; } }
 
-  .index, .guide-teaser { margin-top: clamp(3rem, 6vw, 5rem); }
+  .recent, .topics-teaser, .guide-teaser { margin-top: clamp(3rem, 6vw, 5rem); }
   .index-head { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: 0.75rem; margin-bottom: 0.5rem; }
   .index-head h2 { font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem); letter-spacing: -0.02em; }
   .index-head p { font-size: var(--small); color: var(--ink-2); }
-  .topic-index { display: grid; gap: 0 3rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr)); }
-  .topic-group { padding-top: 1.5rem; break-inside: avoid; }
-  .topic-group h3 { font-size: var(--small); font-weight: 600; display: flex; gap: 0.6rem; align-items: baseline; padding-bottom: 0.4rem; border-bottom: 1px solid var(--rule); }
-  .topic-group h3 a { text-decoration: none; color: var(--ink); }
-  .topic-group h3 a:hover { text-decoration: underline; }
+  .topic-nav { list-style: none; padding: 0; display: grid; gap: 0 3rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+  .topic-nav li { padding-block: 1rem; border-bottom: 1px solid var(--rule); }
+  .topic-nav a { display: flex; gap: 0.6rem; align-items: baseline; text-decoration: none; color: var(--ink); font-weight: 600; }
+  .topic-nav a:hover .topic-nav-title { text-decoration: underline; text-decoration-thickness: 1px; }
+  .topic-nav p { font-size: var(--small); color: var(--ink-2); margin-top: 0.25rem; line-height: 1.5; }
   .count { font-size: var(--tiny); color: var(--ink-2); font-weight: 400; font-variant-numeric: tabular-nums; }
 
   .entries { list-style: none; padding: 0; }

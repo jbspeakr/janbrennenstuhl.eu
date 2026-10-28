@@ -1,0 +1,6 @@
+{{/* Entries per topic ID, counting every eligible page under each of its topics: the numbers the topic hubs show. */}}
+{{ $counts := dict }}
+{{ range partialCached "eligible.html" . "all" }}
+  {{ range partial "data/topics.html" . }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}
+{{ end }}
+{{ return $counts }}

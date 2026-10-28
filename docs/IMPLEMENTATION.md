@@ -14,7 +14,7 @@ Implements phases 1–4 of the modernization plan (13 October 2026) on the `mode
 
 - Dark-first OKLCH tokens with an equal light theme, Geist and Geist Mono self-hosted with metric-matched fallback, nothing under 13px. Contrast for every text pair is in `docs/DESIGN.md`.
 - The generated flow drawing for every page: composition and hue from a hash of the page's identity, no labels, inline and theme-aware; the highlighted path draws in once, static under reduced motion; carries across navigation with view transitions.
-- New home (statement, flagship, Now strip, topic-grouped index), article template (diagram header, key findings, sticky TOC with reading progress, series navigator, cite block), field-guide entry template, topic hubs, writing, Now, talks with a speaker bio, accessibility statement, 404 with search.
+- New home (statement, flagship, Now strip, recent essays, topic rows), article template (diagram header, key findings, sticky TOC with reading progress, series navigator, cite block), field-guide entry template, topic hubs, writing, Now, talks with a speaker bio, accessibility statement, 404 with search.
 - ⌘K / Ctrl+K command palette, light/dark theme toggle, speculation rules, print styles.
 - Social cards rendered by Hugo from per-topic diagram plates.
 

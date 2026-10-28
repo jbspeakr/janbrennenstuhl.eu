@@ -16,12 +16,21 @@
 </section>
 {{ end }}
 {{ with site.GetPage "/page/now" }}{{ partial "ui/now-strip.html" . }}{{ end }}
-<section class="wrap index" aria-labelledby="index-title">
+{{- $recent := where (partialCached "eligible.html" . "all") "Section" "post" }}
+{{- with site.GetPage site.Params.featured }}{{ $recent = complement (slice .) $recent }}{{ end }}
+<section class="wrap recent" aria-labelledby="recent-title">
   <header class="index-head">
-    <h2 id="index-title">Index</h2>
-    <p>Every essay, grouped by topic. <a href="/writing/">Chronological list</a> <span aria-hidden="true">·</span> <a href="/search/">Search</a> <span aria-hidden="true">·</span> <a href="/index.xml">RSS</a></p>
+    <h2 id="recent-title">Recent essays</h2>
+    <p><a href="/writing/">All writing</a> <span aria-hidden="true">·</span> <a href="/index.xml">RSS</a></p>
   </header>
-  {{ partial "ui/topic-index.html" (where (partialCached "eligible.html" . "all") "Section" "post") }}
+  <ol class="entries">{{ range first 5 $recent }}{{ partial "row.html" . }}{{ end }}</ol>
+</section>
+<section class="wrap topics-teaser" aria-labelledby="topics-title">
+  <header class="index-head">
+    <h2 id="topics-title">Topics</h2>
+    <p>Essays, field-guide entries, talks and projects by subject. <a href="/topics/">All topics</a> <span aria-hidden="true">·</span> <a href="/search/">Search</a></p>
+  </header>
+  {{ partial "ui/topic-nav.html" . }}
 </section>
 {{ with site.GetPage "/knowledge-base" }}
 <section class="wrap guide-teaser" aria-labelledby="guide-title">
