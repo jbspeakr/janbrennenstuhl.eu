@@ -84,7 +84,7 @@ The CC BY grant does not cover:
 
 - Pages marked `license: false` in their front matter: the imprint, the privacy policy, the affiliate disclaimer and the about page.
 - Credited third-party images and quotations in the writing. They keep their own rights.
-- Portraits of Jan Brennenstuhl, and the third-party logos in `static/images/` (Bunny, Coursera, Pluralsight, Yubico). Those are trademarks of their owners.
+- Portraits of Jan Brennenstuhl, and the Bunny logos in `static/images/`, which are trademarks of their owner.
 
 Bundled third-party work:
 
