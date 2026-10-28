@@ -3,4 +3,4 @@
 
 | Study | Year | Sample | Method | Finding |
 | --- | --- | --- | --- | --- |
-{{ trim .Inner "\n " }}
+{{ replaceRE `\n\s*\n` "\n" (trim .Inner "\n ") }}

@@ -11,6 +11,8 @@ const INSTRUCTIONS =
   "Read-only access to Jan Brennenstuhl's essays and field guide on application security, identity and agent identity. " +
   "Use search_site to find entries, get_entry for the full Markdown, and get_findings for quotable claims with anchor URLs. " +
   "Cite canonical URLs. Content is CC BY 4.0 unless an entry says otherwise, AI training included; attribution is the condition. Reuse policy: https://www.janbrennenstuhl.eu/agents/";
+// Every kind the search index can hold, so search_site can filter for each of them.
+export const KINDS = ["essay", "guide", "talk", "project", "glossary", "profile"];
 const ALLOWED_ORIGINS = new Set([SITE]);
 
 type Json = Record<string, unknown>;
@@ -20,12 +22,12 @@ const TOOLS = [
   {
     name: "search_site",
     title: "Search the site",
-    description: "Full-text search over essays, field-guide entries, talks and projects. Returns titles, canonical URLs and the best matching section.",
+    description: "Full-text search over essays, field-guide entries, talks, projects, the glossary and the profile page. Returns titles, canonical URLs and the best matching section.",
     inputSchema: {
       type: "object",
       properties: {
         query: { type: "string", description: "Words to search for" },
-        kind: { type: "string", enum: ["essay", "guide", "talk", "project"], description: "Optional content type" },
+        kind: { type: "string", enum: KINDS, description: "Optional content type" },
         topic: { type: "string", description: "Optional topic id, see list_topics" },
         limit: { type: "integer", minimum: 1, maximum: 20, description: "Maximum results, default 8" },
       },
