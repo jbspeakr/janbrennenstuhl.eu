@@ -39,11 +39,13 @@ header = "Content-Security-Policy-Report-Only"
 "frame-ancestors" = "'none'"
 "form-action" = "'self'"
 
-# Browser Cache-Control and edge TTL (seconds) by URL pattern. Bunny wildcards, matched against
+# Browser Cache-Control (browser: the full header; browserTtl: seconds) and edge TTL (seconds) by URL pattern. Bunny wildcards, matched against
 # the full URL. At most 25 patterns per rule, or 5 when the rule has an exclude list.
 [[cache]]
 name = "Documents"
-browser = "public, max-age=0, must-revalidate"
+# Browsers revalidate on every use (Cache-Control max-age=0) while the edge keeps the copy for `edge`.
+# browserTtl, not browser: a max-age=0 header stops Bunny from caching the page at the edge.
+browserTtl = 0
 edge = 300
 patterns = ["*/", "*.html", "*.md", "*.json", "*.xml", "*.txt", "*/.well-known/*"]
 

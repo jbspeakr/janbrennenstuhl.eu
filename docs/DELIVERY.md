@@ -40,7 +40,7 @@ The values below are in `edge/rules.toml`; change them there.
 
 | Resource | Browser `Cache-Control` | Edge TTL |
 | --- | --- | --- |
-| HTML, `index.md`, `*.json`, `*.xml`, `llms.txt`, `llms-full.txt`, `robots.txt`, `/.well-known/*`, `release-manifest.json` | `public, max-age=0, must-revalidate` | 300 s |
+| HTML, `index.md`, `*.json`, `*.xml`, `llms.txt`, `llms-full.txt`, `robots.txt`, `/.well-known/*`, `release-manifest.json` | `max-age=0` via Override Browser Cache Time (a `Set Response Header` with `max-age=0` would stop the edge caching HTML) | 300 s |
 | Fingerprinted `/css/*.css`, `/js/*.js` (hash in the file name) and processed images (`*_hu_*`) | `public, max-age=31536000, immutable` | 1 year |
 | `/fonts/*` (version in the file name) | `public, max-age=31536000, immutable` | 1 year |
 | `social.png`, favicons, `site.webmanifest`, original bundle images | `public, max-age=86400` | 1 day |
