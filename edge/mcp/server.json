@@ -1,0 +1,19 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "eu.janbrennenstuhl/site",
+  "title": "janbrennenstuhl.eu",
+  "description": "Search, read and cite Jan Brennenstuhl's essays on AppSec, identity and agent identity.",
+  "version": "1.0.0",
+  "websiteUrl": "https://www.janbrennenstuhl.eu/agents/#mcp-server",
+  "repository": {
+    "url": "https://github.com/jbspeakr/janbrennenstuhl.eu",
+    "source": "github",
+    "subfolder": "edge/mcp"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.janbrennenstuhl.eu/mcp"
+    }
+  ]
+}

@@ -91,6 +91,16 @@ class Release(unittest.TestCase):
         self.assertIn('export async function handle(', code)
         self.assertIn('BunnySDK.net.http.serve(', code)
 
+    def test_mcp_registry_entry_matches_the_server_and_the_catalog(self):
+        import json, re
+        server = json.loads((root / 'edge/mcp/server.json').read_text())
+        handler = (root / 'edge/mcp/handler.ts').read_text()
+        self.assertEqual(server['version'], re.search(r'SERVER_INFO = \{[^}]*version: "([^"]+)"', handler).group(1))
+        self.assertLessEqual(len(server['description']), 100)
+        catalog = (root / 'static/.well-known/api-catalog').read_text()
+        for remote in server['remotes']:
+            self.assertIn(f'"href": "{remote["url"]}"', catalog)
+
     def test_mcp_deploy_refuses_a_malformed_script_id(self):
         with self.assertRaises(SystemExit):
             mcp_script.deploy('code', '12/../34', 'key')
