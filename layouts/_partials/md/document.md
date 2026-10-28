@@ -23,5 +23,5 @@
 
 ---
 
-Cite as: Jan Brennenstuhl. "{{ .Title }}." {{ site.Title }}, {{ .PublishDate.Format "2 January 2006" }}. {{ .Permalink }}
+Cite as: Jan Brennenstuhl. "{{ .Title }}{{ if not (findRE `[.?!]$` .Title) }}.{{ end }}" {{ site.Title }}, {{ .PublishDate.Format "2 January 2006" }}. {{ .Permalink }}
 {{ if ne .Params.license false }}License: CC BY 4.0 ({{ site.Params.license.url }}) for the original text; credited third-party media keep their own rights.{{ else }}License: not specified.{{ end }}

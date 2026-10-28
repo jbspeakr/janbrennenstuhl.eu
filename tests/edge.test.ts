@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { handle } from "../edge/mcp/handler.ts";
+import { handle, KINDS } from "../edge/mcp/handler.ts";
 import { markdownPath, prefersMarkdown } from "../edge/negotiate-core.ts";
 
 const fixtures: Record<string, unknown> = {
@@ -103,5 +103,9 @@ test("content negotiation prefers Markdown only when asked for it", () => {
 test("the built catalog carries topics for list_topics", { skip: !safeExists("public/catalog.json") }, () => {
   const catalog = JSON.parse(readFileSync("public/catalog.json", "utf8"));
   assert.equal(catalog.topics.length, 6);
+});
+test("the search_site kind filter covers every kind in the built search index", { skip: !safeExists("public/search/index.json") }, () => {
+  const index = JSON.parse(readFileSync("public/search/index.json", "utf8")) as { kind: string }[];
+  for (const kind of new Set(index.map((e) => e.kind))) assert.ok(KINDS.includes(kind), `kind "${kind}" missing from KINDS`);
 });
 function safeExists(p: string) { try { readFileSync(p); return true; } catch { return false; } }

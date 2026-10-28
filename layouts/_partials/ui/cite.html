@@ -1,7 +1,9 @@
 {{- $date := .PublishDate -}}
 {{- $key := printf "brennenstuhl%d%s" $date.Year (replaceRE "[^a-z0-9]" "" (lower (index (split (.Title | plainify) " ") 0))) -}}
-{{- $plain := printf "Jan Brennenstuhl. “%s.” %s, %s. %s" .Title site.Title ($date.Format "2 January 2006") .Permalink -}}
-{{- $apa := printf "Brennenstuhl, J. (%s). %s. %s. %s" ($date.Format "2006, January 2") .Title site.Title .Permalink -}}
+{{- /* Close the title with a period unless it already ends in punctuation, e.g. a question. */ -}}
+{{- $titleEnd := cond (findRE `[.?!]$` .Title | len | eq 0) (print .Title ".") .Title -}}
+{{- $plain := printf "Jan Brennenstuhl. “%s” %s, %s. %s" $titleEnd site.Title ($date.Format "2 January 2006") .Permalink -}}
+{{- $apa := printf "Brennenstuhl, J. (%s). %s %s. %s" ($date.Format "2006, January 2") $titleEnd site.Title .Permalink -}}
 {{- $bib := printf "@online{%s,\n  author = {Brennenstuhl, Jan},\n  title = {%s},\n  date = {%s},\n  organization = {%s},\n  url = {%s}\n}" $key .Title ($date.Format "2006-01-02") site.Title .Permalink -}}
 {{- $state := partial "data/status.html" . -}}
 <footer class="cite" id="cite" aria-labelledby="cite-title">
