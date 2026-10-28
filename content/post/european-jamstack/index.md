@@ -18,7 +18,7 @@ tags: ["eurostack", "jamstack"]
 
 links:
   - title: "Go European: Host with Bunny CDN"
-    description: Looking for an European CDN? Join Team Bunny!
+    description: Looking for a European CDN? Join Team Bunny!
     website: https://bunny.net?ref=4pdc7xubq5
     image: /images/bunny.svg
 ---
