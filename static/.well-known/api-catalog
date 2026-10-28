@@ -8,8 +8,13 @@
         { "href": "https://www.janbrennenstuhl.eu/search/index.json", "type": "application/json", "title": "Full-text search index" },
         { "href": "https://www.janbrennenstuhl.eu/feed.json", "type": "application/feed+json", "title": "JSON Feed" },
         { "href": "https://www.janbrennenstuhl.eu/index.xml", "type": "application/rss+xml", "title": "RSS feed" },
-        { "href": "https://www.janbrennenstuhl.eu/llms.txt", "type": "text/plain", "title": "llms.txt" }
+        { "href": "https://www.janbrennenstuhl.eu/llms.txt", "type": "text/plain", "title": "llms.txt" },
+        { "href": "https://mcp.janbrennenstuhl.eu/mcp", "type": "application/json", "title": "Read-only MCP server (Streamable HTTP)" }
       ]
+    },
+    {
+      "anchor": "https://mcp.janbrennenstuhl.eu/mcp",
+      "service-doc": [{ "href": "https://www.janbrennenstuhl.eu/agents/#mcp-server", "type": "text/html" }]
     },
     {
       "anchor": "https://www.janbrennenstuhl.eu/catalog.json",

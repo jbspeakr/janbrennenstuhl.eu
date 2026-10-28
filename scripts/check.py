@@ -351,6 +351,10 @@ for r in redirects:
 for name in ("api-catalog", "tdmrep.json"):
     json.loads((PUBLIC / ".well-known" / name).read_text())
 for href in re.findall(r'"href": "([^"]+)"', (PUBLIC / ".well-known/api-catalog").read_text()):
+    # Services on their own subdomain (the MCP server) are not in the build; require HTTPS on our domain.
+    if urlsplit(href).netloc != HOST:
+        check(urlsplit(href).scheme == "https" and urlsplit(href).netloc.endswith(".janbrennenstuhl.eu"), f"api-catalog link off-site: {href}")
+        continue
     check((PUBLIC / urlsplit(href).path.lstrip("/")).exists() or target_of(href).exists(), f"api-catalog link missing: {href}")
 
 # --- Feeds -------------------------------------------------------------------------------------------

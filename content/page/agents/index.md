@@ -3,7 +3,7 @@ title: For agents
 slug: agents
 description: How software agents can find, read, quote and cite this site, and what the reuse policy is.
 date: 2026-10-13
-lastmod: 2026-10-13
+lastmod: 2026-10-28
 ---
 
 Everything on this site is written for people first, and every page is also available in a form that software can read without parsing HTML.
@@ -17,6 +17,17 @@ Everything on this site is written for people first, and every page is also avai
 - [`/findings.json`](/findings.json) lists every quotable finding with its anchor URL, the source it rests on and the review status of the page.
 - [`/feed.json`](/feed.json) (JSON Feed 1.1) and [`/index.xml`](/index.xml) (RSS) carry full content. Each topic has its own feeds, for example [`/topics/passwords/feed.json`](/topics/passwords/feed.json).
 - [`/.well-known/api-catalog`](/.well-known/api-catalog) (RFC 9727) points to all of the above.
+
+## MCP server
+
+A read-only [Model Context Protocol](https://modelcontextprotocol.io/) server runs at `https://mcp.janbrennenstuhl.eu/mcp` (Streamable HTTP, no sign-in). Add it to an MCP client as a remote server. It has four tools:
+
+- `search_site` searches essays, field-guide entries, talks and projects, optionally by type or topic.
+- `get_entry` returns the full Markdown of one entry by catalog ID or canonical URL.
+- `get_findings` lists quotable findings with their anchor URLs, sources and review status.
+- `list_topics` lists the topics with descriptions and entry counts.
+
+It serves the same public files listed above, a few minutes behind a release, and is rate-limited per client.
 
 ## Citing
 
