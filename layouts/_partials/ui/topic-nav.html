@@ -1,0 +1,7 @@
+{{- /* Context: none. One row per topic, linking to its hub; counts match the hub. */ -}}
+{{- $counts := partialCached "data/topic-counts.html" . "all" -}}
+<ul class="topic-nav">
+{{- range hugo.Data.topics.topic }}{{ $t := . }}{{ with index $counts $t.id }}
+  <li><a href="/topics/{{ $t.id }}/"><span class="topic-nav-title">{{ $t.title }}</span> <span class="count">{{ . }} entries</span></a><p>{{ $t.description }}</p></li>
+{{- end }}{{ end }}
+</ul>
