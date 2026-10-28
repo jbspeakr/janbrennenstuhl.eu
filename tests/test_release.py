@@ -64,6 +64,11 @@ class Release(unittest.TestCase):
         self.assertIn('*://example.test/.well-known*', slash['Triggers'][0]['PatternMatches'])
         images = next(r for r in rules if r['Description'] == '[repo] Cache: Images')
         self.assertEqual((images['TriggerMatchingType'], images['Triggers'][1]['PatternMatchingType']), (1, 2))
+        config['cache'].append({'name': 'Documents', 'browserTtl': 0, 'edge': 300, 'patterns': ['*/']})
+        documents = next(r for r in edge_rules.build(config, redirects) if r['Description'] == '[repo] Cache: Documents')
+        self.assertEqual((documents['ActionType'], documents['ActionParameter1']), (16, '0'))
+        self.assertEqual(documents['ExtraActions'][0]['ActionParameter1'], '300')
+        config['cache'].pop()
         headers = rules[0]
         self.assertEqual(headers['ExtraActions'][0]['ActionParameter1'], 'Content-Security-Policy-Report-Only')
         config['maxRules'] = 3

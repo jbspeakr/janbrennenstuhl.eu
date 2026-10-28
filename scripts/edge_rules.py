@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 API = "https://api.bunny.net"
 
 # Enums from Bunny's core OpenAPI spec (EdgeRuleActionType, TriggerTypes, TriggerMatchingTypes).
-REDIRECT, OVERRIDE_CACHE_TIME, SET_RESPONSE_HEADER = 1, 3, 5
+REDIRECT, OVERRIDE_CACHE_TIME, SET_RESPONSE_HEADER, OVERRIDE_BROWSER_CACHE_TIME = 1, 3, 5, 16
 URL, REQUEST_HEADER, EXTENSION, QUERY_STRING = 0, 1, 3, 6
 ANY, ALL, NONE = 0, 1, 2
 # https://docs.bunny.net/cdn/limits
@@ -76,9 +76,14 @@ def build(config, redirects):
     rules.append(rule(prefix + "Directory URL: trailing slash", action(REDIRECT, base + "%{Url.FileName}/", "301"),
                       [trigger(["*/", *(f"*://{h}/.well-known*" for h in [host, *config["canonicalFrom"]] if "*" not in h)], matching=NONE),
                        trigger(["{{empty}}"], EXTENSION), no_query], ALL))
+    # A Cache-Control set with Set Response Header also reaches the edge's own caching decision, so
+    # max-age=0 kept HTML out of the edge cache. browserTtl uses Override Browser Cache Time instead,
+    # which only changes what browsers get.
     for c in config["cache"]:
-        rules.append(url_rule(f"{prefix}Cache: {c['name']}", action(SET_RESPONSE_HEADER, "Cache-Control", c["browser"]),
-                              c["patterns"], c.get("exclude", ()), [action(OVERRIDE_CACHE_TIME, str(c["edge"]))]))
+        browser = (action(OVERRIDE_BROWSER_CACHE_TIME, str(c["browserTtl"])) if "browserTtl" in c
+                   else action(SET_RESPONSE_HEADER, "Cache-Control", c["browser"]))
+        rules.append(url_rule(f"{prefix}Cache: {c['name']}", browser, c["patterns"], c.get("exclude", ()),
+                              [action(OVERRIDE_CACHE_TIME, str(c["edge"]))]))
     for m in config["mime"]:
         rules.append(url_rule(f"{prefix}Content-Type: {m['type']}", action(SET_RESPONSE_HEADER, "Content-Type", m["type"]),
                               m["patterns"]))
