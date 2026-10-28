@@ -53,7 +53,7 @@ def main():
         if not re.fullmatch(r'[A-Za-z0-9_-]+',zone):raise SystemExit('Invalid storage zone')
         for path in files:upload_file(path,root,host,zone,key)
         print(f'Preview uploaded: {len(files)} files to staging zone {zone}.');return
-    if os.environ.get('FORGEJO_EVENT_NAME')!='push' or os.environ.get('FORGEJO_REF')!='refs/heads/main':raise SystemExit('Production upload requires a main-branch push')
+    if os.environ.get('RELEASE_EVENT')!='push' or os.environ.get('RELEASE_REF')!='refs/heads/main':raise SystemExit('Production upload requires a main-branch push')
     host=(os.environ.get('BUNNY_STORAGE_HOST') or 'storage.bunnycdn.com');zone=os.environ['BUNNY_STORAGE_ZONE'];key=os.environ['BUNNY_STORAGE_PASSWORD']
     if host!='storage.bunnycdn.com' and not re.fullmatch(r'[a-z0-9-]+\.storage\.bunnycdn\.com',host):raise SystemExit('Invalid Bunny Storage host')
     if not re.fullmatch(r'[A-Za-z0-9_-]+',zone):raise SystemExit('Invalid storage zone')

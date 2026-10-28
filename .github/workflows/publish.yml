@@ -38,14 +38,17 @@ jobs:
         run: |
           tar -xzf releases/*.tar.gz
           python3 scripts/check_release.py
+      # RELEASE_EVENT/RELEASE_REF carry the triggering run's event and branch: under workflow_run,
+      # GITHUB_EVENT_NAME is "workflow_run" and GITHUB_REF is always main. Every production script
+      # refuses to run unless they say push to main.
       - name: Publish the verified artifact
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           BUNNY_STORAGE_ZONE: ${{ secrets.STORAGE_NAME }}
           BUNNY_STORAGE_PASSWORD: ${{ secrets.STORAGE_PASSWORD }}
           BUNNY_STORAGE_HOST: ${{ vars.BUNNY_STORAGE_HOST }}
-          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
-          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+          RELEASE_EVENT: ${{ github.event.workflow_run.event }}
+          RELEASE_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
         run: python3 scripts/deploy.py
       # After the upload, so redirect targets and new inline-script hashes exist when the rules change.
       # Opt-in: set the variable BUNNY_SYNC_EDGE_RULES to "true" once the hand-made rules that
@@ -55,8 +58,8 @@ jobs:
         env:
           BUNNY_API_KEY: ${{ secrets.ACCOUNT_API_KEY }}
           BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
-          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
-          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+          RELEASE_EVENT: ${{ github.event.workflow_run.event }}
+          RELEASE_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
         run: python3 scripts/edge_rules.py --apply
       # Last, so the edge refetches everything once the new files and rules are in place.
       # deploy.py never deletes, so the purge is what makes the edge drop the old copies.
@@ -64,8 +67,8 @@ jobs:
         env:
           BUNNY_API_KEY: ${{ secrets.ACCOUNT_API_KEY }}
           BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
-          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
-          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+          RELEASE_EVENT: ${{ github.event.workflow_run.event }}
+          RELEASE_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
         run: python3 scripts/purge.py
       # Opt-in, after the purge: the MCP server reads the site's published JSON and Markdown.
       # Set the variable BUNNY_MCP_SCRIPT_ID and the secret MCP_DEPLOY_KEY (the script's own
@@ -82,6 +85,6 @@ jobs:
         env:
           BUNNY_MCP_SCRIPT_ID: ${{ vars.BUNNY_MCP_SCRIPT_ID }}
           BUNNY_MCP_DEPLOY_KEY: ${{ secrets.MCP_DEPLOY_KEY }}
-          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
-          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+          RELEASE_EVENT: ${{ github.event.workflow_run.event }}
+          RELEASE_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
         run: python3 scripts/mcp_script.py --deploy mcp-script/mcp.ts

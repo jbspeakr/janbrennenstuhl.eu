@@ -68,6 +68,6 @@ if __name__ == "__main__":
         args.out.write_text(bundle())
         print(f"Bundled the MCP server into {args.out}.")
     else:
-        if not (os.environ.get("FORGEJO_EVENT_NAME") == "push" and os.environ.get("FORGEJO_REF") == "refs/heads/main"):
+        if not (os.environ.get("RELEASE_EVENT") == "push" and os.environ.get("RELEASE_REF") == "refs/heads/main"):
             raise SystemExit("Deploying the production MCP script requires a main-branch push")
         deploy(args.deploy.read_text(), os.environ["BUNNY_MCP_SCRIPT_ID"], os.environ["BUNNY_MCP_DEPLOY_KEY"])
