@@ -67,3 +67,21 @@ jobs:
           FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
           FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
         run: python3 scripts/purge.py
+      # Opt-in, after the purge: the MCP server reads the site's published JSON and Markdown.
+      # Set the variable BUNNY_MCP_SCRIPT_ID and the secret MCP_DEPLOY_KEY (the script's own
+      # deployment key, not the account key) once the standalone script exists (docs/DELIVERY.md).
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        if: vars.BUNNY_MCP_SCRIPT_ID != ''
+        with:
+          name: mcp-script
+          path: mcp-script
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - name: Deploy the MCP edge script
+        if: vars.BUNNY_MCP_SCRIPT_ID != ''
+        env:
+          BUNNY_MCP_SCRIPT_ID: ${{ vars.BUNNY_MCP_SCRIPT_ID }}
+          BUNNY_MCP_DEPLOY_KEY: ${{ secrets.MCP_DEPLOY_KEY }}
+          FORGEJO_EVENT_NAME: ${{ github.event.workflow_run.event }}
+          FORGEJO_REF: refs/heads/${{ github.event.workflow_run.head_branch }}
+        run: python3 scripts/mcp_script.py --deploy mcp-script/mcp.ts

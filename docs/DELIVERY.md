@@ -21,6 +21,7 @@ Secrets and variables: the production ones (`STORAGE_*`, `ACCOUNT_API_KEY`, `BUN
 - `ACCOUNT_API_KEY` (secret), `BUNNY_PULL_ZONE_ID` (variable): the edge-rule sync and the purge. Only those two steps in `publish` see the key, and both `edge_rules.py --apply` and `purge.py` refuse to run outside a main-branch push. `deploy.py` never deletes or purges, so the last `publish` step purges the whole pull zone; without it the edge keeps serving old copies until their cache time runs out.
 - `BUNNY_SYNC_EDGE_RULES` (variable): set to `true` to enable the sync (see below).
 - `BUNNY_STORAGE_HOST` (variable, optional): regional storage endpoint, default `storage.bunnycdn.com`.
+- `BUNNY_MCP_SCRIPT_ID` (variable), `MCP_DEPLOY_KEY` (secret), optional: the standalone MCP edge script and its own deployment key (Script > Deployments > Settings), which can only change that script. The last `publish` step deploys the bundle the `verify` job built; it is skipped while the variable is empty, and `mcp_script.py --deploy` refuses to run outside a main-branch push.
 - `INDEXNOW_KEY` (production environment secret, optional): IndexNow key. It is served at `/<key>.txt` but kept out of the repository, the build and the logs so it cannot be guessed. `deploy.py` uploads `<key>.txt` after the artifact, outside the release manifest; after a successful upload only catalog entries whose `content_hash` changed are submitted.
 - `PREVIEW_HOST` (variable), `PREVIEW_STORAGE_NAME`, `PREVIEW_STORAGE_PASSWORD` (secrets): optional staging pull zone for PR previews. `deploy.py --preview` refuses to run if production variables are present. The preview is rebuilt with the preview base URL; it is a review copy, not the release artifact.
 
@@ -90,7 +91,16 @@ Every page has a Markdown twin at `<url>index.md`. Two ways to serve it for `Acc
 
 ### Read-only MCP server
 
-`edge/mcp/` is a standalone Bunny Edge Script serving MCP at `https://mcp.janbrennenstuhl.eu/mcp` (suggested host). It is dual-era: MCP revision 2026-07-28 (stateless, per-request `_meta`, mirrored headers validated) and the `initialize` handshake for 2025-03-26 to 2025-11-25 clients. Tools: `search_site`, `get_entry`, `get_findings`, `list_topics`. It only fetches the site's own `search/index.json`, `catalog.json`, `findings.json` and Markdown twins, caches them for 5 minutes, and never fetches a URL taken from a request. No authentication: everything it serves is public. Set a rate limit on its pull zone. After deploying, add it to `static/.well-known/api-catalog`.
+`edge/mcp/` is a standalone Bunny Edge Script serving MCP at `https://mcp.janbrennenstuhl.eu/mcp` (suggested host). It is dual-era: MCP revision 2026-07-28 (stateless, per-request `_meta`, mirrored headers validated) and the `initialize` handshake for 2025-03-26 to 2025-11-25 clients. Tools: `search_site`, `get_entry`, `get_findings`, `list_topics`. It only fetches the site's own `search/index.json`, `catalog.json`, `findings.json` and Markdown twins, caches them for 5 minutes, and never fetches a URL taken from a request. No authentication: everything it serves is public.
+
+It needs its own pull zone because it is a standalone script (it answers every request itself), and the www zone would get in its way: the directory rule 301s `/mcp` to `/mcp/`, which breaks POST clients, and the zone's caching and CSP are built for static files. The separate zone also gets its own rate limit, logs and off switch.
+
+Bunny takes one file, so `scripts/mcp_script.py --out` inlines `handler.ts` into `main.ts` (stdlib only; URL imports stay for Bunny's Deno runtime). The `verify` job uploads the bundle as the `mcp-script` artifact and `publish` deploys those bytes, so code changes go live with the next release. One-time setup:
+
+1. Edge Scripting > Add Script > Standalone, named for example `janbrennenstuhl-mcp`. Bunny creates its pull zone. Paste the output of `python3 scripts/mcp_script.py --out mcp-script/mcp.ts` as the first version.
+2. On that pull zone: add the hostname `mcp.janbrennenstuhl.eu`, a CNAME to the zone's `b-cdn.net` hostname, a free certificate, and a rate limit.
+3. Set `BUNNY_MCP_SCRIPT_ID` and `MCP_DEPLOY_KEY` in the `production` environment.
+4. Check it: `curl -sX POST https://mcp.janbrennenstuhl.eu/mcp -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18"}}'`, then add it to `static/.well-known/api-catalog` and `/agents/`.
 
 ## Dry run and live checks
 

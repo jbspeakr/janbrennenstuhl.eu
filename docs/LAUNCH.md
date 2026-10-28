@@ -40,7 +40,8 @@ below "Publish" happens before everything above it is ticked.
       head partial).
 - [ ] IndexNow accepted the submission (job log); Search Console shows the new sitemap.
 - [ ] Plausible receives page views from the production host and none from the preview host.
-- [ ] Deploy the MCP edge script if wanted and add it to `static/.well-known/api-catalog`.
+- [ ] MCP edge script, if wanted: one-time setup in docs/DELIVERY.md ("Read-only MCP server"); later
+      releases deploy it. Then add it to `static/.well-known/api-catalog`.
 
 ## First week
 

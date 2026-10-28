@@ -33,6 +33,15 @@ jobs:
           path: releases/*.tar.gz
           retention-days: 90
           if-no-files-found: error
+      - name: Bundle the MCP edge script
+        run: python3 scripts/mcp_script.py --out mcp-script/mcp.ts
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        # The single-file MCP server the publish job deploys, so it never rebuilds.
+        with:
+          name: mcp-script
+          path: mcp-script/mcp.ts
+          retention-days: 90
+          if-no-files-found: error
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         # The rules the publish job would sync, for review on the PR.
         with:
