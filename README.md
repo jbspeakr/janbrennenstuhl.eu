@@ -67,9 +67,9 @@ Search, retrieval and training are welcome under CC BY 4.0. Attribution is the c
 - [Implementation notes](docs/IMPLEMENTATION.md): what changed and what is still open
 - [`AGENTS.md`](AGENTS.md): the working guide for coding agents in this repository
 
-## Contributing
+## Corrections
 
-This is a personal publication, so the writing is not open for contributions. Corrections are welcome: open an issue or a pull request for a factual error, a broken link or an accessibility problem. Report security issues as described in [`/.well-known/security.txt`](static/.well-known/security.txt), not in a public issue.
+This is a personal publication, so the repository does not take issues or pull requests. Corrections are still welcome: for a factual error, a broken link or an accessibility problem, use the contact details in the [imprint](https://www.janbrennenstuhl.eu/imprint/), which every article links as "Send a correction". Security reports follow [`/.well-known/security.txt`](https://www.janbrennenstuhl.eu/.well-known/security.txt).
 
 ## Licenses
 
