@@ -102,6 +102,8 @@ Bunny takes one file, so `scripts/mcp_script.py --out` inlines `handler.ts` into
 3. Set `BUNNY_MCP_SCRIPT_ID` and `MCP_DEPLOY_KEY` in the `production` environment.
 4. Check it: `curl -sX POST https://mcp.janbrennenstuhl.eu/mcp -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18"}}'`, then add it to `static/.well-known/api-catalog` and `/agents/`.
 
+`edge/mcp/server.json` is the entry for the official [MCP Registry](https://registry.modelcontextprotocol.io/) under `eu.janbrennenstuhl/site`. Publishing proves control of the domain with a TXT record on the apex `janbrennenstuhl.eu` (`v=MCPv1; k=ed25519; p=…`) and a private key that stays out of the repository: `mcp-publisher login dns --domain janbrennenstuhl.eu --private-key …`, then `mcp-publisher publish` from `edge/mcp/`. Bump `version` there and in `SERVER_INFO` (`handler.ts`) together when the tools change, then publish again; a unit test keeps the two and the api-catalog URL in sync.
+
 ## Dry run and live checks
 
 ```sh
