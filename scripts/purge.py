@@ -10,7 +10,7 @@ import os, re
 from edge_rules import api
 
 if __name__ == "__main__":
-    if not (os.environ.get("FORGEJO_EVENT_NAME") == "push" and os.environ.get("FORGEJO_REF") == "refs/heads/main"):
+    if not (os.environ.get("RELEASE_EVENT") == "push" and os.environ.get("RELEASE_REF") == "refs/heads/main"):
         raise SystemExit("Purging the production pull zone requires a main-branch push")
     key, zone = os.environ["BUNNY_API_KEY"], os.environ["BUNNY_PULL_ZONE_ID"]
     if not re.fullmatch(r"\d+", zone):

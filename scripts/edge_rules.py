@@ -180,7 +180,7 @@ def main():
         json.dump({"limit": config["maxRules"], "count": len(rules), "rules": rules}, sys.stdout, indent=2)
         print(f"\n{len(rules)} of {config['maxRules']} edge rules", file=sys.stderr)
         return
-    main_push = os.environ.get("FORGEJO_EVENT_NAME") == "push" and os.environ.get("FORGEJO_REF") == "refs/heads/main"
+    main_push = os.environ.get("RELEASE_EVENT") == "push" and os.environ.get("RELEASE_REF") == "refs/heads/main"
     if config["host"] == production and not main_push:
         raise SystemExit("Edge-rule sync for the production host requires a main-branch push")
     key, zone = os.environ["BUNNY_API_KEY"], os.environ["BUNNY_PULL_ZONE_ID"]

@@ -73,7 +73,11 @@ test("unsupported modern version lists supported versions", async () => {
 
 test("legacy clients can initialize and list tools", async () => {
   const init = await handle(new Request("https://mcp.example/mcp", { method: "POST", body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "t", version: "1" } } }) }), load);
-  assert.equal((await init.json()).result.protocolVersion, "2025-06-18");
+  const initResult = (await init.json()).result;
+  assert.equal(initResult.protocolVersion, "2025-06-18");
+  // The licence policy agents read must match docs/DECISIONS.md: CC BY 4.0, training permitted.
+  assert.match(initResult.instructions, /CC BY 4\.0/);
+  assert.doesNotMatch(initResult.instructions, /reserved/i);
   const note = await handle(new Request("https://mcp.example/mcp", { method: "POST", body: JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }) }), load);
   assert.equal(note.status, 202);
   const list = await handle(new Request("https://mcp.example/mcp", { method: "POST", headers: { "MCP-Protocol-Version": "2025-06-18" }, body: JSON.stringify({ jsonrpc: "2.0", id: 2, method: "tools/list" }) }), load);

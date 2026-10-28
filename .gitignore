@@ -13,3 +13,4 @@ edge-rules.json
 __pycache__/
 node_modules/
 test-results/
+mcp-script/

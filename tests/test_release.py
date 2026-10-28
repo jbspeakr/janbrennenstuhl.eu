@@ -15,6 +15,7 @@ def module(name):
 deploy = module('deploy')
 edge_rules = module('edge_rules')
 indexnow = module('indexnow')
+mcp_script = module('mcp_script')
 
 
 class Release(unittest.TestCase):
@@ -81,6 +82,18 @@ class Release(unittest.TestCase):
                   'Triggers': [{**ours['Triggers'][0], 'Parameter1': ''}]}
         self.assertEqual(edge_rules.comparable(ours), edge_rules.comparable(echoed))
         self.assertNotEqual(edge_rules.comparable(ours), edge_rules.comparable({**echoed, 'ActionParameter2': 'c'}))
+
+    def test_mcp_bundle_is_one_file_with_only_url_imports(self):
+        code = mcp_script.bundle()
+        imports = [line for line in code.splitlines() if line.startswith('import ')]
+        self.assertTrue(imports and all('from "https://' in line for line in imports))
+        self.assertNotIn('from "./', code)
+        self.assertIn('export async function handle(', code)
+        self.assertIn('BunnySDK.net.http.serve(', code)
+
+    def test_mcp_deploy_refuses_a_malformed_script_id(self):
+        with self.assertRaises(SystemExit):
+            mcp_script.deploy('code', '12/../34', 'key')
 
 
 if __name__ == '__main__':
