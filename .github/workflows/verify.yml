@@ -7,9 +7,10 @@ permissions:
   contents: read
 # Builds and tests every push and PR. Holds no production credentials: publish.yml releases
 # the verified artifact after this workflow succeeds on a main push.
+# A new push to a PR cancels its older run; main runs are never cancelled, since each one feeds a release.
 concurrency:
   group: blog-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -36,12 +37,14 @@ jobs:
         with:
           name: verified-site
           path: releases/*.tar.gz
-          retention-days: 90
+          # 90 days on main is the rollback window (docs/DELIVERY.md); a PR's copy only feeds its browser job.
+          retention-days: ${{ github.event_name == 'push' && 90 || 5 }}
           if-no-files-found: error
       - name: Bundle the MCP edge script
         run: python3 scripts/mcp_script.py --out mcp-script/mcp.ts
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        # The single-file MCP server the publish job deploys, so it never rebuilds.
+        # The single-file MCP server the publish job deploys, so it never rebuilds. PRs only check that it bundles.
+        if: github.event_name == 'push'
         with:
           name: mcp-script
           path: mcp-script/mcp.ts
@@ -67,6 +70,13 @@ jobs:
           path: releases
       - name: Extract verified artifact
         run: tar -xzf releases/*.tar.gz
+      - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        # npm downloads and Playwright's Chromium, keyed on the exact pins in package-lock.json.
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/ms-playwright
+          key: browser-qa-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install browser QA dependencies
         run: |
           npm ci --ignore-scripts

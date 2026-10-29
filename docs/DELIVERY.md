@@ -6,12 +6,12 @@ Two workflows split verification from release. `.github/workflows/verify.yml` ru
 
 | Job | Runs on | Credentials | Does |
 | --- | --- | --- | --- |
-| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact kept for 90 days |
+| `verify` | every push and PR | none | `bootstrap.sh` (Hugo only), `verify.sh` (build + `check.py` + unit tests), deploy dry run, edge-rule dry run (artifact `edge-rules`), `release.py` packages a checksummed artifact, kept for 90 days from `main` and 5 days from a PR; the MCP bundle is uploaded only from `main` |
 | `browser` | every push and PR | none | tests that same artifact: axe matrix, keyboard, no-JS, reflow, redirects, Markdown negotiation, Lighthouse lab gate |
 | `preview` | same-repo PRs, only if `vars.PREVIEW_HOST` is set | staging zone only | builds for the preview host and uploads to the staging storage zone |
 | `publish` (publish.yml) | after `Verify` succeeds on a push to `main` | production storage password; account API key for the edge-rule sync | checks artifact checksums and revision, uploads the same bytes, then syncs the edge rules |
 
-Third-party actions are pinned to commit SHAs. Verify serializes runs per ref; Publish serializes all releases and never cancels an upload halfway. Do not start a second deployment outside this workflow.
+Third-party actions are pinned to commit SHAs. Verify serializes runs per ref and cancels a PR's older run when it gets a new push (never a `main` run); Publish serializes all releases and never cancels an upload halfway. Do not start a second deployment outside this workflow.
 
 Uploads use only the storage-zone password. The account API key is used by one step, the edge-rule sync in `publish`, because Bunny has no scoped key for edge rules (docs/DECISIONS.md). Assets upload before HTML and Markdown; feeds and catalogs follow; the release manifest is last. No remote file is ever deleted, so prior fingerprinted assets stay available. This is an ordered upload, **not an atomic switch**: for a short time HTML can span two versions.
 
