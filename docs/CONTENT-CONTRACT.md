@@ -28,7 +28,7 @@ Optional:
 | `lastmod` | A meaningful content change. Not a rebuild, not a metadata tweak. |
 | `reviewed` | Date of an actual editorial review of the advice after publication. Never set it without a review. Essays, talks and projects count as reviewed on publication (`review_basis: publication`, dated to the publish date); a later `reviewed` replaces that (`review_basis: editorial`). Field-guide entries stay `not-reviewed` until one is set. |
 | `status` | `archived` or `superseded` (with `supersededBy`); default `published`. |
-| `image`, `imageAlt` | Shown only when informative (`imageAlt` set and not `imageDecorative`). Every article gets the generated diagram anyway. `image` is also the social card (`og:image`), shown or not; without it the card is generated from the topic plate and title. |
+| `image`, `imageAlt` | Shown only when informative (`imageAlt` set and not `imageDecorative`). Every article gets the generated diagram anyway. |
 | `scripts` | Interactive explainers to load, e.g. `[jwt]` for `assets/js/explainers/jwt.js`. |
 | `license: false` | No CC BY grant for this page. |
 

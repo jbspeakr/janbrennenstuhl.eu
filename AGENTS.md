@@ -55,4 +55,4 @@ Use the archetypes; never hand-copy front matter from another page.
 - Talk: `hugo new content talks/<slug>`
 - Project: `hugo new content projects/<slug>`
 
-Then fill in the fields marked in the file, replace `CHANGE-ME` finding IDs with permanent unique IDs, remove `draft: true`, and run `./scripts/verify.sh`. See docs/CONTENT-CONTRACT.md for the rules.
+Then fill in the fields marked in the file, replace `CHANGE-ME` finding IDs with permanent unique IDs, remove `draft: true`, and run `./scripts/verify.sh`. To give the new page its own social-card drawing, serve the build (`python3 scripts/serve.py`) and run `node scripts/card-plates.cjs`; without it the card falls back to the topic drawing. See docs/CONTENT-CONTRACT.md for the rules.

@@ -1,14 +1,10 @@
-{{- /* 1200×630 social card: the page's own `image` when it has one, else the topic's diagram plate and the title, rendered by Hugo at build time. */ -}}
+{{- /* 1200×630 social card from the page's own diagram plate (or its topic's) and the title, rendered by Hugo at build time. */ -}}
 {{- $card := "" -}}
 {{- $eligible := in (partial "eligible.html" .) . -}}
-{{- $own := "" }}{{ with .Params.image }}{{ $own = $.Resources.GetMatch . }}{{ end -}}
-{{- if and $eligible $own -}}
-  {{- $card = $own.Fill "1200x630 Center jpg q82" | resources.Copy (printf "%ssocial.jpg" (strings.TrimPrefix "/" .RelPermalink)) -}}
-{{- else -}}
 {{- $topic := "home" -}}
 {{- if .Params.topic }}{{ $topic = .Params.topic }}{{ else if $eligible }}{{ $topic = index (partial "data/topics.html" .) 0 | default "home" }}{{ end -}}
 {{- if or .IsHome $eligible .Params.topic -}}
-  {{- $base := resources.Get (printf "cards/%s.png" $topic) | default (resources.Get "cards/home.png") -}}
+  {{- $base := resources.Get (printf "cards/pages/%s.png" (partial "data/id.html" .)) | default (resources.Get (printf "cards/%s.png" $topic)) | default (resources.Get "cards/home.png") -}}
   {{- $font := resources.Get "fonts/Geist-Bold-card.ttf" -}}
   {{- $mono := resources.Get "fonts/GeistMono-Medium-card.ttf" -}}
   {{- $title := .Title | default site.Params.statement -}}
@@ -22,6 +18,5 @@
   -}}
   {{- $target := printf "%ssocial.png" (strings.TrimPrefix "/" .RelPermalink) -}}
   {{- $card = $base | images.Filter $filters | resources.Copy $target -}}
-{{- end -}}
 {{- end -}}
 {{- return $card -}}
