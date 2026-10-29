@@ -1,6 +1,6 @@
 # Working on janbrennenstuhl.eu
 
-A static publication for people and agents. **Hugo extended is the only build dependency** (version in `.hugo-version`). Release scripts and checks use the Python 3.11+ standard library. Node is only for browser QA, Lighthouse and edge-script tests.
+A static publication for people and agents. **Hugo extended is the only build dependency** (version in `.hugo-version`), except for the social cards: CI draws each article's card plate with Playwright's Chromium first (`scripts/card-plates.sh`); without them a card falls back to its topic plate. Release scripts and checks use the Python 3.11+ standard library. Node is otherwise only for browser QA, Lighthouse and edge-script tests.
 
 ## Commands
 

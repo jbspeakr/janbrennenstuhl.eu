@@ -15,7 +15,7 @@ The site is a static publication for two audiences: people who read it in a brow
 
 ## Quick start
 
-Hugo extended at the version in [`.hugo-version`](.hugo-version) is the only build dependency. The release scripts and checks use the Python 3.11+ standard library.
+Hugo extended at the version in [`.hugo-version`](.hugo-version) is the only build dependency, except for the social cards: CI draws each article's card plate with Chromium first (`scripts/card-plates.sh`), and local builds fall back to the topic plate. The release scripts and checks use the Python 3.11+ standard library.
 
 ```sh
 ./scripts/bootstrap.sh     # install or check the pinned Hugo

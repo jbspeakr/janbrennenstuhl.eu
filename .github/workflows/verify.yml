@@ -19,6 +19,11 @@ jobs:
           persist-credentials: false
       - name: Install pinned Hugo
         run: ./scripts/bootstrap.sh
+      - name: Draw each article's social-card plate as a build input (Chromium, not committed)
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+          ./scripts/card-plates.sh
       - name: Build once and run every static gate
         run: ./scripts/verify.sh
       - name: Verify deployment ordering without credentials
@@ -90,6 +95,11 @@ jobs:
           persist-credentials: false
       - name: Install pinned Hugo
         run: ./scripts/bootstrap.sh
+      - name: Draw each article's social-card plate as a build input
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+          ./scripts/card-plates.sh
       - name: Build for the preview host
         run: |
           HUGO=hugo; [ -x .tools/hugo ] && HUGO=.tools/hugo

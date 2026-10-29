@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import gzip
 import json
+import os
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -278,6 +279,10 @@ catalog = json.loads((PUBLIC / "catalog.json").read_text())
 items = catalog["items"]
 check(catalog.get("schema_version", "").startswith("1."), "Catalog schema version")
 check(len({i["id"] for i in items}) == len(items), "Duplicate catalog IDs")
+if os.environ.get("CI"):  # CI draws every article's card plate first (scripts/card-plates.sh); locally they fall back to the topic plate.
+    for item in items:
+        if item["kind"] in ("essay", "guide", "talk", "project"):
+            check((ROOT / f"assets/cards/pages/{item['id']}.png").exists(), f"No social-card plate for {item['id']}")
 required = ("id", "title", "description", "canonical_url", "markdown_url", "kind", "topics", "published", "modified", "review_status", "status", "license", "content_hash")
 for item in items:
     for key in required:
