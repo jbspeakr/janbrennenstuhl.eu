@@ -3,6 +3,7 @@
 [![Verify](https://github.com/jbspeakr/janbrennenstuhl.eu/actions/workflows/verify.yml/badge.svg)](https://github.com/jbspeakr/janbrennenstuhl.eu/actions/workflows/verify.yml)
 [![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE-CONTENT)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
+[![capabilities.txt](https://capabilitiestxt.org/api/badge?domain=www.janbrennenstuhl.eu)](https://capabilitiestxt.org/check/www.janbrennenstuhl.eu)
 
 The source of **[janbrennenstuhl.eu](https://www.janbrennenstuhl.eu)**: essays, a field guide and research notes on application security, identity, passwords, tokens and agent identity, by Jan Brennenstuhl.
 
