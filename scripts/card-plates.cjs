@@ -1,5 +1,6 @@
-/* Renders the social-card base plates from the built site: one per topic hub (assets/cards/<topic>.png)
-   and one per article from its own drawing (assets/cards/pages/<id>.png).
+/* Renders the social-card base plates from the built site: one per topic hub (assets/cards/<topic>.png,
+   committed) and one per article from its own drawing (assets/cards/pages/<id>.png, drawn in CI by
+   scripts/card-plates.sh and not committed). PLATES=pages draws only the article plates.
    Run after a build while `python3 scripts/serve.py` is serving on PORT (default 8000).
    Hugo writes each page's title onto these plates at build time (layouts/_partials/social-card.html). */
 const { chromium } = require('playwright');
@@ -17,7 +18,7 @@ const kinds = ['essay', 'guide', 'talk', 'project'];
   const css = fs.readdirSync(path.join(root, 'public/css')).find(f => f.endsWith('.css'));
   const catalog = JSON.parse(fs.readFileSync(path.join(root, 'public/catalog.json'), 'utf8'));
   const plates = [
-    ...[...topics, 'home'].map(topic => ({ url: topic === 'home' ? '/' : `/topics/${topic}/`, selector: topic === 'home' ? '.flagship-art svg.diagram' : '.hub-header svg.diagram', out: `assets/cards/${topic}.png` })),
+    ...(process.env.PLATES === 'pages' ? [] : [...topics, 'home'].map(topic => ({ url: topic === 'home' ? '/' : `/topics/${topic}/`, selector: topic === 'home' ? '.flagship-art svg.diagram' : '.hub-header svg.diagram', out: `assets/cards/${topic}.png` }))),
     ...catalog.items.filter(i => kinds.includes(i.kind)).map(i => ({ url: new URL(i.canonical_url).pathname, selector: '.article-art svg.diagram', out: `assets/cards/pages/${i.id}.png` })),
   ];
   fs.mkdirSync(path.join(root, 'assets/cards/pages'), { recursive: true });

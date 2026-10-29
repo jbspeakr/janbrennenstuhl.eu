@@ -1,6 +1,6 @@
 # Content contract
 
-Hugo is the only build tool. Every published representation (HTML, Markdown twin, feeds, catalog, findings, search index, `llms.txt`, `llms-full.txt`, social card) is generated from the same source in one build.
+Hugo is the only build tool, apart from the per-article social-card plates that CI draws with Chromium just before the build (`scripts/card-plates.sh`). Every published representation (HTML, Markdown twin, feeds, catalog, findings, search index, `llms.txt`, `llms-full.txt`, social card) is generated from the same source in one build.
 
 ## What an author writes
 

@@ -1,6 +1,6 @@
 # Working on janbrennenstuhl.eu
 
-A static publication for people and agents. **Hugo extended is the only build dependency** (version in `.hugo-version`). Release scripts and checks use the Python 3.11+ standard library. Node is only for browser QA, Lighthouse and edge-script tests.
+A static publication for people and agents. **Hugo extended is the only build dependency** (version in `.hugo-version`), except for the social cards: CI draws each article's card plate with Playwright's Chromium first (`scripts/card-plates.sh`); without them a card falls back to its topic plate. Release scripts and checks use the Python 3.11+ standard library. Node is otherwise only for browser QA, Lighthouse and edge-script tests.
 
 ## Commands
 
@@ -55,4 +55,4 @@ Use the archetypes; never hand-copy front matter from another page.
 - Talk: `hugo new content talks/<slug>`
 - Project: `hugo new content projects/<slug>`
 
-Then fill in the fields marked in the file, replace `CHANGE-ME` finding IDs with permanent unique IDs, remove `draft: true`, and run `./scripts/verify.sh`. To give the new page its own social-card drawing, serve the build (`python3 scripts/serve.py`) and run `node scripts/card-plates.cjs`; without it the card falls back to the topic drawing. See docs/CONTENT-CONTRACT.md for the rules.
+Then fill in the fields marked in the file, replace `CHANGE-ME` finding IDs with permanent unique IDs, remove `draft: true`, and run `./scripts/verify.sh`. See docs/CONTENT-CONTRACT.md for the rules.
