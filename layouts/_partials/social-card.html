@@ -1,6 +1,10 @@
-{{- /* 1200×630 social card from the topic's diagram plate and the title, rendered by Hugo at build time. */ -}}
+{{- /* 1200×630 social card: the page's own `image` when it has one, else the topic's diagram plate and the title, rendered by Hugo at build time. */ -}}
 {{- $card := "" -}}
 {{- $eligible := in (partial "eligible.html" .) . -}}
+{{- $own := "" }}{{ with .Params.image }}{{ $own = $.Resources.GetMatch . }}{{ end -}}
+{{- if and $eligible $own -}}
+  {{- $card = $own.Fill "1200x630 Center jpg q82" | resources.Copy (printf "%ssocial.jpg" (strings.TrimPrefix "/" .RelPermalink)) -}}
+{{- else -}}
 {{- $topic := "home" -}}
 {{- if .Params.topic }}{{ $topic = .Params.topic }}{{ else if $eligible }}{{ $topic = index (partial "data/topics.html" .) 0 | default "home" }}{{ end -}}
 {{- if or .IsHome $eligible .Params.topic -}}
@@ -18,5 +22,6 @@
   -}}
   {{- $target := printf "%ssocial.png" (strings.TrimPrefix "/" .RelPermalink) -}}
   {{- $card = $base | images.Filter $filters | resources.Copy $target -}}
+{{- end -}}
 {{- end -}}
 {{- return $card -}}

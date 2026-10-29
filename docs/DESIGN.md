@@ -65,7 +65,7 @@ The header has one setting: a light/dark toggle. It follows the system until use
 
 So no two pages share a composition, and pages in the same topic no longer look alike. The drawing is always decorative (`aria-hidden`); explanatory figures use `figure-diagram` with a text alternative. Colours come from the tokens and `--h`, so the same SVG works in both themes. The highlighted path draws in once on load; under `prefers-reduced-motion` everything is static. The same `view-transition-name` on the home flagship and its article lets the drawing carry across the navigation (`@view-transition { navigation: auto; }`, CSS only). Article and flagship drawings sit inside the content width as a rounded plate, 4:1 on wide screens and 5:2 on narrow ones.
 
-Social cards reuse it: `assets/cards/<topic>.png` are the topic drawings rendered once at 1200×630 in the dark theme; Hugo's `images.Text` writes the title (Geist Bold) and the topic label (Geist Mono) at build time. To regenerate the plates after changing the drawing or the palette: build, serve on port 8000, then run `node scripts/card-plates.cjs`.
+Social cards use a page's own `image` (cropped to 1200×630 JPEG) when it has one. Pages without one reuse the drawing: `assets/cards/<topic>.png` are the topic drawings rendered once at 1200×630 in the dark theme; Hugo's `images.Text` writes the title (Geist Bold) and the topic label (Geist Mono) at build time. To regenerate the plates after changing the drawing or the palette: build, serve on port 8000, then run `node scripts/card-plates.cjs`.
 
 ## Layout
 
