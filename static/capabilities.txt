@@ -1,0 +1,25 @@
+# capabilities.txt
+
+> Brennenstuhl on Security (www.janbrennenstuhl.eu): essays, a field guide and research notes on application security, identity and agent identity. Every capability is read-only and public: no sign-in, no approval, nothing is changed.
+> Structured form: https://www.janbrennenstuhl.eu/.well-known/capabilities.json
+> Invocation: MCP tools on https://mcp.janbrennenstuhl.eu/mcp (Streamable HTTP, no authentication); HTTP capabilities are plain GET requests on https://www.janbrennenstuhl.eu.
+> Reading list: https://www.janbrennenstuhl.eu/llms.txt
+> Reuse policy: https://www.janbrennenstuhl.eu/agents/ (CC BY 4.0 unless an entry says otherwise; attribution is the condition)
+
+## MCP
+
+### Read-only MCP server (site.mcp)
+
+- site.mcp.search_site (v1.0.0) — Full-text search over essays, field-guide entries, talks, projects, the glossary and the profile page, optionally by kind or topic. Returns titles, canonical URLs and the best matching section.
+- site.mcp.get_entry (v1.0.0) — Full Markdown of one entry with front matter (dates, review status, license), by catalog id such as jb-jwks or canonical URL.
+- site.mcp.get_findings (v1.0.0) — Quotable findings with their anchor URL, source and review status, filtered by entry id or words.
+- site.mcp.list_topics (v1.0.0) — The site's six topics with descriptions, URLs and entry counts.
+
+## HTTP
+
+### Static files (site.http)
+
+- site.http.markdown_twin — Markdown version of any page: GET its URL plus index.md, or the page URL with Accept: text/markdown.
+- site.http.catalog — GET /catalog.json: ids, canonical URLs, publication, modification and review dates, topics, license and content hash for every entry.
+- site.http.findings — GET /findings.json: every quotable finding with its anchor URL, source and review status.
+- site.http.search_index — GET /search/index.json: the full-text index the MCP search runs on, for searching client-side.

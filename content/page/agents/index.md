@@ -3,7 +3,7 @@ title: For agents
 slug: agents
 description: How software agents can find, read, quote and cite this site, and what the reuse policy is.
 date: 2026-10-13
-lastmod: 2026-10-28
+lastmod: 2026-10-29
 ---
 
 Everything on this site is written for people first, and every page is also available in a form that software can read without parsing HTML.
@@ -16,6 +16,7 @@ Everything on this site is written for people first, and every page is also avai
 - [`/catalog.json`](/catalog.json) holds IDs, canonical URLs, publication, modification and review dates, topics, license and a content hash for each entry.
 - [`/findings.json`](/findings.json) lists every quotable finding with its anchor URL, the source it rests on and the review status of the page.
 - [`/feed.json`](/feed.json) (JSON Feed 1.1) and [`/index.xml`](/index.xml) (RSS) carry full content. Each topic has its own feeds, for example [`/topics/passwords/feed.json`](/topics/passwords/feed.json).
+- [`/capabilities.txt`](/capabilities.txt) ([capabilities.txt](https://www.capabilitiestxt.org/)) lists what an agent can do here, the MCP tools below and the files above, each with a stable ID. [`/.well-known/capabilities.json`](/.well-known/capabilities.json) is the same list as JSON, with how to invoke each one.
 - [`/.well-known/api-catalog`](/.well-known/api-catalog) (RFC 9727) points to all of the above.
 
 ## MCP server

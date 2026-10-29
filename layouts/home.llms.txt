@@ -12,6 +12,7 @@ Jan Brennenstuhl is a principal engineer in Berlin working on application securi
 - [JSON Feed]({{ "feed.json" | absURL }}) and [RSS]({{ "index.xml" | absURL }}): full-content updates. Each topic has its own feeds.
 - [Glossary]({{ "glossary/" | absURL }}): definitions of OAuth, OIDC, JOSE and agent-identity terms, with anchors.
 - Content negotiation: request any page with `Accept: text/markdown` to get its Markdown twin.
+- [capabilities.txt]({{ "capabilities.txt" | absURL }}): what an agent can do here, including the read-only MCP server at https://mcp.janbrennenstuhl.eu/mcp.
 
 ## Topics
 {{ range hugo.Data.topics.topic }}

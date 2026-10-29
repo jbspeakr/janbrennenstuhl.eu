@@ -101,6 +101,21 @@ class Release(unittest.TestCase):
         for remote in server['remotes']:
             self.assertIn(f'"href": "{remote["url"]}"', catalog)
 
+    def test_capabilities_list_every_mcp_tool_at_the_server_version(self):
+        import json, re
+        handler = (root / 'edge/mcp/handler.ts').read_text()
+        version = re.search(r'SERVER_INFO = \{[^}]*version: "([^"]+)"', handler).group(1)
+        tools = re.findall(r'^    name: "([a-z_]+)",', handler, re.M)
+        self.assertTrue(tools)
+        listed = (root / 'static/capabilities.txt').read_text()
+        structured = json.loads((root / 'static/.well-known/capabilities.json').read_text())['capabilities']
+        mcp = {c['invocation']['tool']: c for c in structured if c['invocation']['type'] == 'mcp'}
+        self.assertEqual(set(mcp), set(tools))
+        for tool in tools:
+            self.assertIn(f'- site.mcp.{tool} (v{version}) — ', listed)
+            self.assertEqual((mcp[tool]['id'], mcp[tool]['version']), (f'site.mcp.{tool}', version))
+            self.assertEqual(mcp[tool]['invocation']['endpoint'], json.loads((root / 'edge/mcp/server.json').read_text())['remotes'][0]['url'])
+
     def test_mcp_deploy_refuses_a_malformed_script_id(self):
         with self.assertRaises(SystemExit):
             mcp_script.deploy('code', '12/../34', 'key')

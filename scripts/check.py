@@ -348,7 +348,7 @@ for r in redirects:
     check(source in pages and is_redirect(pages[source]), f"Redirect page missing for {r['from']}")
     check(target_of(r["to"]).exists(), f"Redirect target missing {r['from']} -> {r['to']}")
 
-for name in ("api-catalog", "tdmrep.json"):
+for name in ("api-catalog", "tdmrep.json", "capabilities.json"):
     json.loads((PUBLIC / ".well-known" / name).read_text())
 for href in re.findall(r'"href": "([^"]+)"', (PUBLIC / ".well-known/api-catalog").read_text()):
     # Services on their own subdomain (the MCP server) are not in the build; require HTTPS on our domain.
@@ -356,6 +356,15 @@ for href in re.findall(r'"href": "([^"]+)"', (PUBLIC / ".well-known/api-catalog"
         check(urlsplit(href).scheme == "https" and urlsplit(href).netloc.endswith(".janbrennenstuhl.eu"), f"api-catalog link off-site: {href}")
         continue
     check((PUBLIC / urlsplit(href).path.lstrip("/")).exists() or target_of(href).exists(), f"api-catalog link missing: {href}")
+
+# capabilities.txt and its structured form list the same capabilities; site URLs in both resolve.
+capabilities_txt = (PUBLIC / "capabilities.txt").read_text()
+check(capabilities_txt.startswith("# capabilities.txt\n"), "capabilities.txt must start with '# capabilities.txt'")
+listed = {m[0]: m[1] for m in re.findall(r"^- ([a-z0-9_.]+)(?: \(v([^)]+)\))? — ", capabilities_txt, re.M)}
+structured = {c["id"]: c.get("version", "") for c in json.loads((PUBLIC / ".well-known/capabilities.json").read_text())["capabilities"]}
+check(bool(listed) and listed == structured, "capabilities.txt and capabilities.json list different ids or versions")
+for url in re.findall(r"https://www\.janbrennenstuhl\.eu/[^\s)\"{]*", capabilities_txt + (PUBLIC / ".well-known/capabilities.json").read_text()):
+    check((PUBLIC / urlsplit(url).path.lstrip("/")).exists() or target_of(url).exists(), f"capabilities link missing: {url}")
 
 # --- Feeds -------------------------------------------------------------------------------------------
 for path in PUBLIC.rglob("*.xml"):
