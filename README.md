@@ -53,6 +53,7 @@ npm run test:edge          # MCP server and Markdown negotiation
 Search, retrieval and training are welcome under CC BY 4.0. Attribution is the condition. The policy is at [`/agents/`](https://www.janbrennenstuhl.eu/agents/).
 
 - [`/llms.txt`](https://www.janbrennenstuhl.eu/llms.txt) and [`/llms-full.txt`](https://www.janbrennenstuhl.eu/llms-full.txt)
+- [`/capabilities.txt`](https://www.janbrennenstuhl.eu/capabilities.txt) and [`/.well-known/capabilities.json`](https://www.janbrennenstuhl.eu/.well-known/capabilities.json)
 - A Markdown twin of every page at `<url>index.md`, or with `Accept: text/markdown`
 - [`/catalog.json`](https://www.janbrennenstuhl.eu/catalog.json), [`/findings.json`](https://www.janbrennenstuhl.eu/findings.json) and [`/feed.json`](https://www.janbrennenstuhl.eu/feed.json)
 - [`/.well-known/api-catalog`](https://www.janbrennenstuhl.eu/.well-known/api-catalog) (RFC 9727)

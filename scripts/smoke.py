@@ -5,7 +5,7 @@ from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler,Request,build_opener,urlopen
 from urllib.error import HTTPError
 parser=argparse.ArgumentParser();parser.add_argument('--base',default='https://www.janbrennenstuhl.eu');args=parser.parse_args();base=args.base.rstrip('/')
-paths=['/','/agentic-identity-broker/','/agentic-identity-broker/index.md','/catalog.json','/findings.json','/feed.json','/search/index.json','/index.xml','/sitemap.xml','/llms.txt','/llms-full.txt']
+paths=['/','/agentic-identity-broker/','/agentic-identity-broker/index.md','/catalog.json','/findings.json','/feed.json','/search/index.json','/index.xml','/sitemap.xml','/llms.txt','/llms-full.txt','/capabilities.txt','/.well-known/capabilities.json']
 for path in paths:
     with urlopen(Request(base+path,headers={'Cache-Control':'no-cache','Accept-Encoding':'identity'}),timeout=30) as response:
         body=response.read();headers=response.headers

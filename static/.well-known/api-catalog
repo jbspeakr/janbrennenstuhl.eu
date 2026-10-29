@@ -9,6 +9,8 @@
         { "href": "https://www.janbrennenstuhl.eu/feed.json", "type": "application/feed+json", "title": "JSON Feed" },
         { "href": "https://www.janbrennenstuhl.eu/index.xml", "type": "application/rss+xml", "title": "RSS feed" },
         { "href": "https://www.janbrennenstuhl.eu/llms.txt", "type": "text/plain", "title": "llms.txt" },
+        { "href": "https://www.janbrennenstuhl.eu/capabilities.txt", "type": "text/plain", "title": "capabilities.txt" },
+        { "href": "https://www.janbrennenstuhl.eu/.well-known/capabilities.json", "type": "application/json", "title": "capabilities.txt (structured form)" },
         { "href": "https://mcp.janbrennenstuhl.eu/mcp", "type": "application/json", "title": "Read-only MCP server (Streamable HTTP)" }
       ]
     },
