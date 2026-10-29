@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
       - name: Install pinned Hugo
         run: ./scripts/bootstrap.sh
-      - name: Build input: draw each article's social-card plate (Chromium, not committed)
+      - name: Draw each article's social-card plate as a build input (Chromium, not committed)
         run: |
           npm ci --ignore-scripts
           npx playwright install --with-deps chromium
@@ -95,7 +95,7 @@ jobs:
           persist-credentials: false
       - name: Install pinned Hugo
         run: ./scripts/bootstrap.sh
-      - name: Build input: draw each article's social-card plate
+      - name: Draw each article's social-card plate as a build input
         run: |
           npm ci --ignore-scripts
           npx playwright install --with-deps chromium
