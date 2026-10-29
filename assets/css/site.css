@@ -348,7 +348,17 @@
   .guide-nav p { margin-top: 0.75rem; font-size: var(--small); }
   .related { margin-top: 4.5rem; padding-block: 2rem 2.5rem; background: var(--ground-2); border-block: 1px solid var(--rule); max-width: none; padding-inline: max(var(--gutter), calc((100% - 78rem) / 2 + var(--gutter))); }
   .related h2, .hub-group h2, .year h2 { font-size: var(--small); font-weight: 600; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule-strong); font-variant-numeric: tabular-nums; }
-  .links-box ul { padding-left: 1.2em; font-size: var(--small); }
+  .links-box ul { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
+  .link-card { position: relative; display: flex; gap: 1rem; align-items: center; padding: 1rem 1.25rem; background: var(--ground-2); border: 1px solid var(--rule); border-radius: var(--radius); transition: border-color 0.15s; }
+  .link-card:hover { border-color: var(--rule-strong); }
+  .link-card img { flex: none; width: 2.5rem; height: 2.5rem; }
+  .link-card a { font-weight: 600; color: var(--ink); text-decoration: none; }
+  .link-card a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+  .link-card:hover a { color: var(--signal); }
+  .link-card:has(a:focus-visible) { outline: var(--focus); outline-offset: 3px; }
+  .link-card a:focus-visible { outline: none; }
+  .link-card p { margin: 0.15rem 0 0; font-size: var(--small); color: var(--ink-2); }
+  .links-box .small { margin-top: 0.5rem; }
 
   /* Hubs, guide, topics */
   .hub-header .article-head { padding-bottom: 1rem; }
