@@ -18,7 +18,7 @@ Implements phases 1–4 of the modernization plan (13 October 2026) on the `mode
 - ⌘K / Ctrl+K command palette, light/dark theme toggle, speculation rules, print styles.
 - Social cards rendered by Hugo from per-topic diagram plates.
 
-**Not done:** the plan's mock-first step. I built the design directly and reviewed screenshots at 360 and 1440px in both themes; your sign-off on the actual pages replaces the mocks. No headshot exists in the repository (`jbspeakr.webp` is an illustration), so the speaker block shows one only when `params.headshot` is set. Sidenotes were not built: no current article uses footnotes.
+**Not done:** the plan's mock-first step. I built the design directly and reviewed screenshots at 360 and 1440px in both themes; your sign-off on the actual pages replaces the mocks. No headshot exists in the repository, so the speaker block shows one only when `params.headshot` is set. Sidenotes were not built: no current article uses footnotes.
 
 ## Phase 3: agents and the field guide
 
