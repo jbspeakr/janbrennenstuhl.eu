@@ -2,9 +2,9 @@
 id: jb-author
 kind: profile
 title: "About Jan Brennenstuhl"
-description: "Jan Brennenstuhl is a principal engineer focused on application security, agentic engineering, and the intersection of security, usability, and automation."
+description: "Jan Brennenstuhl is a principal engineer in Berlin who works on application security, identity and agentic engineering."
 date: 2021-04-08
-lastmod: 2025-06-09
+lastmod: 2026-10-31
 draft: false
 image: ""
 slug: "about"
@@ -14,12 +14,16 @@ featured: true
 topics: [application-security, identity-authentication, agentic-engineering]
 ---
 
-Hi. My name is Jan Brennenstuhl, I live and work in Berlin Germany, where I was born and raised. I am a product-minded software engineer, security enthusiast & clean code artist with a huge interest in [interdisciplinary software development](/topics/application-security/) and engineering leadership. I am a big fan of cycling sports, coffee & <a href="https://www.rucksackrebellen.de" title="Rucksackrebellen Wander-Blog">hiking</a>.
+Hi, I'm Jan. I live and work in Berlin, where I was born and raised.
 
-I currently work in Berlin as principal engineer, focused on application security and making [agentic engineering](/topics/agentic-engineering/) more secure and efficient. I spent years building and operating identity solutions used by millions of customers — balancing UX and security in high-stakes revenue funnels — and have since moved into the broader AppSec space, where I'm most interested in the intersection of security, usability, and automation.
+I work as a principal engineer for application security, and most of my time goes into making [agentic engineering](/topics/agentic-engineering/) secure and efficient. Before that I spent years building and operating identity systems used by millions of customers, balancing usability and security in high-stakes revenue funnels. That is where my interest in the overlap of security, usability and automation comes from.
 
-I've worked as software engineer and lead on e-commerce funnels, rule engines, cloud strategies, IAM and SSO solutions, REST APIs, system integrations, technology research, legacy migrations, decommissioning projects and modularizing monolithic systems — various things, mostly in e-commerce and security. I practiced software archaeology more than I set up greenfield web services.
+The list of things I've worked on is long and mostly unglamorous: e-commerce funnels, rule engines, cloud strategies, identity and access management (IAM) and single sign-on (SSO), REST APIs, system integrations, legacy migrations, decommissioning projects and splitting up monoliths. I've practised software archaeology more often than I've started a greenfield service.
 
-I am an internet standards enthusiast, who values open source software and open formats over custom builds. For me, quality software products are created best by small teams of product-minded engineers with a narrow, well-defined business scope and a clear vision. I'm especially passionate about leading and influencing engineers as well as creating and operating reliable, secure and maintainable software products.
+I prefer internet standards, open source software and open formats over custom builds. In my experience, the best software comes from small teams of product-minded engineers with a narrow scope and a clear picture of what they are building. I enjoy leading and coaching engineers as much as building and running software that is reliable, secure and maintainable.
 
-I hold a M.Sc. in Computer Science from the **University of Potsdam**, where I completed my thesis on *"Certificate Management in the Cloud for Authentication in university Environment"*. I’ve also studied Media Informatics at the **Beuth University** of Applied Sciences in Berlin.
+Right now the biggest piece of that is the open-source [Agentic Identity Broker](/projects/agentic-identity-broker/), which Magnus Jungsbluth and I build so that an agent can act for a person without holding that person's credentials. The [now page](/now/) says what I'm working on this month, and the [speaking page](/talks/) lists the talks.
+
+I hold an M.Sc. in Computer Science from the University of Potsdam, with a thesis on certificate management in the cloud for authentication in a university environment, and I studied Media Informatics at Beuth University of Applied Sciences in Berlin.
+
+Away from the keyboard: cycling, coffee and [hiking](https://www.rucksackrebellen.de).
