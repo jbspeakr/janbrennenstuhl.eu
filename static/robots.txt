@@ -4,7 +4,6 @@
 # states the same (no text-and-data-mining reservation).
 
 User-agent: *
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 Sitemap: https://www.janbrennenstuhl.eu/sitemap.xml

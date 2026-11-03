@@ -7,7 +7,9 @@ rules out, so a later PR does not reopen it by accident. Dates are when the deci
 
 **CC BY 4.0 governs, including AI training.** The licence already permits reuse with attribution; a
 text-and-data-mining reservation on top of it would contradict the grant. `robots.txt` allows every
-crawler and signals `ai-train=yes`; `/.well-known/tdmrep.json` declares `tdm-reservation: 0`;
+crawler and carries no `Content-Signal` line: that directive is a Cloudflare proposal, not part of
+RFC 9309, and SEO audits such as Semrush flag it as invalid (removed 3 November 2026; revisit if the
+IETF aipref vocabulary is published); `/.well-known/tdmrep.json` declares `tdm-reservation: 0`;
 `/agents/` explains that attribution is the condition. Rules out: per-crawler disallow lists, a
 "ask first" training policy, licence exceptions per page except `license: false` for legal pages.
 

@@ -1,5 +1,5 @@
 ---
-title: "AppSec in the Age of Agentic Engineering"
+title: "HTW Berlin Talk: AppSec and Agentic Engineering"
 description: "Guest lecture for the cybersecurity course at HTW Berlin on how coding agents move AppSec toward harness design, platform constraints and measurable risk."
 claim: "AppSec teams should shape the harness, platform and risk model that coding agents work inside, because finding problems after the code is written cannot keep up with agents."
 date: 2026-07-03
