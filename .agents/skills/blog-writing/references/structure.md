@@ -14,7 +14,11 @@ An argument will often need 3 to 5 H2 sections. Treat that as a sizing guide, no
 
 ### Build or Reproduction
 
-Open with the motivation and the artifact or result. Give the reader the prerequisites and approach in the order needed to follow the work. Show results where they arise, including failed attempts that explain a decision. End with a supported limitation, unresolved question, or useful next step when there is one.
+Open with the author's honest take on the project and the artifact or result. Do not open with the publication date or repeat it in the body; the front matter carries it. Do not end the opening with a teaser about a problem revealed later. Give the reader the prerequisites and approach in the order needed to follow the work. Show results where they arise, including failed attempts that explain a decision.
+
+When a step fails, explain the cause before the evidence: say what goes wrong and why, show the error output, then show the fix. Do not stage the failure as a mystery that a later sentence solves.
+
+End with a supported limitation, unresolved question, or useful next step when there is one. Name a limitation plainly ("One downside remains: …") and state the author's relationship to any linked project ("that I maintain").
 
 Use 1 H2 per meaningful phase of the reader's reasoning. Do not force an argument's thesis deadline or section count onto a walkthrough, but make its purpose clear in the opening.
 
@@ -46,6 +50,8 @@ Distinguish documented facts, the author's observations, inferences, and recomme
 
 Use descriptive inline anchors. Add a title attribute only when the destination title adds context: `[anchor text](url "Title")`. Prefer stable official documentation, research papers, public incident reports, vendor security reports, and relevant established personal blogs. Choose sources for what they substantiate, not to meet a link quota.
 
+Write from public context only. Never carry details from `AGENTS.md`, `docs/`, CI configuration or other repository internals into an article, and never describe credentials, key scopes or deployment security setup. Include an implementation detail only if the reader needs it to follow or rebuild the work; "the source code repository" is enough where a subfolder path adds nothing.
+
 For a historical event or well-documented attack, give the context needed for the current argument and link the primary source. Do not retell the full incident unless the analysis depends on those details.
 
 ## Choose Formatting for the Content
@@ -63,30 +69,13 @@ Create articles at `content/post/<slug>/index.md`. Keep referenced media and doc
 
 Use `{{< ref "/post/<slug>/index.md" >}}` for internal article links. Confirm that the target exists and resolves. Verify local assets and document links as well as balanced shortcodes. Use the repository's existing shortcode syntax; inspect a working example before adding an unfamiliar shortcode.
 
-Preserve valid existing front matter when editing. New articles use the following template with actual metadata and a real image path. Do not invent an asset or attribution to fill a field. Set dates deliberately, match existing category and tag names, and follow the requested publication state. `featured: true` is only for deliberate promotion; include `imageCredit` when attribution is required.
+Preserve valid existing front matter when editing. Create new articles from the archetype (`hugo new content post/<slug>`) and follow `docs/CONTENT-CONTRACT.md`; never hand-copy front matter from another page. Authors write `title`, `description`, `date`, `tags` and `slug`, and optionally `claim`, `lead`, `series` and `findings`. Everything else is derived. Do not invent an asset or attribution to fill a field.
 
-```yaml
----
-title: "Full Article Title"
-linkTitle: "Short Title for Navigation"
-description: "One-sentence summary for SEO and social cards."
-excerpt: "Same or similar to description."
-lead: "Slightly longer hook for article listing pages."
-slug: url-friendly-slug
-image: featured-image.webp
-# imageCredit:
-#   name: "Creator name"
-#   url: "https://example.com/source"
-date: YYYY-MM-DD
-lastmod: YYYY-MM-DD
-draft: false
-weight: 50
-categories: ["primary-category"]
-tags: ["tag-1", "tag-2"]
-featured: false
----
-```
+- Make the slug short and keyword-led from public product and topic words (`bunny-edgescript-mcp-server`), not the working folder name (`blog-mcp-server`). Renaming a published slug needs an alias, as the content contract describes.
+- Articles that feature Bunny carry the referral `links:` block. Copy it from `content/post/bunny-shield-review/index.md`.
+- Apply the voice rules to `description`, `claim` and `lead` too: possessives, honest motive, no date opener. Update them when the body's framing changes.
+- Remove `draft: true` when the article is ready to publish.
 
-Replace sample values before delivery. `draft: false` represents a publication-ready article; use `true` when the assignment is to prepare an unpublished draft. Front matter summaries serve different surfaces and may overlap; the no-repetition rule does not require unrelated summaries of the same article.
+Keep `draft: true` when the assignment is to prepare an unpublished draft. Front matter summaries serve different surfaces and may overlap; the no-repetition rule does not require unrelated summaries of the same article.
 
-For article file changes, verify metadata, bundle assets, internal references, shortcode balance, and quoted statistics against their sources. Run `hugo --minify` before delivery. If the changed article remains a draft, also build with drafts included so that the edited page is actually rendered. Inspect the rendered article when changing its visual presentation. A review-only assignment or a skill-documentation change does not require a site build.
+For article file changes, verify metadata, bundle assets, internal references, shortcode balance, and quoted statistics against their sources. Run `./scripts/verify.sh` before delivery. If the changed article remains a draft, also build with drafts included so that the edited page is actually rendered. Inspect the rendered article when changing its visual presentation. A review-only assignment or a skill-documentation change does not require a site build.

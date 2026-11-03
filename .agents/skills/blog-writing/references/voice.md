@@ -16,6 +16,17 @@ A paragraph with no person in it is a warning sign of detached prose. Reconnect 
 
 Avoid definitions with no actor, such as "X is the unit that..." or "X serves as...". Explain what someone does with X. Avoid making abstractions act: replace "Fleet scale shifts remediation" with "When we manage more machines, we change how we fix them", provided that `we` has an honest referent.
 
+## Sound Like Jan
+
+These rules come from the author's own edits to agent drafts. They describe how the author actually writes, so apply them alongside the rest of this file.
+
+- Own the author's things. Write "my blog", "my site", "my server", "my macOS" and "the atlas I maintain", not "this site", "the site" or "the server" as if a narrator were describing someone else's property. "This site" is fine only where the page lists its own machine-readable outputs.
+- State motives as modestly as the author does. "Likely unnecessary, but a neat side project", "it fits the zeitgeist" and "there is no hard use case I am aware of" are honest. Never upgrade curiosity or tinkering into a mission statement ("because I write about X"), even when the author's public work would make that reason plausible.
+- Prefer "could" to "should" when the author offers their own work as an example ("how such a server could look and feel"). Keep "should" for recommendations backed by a source.
+- Name the vendor or product next to its generic noun when the reader might arrive cold: "the Bunny pull zone", "the agentic client", "the official `mcp-publisher` tool". Calling something "official" is useful when the article later criticizes it.
+- In build and reproduction articles, a short conversational beat may close a finished step: "So far so straightforward.", "Of course, `publish` runs in…", "And with these little hurdles taken, … Yeah!". Use at most 1 per section, inside a paragraph, never as a section opener or a paragraph of its own. "Of course," and "de-facto" are recurring author habits; use them where they fit, not in every article.
+- Keep the author's own phrasing when it is understandable, including light non-native constructions such as "Currently supported are Ed25519 and ECDSA P-384". Fix spelling, apostrophes and clear grammar errors ("blogs" for "blog's", "suggest to proof" for "suggests proving", "misses to mention" for "fails to mention"), and leave the rest of the sentence alone.
+
 ## Build Readable Sentences
 
 - Keep the normal subject, verb, object order. Each clause carries 1 thought. Chain related plain clauses with "and", "so", "but", "as", or "because"; do not fuse unrelated thoughts.
@@ -36,7 +47,7 @@ Every sentence must add knowledge, motive, a necessary relationship, or a concre
 - Do not follow prose with a bullet list that repeats its benefits.
 - Do not append an obvious justification to a stated practice. State the practice and stop. Retain a reason only when it adds a non-obvious motive or explains a decision the reader needs to understand.
 - Use 1 useful example or consequence where several merely illustrate the same point. Keep additional examples only when they establish distinct behavior, boundaries, or evidence. Do not assemble 3 items for rhythm.
-- Delete paragraphs whose only job is a reaction, such as "Huge if true!" or "This one is a genuinely new kind of model!". Open a section with what happened. A reaction belongs with the news only when it adds a specific, grounded judgment.
+- Delete paragraphs whose only job is a reaction, such as "Huge if true!" or "This one is a genuinely new kind of model!". Open a section with what happened. A reaction belongs with the news only when it adds a specific, grounded judgment. A 1-sentence beat that closes a finished build step is different; see "Sound Like Jan".
 - Cut trailing amplifiers such as "without being rewritten for either" or "and the risk goes away" when they only repeat the claim. State any distinct, supported compatibility or risk finding directly.
 - Do not add a closing sentence that repeats the section's point or a transition that merely announces the next section.
 - Keep reasoning, limitations, and necessary context. Compression must not make the reader reconstruct the argument from links.
@@ -47,9 +58,9 @@ Use plain English that non-native speakers can follow. Prefer common words over 
 
 Use contractions naturally: "wasn't", "it's", "I've". Ordinary colloquialisms such as "just", "a bunch of", "pretty much", "nowadays", and "organically" belong in this voice when they express attitude, approximation, or how something happened. Do not remove them merely to sound formal, or sprinkle them in to simulate personality. Avoid obscure idioms and culture-dependent jokes.
 
-Write numbers as digits: `600`, `5 skills`, `3 plugins`. Preserve the spelling of an exact quotation, title, product name, or literal code value.
+Write counts, limits, versions and measurements as digits: `600`, `5 skills`, `3 plugins`, `1 file per script`. When "one" only works as an article, write "a" or "a single": "a single Bunny edge script", not "1 Bunny edge script". Preserve the spelling of an exact quotation, title, product name, or literal code value.
 
-Spell out abbreviations and explain terms of art on first use, for example "identity and access management (IAM)". Do not let insider vocabulary carry unexplained meaning.
+Spell out abbreviations and explain terms of art on first use when an engineering or security reader might not know them, for example "identity and access management (IAM)" or "Model Context Protocol (MCP)". Leave common engineering abbreviations as they are: CI, DNS, URL, API, HTTP, LoC. Do not let insider vocabulary carry unexplained meaning.
 
 Ground claims in the author's supplied experience or a named source. Attribute estimates and claims: "OpenAI estimates" or "they claim" with a clear antecedent. Inline parenthetical examples and "etc" are welcome when they keep an explanation readable; they must not obscure a material boundary. Preserve real uncertainty. Avoid empty rhetorical hedges such as "arguably", "it could be said", and "some might say".
 
@@ -73,6 +84,8 @@ These rhetorical constructions are prohibited in authored prose. A genuine sourc
 - The rule of 3 as a reflex, and vague attribution such as "experts argue" without a named source.
 - Fronted-clause comma pivots as topic sentences: "Where X wins, it wins on..." or "When Y fails, it fails because...". State the finding as a plain declarative. An ordinary fronted clause can appear elsewhere; do not repeat it as the opener of consecutive paragraphs.
 - Any rhetorical shape repeated at the start of consecutive paragraphs, including repeated bolded leads.
+- Dramatic reveal sentences that withhold a cause to build suspense, such as "The second line gives it away." or "The reason is in the source:". Give the cause first; see the build route in [structure](structure.md).
+- Clever closing images that replace a plain statement, such as "a server with nothing to protect would only add an empty row there". Say the consequence directly.
 - A summary sentence that restates its heading; "In this article the authors"; "In this article, we will..." and similar meta-narration.
 
 ## Banned Words
@@ -104,6 +117,17 @@ The revised examples below resolve conflicts in the supplied calibration: number
    Prefer: "We use each of the 5 skills in our day-to-day work, and we're shipping them in 3 plugins."
 6. Avoid: "A skill writes that same capability down as a folder with a SKILL.md at its root, which holds a short description the agent matches against the task in front of it and the procedure it should follow once it matches."
    Prefer: "We package the skill in a folder with a SKILL.md file at its root. We put a short description and a procedure in that file. The agent matches the description against the task, and once it finds a match, it follows the procedure."
+
+7. Avoid: "Since 28 October 2026, this site has a read-only MCP server."
+   Prefer, when the author supplies the attitude: "Likely unnecessary, but a neat side project and feasibility study: I now have my own read-only MCP server."
+8. Avoid: "I built it anyway because I write about agent identity and MCP authorization."
+   Prefer, when this is the author's actual motive: "I mainly built it because it fits the zeitgeist, and a live, small server is a working example I can point to."
+9. Avoid: "The whole thing is 1 Bunny edge script" and "1 remote of type `streamable-http`".
+   Prefer: "The whole thing is a single Bunny edge script" and "a single remote of type `streamable-http`".
+10. Avoid: "the continuous integration (CI) job that verifies a release builds that bundle and stores it as an artifact".
+    Prefer: "a CI job verifies and stores it as an artifact".
+11. Avoid: "The server has no authorization at all, and that is the one thing it can't demonstrate."
+    Prefer: "One downside remains: my MCP server has no authorization at all, so there is no sense in adding it to the MCP auth atlas that I maintain."
 
 ## Enforcement
 
