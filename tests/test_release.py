@@ -30,6 +30,44 @@ class Release(unittest.TestCase):
             self.assertLess(order.index('index.md'), order.index('catalog.json'))
             self.assertEqual(order[-1], 'release-manifest.json')
 
+    def test_unchanged_files_are_skipped_but_the_manifest_always_uploads(self):
+        import hashlib
+        with TemporaryDirectory() as directory:
+            r = Path(directory)
+            for name in ['same.css', 'new.css', 'index.html', 'release-manifest.json']:
+                (r / name).write_text(name)
+            sha = lambda name: hashlib.sha256(name.encode()).hexdigest()
+            previous = {'same.css': sha('same.css'), 'new.css': 'old', 'release-manifest.json': sha('release-manifest.json')}
+            phases, skipped = deploy.unchanged(deploy.upload_phases(r), r, previous)
+            self.assertEqual(skipped, 1)
+            self.assertEqual([[p.name for p in phase] for phase in phases], [['new.css'], ['index.html'], [], ['release-manifest.json']])
+            phases, skipped = deploy.unchanged(deploy.upload_phases(r), r, {})
+            self.assertEqual(skipped, 0)
+
+    def test_each_upload_phase_finishes_before_the_next_and_a_failure_stops_later_phases(self):
+        import threading, time
+        log, lock, original = [], threading.Lock(), deploy.upload_file
+        def fake(path, root, host, zone, key):
+            time.sleep(0.01 if path.suffix == '.css' else 0)
+            if path.name == 'broken.html': raise RuntimeError('boom')
+            with lock: log.append(path.name)
+        deploy.upload_file = fake
+        try:
+            with TemporaryDirectory() as directory:
+                r = Path(directory)
+                for name in [f'a{i}.css' for i in range(20)] + ['index.html', 'catalog.json', 'release-manifest.json']:
+                    (r / name).write_text('x')
+                deploy.upload_phased(deploy.upload_phases(r), r, 'h', 'z', 'k')
+                self.assertTrue(all(n.endswith('.css') for n in log[:20]))
+                self.assertEqual(log[20:], ['index.html', 'catalog.json', 'release-manifest.json'])
+                log.clear(); (r / 'broken.html').write_text('x')
+                with self.assertRaises(RuntimeError):
+                    deploy.upload_phased(deploy.upload_phases(r), r, 'h', 'z', 'k')
+                self.assertNotIn('catalog.json', log)
+                self.assertNotIn('release-manifest.json', log)
+        finally:
+            deploy.upload_file = original
+
     def test_indexnow_submits_only_changed_entries(self):
         before = {'items': [{'id': 'one', 'content_hash': 'old'}]}
         current = {'items': [{'id': 'one', 'content_hash': 'old', 'canonical_url': 'https://example.test/one/'},
