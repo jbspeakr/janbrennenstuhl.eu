@@ -23,9 +23,9 @@ Apply the prose rules to the requested article and its authored metadata. The ru
 ## Workflow: Idea to Article
 
 1. Establish the contribution and reader need. Identify the artifact, method, result, or supplied observation that makes the article useful. State privately what the reader should understand or be able to do afterward. Use the user's notes and available public artifacts; ask only for essential personal context that cannot be recovered from them.
-2. Map the evidence before drafting. Distinguish facts, observations, inferences, and recommendations. Find the strongest available source for material claims, verify quantitative scope, and identify unsupported claims to remove or qualify. Do not fill gaps with invented experience.
+2. Map the evidence before drafting. Distinguish facts, observations, inferences, and recommendations. Find the strongest available source for material claims, verify quantitative scope, and identify unsupported claims to remove or qualify. Do not fill gaps with invented experience or with details from repository instructions, `docs/` or CI configuration; that context is for working on the site, not for the article.
 3. Choose a structure from the structure reference. Give each proposed H2 a distinct, 1-sentence purpose and order the sections around the reader's reasoning. Plan a concrete opening. Do not force every article into a fixed number of sections or a mandatory conclusion.
-4. Draft with the voice reference open. Make actors visible, introduce necessary terms, and develop each point with its evidence. Use the author's supplied attitude and observations where appropriate. Do not add colloquialisms, anecdotes, questions, or analogies as a personality checklist.
+4. Draft with the voice reference open. Make actors visible, introduce necessary terms, and develop each point with its evidence. Use the author's supplied attitude and observations where appropriate, and follow "Sound Like Jan" in the voice reference. Do not add anecdotes, questions, or analogies as a personality checklist.
 5. Compress without losing reasoning. Make each point once, remove reaction-only paragraphs and repeated benefits, and keep the material limitations. Prefer 1 useful example to several interchangeable ones. Preserve distinct evidence and explanatory motives.
 6. Run the complete review below, then verify the article's Hugo mechanics when files changed. Deliver the requested article or edits with a brief, accurate account of verification and any remaining source uncertainty.
 
@@ -37,8 +37,9 @@ For a review-only request, report prioritized findings with locations and concre
 2. Reasoning and evidence: verify material claims, sources, quantitative scope, and quoted statistics. Keep facts, observations, inferences, and recommendations distinguishable. Preserve uncertainty that affects the conclusion.
 3. Structure: check the chosen article route, opening, section purposes, and information order. Merge duplicate points across sections. Remove endings that only recap or advertise what comes next. Make the article understandable without following every link.
 4. Voice: apply every section of the voice reference, including both banned lists, to titles, headings, body, captions, and metadata. Search can help locate words and punctuation; inspect each match for legitimate source quotations or literal technical text. Do not treat a clean search as a completed voice review.
-5. Read aloud for flow: inspect paragraphs in sequence. Repair chopped thoughts, nested clauses, vague pronouns, repeated rhetorical openers, and decorative wording. Keep natural contractions and useful colloquial qualification. Check who does what without inserting unsupported `I` or `we`.
-6. Mechanics: for article file edits, follow the structure reference's front matter, bundle, link, shortcode, and build checks. Report only checks actually run. For review-only work or changes to this skill, check the relevant documents and references instead of claiming a site build validates prose.
+5. Read aloud for flow: inspect paragraphs in sequence. Repair chopped thoughts, nested clauses, vague pronouns, repeated rhetorical openers, and decorative wording. Keep natural contractions, useful colloquial qualification, and the author's short conversational beats. Check who does what without inserting unsupported `I` or `we`.
+6. Spelling and idiom: fix typos, apostrophes and clear grammar errors in the author's own edits. Keep the author's wording when it is understandable; do not flatten it into generic English.
+7. Mechanics: for article file edits, follow the structure reference's front matter, bundle, link, shortcode, and build checks. Report only checks actually run. For review-only work or changes to this skill, check the relevant documents and references instead of claiming a site build validates prose.
 
 ## Completion Gate
 
@@ -51,6 +52,7 @@ Before delivering an article or review, confirm:
 - [ ] Material claims and quantities are sourced, scoped, and attributed; uncertainty is preserved.
 - [ ] The voice review covers every rule, not just searchable banned words.
 - [ ] Each sentence contributes information or necessary reasoning; no section repeats a point for emphasis.
+- [ ] The author owns their things ("my blog"), motives are as modest as supplied, and no repository internals or security setup leaked into the prose.
 - [ ] A read-aloud pass confirms clear actors, readable clauses, resolved pronouns, and varied paragraph openings.
 - [ ] Authored headings, captions, and metadata pass the same voice review as the body.
 - [ ] Applicable Hugo checks were run for article edits, and any blocked verification is reported accurately.
