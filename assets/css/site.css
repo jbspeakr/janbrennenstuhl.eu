@@ -206,7 +206,8 @@
   /* The head uses the body's text column: eyebrow, title, lead and prose share one width.
      The column is sized here, in body text, so ch means the same as on .prose. */
   .article-header .article-head { display: grid; grid-template-columns: minmax(0, var(--measure)); }
-  .article-head .eyebrow, .article-head .lead, .article-head .answer { max-width: none; }
+  .article-head .eyebrow, .article-head h1, .article-head .lead, .article-head .answer { max-width: none; }
+  .article-head h1 { text-wrap: pretty; }
   /* Wide: the head shares the article grid, byline in the contents column, title over the text */
   @media (min-width: 70rem) {
     .article-header .article-head { grid-template-columns: 15rem minmax(0, var(--measure)); column-gap: 4rem; }
