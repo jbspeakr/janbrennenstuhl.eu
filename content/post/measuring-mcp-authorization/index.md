@@ -5,7 +5,7 @@ description: "Letsauth Lab is my open lab at letsauth.eu: a passive scanner chec
 claim: "Public MCP servers implement the MCP Authorization specification unevenly, and Letsauth Lab records each difference as a dated observation with evidence a reviewer can open."
 lead: "I wanted to know how many large MCP providers support the full authorization specification. My scanner now checks 39 public servers every night, and most of them still rely on dynamic client registration, which the current revision deprecates."
 date: 2026-11-02
-slug: letsauth-lab
+slug: measuring-mcp-authorization
 tags: ["oauth2", "agentic-engineering", "open-source", "eurostack"]
 findings:
   - id: letsauth-unknown-not-failure
@@ -75,6 +75,6 @@ European sovereignty in technology matters to me as a European tech professional
 
 ## What comes next
 
-The [roadmap](https://github.com/letsauthlab/letsauth/blob/main/docs/roadmap.md "Letsauth Lab roadmap") names 3 planned features. eIDAS 2.0 with the EU Digital Identity Wallet, the AI Act and NIS2 all touch how an agent may receive authority, and they are already documents on the standards map. With "Agents under EU rules", I want to turn their mandates, oversight duties and obligations into explorer scenarios and long-form pages. Once there is enough change to report, I plan to generate a changelog and newsletter from merged data and content changes, which brings the original newsletter idea back in a form that can't drift from the data. And a visual redesign will move the lab to the same calm system my blog uses.
+My [Letsauth Lab project page]({{< ref "/projects/letsauth-lab/index.md" >}} "Letsauth Lab") keeps the current links and licences, and the [roadmap](https://github.com/letsauthlab/letsauth/blob/main/docs/roadmap.md "Letsauth Lab roadmap") names 3 planned features. eIDAS 2.0 with the EU Digital Identity Wallet, the AI Act and NIS2 all touch how an agent may receive authority, and they are already documents on the standards map. With "Agents under EU rules", I want to turn their mandates, oversight duties and obligations into explorer scenarios and long-form pages. Once there is enough change to report, I plan to generate a changelog and newsletter from merged data and content changes, which brings the original newsletter idea back in a form that can't drift from the data. And a visual redesign will move the lab to the same calm system my blog uses.
 
 The most useful contribution is an observation: what a server you know does, with evidence a reviewer can open. The repository has an [issue template for observations](https://github.com/letsauthlab/letsauth/issues/new/choose "Open an issue on Letsauth Lab") and a [contributing guide](https://github.com/letsauthlab/letsauth/blob/main/CONTRIBUTING.md "Contributing to Letsauth Lab") for that, and corrections, servers, specification revisions and code are welcome too. If you run an MCP server and the atlas has you wrong, the evidence link in the cell is where I'd start the conversation.
