@@ -4,7 +4,6 @@ description: "An open lab at letsauth.eu that measures how public MCP servers im
 claim: "Letsauth Lab records what public MCP servers serve of the MCP Authorization specification as dated observations with evidence, so agent authorization can be checked against measured data."
 date: 2026-10-13
 tags: ["oauth2", "agentic-engineering", "open-source", "eurostack"]
-draft: true
 ---
 
 I started Letsauth Lab to find out how many public MCP servers support the current MCP Authorization specification. A passive scanner reads their public OAuth metadata every night and records each result as a dated observation with evidence, without tokens, client credentials or authorization flows. Around the resulting MCP auth atlas, the lab has a standards map, a delegation chain explorer and breach anatomies that read from the same data.
