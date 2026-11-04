@@ -18,7 +18,9 @@ Open with the author's honest take on the project and the artifact or result. Do
 
 When a step fails, explain the cause before the evidence: say what goes wrong and why, show the error output, then show the fix. Do not stage the failure as a mystery that a later sentence solves.
 
-End with a supported limitation, unresolved question, or useful next step when there is one. Name a limitation plainly ("One downside remains: …") and state the author's relationship to any linked project ("that I maintain").
+End with a supported limitation, unresolved question, or useful next step when there is one. Name a limitation plainly ("One downside remains: …") and state the author's relationship to any linked project ("that I maintain"). When the article asks readers to contribute, tie the request to the article's main limitation and address the reader directly ("If you know something my scanner can't see, …").
+
+Write next steps as the author's own wishes on the article's topic: "I want to grow the MCP coverage", "I'd also like to turn the observations into talks". Never copy items from a roadmap file, issue tracker or planning document into the article; doing so makes public promises the author has not made and can leak unannounced plans.
 
 Use 1 H2 per meaningful phase of the reader's reasoning. Do not force an argument's thesis deadline or section count onto a walkthrough, but make its purpose clear in the opening.
 
@@ -44,6 +46,8 @@ Distinguish documented facts, the author's observations, inferences, and recomme
 
 - Technical work, outcomes, and professional experience require public or inspectable support, such as a repository, talk, slide deck, published result, or primary source. Personal preferences and supplied lived observations can stand alone when honestly framed and free of employer context.
 - For quantitative comparisons, name the baseline, units, method, scope, and source. For standalone quantities, give the relevant unit, scope, and source; do not invent a comparison baseline. Never manufacture precision.
+- When an article says a provider departs from a specification, name the exact field or behaviour, quote the normative keyword ("SHOULD NOT"), link the specification section, and give the specification's reason when it states one. "6 advertise `offline_access`" is too vague; "6 list `offline_access` in the `scopes_supported` of their protected resource metadata" is checkable.
+- Describe the author's linked artifacts as they currently exist. Check that a page, report or feature still exists under the name and shape the article uses before linking or describing it.
 - Prefer primary sources for material external claims. Attribute a vendor's estimate or claim to the vendor; a source link alone does not make the claim independently established.
 - Put the decisive evidence into the section when a strong conclusion needs it. The reader should not have to open a link to discover the reasoning or a material limitation.
 - Preserve uncertainty and counterevidence that could change the reader's decision. Do not turn a personal observation into a universal claim.
