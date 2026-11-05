@@ -49,10 +49,11 @@ Before delivering an article or review, confirm:
 - [ ] The reader can identify the contribution, and the chosen structure makes it easy to follow.
 - [ ] Every section has a distinct purpose; the opening and ending suit the article type.
 - [ ] First-person claims are honest, professional claims have inspectable support, and no employer or internal context is disclosed.
+- [ ] Work is credited to the author, the author's agents, or automation as it actually happened, and tense and time markers match the project's current state.
 - [ ] Material claims and quantities are sourced, scoped, and attributed; uncertainty is preserved.
 - [ ] The voice review covers every rule, not just searchable banned words.
 - [ ] Each sentence contributes information or necessary reasoning; no section repeats a point for emphasis.
-- [ ] The author owns their things ("my blog"), motives are as modest as supplied, and no repository internals or security setup leaked into the prose.
+- [ ] The author owns their things ("my blog"), motives are as modest as supplied, and no repository internals, roadmap items or unannounced plans leaked into the prose.
 - [ ] A read-aloud pass confirms clear actors, readable clauses, resolved pronouns, and varied paragraph openings.
 - [ ] Authored headings, captions, and metadata pass the same voice review as the body.
 - [ ] Applicable Hugo checks were run for article edits, and any blocked verification is reported accurately.

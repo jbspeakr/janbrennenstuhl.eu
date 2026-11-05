@@ -24,8 +24,14 @@ These rules come from the author's own edits to agent drafts. They describe how 
 - State motives as modestly as the author does. "Likely unnecessary, but a neat side project", "it fits the zeitgeist" and "there is no hard use case I am aware of" are honest. Never upgrade curiosity or tinkering into a mission statement ("because I write about X"), even when the author's public work would make that reason plausible.
 - Prefer "could" to "should" when the author offers their own work as an example ("how such a server could look and feel"). Keep "should" for recommendations backed by a source.
 - Name the vendor or product next to its generic noun when the reader might arrive cold: "the Bunny pull zone", "the agentic client", "the official `mcp-publisher` tool". Calling something "official" is useful when the article later criticizes it.
-- In build and reproduction articles, a short conversational beat may close a finished step: "So far so straightforward.", "Of course, `publish` runs in…", "And with these little hurdles taken, … Yeah!". Use at most 1 per section, inside a paragraph, never as a section opener or a paragraph of its own. "Of course," and "de-facto" are recurring author habits; use them where they fit, not in every article.
-- Keep the author's own phrasing when it is understandable, including light non-native constructions such as "Currently supported are Ed25519 and ECDSA P-384". Fix spelling, apostrophes and clear grammar errors ("blogs" for "blog's", "suggest to proof" for "suggests proving", "misses to mention" for "fails to mention"), and leave the rest of the sentence alone.
+- Credit each piece of work to whoever did it: the author ("I wrote"), the author's coding agents ("I had my agent record"), or automation ("the scanner records"). Never fold agent or automated work into a plain "I", and say so when the author did something by hand ("added manually by me").
+- Mark how long a statement holds when the project is still changing. Use "currently", "today", "still", "for now" or "(yet)" where they are true, and the future tense for behaviour that is designed but has not happened yet ("when the specification changes next time, my atlas will keep the old reading"). Do not describe an evolving project as finished or an untested design as proven.
+- Keep vocabulary consistent with the article's stance. An article that argues against rankings must not call its own outputs "grades", "scores" or "rankings". Check for words that quietly contradict the argument before delivering.
+- Address the reader directly in requests and pointers: "If you know something about a server that my scanner can't see, please add it", "In case you want to learn more about X, read [link]". Keep the rest of the article in the author's `I`; do not turn explanations into generic "you" instructions.
+- Narrow broad claims to what the work actually covers: "authorized by MCP providers", not "how AI agents are authorized"; "in AI-related domains", not "in AI".
+- Keep the author's mild attitude and context when supplied: "yet another AI-composed meta study", "I don't want to violate any T&Cs". Do not neutralize it into "the next study".
+- In build and reproduction articles, a short conversational beat may close a finished step: "So far so straightforward.", "Of course, `publish` runs in…", "And with these little hurdles taken, … Yeah!". Use at most 1 per section, inside a paragraph, never as a paragraph of its own. A framing beat that sets the tone, such as "Just to set the tone right,", may open a section once per article; a reaction may not. "Of course," and "de-facto" are recurring author habits; use them where they fit, not in every article.
+- Keep the author's own phrasing when it is understandable, including light non-native constructions: inverted order ("Currently supported are …"), "quite some", "a multitude of", "With currently …". Fix spelling, apostrophes, compound hyphens and clear grammar errors: missing possessive apostrophes ("my projects X" for "my project's X"), "suggest to do" for "suggest doing", "not many" where "few" is meant, "X related" for "X-related". Leave the rest of the sentence alone. After the author rewrites part of a sentence, check that the whole sentence still parses.
 
 ## Build Readable Sentences
 
@@ -51,6 +57,7 @@ Every sentence must add knowledge, motive, a necessary relationship, or a concre
 - Cut trailing amplifiers such as "without being rewritten for either" or "and the risk goes away" when they only repeat the claim. State any distinct, supported compatibility or risk finding directly.
 - Do not add a closing sentence that repeats the section's point or a transition that merely announces the next section.
 - Keep reasoning, limitations, and necessary context. Compression must not make the reader reconstruct the argument from links.
+- Use a distinctive phrase at most twice across the front matter and body, such as "evidence a reviewer can open". Keep it where it does the most work and rephrase or drop the others.
 
 ## Use Familiar Words
 
@@ -58,9 +65,9 @@ Use plain English that non-native speakers can follow. Prefer common words over 
 
 Use contractions naturally: "wasn't", "it's", "I've". Ordinary colloquialisms such as "just", "a bunch of", "pretty much", "nowadays", and "organically" belong in this voice when they express attitude, approximation, or how something happened. Do not remove them merely to sound formal, or sprinkle them in to simulate personality. Avoid obscure idioms and culture-dependent jokes.
 
-Write counts, limits, versions and measurements as digits: `600`, `5 skills`, `3 plugins`, `1 file per script`. When "one" only works as an article, write "a" or "a single": "a single Bunny edge script", not "1 Bunny edge script". Preserve the spelling of an exact quotation, title, product name, or literal code value.
+Write measured data, limits, versions and technical counts as digits: `600`, `28 of 39 servers`, `at most 8 requests`, `5 skills`, `1 file per script`. Write small narrative or hypothetical counts in words: "two providers can both claim conformance", "three scenarios", "a server with two unsupported rows". When "one" only works as an article, write "a" or "a single": "a single Bunny edge script", not "1 Bunny edge script". Preserve the spelling of an exact quotation, title, product name, or literal code value.
 
-Spell out abbreviations and explain terms of art on first use when an engineering or security reader might not know them, for example "identity and access management (IAM)" or "Model Context Protocol (MCP)". Leave common engineering abbreviations as they are: CI, DNS, URL, API, HTTP, LoC. Do not let insider vocabulary carry unexplained meaning.
+Spell out abbreviations and explain terms of art on first use when an engineering or security reader might not know them, for example "identity and access management (IAM)" or "dynamic client registration (DCR)". After the first use, write the abbreviation every time; do not repeat the long form. Do not spell out a term the title already uses and the article's core readers know, such as MCP in an article about MCP authorization. Leave common engineering abbreviations as they are: CI, DNS, URL, API, HTTP, LoC. Do not let insider vocabulary carry unexplained meaning.
 
 Ground claims in the author's supplied experience or a named source. Attribute estimates and claims: "OpenAI estimates" or "they claim" with a clear antecedent. Inline parenthetical examples and "etc" are welcome when they keep an explanation readable; they must not obscure a material boundary. Preserve real uncertainty. Avoid empty rhetorical hedges such as "arguably", "it could be said", and "some might say".
 
@@ -102,7 +109,7 @@ Use plain alternatives that fit the claim: "shows", "indicates", "supports", "ar
 
 ## Calibration Pairs
 
-The revised examples below resolve conflicts in the supplied calibration: numbers use digits, the abstract opener is removed, and clauses follow the sentence rules. First-person examples are usable only when the author supplies or supports the underlying experience.
+The revised examples below resolve conflicts in the supplied calibration: measured numbers use digits, the abstract opener is removed, and clauses follow the sentence rules. First-person examples are usable only when the author supplies or supports the underlying experience.
 
 1. Avoid: "Not as a decision; it just happened."
    Prefer: "I didn't make an explicit decision; it just happened organically."
@@ -128,6 +135,12 @@ The revised examples below resolve conflicts in the supplied calibration: number
     Prefer: "a CI job verifies and stores it as an artifact".
 11. Avoid: "The server has no authorization at all, and that is the one thing it can't demonstrate."
     Prefer: "One downside remains: my MCP server has no authorization at all, so there is no sense in adding it to the MCP auth atlas that I maintain."
+12. Avoid: "209 are vendor claims I recorded from documentation during a first pass, and a single one is manual."
+    Prefer, when an agent did the recording: "209 are vendor claims I had my agent record from vendor documentation as a baseline, and a single one was added manually by me."
+13. Avoid: "The most useful contribution is an observation: what a server does, with evidence a reviewer can open."
+    Prefer: "If you know something about a server that my scanner can't see, such as how it validates tokens or rotates refresh tokens, please add it to the atlas with evidence a reviewer can open."
+14. Avoid: "When the specification changes, the atlas keeps the old reading next to the new one." (for a project that has not seen a change yet)
+    Prefer: "When the MCP specification changes next time, my atlas will keep the old reading next to the new one."
 
 ## Enforcement
 
