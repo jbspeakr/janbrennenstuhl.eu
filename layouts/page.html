@@ -23,6 +23,7 @@
       {{ partial "ui/key-findings.html" . }}
       {{ partial "ui/hero-image.html" . }}
       <div class="prose" data-article-body>{{ partial "ui/content.html" . }}</div>
+      {{ if eq $kind "project" }}{{ partial "ui/project-series.html" . }}{{ end }}
       {{ partial "ui/links.html" . }}
       {{ partial "ui/series-nav.html" . }}
       {{ partial "ui/cite.html" . }}

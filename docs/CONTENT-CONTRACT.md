@@ -23,7 +23,7 @@ Optional:
 | `lead` | A longer opening shown under the title; defaults to `description`. |
 | `claim` | One quotable sentence stating the main point; used in `llms.txt`, feeds and the catalog. |
 | `findings` | Up to three key findings for essays: `[{id, text}]`. Each gets the anchor `#f-<id>`. IDs are permanent and unique site-wide. |
-| `series` | A series ID from `data/series.toml`; adds the series navigator. |
+| `series` | A series ID from `data/series.toml`; adds the series navigator. If the series names a `project` page, the post is also listed on that project page. |
 | `topics` | Overrides the topics derived from tags (see `data/topics.toml`). |
 | `lastmod` | A meaningful content change. Not a rebuild, not a metadata tweak. |
 | `reviewed` | Date of an actual editorial review of the advice after publication. Never set it without a review. Essays, talks and projects count as reviewed on publication (`review_basis: publication`, dated to the publish date); a later `reviewed` replaces that (`review_basis: editorial`). Field-guide entries stay `not-reviewed` until one is set. |

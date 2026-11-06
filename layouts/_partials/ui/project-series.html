@@ -1,0 +1,9 @@
+{{- range partial "data/project-series.html" . }}
+<section class="project-series" id="series-{{ .id }}" aria-labelledby="series-{{ .id }}-title">
+  <h2 id="series-{{ .id }}-title">Series: {{ .title }}</h2>
+  <p>{{ .description }}</p>
+  <ol class="entries">{{ range .pages }}
+    <li class="row"><a href="{{ .RelPermalink }}"><span class="row-title">{{ .Title }}</span></a> <span class="row-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time></span></li>{{ end }}
+  </ol>
+</section>
+{{- end }}
