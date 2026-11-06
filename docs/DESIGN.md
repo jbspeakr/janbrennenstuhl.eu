@@ -37,6 +37,7 @@ Meaning never rests on colour alone: findings carry anchors and labels, verdicts
 Each kind of block has its own treatment, so a page never reads as a stack of identical boxes:
 
 - **Findings** (key findings, `finding`): `--ground-2` panel with the 2px accent rail on the left. Their actions (link, copy quote, save as image) are small underlined text, not buttons.
+- **Tables:** open, no box: a `--rule-strong` rule above and below, `--rule` between rows, tabular figures. Columns of figures are right-aligned automatically by the table render hook. A two-column table with `{.figures}` becomes a key-figures list: the label in `--ink-2`, the **bold** part of the value set large; on phones each row stacks. A soft shade at the edge shows when a wide table scrolls.
 - **Callouts:** outlined with `--rule-strong`, no fill.
 - **Notices:** `--threat` rail on a faint `--threat` tint.
 - **Explainers:** dashed outline, like the trust boundary in the drawings: the part you can operate.

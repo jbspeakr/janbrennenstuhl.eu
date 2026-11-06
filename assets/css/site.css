@@ -293,12 +293,29 @@
   .finding:target, .key-findings li:target, .pullquote:target { outline: 2px solid var(--signal); outline-offset: 4px; }
 
   /* Tables, code */
-  .table-scroll { overflow-x: auto; max-width: 100%; border: 1px solid var(--rule); border-radius: var(--radius); }
-  table { border-collapse: collapse; width: 100%; font-size: var(--small); line-height: 1.45; }
-  caption { text-align: left; font-size: var(--small); font-weight: 600; color: var(--ink-2); padding: 0.75rem 1rem 0.25rem; }
-  th, td { text-align: left; vertical-align: top; padding: 0.5rem 1rem; border-bottom: 1px solid var(--rule); }
-  thead th { font-size: var(--tiny); color: var(--ink-2); font-weight: 600; }
+  .table-scroll { overflow-x: auto; max-width: 100%; --shade: color-mix(in oklch, var(--ink) 16%, transparent);
+    background: linear-gradient(to right, var(--ground) 40%, transparent) left / 2rem 100% no-repeat local, linear-gradient(to left, var(--ground) 40%, transparent) right / 2rem 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, var(--shade), transparent) left / 0.75rem 100% no-repeat scroll, radial-gradient(farthest-side at 100% 50%, var(--shade), transparent) right / 0.75rem 100% no-repeat scroll; }
+  table { border-collapse: collapse; width: 100%; font-size: var(--small); line-height: 1.45; font-variant-numeric: tabular-nums; border-block: 1px solid var(--rule-strong); }
+  caption { text-align: left; font-size: var(--small); font-weight: 600; color: var(--ink-2); padding-bottom: 0.5rem; }
+  th, td { text-align: left; vertical-align: top; padding: 0.6rem 1.25rem 0.6rem 0; border-bottom: 1px solid var(--rule); }
+  :is(th, td):last-child { padding-right: 0; }
+  thead th { font-size: var(--tiny); color: var(--ink-2); font-weight: 500; padding-block: 0.5rem; border-bottom-color: var(--rule-strong); }
   tbody tr:last-child > * { border-bottom: 0; }
+  .num { text-align: right; }
+  /* Key figures: {.figures} on a two-column table; **bold** sets the figure */
+  .figures { border-top: 0; }
+  .figures thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .figures td { vertical-align: baseline; padding-block: 0.85rem; }
+  .figures td:first-child { color: var(--ink-2); width: 14rem; }
+  .figures td:last-child { font-size: var(--text); }
+  .figures strong { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+  @media (max-width: 40rem) {
+    .figures tr { display: block; padding-block: 0.75rem; border-bottom: 1px solid var(--rule); }
+    .figures tr:last-child { border-bottom: 0; }
+    .figures td { display: block; width: auto !important; padding: 0; border: 0; }
+    .figures td:first-child { font-size: var(--tiny); }
+  }
   .studies tbody th { font-weight: 600; min-width: 12rem; }
   .studies .org { display: block; font-weight: 400; color: var(--ink-2); font-size: var(--tiny); }
   .studies td:last-child { min-width: 14rem; }
