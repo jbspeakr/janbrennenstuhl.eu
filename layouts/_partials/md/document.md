@@ -20,6 +20,15 @@
 {{- end }}
 {{ end }}
 {{ partial "md/body.md" . }}
+{{- range partial "data/project-series.html" . }}
+
+## Series: {{ .title }}
+
+{{ .description }}
+{{ range .pages }}
+- [{{ .Title }}]({{ .Permalink }}) ({{ .Date.Format "January 2006" }})
+{{- end }}
+{{- end }}
 
 ---
 
