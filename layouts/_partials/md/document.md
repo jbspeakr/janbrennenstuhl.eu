@@ -1,4 +1,4 @@
-{{- /* Full Markdown twin: YAML front matter, title, lead or answer, key findings, body, citation footer. */ -}}
+{{- /* Full Markdown twin: YAML front matter, title, lead or answer, TL;DR findings, body, citation footer. */ -}}
 {{- $meta := partial "metadata.html" . -}}
 {{- $fm := dict -}}
 {{- range $k, $v := $meta }}{{ if not (in (slice "source_url" "source_revision" "content_hash" "claim") $k) }}{{ $fm = merge $fm (dict $k $v) }}{{ end }}{{ end -}}
@@ -13,7 +13,7 @@
 {{ . }}
 {{ end }}{{ end }}
 {{- with .Params.findings }}
-## Key findings
+## TL;DR
 {{ range $i, $f := . }}
 <a id="f-{{ $f.id }}"></a>
 {{ add $i 1 }}. {{ $f.text }} ({{ $.Permalink }}#f-{{ $f.id }})
