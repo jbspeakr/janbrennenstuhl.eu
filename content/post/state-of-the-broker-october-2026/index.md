@@ -77,7 +77,7 @@ Our biggest topic right now is moving beyond on-behalf-of cases. Today, the brok
 
 For the people who delegate, we plan an activity and audit ledger. It will power the [activity UI](https://github.com/zalando-incubator/agentic-identity-broker/issues/188 "Activity API for the broker UI") that I proposed in October as well as other auditing interfaces. In the same area, we are revisiting the [granularity of the consent screen](https://github.com/zalando-incubator/agentic-identity-broker/issues/285 "design: Overhaul Consent Screen Granularity") and want [incremental authorization with per-service virtual scopes](https://github.com/zalando-incubator/agentic-identity-broker/issues/299 "Incremental authorization: per-service virtual scopes for MCP step-up") for MCP step-up, which would also fix a re-authentication loop with optional services.
 
-The third topic is the repository itself. Now that Spec Kit runs on GitHub, we keep making the repository easier for agents to work in and add more agentic support for maintaining it.
+We are also working on the repository itself. Now that Spec Kit runs on GitHub, we keep making the repository easier for agents to work in and add more agentic support for maintaining it.
 
 [PLACEHOLDER: trends you saw in October, for example in IETF work on agent identity or vendor products. Add only what you can link.]
 
