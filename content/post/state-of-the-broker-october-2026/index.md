@@ -2,10 +2,18 @@
 title: "State of the Broker: October 2026"
 description: "The first full month of the open-source Agentic Identity Broker: security hardening, third-party OAuth 2.0 features, session fixes, Spec Kit automation and the first outside write-ups."
 claim: "In its first full month as open source, the Agentic Identity Broker gained third-party OAuth 2.0 features and its first outside contributors, while session stability and running Spec Kit on GitHub took the most work."
+lead: "October was our first full month as an open-source project. We hardened the release, connected more third-party OAuth 2.0 services, fought lost sessions, moved Spec Kit onto GitHub, and three people landed their first commits."
 date: 2026-11-06
 slug: state-of-the-broker-october-2026
 tags: ["agentic-engineering", "oauth2", "open-source"]
 series: "state-of-the-broker"
+findings:
+  - id: sotb-2026-10-activity
+    text: "In October 2026, its first full month as open source, the Agentic Identity Broker merged 95 pull requests, published 60 releases and gained 3 first-time contributors."
+  - id: sotb-2026-10-sessions
+    text: "Lost third-party sessions were the broker's most visible problem in October 2026; the fixes cover unnecessary logouts, re-consent after a failed refresh, proactive refresh and refresh tokens that a provider rejected with invalid_grant."
+  - id: sotb-2026-10-speckit
+    text: "The broker's Spec Kit phases now run as GitHub Agentic Workflows that maintainers steer with slash commands; getting there took 8 fixes and 9 failed or incomplete runs in October 2026."
 draft: true
 ---
 
