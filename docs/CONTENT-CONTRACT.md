@@ -22,7 +22,7 @@ Optional:
 | --- | --- |
 | `lead` | A longer opening shown under the title; defaults to `description`. |
 | `claim` | One quotable sentence stating the main point; used in `llms.txt`, feeds and the catalog. |
-| `findings` | Up to three key findings for essays: `[{id, text}]`. Each gets the anchor `#f-<id>`. IDs are permanent and unique site-wide. |
+| `findings` | Up to three findings for essays, shown under the heading "TL;DR": `[{id, text}]`. Each gets the anchor `#f-<id>`. IDs are permanent and unique site-wide. |
 | `series` | A series ID from `data/series.toml`; adds the series navigator. If the series names a `project` page, the post is also listed on that project page. |
 | `topics` | Overrides the topics derived from tags (see `data/topics.toml`). |
 | `lastmod` | A meaningful content change. Not a rebuild, not a metadata tweak. |
