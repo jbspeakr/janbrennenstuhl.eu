@@ -320,9 +320,9 @@
   .chroma .err { color: inherit; }
 
   /* Article end: series as a panel, citation as quiet small print, related as a full-width band. */
-  .links-box, .series-nav, .cite, .guide-nav { margin-top: 3rem; max-width: var(--measure); }
+  .links-box, .series-nav, .cite, .guide-nav, .project-series { margin-top: 3rem; max-width: var(--measure); }
   .links-box, .guide-nav { padding-top: 1.5rem; border-top: 1px solid var(--rule); }
-  :is(.links-box, .series-nav, .cite, .guide-nav) h2 { font-size: var(--small); color: var(--ink); font-weight: 600; margin-bottom: 0.75rem; }
+  :is(.links-box, .series-nav, .cite, .guide-nav, .project-series) h2 { font-size: var(--small); color: var(--ink); font-weight: 600; margin-bottom: 0.75rem; }
   .series-nav { background: var(--ground-2); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
   .series-nav ol { padding-left: 1.4em; margin-top: 0.75rem; }
   .series-nav li { padding-block: 0.15rem; }
@@ -330,7 +330,7 @@
   .series-nav a[aria-current] { font-weight: 600; text-decoration: none; }
   .series-nav a[aria-current]::before { content: "▸ " / ""; color: var(--signal); }
   .series-nav time { font-size: var(--tiny); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .series-nav > p:first-of-type { color: var(--ink-2); font-size: var(--small); }
+  :is(.series-nav, .project-series) > p:first-of-type { color: var(--ink-2); font-size: var(--small); }
   .series-step { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-size: var(--small); font-weight: 500; }
   .cite { font-size: var(--tiny); color: var(--ink-2); line-height: 1.6; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
   .cite h2 { margin-bottom: 0.5rem; }

@@ -1,0 +1,10 @@
+{{/* Series that belong to this project page (`project` in data/series.toml), each with its published pages newest first. */}}
+{{ $page := . }}{{ $found := slice }}
+{{ range hugo.Data.series.series }}{{ $s := . }}
+  {{ with $s.project }}{{ with site.GetPage . }}{{ if eq . $page }}
+    {{ with (where site.RegularPages "Params.series" $s.id).ByDate.Reverse }}
+      {{ $found = $found | append (merge $s (dict "pages" .)) }}
+    {{ end }}
+  {{ end }}{{ end }}{{ end }}
+{{ end }}
+{{ return $found }}
