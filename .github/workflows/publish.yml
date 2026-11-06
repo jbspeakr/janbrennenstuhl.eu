@@ -28,7 +28,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: false
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: verified-site
           path: releases
@@ -73,7 +73,7 @@ jobs:
       # Opt-in, after the purge: the MCP server reads the site's published JSON and Markdown.
       # Set the variable BUNNY_MCP_SCRIPT_ID and the secret MCP_DEPLOY_KEY (the script's own
       # deployment key, not the account key) once the standalone script exists (docs/DELIVERY.md).
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         if: vars.BUNNY_MCP_SCRIPT_ID != ''
         with:
           name: mcp-script
