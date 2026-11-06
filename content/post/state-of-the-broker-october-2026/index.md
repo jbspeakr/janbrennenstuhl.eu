@@ -52,13 +52,14 @@ Three people landed their first commits in October. Santhosh K ([@x418](https://
 
 | Measure | October 2026 |
 | --- | --- |
-| Commits on `main` | 93, of which 12 from Dependabot |
-| Pull requests opened / merged | 139 / 95 |
-| Issues opened / closed | 33 / 15 |
-| Releases | 60, from `v0.1.69` to `v0.1.128` |
-| People with commits | 7, of them 3 for the first time |
-| Stars | 34 on 30 October, from 27 on 1 October |
-| Forks | 5 on 30 October |
+| Commits on `main` | **93**, of which 12 from Dependabot |
+| Pull requests opened / merged | **139** / 95 |
+| Issues opened / closed | **33** / 15 |
+| Releases | **60**, from `v0.1.69` to `v0.1.128` |
+| People with commits | **7**, of them 3 for the first time |
+| Stars | **34** on 30 October, from 27 on 1 October |
+| Forks | **5** on 30 October |
+{.figures}
 
 The broker publishes a release for almost every merge to `main`, so the release count says more about our merge rate than about features. The two of us who maintain the broker still wrote most of the commits: 67 of 93, 35 of them mine.
 
