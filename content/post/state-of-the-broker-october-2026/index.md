@@ -17,21 +17,19 @@ findings:
 draft: true
 ---
 
-October was the first full month of the [Agentic Identity Broker](https://github.com/zalando-incubator/agentic-identity-broker "Agentic Identity Broker source repository") as an open-source project. We spent the first half of it hardening what we had published on 15 September, and the second half adding the features that people asked for once they connected the broker to real third-party services. Along the way, three people landed their first commits, and we moved most of our spec-driven workflow onto GitHub.
+October was the first full month of the [Agentic Identity Broker](https://github.com/zalando-incubator/agentic-identity-broker "Agentic Identity Broker source repository") as an open-source project. The team spent the first half of it hardening what we had published on 15 September, and the second half adding the features that people asked for once they connected the broker to real third-party services. Along the way, three people landed their first commits, and we moved most of our spec-driven workflow onto GitHub.
 
 This is the first post of a monthly series. Each month, I want to write down what changed in the broker, how the project numbers moved, who wrote about it, what got in the way and what we look at next. If you are new to the broker, my [retrospective on building it with coding agents]({{< ref "/post/agentic-identity-broker/index.md" >}} "What I Learned Building an Identity Broker With Coding Agents") explains what it does and why we built it.
 
 ## Hardening what we released
 
-The first two weeks of October were mostly security fixes, some of them for findings from dependency and code scanners ([#192](https://github.com/zalando-incubator/agentic-identity-broker/pull/192), [#272](https://github.com/zalando-incubator/agentic-identity-broker/pull/272)). I made the broker reject wildcard CORS origins ([#170](https://github.com/zalando-incubator/agentic-identity-broker/pull/170)), redact rejected PostgreSQL connection URLs from its logs ([#167](https://github.com/zalando-incubator/agentic-identity-broker/pull/167)) and limit where its admin API is reachable ([#155](https://github.com/zalando-incubator/agentic-identity-broker/pull/155)). I also restricted the TLS bypass for the key management service to explicit development setups ([#168](https://github.com/zalando-incubator/agentic-identity-broker/pull/168)) and closed a server-side request forgery (SSRF) bypass in the fetcher for Client ID Metadata Documents (CIMD) in production ([#169](https://github.com/zalando-incubator/agentic-identity-broker/pull/169)).
+The first two weeks of October were mostly security fixes, some of them for findings from dependency and code scanners ([#192](https://github.com/zalando-incubator/agentic-identity-broker/pull/192), [#272](https://github.com/zalando-incubator/agentic-identity-broker/pull/272)) as well as agentic security assessments using Claude Mythos 5.1 and OpenAIs Daybreak Blue. I made the broker reject wildcard CORS origins ([#170](https://github.com/zalando-incubator/agentic-identity-broker/pull/170)), redact rejected PostgreSQL connection URLs from its logs ([#167](https://github.com/zalando-incubator/agentic-identity-broker/pull/167)) and limit where its admin API is reachable ([#155](https://github.com/zalando-incubator/agentic-identity-broker/pull/155)). I also restricted the TLS bypass for the key management service to explicit development setups ([#168](https://github.com/zalando-incubator/agentic-identity-broker/pull/168)) and closed a server-side request forgery (SSRF) bypass in the fetcher for Client ID Metadata Documents (CIMD) in production ([#169](https://github.com/zalando-incubator/agentic-identity-broker/pull/169)).
 
-The second theme was observability. I taught the broker to classify why it denies a grant authorization ([#197](https://github.com/zalando-incubator/agentic-identity-broker/pull/197)) and to record grant lifecycle changes in its audit log ([#201](https://github.com/zalando-incubator/agentic-identity-broker/pull/201)). My refactoring of the classification contract had a side effect: it dropped audit fields from the Open Policy Agent (OPA) integration, and we restored them a few days later ([#219](https://github.com/zalando-incubator/agentic-identity-broker/pull/219)).
-
-[PLACEHOLDER: Jan, say which of these changes your coding agents wrote and which you did by hand, if you want to credit that here.]
+The second theme was observability. I taught the broker to classify why it denies a grant authorization ([#197](https://github.com/zalando-incubator/agentic-identity-broker/pull/197)) and to record grant lifecycle changes in its audit log ([#201](https://github.com/zalando-incubator/agentic-identity-broker/pull/201)). My refactoring of the classification contract had a side effect: it dropped audit fields from the Open Policy Agent (OPA) integration, and we had to restore them a few days later ([#219](https://github.com/zalando-incubator/agentic-identity-broker/pull/219)).
 
 ## Connecting more third-party services
 
-Most new features in October make it easier to connect the broker to OAuth 2.0 services that we don't control. We added discovery of OAuth 2.0 protected resources for third-party services ([#191](https://github.com/zalando-incubator/agentic-identity-broker/pull/191)), so an operator no longer has to list every protected resource by hand. We also made it possible to supply a trust anchor's public keys inline or from a file ([#221](https://github.com/zalando-incubator/agentic-identity-broker/pull/221)) instead of fetching them from a JSON Web Key Set (JWKS) URL. I added filesystem credential sources ([#183](https://github.com/zalando-incubator/agentic-identity-broker/pull/183)), so client secrets for third-party services can come from mounted files.
+Most new features that arrived in October make it easier to connect the broker to OAuth 2.0 services that we don't control. The team added discovery of OAuth 2.0 protected resources for third-party services ([#191](https://github.com/zalando-incubator/agentic-identity-broker/pull/191)), so an operator no longer has to list every protected resource by hand. We also made it possible to supply a trust anchor's public keys inline or from a file ([#221](https://github.com/zalando-incubator/agentic-identity-broker/pull/221)) instead of fetching them from a JSON Web Key Set (JWKS) URL. I added filesystem credential sources ([#183](https://github.com/zalando-incubator/agentic-identity-broker/pull/183)), so client secrets for third-party services can come from mounted files.
 
 CIMD clients can now authenticate with `private_key_jwt` ([#237](https://github.com/zalando-incubator/agentic-identity-broker/pull/237)), which unblocks ChatGPT as a client ([#220](https://github.com/zalando-incubator/agentic-identity-broker/issues/220)). A token exchange can now expect a different audience in its client assertion ([#283](https://github.com/zalando-incubator/agentic-identity-broker/pull/283)). We also added public outbound CIMD clients ([#280](https://github.com/zalando-incubator/agentic-identity-broker/pull/280)) and allowlisted private-use redirect URIs for agents ([#273](https://github.com/zalando-incubator/agentic-identity-broker/pull/273)).
 
@@ -55,8 +53,6 @@ Three people landed their first commits in October. Santhosh K made the Helm cha
 
 ## The month in numbers
 
-I counted these numbers on 6 November 2026 from the default branch and from GitHub search, for 1 to 31 October.
-
 | Measure | October 2026 |
 | --- | --- |
 | Commits on `main` | 93, of which 12 from Dependabot |
@@ -64,20 +60,16 @@ I counted these numbers on 6 November 2026 from the default branch and from GitH
 | Issues opened / closed | 33 / 15 |
 | Releases | 60, from `v0.1.69` to `v0.1.128` |
 | People with commits | 7, of them 3 for the first time |
-| Stars | 48 on 6 November, [PLACEHOLDER: count on 1 October] |
-| Forks | 6 on 6 November |
+| Stars | 34 on 30 October, from 27 on 1 October |
+| Forks | 5 on 30 October |
 
-The broker publishes a release for every merge to `main`, so the release count says more about our merge rate than about features. The two of us who maintain the broker still wrote most of the commits: 67 of 93, 35 of them mine.
+The broker publishes a release for almost every merge to `main`, so the release count says more about our merge rate than about features. The two of us who maintain the broker still wrote most of the commits: 67 of 93, 35 of them mine.
 
 ## Who wrote about the broker
 
 Alejandro Saucedo published [the second part of his series on agent security and identity](https://ethical.institute/newsletter/407/ "Agentic Security & Identity, Part 2") on 4 October. He runs the broker on a local Kubernetes cluster with his Kubernetes Agent Orchestration System (KAOS) and walks through allowed and denied requests for two users and two agents. HackerNoon republished [part 1](https://hackernoon.com/agent-security-and-identity-part-1-who-are-you-whos-your-agent-and-what-should-they-be-allowed "Agent Security & Identity (Part 1)") on 21 October and [part 2](https://hackernoon.com/agent-security-and-identity-part-2-who-are-you-whos-your-agent-and-what-should-they-be-allowed "Agent Security & Identity (Part 2)") on 23 October. The [KAOS documentation](https://axsaucedo.github.io/kaos/dev/security/walkthrough-agent-identity.html "KAOS: Agent identity") also lists the broker as one of three agent identity issuers.
 
 On 9 October, Mike Moore from Solo.io, the company that created agentgateway, published [a guide to token exchange in agentgateway](https://webofmike.com/agentgateway-token-exchange/ "agentgateway Token Exchange for AI Agents") with a case study on the broker. He points out that our gateway guide used the broker's own external processing sidecar instead of agentgateway's native `oauthTokenExchange` policy. That was true at the time, and we documented the native policy at the start of November ([#275](https://github.com/zalando-incubator/agentic-identity-broker/pull/275)).
-
-[PLACEHOLDER: Show HN post, date, points and comments. I found the [Show HN thread](https://news.ycombinator.com/item?id=50393235 "Show HN: Agentic Identity Broker, OAuth Delegation for AI Agents") but could not verify when it was posted.]
-
-[PLACEHOLDER: social media in October, such as LinkedIn posts, reshares and conference mentions. I could not verify these from public sources.]
 
 ## What we look at next
 
