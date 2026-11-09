@@ -17,6 +17,7 @@ name = "CC BY 4.0"
 url = "https://creativecommons.org/licenses/by/4.0/"
 
 # Plausible (EU-hosted, cookie-free). Loaded only when the build's baseURL is the production host,
-# so previews and local builds never count. The one allowed third-party request (docs/DECISIONS.md).
+# so previews and local builds never count. Served from our own host: the www pull zone proxies
+# /js/pa-*.js and /api/event to plausible.io (edge/rules.toml, docs/DECISIONS.md).
 [analytics]
-plausible = "https://plausible.io/js/pa-lwYmB-AXA--rNMvzyMeuT.js"
+plausible = "/js/pa-lwYmB-AXA--rNMvzyMeuT.js"

@@ -18,8 +18,11 @@ const routes = [
 ];
 const launch = () => chromium.launch({ headless: true, ...(process.env.CHROMIUM_EXECUTABLE ? { executablePath: process.env.CHROMIUM_EXECUTABLE, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] } : {}) });
 const overflow = page => page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
-// QA never calls the analytics host; the page must behave identically when the script is blocked.
-const offline = context => context.route('https://plausible.io/**', r => r.abort());
+// QA never calls analytics (proxied in production, see edge/rules.toml); pages must behave identically when it is blocked.
+const offline = async context => {
+  await context.route('https://plausible.io/**', r => r.abort());
+  await context.route(/\/(js\/pa-[^/]*\.js|api\/event)(\?|$)/, r => r.abort());
+};
 
 (async () => {
   const server = spawn(process.env.PYTHON || 'python3', ['scripts/serve.py', port], { stdio: 'ignore' });
