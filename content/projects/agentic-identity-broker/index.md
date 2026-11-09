@@ -13,5 +13,6 @@ Magnus Jungsbluth and I built the open-source Agentic Identity Broker. It keeps 
 - [Documentation](https://agenticidentitybroker.dev/)
 - [Source code and current project status](https://github.com/zalando-incubator/agentic-identity-broker)
 - [What I learned building it]({{< ref "/post/agentic-identity-broker" >}})
+- [How the broker fits Agent Substrate and kagent]({{< ref "/post/agent-substrate-identity" >}})
 
 The project is licensed under MIT. This page reflects the September 2026 release; consult the project documentation for current capabilities.
