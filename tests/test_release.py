@@ -86,7 +86,8 @@ class Release(unittest.TestCase):
                   'csp': {'header': 'Content-Security-Policy-Report-Only', 'directives': {'default-src': "'self'"}},
                   'cache': [{'name': 'Images', 'browser': 'public, max-age=86400', 'edge': 86400,
                              'patterns': ['*.webp'], 'exclude': ['*_hu_*']}],
-                  'mime': [], 'canonicalFrom': ['example.test.invalid']}
+                  'mime': [], 'canonicalFrom': ['example.test.invalid'],
+                  'proxy': {'name': 'Plausible', 'origin': 'https://plausible.io', 'patterns': ['*/js/pa-*.js', '*/api/event']}}
         redirects = [{'from': f'/tags/t{i}/', 'to': '/topics/a/', 'status': 301} for i in range(30)]
         redirects.append({'from': '/1/', 'to': '/', 'status': 301})
         rules = edge_rules.build(config, redirects)
@@ -99,7 +100,12 @@ class Release(unittest.TestCase):
         self.assertEqual(root['Triggers'][0]['PatternMatches'], ['*://example.test/1/'])
         slash = next(r for r in rules if r['Description'] == '[repo] Directory URL: trailing slash')
         self.assertEqual(slash['ActionParameter1'], 'https://example.test%{Url.Directory}%{Url.FileName}/')
-        self.assertEqual([t['Type'] for t in slash['Triggers']], [0, 3, 6])
+        self.assertEqual([t['Type'] for t in slash['Triggers']], [0, 0, 3, 6])
+        # /api/event has no extension; a 301 to /api/event/ would drop every analytics POST.
+        self.assertEqual((slash['Triggers'][1]['PatternMatches'], slash['Triggers'][1]['PatternMatchingType']), (['*/js/pa-*.js', '*/api/event'], 2))
+        proxy = next(r for r in rules if r['Description'] == '[repo] Proxy: Plausible')
+        self.assertEqual((proxy['ActionType'], proxy['ActionParameter1']), (2, 'https://plausible.io'))
+        self.assertEqual((proxy['ExtraActions'][0]['ActionType'], proxy['ExtraActions'][0]['ActionParameter1'], proxy['ExtraActions'][0]['ActionParameter2']), (6, 'Host', 'plausible.io'))
         self.assertIn('*://example.test/.well-known*', slash['Triggers'][0]['PatternMatches'])
         images = next(r for r in rules if r['Description'] == '[repo] Cache: Images')
         self.assertEqual((images['TriggerMatchingType'], images['Triggers'][1]['PatternMatchingType']), (1, 2))

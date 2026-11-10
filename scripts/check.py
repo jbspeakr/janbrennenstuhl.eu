@@ -26,8 +26,9 @@ HOST = "www.janbrennenstuhl.eu"
 
 # Compressed budgets in bytes (docs/DESIGN.md).
 BUDGET = {"css": 15_000, "js_article": 8_000, "html_article": 30_000, "font_preload": 35_000, "diagram": 6_000, "search_index": 200_000}
-# The only third-party script allowed on any page (docs/DECISIONS.md): Plausible analytics.
-ALLOWED_SCRIPT_HOSTS = {"plausible.io"}
+# Plausible analytics is served from our own host through the edge proxy (docs/DECISIONS.md), so the
+# script URL must be a same-origin path the proxy rule in edge/rules.toml covers.
+ANALYTICS_PATH = "/js/pa-"
 
 errors: list[str] = []
 warnings: list[str] = []
@@ -219,7 +220,8 @@ for path, page in pages.items():
         check(not script.get("src", "").startswith(("http:", "https:", "//")), f"Third-party script {route}")
     for body in page.find("body"):  # the analytics loader in site.js reads this attribute after the load event
         analytics = body.get("data-analytics", "")
-        check(not analytics or urlsplit(analytics).hostname in ALLOWED_SCRIPT_HOSTS, f"Analytics host not allowed {route}: {analytics}")
+        check(not analytics or (not urlsplit(analytics).netloc and analytics.startswith(ANALYTICS_PATH)),
+              f"Analytics script must be the proxied same-origin path {route}: {analytics}")
     for link in page.find("link", rel="stylesheet"):
         check(not link.get("href", "").startswith(("http:", "https:", "//")), f"Third-party stylesheet {route}")
     check(len(page.ids) == len(set(page.ids)), f"Duplicate IDs {route}: {sorted({i for i in page.ids if page.ids.count(i) > 1})}")

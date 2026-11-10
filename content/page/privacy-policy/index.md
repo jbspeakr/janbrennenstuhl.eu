@@ -25,7 +25,7 @@ This site sets no cookies. Search runs in your browser after downloading a stati
 
 ## Page-view counting
 
-The production site loads one script from [Plausible](https://plausible.io/data-policy), an EU-hosted analytics service. It counts page views and referrers without cookies, without a persistent identifier and without storing your IP address; the data is aggregated and cannot be traced to a person. Browsers that block the script lose nothing: every page works without it.
+The production site loads one script from [Plausible](https://plausible.io/data-policy), an EU-hosted analytics service. The script and its page-view requests go through this site's own domain and are passed on to Plausible, so Plausible receives the same data as with a direct connection. It counts page views and referrers without cookies, without a persistent identifier and without storing your IP address; the data is aggregated and cannot be traced to a person. Browsers that block the script lose nothing: every page works without it.
 
 ## Color preference
 

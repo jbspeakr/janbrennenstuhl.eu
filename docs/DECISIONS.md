@@ -15,13 +15,15 @@ IETF aipref vocabulary is published); `/.well-known/tdmrep.json` declares `tdm-r
 
 ## Analytics (15 October 2026)
 
-**Plausible stays.** It is the one third-party request the site makes: `assets/js/theme.js` carries
-the queue stub inside the already-hashed inline script, `baseof.html` puts the script URL on `<body>`
+**Plausible stays, proxied through our own host (9 November 2026).** Ad blockers that list
+`plausible.io` blocked the script and its beacon, so the www pull zone now sends `/js/pa-*.js` and
+`/api/event` to `https://plausible.io` with a Change Origin URL edge rule (`[proxy]` in
+`edge/rules.toml`), and the site makes no third-party request. `assets/js/theme.js` carries
+the queue stub, with `endpoint: '/api/event'`, inside the already-hashed inline script, `baseof.html` puts the script URL on `<body>`
 only when the build's base URL is the production host, `site.js` injects it after the load event so
 it never competes with content (a plain `async` tag cost one simulated round trip of LCP in the
-Lighthouse gate), and `scripts/check.py` allows exactly that host.
-The CSP in `docs/DELIVERY.md` lists `https://plausible.io` in `script-src` and `connect-src`. No
-proxying through Bunny for now; revisit only if ad blockers make the numbers useless. Rules out:
+Lighthouse gate), and `scripts/check.py` requires a same-origin `/js/pa-` path. The CSP needs only
+`'self'`. Rules out:
 inline analytics snippets, self-hosted Plausible or Umami, a web-vitals beacon.
 
 ## Newsletter and webmentions (14 October 2026)

@@ -89,7 +89,7 @@ Compressed transfer, enforced by `scripts/check.py` (and Lighthouse in CI):
 | Preloaded font | 35 kB | 26.4 kB |
 | Inline diagram | 6 kB | ~2 kB |
 | Search index (`/search/index.json`, full text) | 200 kB | ~150 kB |
-| Third-party requests | 1: the deferred Plausible script on the production host (docs/DECISIONS.md) | 1 |
+| Third-party requests | 0: the deferred Plausible script is proxied through our own host (docs/DECISIONS.md) | 0 |
 
 ### LCP and the CSP
 

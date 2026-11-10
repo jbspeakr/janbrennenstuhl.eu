@@ -12,6 +12,14 @@ maxRules = 50
 # the root domain, the zone's Bunny hostname and the old jbspeakr.cc domain. One rule, matched on the full URL.
 canonicalFrom = ["janbrennenstuhl.eu", "*.b-cdn.net", "jbspeakr.cc", "www.jbspeakr.cc"]
 
+# Plausible through our own host (docs/DECISIONS.md), so blockers that list plausible.io miss it.
+# The paths match Plausible's own, because Change Origin URL keeps the request path. The event
+# endpoint is set in assets/js/theme.js; the script URL in config/_default/params.toml.
+[proxy]
+name = "Plausible"
+origin = "https://plausible.io"
+patterns = ["*/js/pa-*.js", "*/api/event"]
+
 [headers]
 "Strict-Transport-Security" = "max-age=31536000; includeSubDomains; preload"
 "X-Content-Type-Options" = "nosniff"
@@ -29,11 +37,11 @@ header = "Content-Security-Policy-Report-Only"
 
 [csp.directives]
 "default-src" = "'self'"
-"script-src" = "'self' https://plausible.io 'sha256-1dUuVM7OURbaW/lywnzsnTq+6GnIZ3efUSOx8oivojs=' 'inline-speculation-rules'"
+"script-src" = "'self' 'sha256-HhZwVFacmsMozPSi9Ay8XqlFX3+hDfJmOYyPnYYBRro=' 'inline-speculation-rules'"
 "style-src" = "'self'"
 "img-src" = "'self' data:"
 "font-src" = "'self'"
-"connect-src" = "'self' https://plausible.io"
+"connect-src" = "'self'"
 "object-src" = "'none'"
 "base-uri" = "'self'"
 "frame-ancestors" = "'none'"
@@ -54,6 +62,9 @@ name = "Fingerprinted assets and fonts"
 browser = "public, max-age=31536000, immutable"
 edge = 31536000
 patterns = ["*/css/*", "*/js/*", "*_hu_*", "*/fonts/*.woff2"]
+# The proxied Plausible script keeps its URL across versions, so it is not immutable: it keeps
+# plausible.io's own Cache-Control (no extra rule, which keeps us under maxRules).
+exclude = ["*/js/pa-*.js"]
 
 [[cache]]
 name = "Original images"

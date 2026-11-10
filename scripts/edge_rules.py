@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 API = "https://api.bunny.net"
 
 # Enums from Bunny's core OpenAPI spec (EdgeRuleActionType, TriggerTypes, TriggerMatchingTypes).
-REDIRECT, OVERRIDE_CACHE_TIME, SET_RESPONSE_HEADER, OVERRIDE_BROWSER_CACHE_TIME = 1, 3, 5, 16
+REDIRECT, ORIGIN_URL, OVERRIDE_CACHE_TIME, SET_RESPONSE_HEADER, SET_REQUEST_HEADER, OVERRIDE_BROWSER_CACHE_TIME = 1, 2, 3, 5, 6, 16
 URL, REQUEST_HEADER, EXTENSION, QUERY_STRING = 0, 1, 3, 6
 ANY, ALL, NONE = 0, 1, 2
 # https://docs.bunny.net/cdn/limits
@@ -73,9 +73,15 @@ def build(config, redirects):
     rules.append(rule(prefix + "Directory URL: index.html with query",
                       action(REDIRECT, base + "?%{Request.QueryString}", "301"),
                       [index_html, trigger(["?*=*"], QUERY_STRING)], ALL))
+    proxy = config["proxy"]
     rules.append(rule(prefix + "Directory URL: trailing slash", action(REDIRECT, base + "%{Url.FileName}/", "301"),
                       [trigger(["*/", *(f"*://{h}/.well-known*" for h in [host, *config["canonicalFrom"]] if "*" not in h)], matching=NONE),
-                       trigger(["{{empty}}"], EXTENSION), no_query], ALL))
+                       trigger(proxy["patterns"], matching=NONE), trigger(["{{empty}}"], EXTENSION), no_query], ALL))
+    # First-party analytics: the script and its event endpoint are fetched from the proxy origin.
+    # Bunny forwards the visitor's IP in X-Forwarded-For, which the origin needs to count visitors.
+    origin_host = proxy["origin"].split("://", 1)[1].split("/", 1)[0]
+    rules.append(url_rule(f"{prefix}Proxy: {proxy['name']}", action(ORIGIN_URL, proxy["origin"]), proxy["patterns"],
+                          extra=[action(SET_REQUEST_HEADER, "Host", origin_host)]))
     # A Cache-Control set with Set Response Header also reaches the edge's own caching decision, so
     # max-age=0 kept HTML out of the edge cache. browserTtl uses Override Browser Cache Time instead,
     # which only changes what browsers get.
