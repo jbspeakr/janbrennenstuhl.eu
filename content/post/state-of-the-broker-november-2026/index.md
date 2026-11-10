@@ -30,6 +30,7 @@ Notes from 1 to 6 November:
 Notes from 1 to 6 November:
 
 - Spec Kit automation kept needing fixes: CI and container test repair after implementation, App permissions, the sandbox for security scanners ([#370](https://github.com/zalando-incubator/agentic-identity-broker/pull/370), [#375](https://github.com/zalando-incubator/agentic-identity-broker/pull/375), [#391](https://github.com/zalando-incubator/agentic-identity-broker/pull/391), [#423](https://github.com/zalando-incubator/agentic-identity-broker/pull/423)).
+- My [Agent Substrate proof of concept]({{< ref "/post/agent-substrate-identity" >}}) found two broker gaps: the broker can't act as a Substrate credential provider without a shim, and its third-party exchange can't accept Substrate's actor JWT as a separate actor token. Both are open for discussion with the contributors.
 - [PLACEHOLDER: anything else that got in the way.]
 
 ## Thank you, new contributors
