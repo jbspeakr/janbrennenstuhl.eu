@@ -34,26 +34,45 @@ The broker gives the approver little to work with today. The OPA policy can atta
 
 ## I Ask the Model Questions and Let Rules Decide
 
-The issue contains an illustrative request to such a model. It is a sketch and not a specification:
+The issue contains an illustrative request in shorthand. It is a sketch and not a specification. The model I have in mind for it is `laya:en`, the English checkpoint of [Laya](https://systemonemodels.org/models/laya/ "Laya by Convai Innovations"), an open-weights System One model from Convai Innovations, served locally by [Ollaya](https://ollaya.dev/ "Ollaya: Run decision models locally"). Ollaya is a community project that runs decision models the way Ollama runs LLMs, and its `/v1/systemone` endpoint takes the same request format as TypeSafe's Jev. Written out for that endpoint, the sketch looks like this:
 
-```text
-state:
-  mcp_server: google-drive-mcp
-  tool_name: drive.share_file
-  policy_risk_level: medium
-  arguments: { role: editor, grantee_domain: thirdparty.com,
-               transfer_ownership: false }
-questions:
-  leaves_organisation: noul  - "Does this call give access or data to
-                                a party outside the organisation?"
-  changes_access:      noul  - "Does this call change who can access
-                                a resource?"
-  reversibility:       score - ["no persistent effect",
-                                "reversible with effort",
-                                "irreversible or externally visible"]
+```shell {filename="system-one-request.sh"}
+curl http://localhost:11435/v1/systemone -d '{
+  "model": "laya:en",
+  "state": {
+    "mcp_server": "google-drive-mcp",
+    "tool_name": "drive.share_file",
+    "policy_risk_level": "medium",
+    "arguments": {
+      "role": "editor",
+      "grantee_domain": "thirdparty.com",
+      "transfer_ownership": false
+    }
+  },
+  "questions": {
+    "leaves_organisation": {
+      "type": "noul",
+      "instructions": "Does this call give access or data to a party outside the organisation?"
+    },
+    "changes_access": {
+      "type": "noul",
+      "instructions": "Does this call change who can access a resource?"
+    },
+    "reversibility": {
+      "type": "score",
+      "criteria": [
+        "no persistent effect",
+        "reversible with effort",
+        "irreversible or externally visible"
+      ]
+    }
+  }
+}'
 ```
 
 The model gets the tool, the policy's risk level and the arguments. `noul` and `score` are two of the question types that System One decision models share. A Noul question is a yes/no question, and the model returns the probability that the answer is yes. A Score question places the content on an ordered scale that the caller defines. For this call, a useful model returns a probability close to 1 for the first two questions and a score around the middle level, "reversible with effort". A rule in the broker then decides what follows. An operator could configure that a call is approved automatically when both probabilities are close to 0 and the score sits at "no persistent effect", and that everything else shows up on the approval page with the three answers next to it.
+
+Whether `laya:en` answers such questions well enough is open. Convai describes Laya as "a fast base to specialise, not a zero-shot decision engine", and Ollaya's model page says the raw checkpoints are over-confident until someone refits their calibration on labelled data. Thresholds in a rule are only worth something after that work.
 
 I keep the decision away from the model mainly because an operator can review a rule. "Auto-approve when nothing leaves the organisation and the call has no persistent effect" is a sentence a security team can agree to, test and find again in an audit log next to the answers that triggered it. A model that returns "approve" leaves only the model to ask why. I made a similar point about reviewers based on large language models in [AppSec in the Age of Agentic Engineering]({{< ref "/post/appsec-agentic-engineering/index.md" >}} "AppSec in the Age of Agentic Engineering"): they catch things that rules miss, but they don't return the same result on every run, so they need something deterministic next to them.
 
@@ -77,7 +96,7 @@ I don't have a settled answer yet. Magnus's placement keeps the decision in one 
 
 MCP arguments can hold anything: the body of an email, a customer record, the content of a file. If the model runs outside the deployment, every assessed call sends that content to one more party. Forwarding the complete argument map can't be the default for that reason. Repo Assist put it as the second open decision on the issue: which argument fields may leave the deployment, and which timeout and retention apply.
 
-The example above hints at an answer. The three questions need `role`, `grantee_domain` and `transfer_ownership`, and they don't need the file. An operator could name, per tool, the fields that the model may see, and a tool without such a list would never be assessed. The interface is meant to be pluggable, and several System One models have open weights, so an operator could also point it at a model inside their own deployment. I'd make the operator choose in both cases.
+The example above hints at an answer. The three questions need `role`, `grantee_domain` and `transfer_ownership`, and they don't need the file. An operator could name, per tool, the fields that the model may see, and a tool without such a list would never be assessed. The interface is meant to be pluggable, so an operator could also keep the model inside their own deployment. `laya:en` has 421M parameters and runs on a CPU, and Ollaya listens on `127.0.0.1` by default, so in the setup above no argument leaves the machine. I'd make the operator choose in both cases.
 
 ## A Failing Model Never Approves Anything
 
