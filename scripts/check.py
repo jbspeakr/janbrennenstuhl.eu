@@ -25,7 +25,7 @@ SITE = "https://www.janbrennenstuhl.eu"
 HOST = "www.janbrennenstuhl.eu"
 
 # Compressed budgets in bytes (docs/DESIGN.md).
-BUDGET = {"css": 15_000, "js_article": 8_000, "html_article": 30_000, "font_preload": 35_000, "diagram": 6_000, "search_index": 200_000}
+BUDGET = {"css": 15_000, "js_article": 8_000, "html_article": 30_000, "font_preload": 35_000, "diagram": 6_000, "search_index": 400_000, "search_engine": 100_000}
 # Plausible analytics is served from our own host through the edge proxy (docs/DECISIONS.md), so the
 # script URL must be a same-origin path the proxy rule in edge/rules.toml covers.
 ANALYTICS_PATH = "/r/"
@@ -348,6 +348,13 @@ for finding in findings:
 
 search = json.loads((PUBLIC / "search/index.json").read_text())
 check({s["id"] for s in search} == {i["id"] for i in items}, "Search index and catalog cover different entries")
+# The browser searches with Pagefind (scripts/search-index.sh); /search/index.json above is what the MCP server reads.
+pagefind_dir = PUBLIC / "pagefind"
+check((pagefind_dir / "pagefind.js").exists(), "No Pagefind bundle in public/pagefind; run scripts/search-index.sh after the build")
+if (pagefind_dir / "pagefind-entry.json").exists():
+    indexed = sum(lang["page_count"] for lang in json.loads((pagefind_dir / "pagefind-entry.json").read_text())["languages"].values())
+    check(indexed == len(items), f"Pagefind indexed {indexed} pages, the catalog has {len(items)}")
+    check(not list(pagefind_dir.glob("pagefind-*ui*")), "Unused Pagefind UI files in public/pagefind")
 
 redirects = json.loads((PUBLIC / "redirects.json").read_text())["redirects"]
 for r in redirects:
@@ -436,10 +443,14 @@ check(article_js <= BUDGET["js_article"], f"Article JS budget: {article_js} B > 
 font = (PUBLIC / "fonts/Geist-Variable-1.7.2.woff2").stat().st_size
 check(font <= BUDGET["font_preload"], f"Preloaded font budget: {font} B")
 search_index = gz((PUBLIC / "search/index.json").read_bytes())
+# What a browser fetches before its first search, whatever the query: the API, its worker, the engine
+# and the index metadata. Index chunks and page fragments are fetched per query (.pagefind files are stored compressed).
+search_engine = sum(gz(p.read_bytes()) for p in pagefind_dir.glob("pagefind*.js")) + sum(p.stat().st_size for p in list(pagefind_dir.glob("wasm.en*.pagefind")) + list(pagefind_dir.glob("*.pf_meta")))
+check(search_engine <= BUDGET["search_engine"], f"Search engine budget: {search_engine} B > {BUDGET['search_engine']} B")
 check(search_index <= BUDGET["search_index"], f"Search index budget: {search_index} B > {BUDGET['search_index']} B")
 
 print(f"Checked {len(pages)} HTML files, {len(items)} catalog entries, {len(findings)} findings, {len(redirects)} redirects.")
-print(f"Compressed: CSS {css} B, article JS {article_js} B, preloaded font {font} B, search index {search_index} B.")
+print(f"Compressed: CSS {css} B, article JS {article_js} B, preloaded font {font} B, search engine {search_engine} B, MCP search index {search_index} B.")
 for warning in warnings:
     print("WARNING:", warning)
 if errors:

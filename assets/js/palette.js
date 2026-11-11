@@ -1,6 +1,6 @@
-import { loadIndex, search, snippet, kindLabel } from './search-core.js';
+import { search, kindLabel } from './search-core.js';
 
-let dialog, input, kind, topic, list, status, lastFocus;
+let dialog, input, kind, topic, list, status, lastFocus, generation = 0;
 
 function build() {
   dialog = document.createElement('dialog');
@@ -48,26 +48,29 @@ function build() {
 }
 
 async function run() {
+  const current = ++generation;
   const q = input.value.trim();
-  list.replaceChildren();
-  if (!q && !kind.value && !topic.value) { status.textContent = 'Type to search. Arrow keys move through results; Enter opens the first.'; return; }
+  if (!q && !kind.value && !topic.value) { list.replaceChildren(); status.textContent = 'Type to search. Arrow keys move through results; Enter opens the first.'; return; }
   status.textContent = 'Searching…';
   try {
-    const hits = search(await loadIndex(), q, { kind: kind.value, topic: topic.value }).slice(0, 12);
-    for (const { entry, section, words } of hits) {
+    const { total, hits } = await search(q, { kind: kind.value, topic: topic.value, limit: 12 });
+    if (current !== generation) return;
+    list.replaceChildren();
+    for (const hit of hits) {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.href = section ? `${entry.url}#${section.id}` : entry.url;
-      a.textContent = entry.title;
+      a.href = hit.section ? hit.section.url : hit.url;
+      a.textContent = hit.title;
       const small = document.createElement('small');
-      small.textContent = `${kindLabel[entry.kind] || entry.kind} · ${entry.published.slice(0, 4)}${section ? ` · ${section.title}` : ''}`;
+      small.textContent = `${kindLabel[hit.kind] || hit.kind} · ${(hit.date || '').slice(0, 4)}${hit.section ? ` · ${hit.section.title}` : ''}`;
       a.append(small);
       li.append(a);
       list.append(li);
-      if (!section && words.length) small.title = snippet(entry.description || '', words, 120);
     }
-    status.textContent = hits.length ? `${hits.length} result${hits.length === 1 ? '' : 's'}.` : 'No results. Try fewer words or clear the filters.';
+    status.textContent = total ? `${total} result${total === 1 ? '' : 's'}${total > hits.length ? `, showing ${hits.length}` : ''}.` : 'No results. Try fewer words or clear the filters.';
   } catch (_) {
+    if (current !== generation) return;
+    list.replaceChildren();
     status.textContent = 'Search could not load. Use the search page instead.';
   }
 }

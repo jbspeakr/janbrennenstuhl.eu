@@ -1,0 +1,6 @@
+{{- /* What Pagefind (scripts/search-index.sh) needs from an indexed page besides its text: the kind and
+       topics as filters, the kind and date as result metadata, and the date for filter-only listings. */ -}}
+{{- $kind := partial "data/kind.html" . -}}
+{{- $date := .PublishDate.Format "2006-01-02" -}}
+<span hidden data-pagefind-filter="kind:{{ $kind }}" data-pagefind-meta="kind:{{ $kind }}"></span><span hidden data-pagefind-meta="date:{{ $date }}" data-pagefind-sort="date:{{ $date }}"></span>
+{{- range partial "data/topics.html" . }}<span hidden data-pagefind-filter="topic:{{ . }}"></span>{{ end -}}

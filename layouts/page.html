@@ -2,7 +2,7 @@
 {{- $kind := partial "data/kind.html" . -}}
 {{- if in (slice "essay" "guide" "talk" "project") $kind -}}
 <div class="progress" aria-hidden="true"></div>
-<article class="article k-{{ $kind }}">
+<article class="article k-{{ $kind }}" data-pagefind-body>{{ partial "search-meta.html" . }}
   <header class="article-header">
     <div class="article-art">{{ partial "diagram.html" (dict "page" . "name" (printf "d-%s" (partial "data/id.html" .))) }}</div>
     <div class="wrap article-head">
@@ -35,7 +35,7 @@
 {{- /* Narrow screens have the contents list only at the top of a long page; site.js shows this once it is out of view. */}}
 {{ if ge (len .Fragments.Headings) 1 }}<a class="to-contents" href="#contents" hidden>Contents</a>{{ end }}
 {{- else -}}
-<article class="wrap page">
+<article class="wrap page"{{ if in (partialCached "eligible.html" . "all") . }} data-pagefind-body{{ end }}>{{ if in (partialCached "eligible.html" . "all") . }}{{ partial "search-meta.html" . }}{{ end }}
   <header class="page-header">
     <h1>{{ .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
