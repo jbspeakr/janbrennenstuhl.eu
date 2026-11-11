@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse, json, os, re, sys, tomllib
 from pathlib import Path
 from urllib.error import HTTPError
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -73,15 +74,23 @@ def build(config, redirects):
     rules.append(rule(prefix + "Directory URL: index.html with query",
                       action(REDIRECT, base + "?%{Request.QueryString}", "301"),
                       [index_html, trigger(["?*=*"], QUERY_STRING)], ALL))
-    proxy = config["proxy"]
     rules.append(rule(prefix + "Directory URL: trailing slash", action(REDIRECT, base + "%{Url.FileName}/", "301"),
                       [trigger(["*/", *(f"*://{h}/.well-known*" for h in [host, *config["canonicalFrom"]] if "*" not in h)], matching=NONE),
-                       trigger(proxy["patterns"], matching=NONE), trigger(["{{empty}}"], EXTENSION), no_query], ALL))
-    # First-party analytics: the script and its event endpoint are fetched from the proxy origin.
-    # Bunny forwards the visitor's IP in X-Forwarded-For, which the origin needs to count visitors.
-    origin_host = proxy["origin"].split("://", 1)[1].split("/", 1)[0]
-    rules.append(url_rule(f"{prefix}Proxy: {proxy['name']}", action(ORIGIN_URL, proxy["origin"]), proxy["patterns"],
-                          extra=[action(SET_REQUEST_HEADER, "Host", origin_host)]))
+                       trigger(["{{empty}}"], EXTENSION), no_query], ALL))
+    # First-party analytics (https://plausible.io/docs/proxy/introduction): Change Origin URL with a
+    # full URL replaces the request path, so neutral paths on our host map to Plausible's own.
+    # Every proxied path needs a file extension: Bunny 301s extensionless paths before an origin rule.
+    # Host is set in case the zone forwards the visitor's; X-Forwarded-For carries the visitor's IP,
+    # without which Plausible counts every visit from the CDN and its bot filter drops them.
+    for route in config["proxy"]:
+        if not Path(route["path"]).suffix:
+            raise ValueError(f"Proxied path needs a file extension: {route['path']}")
+        extra = [action(SET_REQUEST_HEADER, "Host", urlsplit(route["origin"]).hostname),
+                 action(SET_REQUEST_HEADER, "X-Forwarded-For", "%{User.IP}")]
+        if "edge" in route:
+            extra.append(action(OVERRIDE_CACHE_TIME, str(route["edge"])))
+        rules.append(url_rule(f"{prefix}Proxy: {route['name']}", action(ORIGIN_URL, route["origin"]),
+                              [f"*://{host}{route['path']}"], extra=extra))
     # A Cache-Control set with Set Response Header also reaches the edge's own caching decision, so
     # max-age=0 kept HTML out of the edge cache. browserTtl uses Override Browser Cache Time instead,
     # which only changes what browsers get.

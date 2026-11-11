@@ -28,7 +28,7 @@ HOST = "www.janbrennenstuhl.eu"
 BUDGET = {"css": 15_000, "js_article": 8_000, "html_article": 30_000, "font_preload": 35_000, "diagram": 6_000, "search_index": 200_000}
 # Plausible analytics is served from our own host through the edge proxy (docs/DECISIONS.md), so the
 # script URL must be a same-origin path the proxy rule in edge/rules.toml covers.
-ANALYTICS_PATH = "/js/pa-"
+ANALYTICS_PATH = "/r/"
 
 errors: list[str] = []
 warnings: list[str] = []

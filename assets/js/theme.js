@@ -8,7 +8,7 @@ try {
   }
 } catch (_) { /* Follow the system theme. */ }
 // Plausible queue stub (the script itself is loaded only on the production host, see baseof.html).
-// Events go to our own host; the edge proxies /api/event to plausible.io (edge/rules.toml).
+// Events go to our own host; the edge proxies /r/e.json to plausible.io (edge/rules.toml).
 window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
 window.plausible.init = window.plausible.init || function (o) { window.plausible.o = o || {}; };
-window.plausible.init({ endpoint: '/api/event' });
+window.plausible.init({ endpoint: '/r/e.json' });
