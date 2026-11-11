@@ -93,8 +93,7 @@
   .theme-toggle[data-current="dark"] .i-moon, .theme-toggle[data-current="light"] .i-sun { display: none; }
   .search-trigger kbd { border: 0; padding: 0; color: var(--ink-2); }
   @media (max-width: 52rem) {
-    .primary { order: 3; width: 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 1.1rem; padding-bottom: 0.1rem; }
-    .primary a { white-space: nowrap; }
+    .primary { order: 3; width: 100%; gap: 0.125rem 1.1rem; }
     .search-trigger span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   }
   @media (max-width: 26rem) { .brand-name span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } }
@@ -161,7 +160,7 @@
   .now-list { margin-block: 0 2.5rem; max-width: var(--measure); }
   @media (max-width: 40rem) { .now-strip .wrap { grid-template-columns: 1fr; } }
 
-  .recent, .topics-teaser, .guide-teaser { margin-top: clamp(3rem, 6vw, 5rem); }
+  .recent, .topics-teaser, .guide-teaser, .projects-teaser, .agents-strip { margin-top: clamp(3rem, 6vw, 5rem); }
   .index-head { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: 0.75rem; margin-bottom: 0.5rem; }
   .index-head h2 { font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem); letter-spacing: -0.02em; }
   .index-head p { font-size: var(--small); color: var(--ink-2); }
@@ -179,6 +178,40 @@
   .row-meta { font-size: var(--tiny); display: flex; gap: 0.5rem; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
   .row-meta .kind { color: var(--ink-2); }
   .row-meta .series { color: var(--ink-2); }
+
+  /* Home blocks: the lead essay with rows, cards (field guide, projects), the agents panel. */
+  .row-rich { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; padding-block: 1rem; }
+  .row-rich:first-child { padding-top: 1.5rem; }
+  .row-date { font-size: var(--tiny); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .row-rich > a { grid-column: 1 / -1; font-weight: 600; font-size: 1.1rem; }
+  .cards { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--ground-2); }
+  .card:hover { border-color: var(--rule-strong); }
+  .card:focus-within { outline: var(--focus); outline-offset: 3px; }
+  .card .diagram { aspect-ratio: 5 / 2; width: 100%; height: auto; border-bottom: 1px solid var(--rule); }
+  .card-text { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem 1.25rem 1.25rem; flex: 1; font-size: var(--small); color: var(--ink-2); line-height: 1.5; }
+  .card-label { font-size: var(--tiny); color: var(--ink-2); }
+  .card :is(h2, h3) { font-size: 1.15rem; line-height: 1.3; color: var(--ink); }
+  .card :is(h2, h3) a { text-decoration: none; }
+  .card :is(h2, h3) a::after { content: ""; position: absolute; inset: 0; }
+  .card :is(h2, h3) a:focus-visible { outline: none; }
+  .card:hover :is(h2, h3) a { text-decoration: underline; text-decoration-thickness: 1px; }
+  .card .row-meta { margin-top: auto; padding-top: 0.5rem; }
+  .essay-lead { display: grid; gap: 0 3rem; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; }
+  .essay-lead .cards { grid-template-columns: 1fr; }
+  .essay-lead .card-lead h3 { font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.6rem); letter-spacing: -0.015em; }
+  .essay-lead .card-lead .card-text { font-size: 1rem; padding: 1.25rem 1.5rem 1.5rem; }
+  @media (max-width: 60rem) { .essay-lead { grid-template-columns: 1fr; } }
+  .project-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+  .agents-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 3rem; align-items: center; border: 1px solid var(--rule-strong); border-radius: var(--radius); padding: clamp(1rem, 3vw, 2rem); }
+  .agents-panel h2 { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); letter-spacing: -0.02em; margin-block: 0.25rem 0.5rem; }
+  .agents-panel p { font-size: var(--small); color: var(--ink-2); line-height: 1.6; max-width: 40rem; }
+  .agents-connect { display: grid; gap: 0.75rem; }
+  .agents-panel .endpoint { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+  .endpoint code { color: var(--ink); background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 0.375rem 0.5rem; font-size: var(--tiny); overflow-wrap: anywhere; }
+  .agents-tools { display: flex; flex-wrap: wrap; gap: 0.25rem 0.875rem; }
+  .agents-tools code { font-size: var(--tiny); }
+  @media (max-width: 52rem) { .agents-panel { grid-template-columns: 1fr; } }
 
   /* Pages and articles */
   .page, .page-header { padding-top: clamp(2.5rem, 6vw, 4.5rem); }

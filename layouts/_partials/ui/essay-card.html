@@ -1,0 +1,11 @@
+{{- /* Context: PAGE. The lead essay on the home page, with its drawing. */ -}}
+{{- $topic := dict }}{{ with index (partial "data/topics.html" .) 0 }}{{ $topic = partial "data/topic.html" . }}{{ end -}}
+<li class="card card-lead">
+  {{ partial "diagram.html" (dict "page" . "class" "mini") }}
+  <div class="card-text">
+    <p class="card-label">{{ with partial "data/series.html" . }}{{ .title }}{{ else }}{{ $topic.title }}{{ end }}</p>
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p>{{ .Description }}</p>
+    <p class="row-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time> <span aria-hidden="true">·</span> {{ .ReadingTime }} min read</p>
+  </div>
+</li>
