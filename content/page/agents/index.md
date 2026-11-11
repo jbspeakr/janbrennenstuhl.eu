@@ -3,7 +3,7 @@ title: For agents
 slug: agents
 description: How software agents can find, read, quote and cite this site, and what the reuse policy is.
 date: 2026-10-13
-lastmod: 2026-10-29
+lastmod: 2026-11-11
 ---
 
 Everything on this site is written for people first, and every page is also available in a form that software can read without parsing HTML.
@@ -29,6 +29,18 @@ A read-only [Model Context Protocol](https://modelcontextprotocol.io/) server ru
 - `list_topics` lists the topics with descriptions and entry counts.
 
 It serves the same public files listed above, a few minutes behind a release, and is rate-limited per client.
+
+### Connect a client
+
+In Claude Code, add it with one command:
+
+```sh
+claude mcp add --transport http janbrennenstuhl https://mcp.janbrennenstuhl.eu/mcp
+```
+
+In Claude, open Settings, then Connectors, choose "Add custom connector" and paste the URL. Other MCP clients take the same URL as a remote server with the Streamable HTTP transport.
+
+I describe how the server is built in [A Read-Only MCP Server with Bunny Edge Script]({{< ref "/post/blog-mcp-server" >}}).
 
 ## Citing
 

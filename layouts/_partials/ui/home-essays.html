@@ -1,0 +1,12 @@
+{{- /* Context: dict "pages" (essays, newest first) "variant" (index | cards | lead). */ -}}
+{{- $v := .variant | default "lead" -}}
+{{- if eq $v "cards" -}}
+<ol class="cards essay-cards">{{ range first 6 .pages }}{{ partial "ui/essay-card.html" (dict "page" . "art" true) }}{{ end }}</ol>
+{{- else if eq $v "lead" -}}
+<div class="essay-lead">
+  <ol class="cards">{{ range first 1 .pages }}{{ partial "ui/essay-card.html" (dict "page" . "art" true "lead" true) }}{{ end }}</ol>
+  <ol class="entries essay-index">{{ range first 5 (after 1 .pages) }}{{ partial "ui/essay-row.html" . }}{{ end }}</ol>
+</div>
+{{- else -}}
+<ol class="entries essay-index">{{ range first 5 .pages }}{{ partial "ui/essay-row.html" . }}{{ end }}</ol>
+{{- end -}}

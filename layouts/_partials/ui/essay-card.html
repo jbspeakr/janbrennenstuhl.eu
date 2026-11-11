@@ -1,0 +1,12 @@
+{{- /* Context: dict "page" PAGE, optional "art" (bool, show the page's drawing), "lead" (bool, larger). */ -}}
+{{- $p := .page -}}
+{{- $topic := dict }}{{ with index (partial "data/topics.html" $p) 0 }}{{ $topic = partial "data/topic.html" . }}{{ end -}}
+<li class="card{{ if .lead }} card-lead{{ end }}">
+  {{ if .art }}{{ partial "diagram.html" (dict "page" $p "class" "mini") }}{{ end }}
+  <div class="card-text">
+    <p class="card-label">{{ with partial "data/series.html" $p }}{{ .title }}{{ else }}{{ $topic.title }}{{ end }}</p>
+    <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
+    <p>{{ $p.Description }}</p>
+    <p class="row-meta"><time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "2 Jan 2006" }}</time> <span aria-hidden="true">·</span> {{ $p.ReadingTime }} min read</p>
+  </div>
+</li>

@@ -1,0 +1,15 @@
+{{- /* Context: none. Points people to the read-only MCP server (edge/mcp) and the machine-readable files. */ -}}
+<section class="wrap agents-strip" aria-labelledby="agents-title">
+  <div class="agents-panel">
+    <div>
+      <p class="card-label">For agents</p>
+      <h2 id="agents-title">Read this site from your agent</h2>
+      <p>A read-only MCP server lets Claude, ChatGPT or any other MCP client search the essays and the field guide, read entries as Markdown and quote findings with their sources. It needs no sign-in.</p>
+    </div>
+    <div class="agents-connect">
+      <p class="endpoint"><code>{{ site.Params.mcp }}</code> <button class="link-button" type="button" data-copy="{{ site.Params.mcp }}" hidden>Copy</button></p>
+      <p class="agents-tools"><code>search_site</code> <code>get_entry</code> <code>get_findings</code> <code>list_topics</code></p>
+      <p><a class="arrow" href="/agents/#mcp-server">How to connect</a></p>
+    </div>
+  </div>
+</section>
