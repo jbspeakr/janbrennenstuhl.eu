@@ -23,7 +23,7 @@
     <h2 id="recent-title">Recent essays</h2>
     <p><a href="/writing/">All writing</a> <span aria-hidden="true">·</span> <a href="/index.xml">RSS</a></p>
   </header>
-  {{ partial "ui/home-essays.html" (dict "pages" $recent "variant" site.Params.homeEssays) }}
+  {{ partial "ui/home-essays.html" $recent }}
 </section>
 {{ with site.GetPage "/knowledge-base" }}
 <section class="wrap guide-teaser" aria-labelledby="guide-title">
@@ -31,7 +31,7 @@
     <h2 id="guide-title">Field guide</h2>
     <p>{{ .Description }} <a href="{{ .RelPermalink }}">All entries</a> <span aria-hidden="true">·</span> <a href="/glossary/">Glossary</a></p>
   </header>
-  {{ partial "ui/home-guide.html" (dict "guide" . "variant" site.Params.homeGuide) }}
+  {{ partial "ui/home-guide.html" . }}
 </section>
 {{ end }}
 {{ with site.GetPage "/projects" }}

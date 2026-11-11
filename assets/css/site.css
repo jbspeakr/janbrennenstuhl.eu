@@ -177,14 +177,11 @@
   .row-meta .kind { color: var(--ink-2); }
   .row-meta .series { color: var(--ink-2); }
 
-  /* Home index blocks: rows with a description, cards, the field guide by area, the agents panel. */
-  .row-rich { display: grid; grid-template-columns: 7rem 1fr auto; gap: 0.25rem 1.5rem; padding-block: 1rem; }
+  /* Home blocks: the lead essay with rows, cards (field guide, projects), the agents panel. */
+  .row-rich { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; padding-block: 1rem; }
+  .row-rich:first-child { padding-top: 1.5rem; }
   .row-date { font-size: var(--tiny); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .row-main a { text-decoration: none; font-weight: 600; font-size: 1.1rem; line-height: 1.3; }
-  .row-main a:hover .row-title { text-decoration: underline; text-decoration-thickness: 1px; }
-  .row-main p, .guide-qa p { font-size: var(--small); color: var(--ink-2); line-height: 1.5; margin-top: 0.25rem; max-width: 46rem; }
-  .row-rich .row-meta { justify-content: flex-end; max-width: 14rem; }
-  @media (max-width: 52rem) { .row-rich { grid-template-columns: 1fr; } .row-rich .row-meta { justify-content: flex-start; max-width: none; } }
+  .row-rich > a { grid-column: 1 / -1; font-weight: 600; font-size: 1.1rem; }
   .cards { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
   .card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--ground-2); }
   .card:hover { border-color: var(--rule-strong); }
@@ -202,26 +199,8 @@
   .essay-lead .cards { grid-template-columns: 1fr; }
   .essay-lead .card-lead h3 { font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.6rem); letter-spacing: -0.015em; }
   .essay-lead .card-lead .card-text { font-size: 1rem; padding: 1.25rem 1.5rem 1.5rem; }
-  .essay-lead .row-rich { grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; }
-  .essay-lead .row-main { grid-column: 1 / -1; }
-  .essay-lead .row-rich .row-meta { justify-content: flex-start; max-width: none; }
-  .essay-lead .row-main p { display: none; }
-  .essay-lead .row-rich:first-child { padding-top: 1.5rem; }
   @media (max-width: 60rem) { .essay-lead { grid-template-columns: 1fr; } }
   .project-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
-  .guide-qa .row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 0.25rem 3rem; padding-block: 1rem; }
-  .guide-qa .row > a { font-weight: 600; font-size: 1.1rem; }
-  .guide-qa p { margin-top: 0; }
-  @media (max-width: 52rem) { .guide-qa .row { grid-template-columns: 1fr; } }
-  .guide-areas { display: grid; gap: 2rem 3rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); margin-top: 1.5rem; }
-  .guide-areas h3 { font-size: 1.15rem; display: flex; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; }
-  .guide-areas h3 a { text-decoration: none; }
-  .guide-areas h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
-  .guide-areas p { font-size: var(--small); color: var(--ink-2); line-height: 1.5; margin-top: 0.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule-strong); }
-  .guide-areas ul { list-style: none; padding: 0; }
-  .guide-areas li { border-bottom: 1px solid var(--rule); }
-  .guide-areas li a { display: block; padding-block: 0.625rem; text-decoration: none; font-weight: 500; line-height: 1.35; }
-  .guide-areas li a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
   .agents-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 3rem; align-items: center; border: 1px solid var(--rule-strong); border-radius: var(--radius); padding: clamp(1rem, 3vw, 2rem); }
   .agents-panel h2 { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); letter-spacing: -0.02em; margin-block: 0.25rem 0.5rem; }
   .agents-panel p { font-size: var(--small); color: var(--ink-2); line-height: 1.6; max-width: 40rem; }

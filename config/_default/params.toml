@@ -3,9 +3,6 @@ statement = "Security that makes the secure path the easy one."
 author = "Jan Brennenstuhl"
 authorURL = "/about/"
 featured = "/post/agentic-identity-broker"
-# Home page layouts. homeEssays: lead | cards | index. homeGuide: areas | cards | qa.
-homeEssays = "lead"
-homeGuide = "areas"
 # The read-only MCP server (edge/mcp), shown on the home page and the agents page.
 mcp = "https://mcp.janbrennenstuhl.eu/mcp"
 sourceRepository = "https://github.com/jbspeakr/janbrennenstuhl.eu"

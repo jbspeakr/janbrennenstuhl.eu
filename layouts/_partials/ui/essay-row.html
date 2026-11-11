@@ -1,7 +1,7 @@
-{{- /* Context: PAGE. An index row with the date first, the description under the title and the topic at the end. */ -}}
+{{- /* Context: PAGE. A home row: date and topic (or series) above the title. */ -}}
 {{- $topic := dict }}{{ with index (partial "data/topics.html" .) 0 }}{{ $topic = partial "data/topic.html" . }}{{ end -}}
 <li class="row row-rich">
   <time class="row-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
-  <div class="row-main"><a href="{{ .RelPermalink }}"><span class="row-title">{{ .Title }}</span></a><p>{{ .Description }}</p></div>
   <span class="row-meta">{{ with partial "data/series.html" . }}<span class="series">{{ .title }}</span>{{ else }}{{ with $topic.title }}<span>{{ . }}</span>{{ end }}{{ end }} <span>{{ .ReadingTime }} min</span></span>
+  <a href="{{ .RelPermalink }}"><span class="row-title">{{ .Title }}</span></a>
 </li>
