@@ -16,6 +16,7 @@ if (toggle) {
   system.addEventListener('change', label);
   toggle.addEventListener('click', () => {
     root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
+    for (const m of document.querySelectorAll('meta[name=theme-color]')) m.content = root.dataset.theme === 'dark' ? '#16191c' : '#fafbfc';
     label();
     try { localStorage.setItem('jb-reader', JSON.stringify({ theme: root.dataset.theme })); } catch (_) { /* session only */ }
   });
@@ -52,6 +53,15 @@ if (canCopy) {
 // Table of contents: collapsed in the HTML so narrow screens keep the text close; opened where it has its own column.
 const tocBox = document.querySelector('.toc-box');
 if (tocBox && matchMedia('(min-width: 70rem)').matches) tocBox.open = true;
+
+// Narrow screens: once the contents list has scrolled away, offer a way back to it, and open it on arrival.
+const toContents = document.querySelector('.to-contents');
+const tocAside = document.querySelector('#contents');
+if (toContents && tocAside && 'IntersectionObserver' in window) {
+  // The root reaches far below the viewport, so the list counts as in view until it has left through the top.
+  new IntersectionObserver(([entry]) => { toContents.hidden = entry.isIntersecting; }, { rootMargin: '0px 0px 1000000px 0px' }).observe(tocAside);
+  toContents.addEventListener('click', () => { if (tocBox) tocBox.open = true; });
+}
 
 // Table of contents: mark the section being read.
 const tocLinks = [...document.querySelectorAll('.toc a[href^="#"]')];

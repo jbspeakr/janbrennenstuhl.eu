@@ -15,7 +15,7 @@ image: aws-cloudformation-sucks.webp
 tags: ["operational-excellence", "aws"]
 ---
 
-[AWS CloudFormation](https://aws.amazon.com/cloudformation/) (CFN) is a file-based interface for provisioning AWS resources and in that way is Amazons answer on the '[Infrastructure as Code](http://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile)' paradigm. I am a huge fan of this approach and CFN is a big step into the right direction as it supports not just common DevOps ideas, by allowing devs to create, update and delete the operational infrastructure they need with their own tools (a text editor, version control and tests).
+[AWS CloudFormation](https://aws.amazon.com/cloudformation/) (CFN) is a file-based interface for provisioning AWS resources and in that way is Amazons answer on the '[Infrastructure as Code](https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile)' paradigm. I am a huge fan of this approach and CFN is a big step into the right direction as it supports not just common DevOps ideas, by allowing devs to create, update and delete the operational infrastructure they need with their own tools (a text editor, version control and tests).
 
 It also enables you to think different about your IT infrastructure and how to work with it (e.g. just think about immutable stacks). However, I see some issues that become more important if you work with CloudFormation on a daily basis ...
 

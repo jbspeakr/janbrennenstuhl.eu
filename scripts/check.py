@@ -386,7 +386,8 @@ for path in PUBLIC.rglob("feed.json"):
         check(target_of(entry["url"]).exists(), f"JSON Feed item missing {entry['url']}")
         check(bool(entry.get("content_html")), f"JSON Feed item without content {entry['url']}")
 rss = ET.parse(PUBLIC / "index.xml").getroot()
-check(len(rss.findall("./channel/item")) == len(items), "Home RSS should carry every entry")
+FEED_LIMIT = 20  # params.feedLimit: full-content feeds hold the newest entries only
+check(len(rss.findall("./channel/item")) == min(len(items), FEED_LIMIT), f"Home RSS should carry the newest {FEED_LIMIT} entries")
 for desc in rss.iter("description"):
     check(' href="/' not in (desc.text or "") and ' src="/' not in (desc.text or ""), "Relative URL in RSS content")
 
