@@ -16,6 +16,15 @@
       "depNameTemplate": "gohugoio/hugo",
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Pagefind pin in .pagefind-version; the checksum is refreshed by scripts/bump-pagefind.sh",
+      "managerFilePatterns": ["/^\\.pagefind-version$/"],
+      "matchStrings": ["^(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*$"],
+      "depNameTemplate": "Pagefind/pagefind",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
     }
   ]
 }

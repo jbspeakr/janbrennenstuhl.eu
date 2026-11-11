@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
-      - name: Install pinned Hugo
+      - name: Install pinned Hugo and Pagefind
         run: ./scripts/bootstrap.sh
       - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         # npm downloads and Playwright's Chromium, keyed on the exact pins in package-lock.json.
@@ -126,7 +126,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
-      - name: Install pinned Hugo
+      - name: Install pinned Hugo and Pagefind
         run: ./scripts/bootstrap.sh
       - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         # npm downloads and Playwright's Chromium, keyed on the exact pins in package-lock.json.
@@ -149,6 +149,7 @@ jobs:
         run: |
           HUGO=hugo; [ -x .tools/hugo ] && HUGO=.tools/hugo
           HUGO_PARAMS_SOURCE_REVISION="$(git rev-parse HEAD)-preview" "$HUGO" --minify --baseURL "https://${{ vars.PREVIEW_HOST }}/"
+          ./scripts/search-index.sh
       - name: Upload to the staging zone
         env:
           BUNNY_PREVIEW_ZONE: ${{ secrets.PREVIEW_STORAGE_NAME }}

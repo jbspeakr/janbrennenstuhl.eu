@@ -1,12 +1,12 @@
 # Working on janbrennenstuhl.eu
 
-A static publication for people and agents. **Hugo extended is the only build dependency** (version in `.hugo-version`), except for the social cards: CI draws each article's card plate with Playwright's Chromium first (`scripts/card-plates.sh`); without them a card falls back to its topic plate. Release scripts and checks use the Python 3.11+ standard library. Node is otherwise only for browser QA, Lighthouse and edge-script tests.
+A static publication for people and agents. **Hugo extended builds the site** (version in `.hugo-version`) and **Pagefind indexes it for browser search** (version in `.pagefind-version`, run by `scripts/search-index.sh` inside `verify.sh`). The one other input is the social cards: CI draws each article's card plate with Playwright's Chromium first (`scripts/card-plates.sh`); without them a card falls back to its topic plate. Release scripts and checks use the Python 3.11+ standard library. Node is otherwise only for browser QA, Lighthouse and edge-script tests.
 
 ## Commands
 
 ```sh
-./scripts/bootstrap.sh              # Hugo at the pinned version (Linux x86-64 downloads and verifies it)
-./scripts/verify.sh                 # production build + scripts/check.py + unit tests
+./scripts/bootstrap.sh              # Hugo and Pagefind at the pinned versions (Linux x86-64 downloads and verifies them)
+./scripts/verify.sh                 # production build + search index + scripts/check.py + unit tests
 python3 scripts/serve.py            # serve public/ on :8000 like the edge (404s, MIME, Markdown negotiation)
 npm ci && npx playwright install chromium
 npm run test:browser                # axe matrix, keyboard, no-JS, reflow, palette, explainers, redirects
@@ -14,7 +14,7 @@ npm run test:lighthouse             # lab gate on three routes
 npm run test:edge                   # MCP server and negotiation unit tests
 ```
 
-`hugo server` is fine for template work. Do not edit `public/`, `resources/`, `.tools/`, `node_modules/` or `test-results/`.
+`hugo server` is fine for template work; search needs the index, so use `verify.sh` and `serve.py` for that. Do not edit `public/`, `resources/`, `.tools/`, `node_modules/` or `test-results/`.
 
 ## Architecture
 
@@ -22,7 +22,7 @@ npm run test:edge                   # MCP server and negotiation unit tests
 - `layouts/`: owned templates. `_partials/eligible.html` selects every substantive page; `_partials/data/*` derive id, kind, topics, series and status; `_partials/md/*` are the Markdown versions of shortcodes; `_partials/diagram.html` draws the trust-boundary diagrams.
 - Output formats (config/_default/config.toml): `index.md` twins, `llms.txt`, `llms-full.txt`, `catalog.json`, `findings.json`, `feed.json`, `search/index.json`, `redirects.json`.
 - `data/`: `topics.toml` (six topics and tag mapping), `series.toml`, `glossary.toml`, `redirects.toml`.
-- `assets/css/site.css`: tokens, layout, both themes, print. `assets/js/`: `site.js` (shared), `palette.js` and `search.js` (on demand), `explainers/*` (per page).
+- `assets/css/site.css`: tokens, layout, both themes, print. `assets/js/`: `site.js` (shared), `palette.js` and `search.js` (on demand; both search through Pagefind in `/pagefind/`, while `/search/index.json` stays for the MCP server), `explainers/*` (per page).
 - `edge/`: `rules.toml` (edge rules synced by `scripts/edge_rules.py`), Bunny Edge Scripts for Markdown negotiation and the read-only MCP server.
 - `scripts/check.py`: release gates. `tests/fixtures/baseline-routes.json`: the 147 original routes and heading anchors; never weaken it to hide a regression.
 
@@ -36,7 +36,7 @@ Field-guide entries are question-led: `answer`, key findings as `finding` shortc
 
 See `docs/DESIGN.md`. Dark-first OKLCH tokens with an equal light theme; Geist and Geist Mono self-hosted; calm graphite tones with one soft accent (rose, from the site icon) per view; generated flow drawings; nothing below 13px; visible focus; reduced-motion support; everything usable without JavaScript.
 
-Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 30 kB, preloaded font ≤ 35 kB, inline diagram ≤ 6 kB, search index ≤ 200 kB, no third-party requests (the Plausible script loads on the production host only, through the same-origin edge proxy; see `docs/DECISIONS.md`). Test 360/768/1440 px in both themes and reflow at 320 px. Passing tests is not design approval.
+Budgets (compressed): CSS ≤ 15 kB, article JS ≤ 8 kB, HTML per article ≤ 30 kB, preloaded font ≤ 35 kB, inline diagram ≤ 6 kB, search engine before the first query ≤ 100 kB, no third-party requests (the Plausible script loads on the production host only, through the same-origin edge proxy; see `docs/DECISIONS.md`). Test 360/768/1440 px in both themes and reflow at 320 px. Passing tests is not design approval.
 
 ## Decisions and launch
 

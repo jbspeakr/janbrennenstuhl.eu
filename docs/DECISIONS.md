@@ -49,11 +49,30 @@ for edge rules, so the account API key is now a repository secret, exposed to th
 main-branch pushes only. Accepted by Jan. Rules out: hand-editing managed (`[repo] `) rules in the
 dashboard, an account key in any other job. Zone settings that are not edge rules stay manual.
 
-## Search index (15 October 2026)
+## Search (11 November 2026, replaces "Search index" of 15 October)
 
-**Full text stays in `/search/index.json`** so the command palette can search bodies, not only
-titles. The budget is 200 kB compressed (about 150 kB today for 52 entries). When the budget is hit,
-switch to a chunked index (Pagefind) instead of trimming bodies.
+**Browsers search with Pagefind; `/search/index.json` stays for the MCP server.** The full-text
+index every search downloaded had reached 172 kB of its 200 kB budget and grew with each essay, and
+the October decision already named Pagefind as the next step. `scripts/search-index.sh` runs the
+pinned Pagefind (`.pagefind-version`, checksum verified like Hugo) over the built pages that carry
+`data-pagefind-body`, which are exactly the catalog entries (`check.py` compares the counts). The
+command palette and `/search/` call its API directly; none of its UI components ship.
+
+- **Cost.** Before any query a browser fetches 86 kB (API, worker, WebAssembly engine, metadata),
+  budgeted at 100 kB. A query then fetches the index chunks it needs (about 33 kB each, seven
+  today) and one fragment of 2 to 7 kB per result shown. A first search costs about what the old
+  index did today; the difference is that it stops growing with the archive.
+- **CSP.** The engine is a same-origin WebAssembly module, so `script-src` gains
+  `'wasm-unsafe-eval'`. That allows WebAssembly compilation only, not `eval()` or inline script.
+- **Matching.** Pagefind matches word stems and prefixes, not arbitrary substrings. When no indexed
+  word starts with a query word it falls back to a loosely related word, so `search-core.js` first
+  checks each query word on its own and returns nothing when one of them is unknown.
+- **`/search/index.json`** is no longer fetched by any page. The MCP edge script reads it for
+  `search_site`, so its budget is its own now (400 kB). If that is reached, trim what the edge
+  script reads; do not point browsers back at it.
+
+Rules out: a hosted search service, Pagefind's prebuilt UI, loading the engine before the reader asks
+to search.
 
 ## Dates and review cadence (15 October 2026)
 
@@ -74,6 +93,8 @@ switch to a chunked index (Pagefind) instead of trimming bodies.
 - Hugo is bumped by `scripts/bump-hugo.sh <version>` (pin plus verified Linux checksum), followed by
   a full local `./scripts/verify.sh` and `npm run test:browser` on that version. Cadence: when a
   release is at least two weeks old, at most quarterly unless a fix is needed.
+- Pagefind is bumped the same way by `scripts/bump-pagefind.sh <version>`. Its API, worker and engine
+  ship to readers, so read the release notes and rerun the search checks in `npm run test:browser`.
 - Browser QA packages are pinned exactly; `renovate.json` groups them into one monthly PR if a
   Renovate runner is attached to the repository. Nothing in `package.json` ships to readers.
 - GitHub Actions stay pinned to commit SHAs with the tag in a comment.

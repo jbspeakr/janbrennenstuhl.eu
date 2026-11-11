@@ -1,4 +1,4 @@
-import { loadIndex, search, snippet, marked, shortDate, kindLabel } from './search-core.js';
+import { search, excerptNodes, shortDate, kindLabel } from './search-core.js';
 
 const form = document.querySelector('#search-form');
 const query = form.querySelector('#query');
@@ -39,16 +39,17 @@ async function run(push = false) {
   if (!q && !kind.value && !topic.value) { fallback.hidden = false; status.textContent = 'Enter a phrase to search, or browse everything below.'; return; }
   status.textContent = 'Searching…';
   try {
-    const hits = search(await loadIndex(), q, { kind: kind.value, topic: topic.value });
+    const { total, hits } = await search(q, { kind: kind.value, topic: topic.value, limit: 30 });
     if (current !== generation) return;
     fallback.hidden = true;
-    status.textContent = hits.length ? `${hits.length} ${hits.length === 1 ? 'result' : 'results'}${q ? ` for “${q}”` : ''}.` : 'No results. Try fewer words or clear the filters.';
-    for (const { entry, section, words } of hits) {
+    const shown = total > hits.length ? ` Showing the first ${hits.length}.` : '';
+    status.textContent = total ? `${total} ${total === 1 ? 'result' : 'results'}${q ? ` for “${q}”` : ''}.${shown}` : 'No results. Try fewer words or clear the filters.';
+    for (const hit of hits) {
       const li = el('li', 'row search-hit');
-      const a = el('a'); a.href = entry.url; const title = el('span', 'row-title'); title.append(marked(entry.title, words)); a.append(title); li.append(a);
-      const meta = el('span', 'row-meta'); meta.append(el('span', '', shortDate(entry.published)), el('span', 'kind', kindLabel[entry.kind] || entry.kind)); li.append(meta);
-      if (section) { const s = el('a', 'hit-section', `In this ${entry.kind === 'guide' ? 'entry' : 'article'}: ${section.title}`); s.href = `${entry.url}#${section.id}`; li.append(s); }
-      const text = el('p', 'hit-text'); text.append(marked(snippet(section ? section.text : entry.description || '', words), words)); li.append(text);
+      const a = el('a'); a.href = hit.url; a.append(el('span', 'row-title', hit.title)); li.append(a);
+      const meta = el('span', 'row-meta'); meta.append(el('span', '', shortDate(hit.date)), el('span', 'kind', kindLabel[hit.kind] || hit.kind)); li.append(meta);
+      if (hit.section) { const s = el('a', 'hit-section', `In this ${hit.kind === 'guide' ? 'entry' : 'article'}: ${hit.section.title}`); s.href = hit.section.url; li.append(s); }
+      const text = el('p', 'hit-text'); text.append(excerptNodes(hit.excerpt)); li.append(text);
       results.append(li);
     }
   } catch (_) {

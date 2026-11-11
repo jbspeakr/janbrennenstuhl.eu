@@ -1,5 +1,5 @@
 {{ define "main" }}
-<article class="wrap page glossary">
+<article class="wrap page glossary" data-pagefind-body>{{ partial "search-meta.html" . }}
   <header class="page-header"><p class="eyebrow"><a href="/knowledge-base/">Field Guide</a></p><h1>{{ .Title }}</h1><p class="lead">{{ .Description }}</p></header>
   <div class="prose">{{ .Content }}</div>
   <nav class="glossary-index" aria-label="Glossary letters">

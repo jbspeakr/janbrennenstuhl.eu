@@ -16,10 +16,10 @@ The site is a static publication for two audiences: people who read it in a brow
 
 ## Quick start
 
-Hugo extended at the version in [`.hugo-version`](.hugo-version) is the only build dependency, except for the social cards: CI draws each article's card plate with Chromium first (`scripts/card-plates.sh`), and local builds fall back to the topic plate. The release scripts and checks use the Python 3.11+ standard library.
+Hugo extended at the version in [`.hugo-version`](.hugo-version) builds the site and Pagefind at the version in [`.pagefind-version`](.pagefind-version) indexes it for search. The one other input is the social cards: CI draws each article's card plate with Chromium first (`scripts/card-plates.sh`), and local builds fall back to the topic plate. The release scripts and checks use the Python 3.11+ standard library.
 
 ```sh
-./scripts/bootstrap.sh     # install or check the pinned Hugo
+./scripts/bootstrap.sh     # install or check the pinned Hugo and Pagefind
 ./scripts/verify.sh        # build public/ and run every static release gate
 python3 scripts/serve.py   # http://127.0.0.1:8000, with real 404s and Markdown negotiation
 ```
@@ -93,5 +93,6 @@ Bundled third-party work:
 - [Geist and Geist Mono](https://vercel.com/font) fonts, © Vercel, under the SIL Open Font License 1.1 ([`static/fonts/OFL.txt`](static/fonts/OFL.txt), [`assets/fonts/OFL-Geist.txt`](assets/fonts/OFL-Geist.txt)).
 - Icons in `assets/icons/` from [Tabler Icons](https://tabler.io/icons), © Paweł Kuna, under the MIT License.
 - [Hugo](https://github.com/gohugoio/hugo), downloaded at build time, is under the Apache License 2.0.
+- [Pagefind](https://github.com/Pagefind/pagefind), downloaded at build time, is under the MIT License; its search API, worker and WebAssembly engine are published under `/pagefind/`.
 
 To reuse an article, name the author, link the canonical URL and say if you changed it. For example: *"Title" by Jan Brennenstuhl, https://www.janbrennenstuhl.eu/…, CC BY 4.0.*

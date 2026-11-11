@@ -31,13 +31,15 @@ patterns = ["*/js/pa-*.js", "*/api/event"]
 # Report-only until real violations have been inspected; then switch the header to
 # Content-Security-Policy. The sha256 source is the inline theme script (assets/js/theme.js);
 # scripts/check.py fails when the build's inline scripts and these hashes differ.
+# 'wasm-unsafe-eval' lets the Pagefind search engine (a same-origin WebAssembly module) compile; it
+# does not allow eval() or inline script (docs/DECISIONS.md, Search).
 # Do not expand the allowlists silently.
 [csp]
 header = "Content-Security-Policy-Report-Only"
 
 [csp.directives]
 "default-src" = "'self'"
-"script-src" = "'self' 'sha256-0UIgqxjSRoSElxj+waLyQ/lJcWCpFTQtF65hA8WDbdQ=' 'inline-speculation-rules'"
+"script-src" = "'self' 'sha256-0UIgqxjSRoSElxj+waLyQ/lJcWCpFTQtF65hA8WDbdQ=' 'inline-speculation-rules' 'wasm-unsafe-eval'"
 "style-src" = "'self'"
 "img-src" = "'self' data:"
 "font-src" = "'self'"
@@ -55,13 +57,16 @@ name = "Documents"
 # browserTtl, not browser: a max-age=0 header stops Bunny from caching the page at the edge.
 browserTtl = 0
 edge = 300
-patterns = ["*/", "*.html", "*.md", "*.json", "*.xml", "*.txt", "*/.well-known/*"]
+# The Pagefind API, its worker and the engine keep their names across releases, so they revalidate
+# like documents (pagefind-entry.json is covered by "*.json").
+patterns = ["*/", "*.html", "*.md", "*.json", "*.xml", "*.txt", "*/.well-known/*", "*/pagefind/*.js", "*/pagefind/*.pagefind"]
 
 [[cache]]
 name = "Fingerprinted assets and fonts"
 browser = "public, max-age=31536000, immutable"
 edge = 31536000
-patterns = ["*/css/*", "*/js/*", "*_hu_*", "*/fonts/*.woff2"]
+# Pagefind's index chunks and page fragments (*.pf_index, *.pf_fragment, …) carry a content hash too.
+patterns = ["*/css/*", "*/js/*", "*_hu_*", "*/fonts/*.woff2", "*/pagefind/*.pf_*"]
 # The proxied Plausible script keeps its URL across versions, so it is not immutable: it keeps
 # plausible.io's own Cache-Control (no extra rule, which keeps us under maxRules).
 exclude = ["*/js/pa-*.js"]
