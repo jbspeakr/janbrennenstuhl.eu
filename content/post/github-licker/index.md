@@ -16,7 +16,7 @@ On Github, every organization with a fast growing open-source codebase quickly f
 
 ## Github & Licenses
 
-For months now, Github addresses in particular the often discussed license-problematic by implementing the [License Picker](https://help.github.com/articles/open-source-licensing/) feature and introducing the [choosealicense.com](http://choosealicense.com/) information page. That's great if you start with new projects and repositories, but what's missing is some kind of license overview and maintaining functionality that allows dealing with licenses of already existing repos.
+For months now, Github addresses in particular the often discussed license-problematic by implementing the [License Picker](https://help.github.com/articles/open-source-licensing/) feature and introducing the [choosealicense.com](https://choosealicense.com/) information page. That's great if you start with new projects and repositories, but what's missing is some kind of license overview and maintaining functionality that allows dealing with licenses of already existing repos.
 
 For that reason, I just built a small Python tool to help you getting an overview of your repos licenses: [Github-Licker](https://github.com/jbspeakr/github-licker), a Github License Checker!
 

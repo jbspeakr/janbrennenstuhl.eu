@@ -1,0 +1,9 @@
+{{- /* Context: dict "section" (the projects section) "level" (heading level, default 3). One card per project. */ -}}
+{{- $h := printf "h%d" (.level | default 3) -}}
+<ol class="cards project-cards">{{ range .section.RegularPages.ByDate.Reverse }}
+  <li class="card"><div class="card-text">
+    <p class="card-label">Open source <span aria-hidden="true">·</span> since <time datetime="{{ .Date.Format "2006-01" }}">{{ .Date.Format "January 2006" }}</time></p>
+    {{ printf "<%s>" $h | safeHTML }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ printf "</%s>" $h | safeHTML }}
+    <p>{{ .Description }}</p>
+  </div></li>{{ end }}
+</ol>

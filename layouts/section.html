@@ -26,7 +26,7 @@
 <header class="wrap page-header"><h1>{{ .Title }}</h1><p class="lead">{{ .Description }}</p></header>
 <div class="wrap topic-cards">
   {{- range hugo.Data.topics.topic }}{{ $t := . }}{{ with site.GetPage (printf "/topics/%s" .id) }}
-  <a class="topic-card" href="{{ .RelPermalink }}">{{ partial "diagram.html" (dict "page" . "seed" $t.id "class" "mini") }}<span class="topic-card-text"><span class="topic-card-title">{{ $t.title }}</span><span>{{ $t.description }}</span><span class="count">{{ index (partialCached "data/topic-counts.html" . "all") $t.id | default 0 }} entries</span></span></a>
+  <a class="topic-card" href="{{ .RelPermalink }}">{{ partial "diagram.html" (dict "page" . "seed" $t.id "class" "mini") }}<span class="topic-card-text"><span class="topic-card-title"><span class="dot t-{{ $t.id }}" aria-hidden="true"></span>{{ $t.title }}</span><span>{{ $t.description }}</span><span class="count">{{ index (partialCached "data/topic-counts.html" . "all") $t.id | default 0 }} entries</span></span></a>
   {{- end }}{{ end }}
 </div>
 {{- else if eq .Section "knowledge-base" -}}
@@ -36,7 +36,7 @@
 <div class="wrap">
   {{- if eq .Section "talks" }}{{ partial "ui/speaker.html" . }}{{ end }}
   <div class="prose">{{ .Content }}</div>
-  <ol class="entries">{{ range .RegularPages.ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</ol>
+  {{ if eq .Section "projects" }}{{ partial "ui/project-cards.html" (dict "section" . "level" 2) }}{{ else }}<ol class="entries">{{ range .RegularPages.ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</ol>{{ end }}
 </div>
 {{- end -}}
 {{ end }}

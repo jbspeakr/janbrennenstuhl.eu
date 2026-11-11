@@ -27,10 +27,10 @@ const kinds = ['essay', 'guide', 'talk', 'project'];
     const svg = await page.locator(plate.selector).evaluate(e => e.outerHTML);
     await page.setContent(`<!doctype html><html data-theme="dark"><head><link rel="stylesheet" href="${base}/css/${css}"><style>
       body{margin:0;width:1200px;height:630px;overflow:hidden;background:#16191c;position:relative}
-      .art{position:absolute;inset:-40px 0 auto 0;opacity:.7}.art svg{width:1200px;height:400px}.art .d-ground{fill:#16191c}
-      .fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0,transparent 170px,#16191c 290px)}
-      .bar{position:absolute;left:72px;top:540px;width:40px;height:2px;background:#e2a4ae}
-    </style></head><body><div class="art">${svg.replace(/style="view-transition-name:[^"]*"/, '')}</div><div class="fade"></div><div class="bar"></div></body></html>`, { waitUntil: 'networkidle' });
+      .art{position:absolute;left:-120px;top:-36px;width:1440px;opacity:.85}.art svg{display:block;width:1440px;max-width:none;height:480px}.art .d-ground{fill:#16191c}
+      .fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0,transparent 190px,rgba(22,25,28,.86) 320px,#16191c 460px)}
+      .bar{position:absolute;left:72px;top:538px;width:56px;height:3px;border-radius:2px;background:var(--tone)}
+    </style></head><body><div class="art">${svg.replace(/style="view-transition-name:[^"]*"/, '')}</div><div class="fade"></div><div class="bar ${svg.match(/class="(diagram[^"]*)"/)[1]}"></div></body></html>`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(root, plate.out) });
     console.log(plate.out);
   }

@@ -93,8 +93,7 @@
   .theme-toggle[data-current="dark"] .i-moon, .theme-toggle[data-current="light"] .i-sun { display: none; }
   .search-trigger kbd { border: 0; padding: 0; color: var(--ink-2); }
   @media (max-width: 52rem) {
-    .primary { order: 3; width: 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 1.1rem; padding-bottom: 0.1rem; }
-    .primary a { white-space: nowrap; }
+    .primary { order: 3; width: 100%; gap: 0.125rem 1.1rem; }
     .search-trigger span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   }
   @media (max-width: 26rem) { .brand-name span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } }
@@ -117,12 +116,14 @@
 }
 
 @layer components {
-  .eyebrow { font-size: var(--small); color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: baseline; }
+  .eyebrow { font-size: var(--tiny); color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: baseline; }
   .eyebrow a { text-decoration: none; }
   .eyebrow a:hover { text-decoration: underline; }
   .chip { color: var(--boundary); }
   .lead { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.3rem); line-height: 1.5; color: var(--ink-2); max-width: 46ch; text-wrap: pretty; }
   .meta, .row-meta, .byline, .small { font-size: var(--small); color: var(--ink-2); }
+  /* Metadata speaks in mono: kinds, dates, bylines, counts. Never navigation, tables or prose. */
+  .eyebrow, .row-meta, .count, .byline, .label, .series-nav time, .flagship .meta, .footer-meta { font-family: var(--mono); font-size: var(--tiny); word-spacing: -0.15em; font-feature-settings: normal; }
   .small { font-size: var(--tiny); }
   .arrow::after { content: " →" / ""; }
   a.ext::after { content: "↗" / ""; font-size: 0.75em; margin-left: 0.15em; text-decoration: none; display: inline-block; }
@@ -159,7 +160,7 @@
   .now-list { margin-block: 0 2.5rem; max-width: var(--measure); }
   @media (max-width: 40rem) { .now-strip .wrap { grid-template-columns: 1fr; } }
 
-  .recent, .topics-teaser, .guide-teaser { margin-top: clamp(3rem, 6vw, 5rem); }
+  .recent, .topics-teaser, .guide-teaser, .projects-teaser, .agents-strip { margin-top: clamp(3rem, 6vw, 5rem); }
   .index-head { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: 0.75rem; margin-bottom: 0.5rem; }
   .index-head h2 { font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem); letter-spacing: -0.02em; }
   .index-head p { font-size: var(--small); color: var(--ink-2); }
@@ -177,6 +178,40 @@
   .row-meta { font-size: var(--tiny); display: flex; gap: 0.5rem; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
   .row-meta .kind { color: var(--ink-2); }
   .row-meta .series { color: var(--ink-2); }
+
+  /* Home blocks: the lead essay with rows, cards (field guide, projects), the agents panel. */
+  .row-rich { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; padding-block: 1rem; }
+  .row-rich:first-child { padding-top: 1.5rem; }
+  .row-date { font-size: var(--tiny); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .row-rich > a { grid-column: 1 / -1; font-weight: 600; font-size: 1.1rem; }
+  .cards { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--ground-2); }
+  .card:hover { border-color: var(--rule-strong); }
+  .card:focus-within { outline: var(--focus); outline-offset: 3px; }
+  .card .diagram { aspect-ratio: 5 / 2; width: 100%; height: auto; border-bottom: 1px solid var(--rule); }
+  .card-text { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem 1.25rem 1.25rem; flex: 1; font-size: var(--small); color: var(--ink-2); line-height: 1.5; }
+  .card-label { font-size: var(--tiny); color: var(--ink-2); }
+  .card :is(h2, h3) { font-size: 1.15rem; line-height: 1.3; color: var(--ink); }
+  .card :is(h2, h3) a { text-decoration: none; }
+  .card :is(h2, h3) a::after { content: ""; position: absolute; inset: 0; }
+  .card :is(h2, h3) a:focus-visible { outline: none; }
+  .card:hover :is(h2, h3) a { text-decoration: underline; text-decoration-thickness: 1px; }
+  .card .row-meta { margin-top: auto; padding-top: 0.5rem; }
+  .essay-lead { display: grid; gap: 0 3rem; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; }
+  .essay-lead .cards { grid-template-columns: 1fr; }
+  .essay-lead .card-lead h3 { font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.6rem); letter-spacing: -0.015em; }
+  .essay-lead .card-lead .card-text { font-size: 1rem; padding: 1.25rem 1.5rem 1.5rem; }
+  @media (max-width: 60rem) { .essay-lead { grid-template-columns: 1fr; } }
+  .project-cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+  .agents-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 3rem; align-items: center; border: 1px solid var(--rule-strong); border-radius: var(--radius); padding: clamp(1rem, 3vw, 2rem); }
+  .agents-panel h2 { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); letter-spacing: -0.02em; margin-block: 0.25rem 0.5rem; }
+  .agents-panel p { font-size: var(--small); color: var(--ink-2); line-height: 1.6; max-width: 40rem; }
+  .agents-connect { display: grid; gap: 0.75rem; }
+  .agents-panel .endpoint { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+  .endpoint code { color: var(--ink); background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 0.375rem 0.5rem; font-size: var(--tiny); overflow-wrap: anywhere; }
+  .agents-tools { display: flex; flex-wrap: wrap; gap: 0.25rem 0.875rem; }
+  .agents-tools code { font-size: var(--tiny); }
+  @media (max-width: 52rem) { .agents-panel { grid-template-columns: 1fr; } }
 
   /* Pages and articles */
   .page, .page-header { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
@@ -200,7 +235,7 @@
   .article-head { padding-top: clamp(1.75rem, 4vw, 3rem); }
   .answer { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.3rem); line-height: 1.5; max-width: 48ch; border-left: 2px solid var(--signal); padding-left: 1rem; }
   .answer-label { display: block; font-size: var(--small); font-weight: 600; color: var(--signal); margin-bottom: 0.25rem; }
-  .byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-size: var(--small); font-variant-numeric: tabular-nums; }
+  .byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
   .byline a { color: var(--ink); }
   .byline .reviewed { color: var(--green); }
   /* The head uses the body's text column: eyebrow, title, lead and prose share one width.
@@ -231,6 +266,10 @@
   @media (max-width: 69.99rem) { .toc-box { border: 1px solid var(--rule); border-radius: var(--radius); padding: 0.5rem 1rem; } }
   .article-body { min-width: 0; }
 
+  /* Way back to the contents list on narrow screens, where it does not stay beside the text. */
+  .to-contents { position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 15; padding: 0.5rem 0.9rem; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--ground-2); color: var(--ink); font-size: var(--tiny); font-weight: 500; text-decoration: none; }
+  .to-contents::before { content: "↑ "; color: var(--ink-2); }
+  @media (min-width: 70rem) { .to-contents { display: none; } }
   .progress { position: fixed; inset: 0 0 auto 0; height: 2px; background: var(--signal); transform-origin: 0 50%; transform: scaleX(0); z-index: 20; }
   @supports (animation-timeline: scroll()) {
     .progress { animation: progress linear both; animation-timeline: scroll(root); }
@@ -261,7 +300,7 @@
   .pullquote p::before { content: "“" / ""; color: var(--signal); }
   .pullquote p::after { content: "”" / ""; color: var(--signal); }
   .prose :not(pre) > code { background: var(--ground-3); padding: 0.1em 0.35em; border-radius: 5px; font-size: 0.85em; overflow-wrap: anywhere; }
-  .prose mark { background: var(--signal-soft); color: inherit; padding-inline: 0.15em; }
+  .prose mark, .search-hit mark { background: var(--signal-soft); color: inherit; padding-inline: 0.15em; }
   p > .figure:only-child, .figure { margin-block: 2rem; }
   .figure figcaption, .hero-image figcaption { font-size: var(--small); color: var(--ink-2); margin-top: 0.5rem; }
   .hero-image { margin-bottom: 2rem; }
@@ -370,6 +409,8 @@
   .guide-nav li a[aria-current] { font-weight: 600; color: var(--signal); }
   .guide-nav p { margin-top: 0.75rem; font-size: var(--small); }
   .related { margin-top: 4.5rem; padding-block: 2rem 2.5rem; background: var(--ground-2); border-block: 1px solid var(--rule); max-width: none; padding-inline: max(var(--gutter), calc((100% - 78rem) / 2 + var(--gutter))); }
+  .related .index-head { border-bottom-color: var(--rule-strong); padding-bottom: 0.5rem; margin-bottom: 0; }
+  .related .index-head h2 { font-size: var(--small); letter-spacing: 0; border: 0; padding: 0; }
   .related h2, .hub-group h2, .year h2 { font-size: var(--small); font-weight: 600; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule-strong); font-variant-numeric: tabular-nums; }
   .links-box ul { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
   .link-card { position: relative; display: flex; gap: 1rem; align-items: center; padding: 1rem 1.25rem; background: var(--ground-2); border: 1px solid var(--rule); border-radius: var(--radius); transition: border-color 0.15s var(--ease); }
@@ -479,20 +520,34 @@
 }
 
 @layer diagram {
-  /* Each drawing sets its own hue (--h); tone and lightness are shared, so all of them stay quiet. */
-  .diagram { --dg: var(--ground-2); --tone: light-dark(oklch(55% 0.1 var(--h, 8)), oklch(76% 0.075 var(--h, 8))); }
+  /* A drawing takes its hues from the page's topics: t-<topic> for the path, u-<topic> for the boundary; h-<n> without a
+     topic. Tone and lightness are shared, so all of them stay quiet. The same tone colours the topic dots. */
+  .t-agentic-engineering { --h: 290; } .t-identity-authentication { --h: 240; } .t-application-security { --h: 20; } .t-passwords { --h: 75; } .t-tokens-jwt { --h: 150; } .t-engineering-practice { --h: 195; }
+  .u-agentic-engineering { --h2: 290; } .u-identity-authentication { --h2: 240; } .u-application-security { --h2: 20; } .u-passwords { --h2: 75; } .u-tokens-jwt { --h2: 150; } .u-engineering-practice { --h2: 195; }
+  .h-0 { --h: 10; } .h-1 { --h: 55; } .h-2 { --h: 100; } .h-3 { --h: 150; } .h-4 { --h: 195; } .h-5 { --h: 235; } .h-6 { --h: 275; } .h-7 { --h: 320; }
+  .diagram, .dot { --tone: light-dark(oklch(55% 0.1 var(--h, 8)), oklch(76% 0.075 var(--h, 8))); }
+  .diagram { --tone2: light-dark(oklch(55% 0.1 var(--h2, var(--h, 8))), oklch(76% 0.075 var(--h2, var(--h, 8)))); --dg: color-mix(in oklch, var(--tone) 5%, var(--ground-2)); }
+  .dot { display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--tone); margin-right: 0.4em; vertical-align: 0.08em; }
   .diagram .d-ground { fill: var(--dg); }
-  .diagram .d-boundary { fill: color-mix(in oklch, var(--tone) 7%, transparent); stroke: color-mix(in oklch, var(--tone) 45%, transparent); stroke-width: 1.5; stroke-dasharray: 6 7; }
+  .diagram .d-fill { fill: color-mix(in oklch, var(--tone2) 22%, transparent); }
+  .diagram .d-boundary { fill: color-mix(in oklch, var(--tone2) 7%, transparent); stroke: color-mix(in oklch, var(--tone2) 55%, transparent); stroke-width: 1.5; stroke-dasharray: 6 7; }
   .diagram .d-edge { fill: none; stroke: color-mix(in oklch, var(--ink-2) 35%, transparent); stroke-width: 1.5; }
-  .diagram .d-edge.hi { stroke: var(--tone); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .diagram .d-edge.hi { stroke: var(--tone); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
   .diagram .d-node { fill: var(--dg); stroke: color-mix(in oklch, var(--ink-2) 55%, transparent); stroke-width: 1.5; }
   .diagram .d-node.hi { fill: var(--tone); stroke: none; }
   .diagram .d-halo { fill: color-mix(in oklch, var(--tone) 16%, transparent); }
+  /* The pulse: a dot (a zero-length dash with a round cap) that runs the highlighted path once, segment by segment. */
+  .diagram .d-pulse { fill: none; stroke: color-mix(in oklch, var(--tone) 45%, var(--ink)); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 0 1; opacity: 0; }
+  .s1 { --s: 1; } .s2 { --s: 2; } .s3 { --s: 3; } .s4 { --s: 4; }
   @media (prefers-reduced-motion: no-preference) {
     .diagram .d-edge.hi { animation: draw 1.2s var(--ease) backwards; animation-delay: 200ms; }
     .diagram .d-halo { animation: fade 0.8s var(--ease) backwards; animation-delay: 1s; }
+    .diagram .d-pulse { animation: pulse 0.5s linear calc(1.6s + var(--s, 0) * 0.5s); }
+    a:hover > .diagram .d-pulse { animation: pulse-again 0.5s linear calc(var(--s, 0) * 0.5s); }
     @keyframes draw { from { stroke-dashoffset: 1; } }
     @keyframes fade { from { opacity: 0; } }
+    @keyframes pulse { from { stroke-dashoffset: 0; opacity: 1; } to { stroke-dashoffset: -1; opacity: 1; } }
+    @keyframes pulse-again { from { stroke-dashoffset: 0; opacity: 1; } to { stroke-dashoffset: -1; opacity: 1; } }
   }
   @media (prefers-reduced-motion: reduce) {
     @view-transition { navigation: none; }
@@ -507,7 +562,7 @@
 @layer print {
   @media print {
     :root { color-scheme: light; --ground: #fff; --ink: #000; --ink-2: #333; --signal: #000; --boundary: #000; }
-    .site-header, .site-footer, .toc, .related, .theme-toggle, .link-button, .text-button, .finding-tools, .cite-formats, .copy-code, .article-art, .flagship-art, .progress, .heading-anchor, .skip-link { display: none !important; }
+    .site-header, .site-footer, .toc, .related, .theme-toggle, .link-button, .text-button, .finding-tools, .cite-formats, .copy-code, .article-art, .flagship-art, .progress, .to-contents, .heading-anchor, .skip-link { display: none !important; }
     body { font-size: 11pt; line-height: 1.5; }
     .article-layout { display: block; }
     .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #333; }

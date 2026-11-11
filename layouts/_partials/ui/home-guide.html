@@ -1,0 +1,9 @@
+{{- /* Context: the field-guide section. The six most recently changed entries as cards with their short answer. */ -}}
+<ol class="cards">{{ range first 6 (sort .RegularPagesRecursive "Lastmod" "desc") }}{{ $state := partial "data/status.html" . }}
+  <li class="card"><div class="card-text">
+    <p class="card-label">{{ .Parent.Title }}</p>
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p>{{ (.Params.answer | default .Description) | markdownify | plainify | truncate 170 }}</p>
+    <p class="row-meta">{{ with $state.reviewed }}Reviewed {{ time.Format "Jan 2006" . }}{{ else }}Not yet reviewed{{ end }}</p>
+  </div></li>{{ end }}
+</ol>

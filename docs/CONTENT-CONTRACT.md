@@ -45,7 +45,7 @@ Under `content/knowledge-base/<area>/<entry>/index.md`. One question per entry:
 
 ## Review cadence
 
-Decided in `docs/DECISIONS.md`. Field-guide entries are reviewed at least every twelve months; essays on fast-moving topics (`fastMovingTopics` in `config/_default/params.toml`) show the older-guidance notice five years after `date` or the last `reviewed`. `python3 scripts/review-queue.py` lists what is due, oldest first. A review means reading the entry against current sources, fixing what changed, then setting `reviewed:` to that day and adding a `changes` line for field-guide entries. `lastmod` moves only when the content changed. External sources are checked monthly by `scripts/links.py` (CI workflow `links`); replace a dead source with an archived copy or a DOI rather than dropping the claim.
+Decided in `docs/DECISIONS.md`. Field-guide entries are reviewed at least every twelve months; essays on fast-moving topics (`fastMovingTopics` in `config/_default/params.toml`) show the older-guidance notice five years after `date` or the last `reviewed`. `python3 scripts/review-queue.py` lists what is due, oldest first. A review means reading the entry against current sources, fixing what changed, then setting `reviewed:` to that day and adding a `changes` line for field-guide entries. `lastmod` moves only when the content changed. External sources are checked monthly by `scripts/links.py` (CI workflow `links`, which keeps one open issue labelled `link-check` with the failures and closes it when they are gone); replace a dead source with an archived copy or a DOI rather than dropping the claim.
 
 ## Shortcodes
 
@@ -79,7 +79,7 @@ Internal links use `ref` (`{{</* ref "/post/jwks" */>}}`); a missing target fail
 | `/catalog.json` | Every entry's metadata, sections and a `content_hash` (SHA-256 of title, description, last modified date and source). The hash detects changes; it is not a signature. |
 | `/findings.json` | Every finding with its URL, source, entry and review status. |
 | `/llms.txt`, `/llms-full.txt` | Orientation with claims and twin links; the full corpus. |
-| `/feed.json`, `/index.xml` and per topic / field guide | Full-content JSON Feed 1.1 and RSS. |
+| `/feed.json`, `/index.xml` and per topic / field guide | Full-content JSON Feed 1.1 and RSS, the newest 20 entries each (`params.feedLimit`). |
 | `/search/index.json` | Search page and command palette. |
 
 `scripts/check.py` enforces parity between HTML, Markdown and the catalog, that every advertised link resolves, and that no shortcode syntax leaks.

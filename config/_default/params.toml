@@ -3,6 +3,8 @@ statement = "Security that makes the secure path the easy one."
 author = "Jan Brennenstuhl"
 authorURL = "/about/"
 featured = "/post/agentic-identity-broker"
+# The read-only MCP server (edge/mcp), shown on the home page and the agents page.
+mcp = "https://mcp.janbrennenstuhl.eu/mcp"
 sourceRepository = "https://github.com/jbspeakr/janbrennenstuhl.eu"
 mastodon = "https://infosec.exchange/@jbspeakr"
 fediverseCreator = "@jbspeakr@infosec.exchange"
@@ -12,6 +14,8 @@ linkedin = "https://www.linkedin.com/in/brennenstuhl/"
 # Posts older than this on fast-moving topics show an "older guidance" note unless reviewed.
 outdatedAfterYears = 5
 fastMovingTopics = ["identity-authentication", "tokens-jwt", "passwords", "application-security"]
+# Feeds carry full content, so they hold the newest entries only (the archive is in catalog.json).
+feedLimit = 20
 [license]
 name = "CC BY 4.0"
 url = "https://creativecommons.org/licenses/by/4.0/"

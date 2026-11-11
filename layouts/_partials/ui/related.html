@@ -1,9 +1,25 @@
 {{- $related := slice -}}
 {{- range .Params.related }}{{ with site.GetPage . }}{{ $related = $related | append . }}{{ end }}{{ end -}}
 {{- if not $related }}{{ $series := partial "data/series.html" . }}{{ range (partialCached "eligible.html" . "all").Related . }}{{ if and (lt (len $related) 3) (not (in ($series.pages | default slice) .)) }}{{ $related = $related | append . }}{{ end }}{{ end }}{{ end -}}
-{{- with $related }}
+{{- /* Essays also list their neighbours by date and say how to follow in the heading row: the feeds and
+       Mastodon are the only distribution channels (docs/DECISIONS.md). */ -}}
+{{- $essay := eq (partial "data/kind.html" .) "essay" -}}
+{{- $newer := "" }}{{ $older := "" -}}
+{{- if $essay }}{{ $posts := where site.RegularPages "Section" "post" }}{{ $newer = $posts.ByDate.Prev . }}{{ $older = $posts.ByDate.Next . }}{{ end -}}
+{{- if or $related $essay }}
 <section class="wrap related" aria-labelledby="related-title">
-  <h2 id="related-title">Continue reading</h2>
-  <ol class="entries">{{ range . }}{{ partial "row.html" . }}{{ end }}</ol>
+  <header class="index-head">
+    <h2 id="related-title">Continue reading</h2>
+    {{- if $essay }}
+    <p>Follow by <a href="/index.xml">RSS</a>{{ with site.Params.mastodon }} <span aria-hidden="true">·</span> <a href="{{ . }}">Mastodon</a>{{ end }} <span aria-hidden="true">·</span> <a href="/writing/">All writing</a></p>
+    {{- end }}
+  </header>
+  <ol class="entries">
+    {{- range $related }}{{ partial "row.html" . }}{{ end }}
+    {{- /* The neighbours by date join the same list, labelled, unless they are already in it. */ -}}
+    {{- range slice (dict "page" $newer "label" "Next essay") (dict "page" $older "label" "Previous essay") }}{{ $label := .label }}{{ with .page }}{{ if not (in $related .) }}
+    <li class="row"><a href="{{ .RelPermalink }}" rel="{{ cond (eq $label "Next essay") "next" "prev" }}"><span class="row-title">{{ with index (partial "data/topics.html" .) 0 }}<span class="dot t-{{ . }}" aria-hidden="true"></span>{{ end }}{{ .Title }}</span></a><span class="row-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time> <span class="kind">{{ $label }}</span></span></li>
+    {{- end }}{{ end }}{{ end }}
+  </ol>
 </section>
 {{- end }}

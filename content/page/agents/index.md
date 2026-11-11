@@ -3,7 +3,7 @@ title: For agents
 slug: agents
 description: How software agents can find, read, quote and cite this site, and what the reuse policy is.
 date: 2026-10-13
-lastmod: 2026-10-29
+lastmod: 2026-11-11
 ---
 
 Everything on this site is written for people first, and every page is also available in a form that software can read without parsing HTML.
@@ -15,7 +15,7 @@ Everything on this site is written for people first, and every page is also avai
 - Every page has a Markdown twin: add `index.md` to its URL, for example [`/agentic-identity-broker/index.md`](/agentic-identity-broker/index.md). Requesting a page with `Accept: text/markdown` returns the same twin. Each HTML page links to its twin with `<link rel="alternate" type="text/markdown">`.
 - [`/catalog.json`](/catalog.json) holds IDs, canonical URLs, publication, modification and review dates, topics, license and a content hash for each entry.
 - [`/findings.json`](/findings.json) lists every quotable finding with its anchor URL, the source it rests on and the review status of the page.
-- [`/feed.json`](/feed.json) (JSON Feed 1.1) and [`/index.xml`](/index.xml) (RSS) carry full content. Each topic has its own feeds, for example [`/topics/passwords/feed.json`](/topics/passwords/feed.json).
+- [`/feed.json`](/feed.json) (JSON Feed 1.1) and [`/index.xml`](/index.xml) (RSS) carry the full content of the 20 newest entries. Each topic has its own feeds, for example [`/topics/passwords/feed.json`](/topics/passwords/feed.json).
 - [`/capabilities.txt`](/capabilities.txt) ([capabilities.txt](https://www.capabilitiestxt.org/)) lists what an agent can do here, the MCP tools below and the files above, each with a stable ID. [`/.well-known/capabilities.json`](/.well-known/capabilities.json) is the same list as JSON, with how to invoke each one.
 - [`/.well-known/api-catalog`](/.well-known/api-catalog) (RFC 9727) points to all of the above.
 
@@ -29,6 +29,18 @@ A read-only [Model Context Protocol](https://modelcontextprotocol.io/) server ru
 - `list_topics` lists the topics with descriptions and entry counts.
 
 It serves the same public files listed above, a few minutes behind a release, and is rate-limited per client.
+
+### Connect a client
+
+In Claude Code, add it with one command:
+
+```sh
+claude mcp add --transport http janbrennenstuhl https://mcp.janbrennenstuhl.eu/mcp
+```
+
+In Claude, open Settings, then Connectors, choose "Add custom connector" and paste the URL. Other MCP clients take the same URL as a remote server with the Streamable HTTP transport.
+
+I describe how the server is built in [A Read-Only MCP Server with Bunny Edge Script]({{< ref "/post/blog-mcp-server" >}}).
 
 ## Citing
 

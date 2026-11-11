@@ -1,5 +1,7 @@
 # Monthly external-link check. Editorial, not a release gate: it never touches deployment and
-# needs no credentials. Run by hand from the Actions tab when preparing a review.
+# needs no secrets. Run by hand from the Actions tab when preparing a review.
+# A failed run keeps one open issue (label `link-check`) up to date with the report, and a clean run
+# closes it, so link rot reaches the author instead of sitting in a run artifact.
 name: links
 on:
   schedule:
@@ -10,11 +12,15 @@ permissions:
 jobs:
   links:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
       - name: Check every external link in content/ and data/
+        id: check
         run: python3 scripts/links.py --report test-results/links.md
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
@@ -22,3 +28,24 @@ jobs:
           name: link-report
           path: test-results/links.md
           retention-days: 90
+      - name: Report the result in one issue
+        if: always() && (steps.check.outcome == 'success' || steps.check.outcome == 'failure')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          OUTCOME: ${{ steps.check.outcome }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create link-check --description "Monthly external-link check" --color ededed --force
+          issue=$(gh issue list --label link-check --state open --json number --jq '.[0].number // empty')
+          if [[ $OUTCOME == success ]]; then
+            if [[ -n $issue ]]; then gh issue close "$issue" --comment "All external links pass: $RUN_URL"; fi
+            exit 0
+          fi
+          # An issue body holds 65,536 characters; the full report is the run's artifact.
+          { head -c 60000 test-results/links.md; printf '\n\nFrom %s. Replace a dead source with an archived copy or a DOI rather than dropping the claim (docs/CONTENT-CONTRACT.md).\n' "$RUN_URL"; } > issue.md
+          if [[ -n $issue ]]; then
+            gh issue edit "$issue" --body-file issue.md
+          else
+            gh issue create --title "External links need attention" --label link-check --body-file issue.md
+          fi

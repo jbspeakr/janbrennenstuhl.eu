@@ -65,3 +65,10 @@ rel = "alternate"
 home = ["html", "rss", "jsonfeed", "llms", "llmsfull", "catalog", "findings", "redirects"]
 section = ["html", "rss", "jsonfeed", "markdown"]
 page = ["html", "markdown"]
+
+# Bundle files are published only when a template asks for their URL (render hooks, picture.html,
+# social cards). The decorative hero images kept in old bundles (`imageDecorative: true`) are never
+# asked for, so they stay in the repository and out of the deploy.
+[[cascade]]
+[cascade.build]
+publishResources = false
