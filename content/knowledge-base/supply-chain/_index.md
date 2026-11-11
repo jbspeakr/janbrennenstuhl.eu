@@ -4,4 +4,4 @@ description: "How to keep dependency updates reviewable when bots and coding age
 weight: 4
 date: 2026-11-10
 ---
-These entries cover the day-to-day handling of dependency updates. My essay on [dependency updates]({{< ref "/post/automatic-dependency-updates" >}}) argues for pinned versions and release-age cooldowns. The entries here describe what I do with the update pull requests that still arrive, and which parts of that work I hand to a coding agent.
+These entries cover the day-to-day handling of dependency updates. My essay on [dependency updates]({{< ref "/post/automatic-dependency-updates" >}}) argues for pinned versions and release-age cooldowns. The entries here describe how to configure the update bots that open the pull requests, and which of those pull requests can merge without a person.
