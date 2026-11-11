@@ -1,9 +1,25 @@
 {{- $related := slice -}}
 {{- range .Params.related }}{{ with site.GetPage . }}{{ $related = $related | append . }}{{ end }}{{ end -}}
 {{- if not $related }}{{ $series := partial "data/series.html" . }}{{ range (partialCached "eligible.html" . "all").Related . }}{{ if and (lt (len $related) 3) (not (in ($series.pages | default slice) .)) }}{{ $related = $related | append . }}{{ end }}{{ end }}{{ end -}}
-{{- with $related }}
+{{- /* Essays also step to their neighbours by date and say how to follow: the feeds and Mastodon are the
+       only distribution channels (docs/DECISIONS.md), and the end of an essay is where a reader decides. */ -}}
+{{- $essay := eq (partial "data/kind.html" .) "essay" -}}
+{{- $newer := "" }}{{ $older := "" -}}
+{{- if $essay }}{{ $posts := where site.RegularPages "Section" "post" }}{{ $newer = $posts.ByDate.Prev . }}{{ $older = $posts.ByDate.Next . }}{{ end -}}
+{{- if or $related $essay }}
 <section class="wrap related" aria-labelledby="related-title">
   <h2 id="related-title">Continue reading</h2>
+  {{- with $related }}
   <ol class="entries">{{ range . }}{{ partial "row.html" . }}{{ end }}</ol>
+  {{- end }}
+  {{- if $essay }}
+  {{- if or $newer $older }}
+  <nav class="essay-step" aria-label="Essays by date">
+    {{- with $older }}<a rel="prev" href="{{ .RelPermalink }}"><span>Older essay</span> {{ .Title }}</a>{{ else }}<span></span>{{ end }}
+    {{- with $newer }}<a rel="next" href="{{ .RelPermalink }}"><span>Newer essay</span> {{ .Title }}</a>{{ end }}
+  </nav>
+  {{- end }}
+  <p class="follow">Follow new essays by <a href="/index.xml">RSS</a>{{ with site.Params.mastodon }} or on <a href="{{ . }}">Mastodon</a>{{ end }}. <a href="/writing/">All writing</a></p>
+  {{- end }}
 </section>
 {{- end }}

@@ -409,6 +409,13 @@
   .guide-nav li a[aria-current] { font-weight: 600; color: var(--signal); }
   .guide-nav p { margin-top: 0.75rem; font-size: var(--small); }
   .related { margin-top: 4.5rem; padding-block: 2rem 2.5rem; background: var(--ground-2); border-block: 1px solid var(--rule); max-width: none; padding-inline: max(var(--gutter), calc((100% - 78rem) / 2 + var(--gutter))); }
+  .essay-step { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+  .essay-step a { text-decoration: none; font-weight: 500; line-height: 1.35; }
+  .essay-step a:hover { text-decoration: underline; }
+  .essay-step a span { display: block; font-size: var(--tiny); font-weight: 400; color: var(--ink-2); }
+  .essay-step a[rel="next"] { text-align: right; }
+  @media (max-width: 40rem) { .essay-step { grid-template-columns: 1fr; gap: 1rem; } .essay-step > span { display: none; } .essay-step a[rel="next"] { text-align: left; } }
+  .follow { margin-top: 1.5rem; font-size: var(--small); color: var(--ink-2); }
   .related h2, .hub-group h2, .year h2 { font-size: var(--small); font-weight: 600; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule-strong); font-variant-numeric: tabular-nums; }
   .links-box ul { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
   .link-card { position: relative; display: flex; gap: 1rem; align-items: center; padding: 1rem 1.25rem; background: var(--ground-2); border: 1px solid var(--rule); border-radius: var(--radius); transition: border-color 0.15s var(--ease); }
