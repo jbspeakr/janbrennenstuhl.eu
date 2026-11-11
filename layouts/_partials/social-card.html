@@ -17,6 +17,11 @@
     (images.Text $title (dict "font" $font "size" $size "linespacing" (int (mul $size 0.18)) "x" 72 "y" 330 "color" "#dfe1e5"))
     (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" $tone))
   -}}
+  {{- /* Kind and month on the right, for dated entries. */ -}}
+  {{- if and $eligible (not .Date.IsZero) (in (slice "essay" "guide" "talk" "project") (partial "data/kind.html" .)) -}}
+    {{- $what := printf "%s  /  %s" (upper (partial "ui/kind-label.html" (partial "data/kind.html" .))) (upper (.Date.Format "Jan 2006")) -}}
+    {{- $filters = $filters | append (images.Text $what (dict "font" $mono "size" 22 "x" 1128 "y" 560 "alignx" "right" "color" "#a4a8ae")) -}}
+  {{- end -}}
   {{- $target := printf "%ssocial.png" (strings.TrimPrefix "/" .RelPermalink) -}}
   {{- $card = $base | images.Filter $filters | resources.Copy $target -}}
 {{- end -}}
