@@ -411,7 +411,7 @@ script_src = tomllib.loads((ROOT / "edge/rules.toml").read_text())["csp"]["direc
 inline_hashes = set()
 for page in pages.values():
     for kind, blocks in page.scripts.items():
-        if kind in ("text/javascript",):
+        if kind in ("text/javascript", "speculationrules"):  # both need a hash; JSON data blocks do not run
             for block in blocks:
                 if block.strip():
                     inline_hashes.add("'sha256-" + base64.b64encode(hashlib.sha256(block.encode()).digest()).decode() + "'")

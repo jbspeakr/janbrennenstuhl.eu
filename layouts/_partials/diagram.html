@@ -7,7 +7,7 @@ without an outline, flow or hub layout, line style, node marks, the highlighted 
 so the drawing stays calm; no two pages share a composition.
 
 Context: dict "page" PAGE, optional "seed" (string, overrides the page identity),
-"name" (view-transition name), "class".
+"carry" (true where the drawing shares its view-transition name with the home flagship), "class".
 Always decorative. Colours come from CSS classes and custom properties, so the drawing follows the theme.
 */ -}}
 {{- $p := .page -}}
@@ -138,7 +138,7 @@ Always decorative. Colours come from CSS classes and custom properties, so the d
 {{- if $hub }}{{ $line = 1 }}{{ end -}}
 {{- $fill := mod (index $n 29) 3 -}}
 {{- $pulses := slice -}}
-<svg class="diagram {{ $tone }}{{ with .class }} {{ . }}{{ end }}" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"{{ with .name }} style="{{ printf "view-transition-name: %s" . | safeCSS }}"{{ end }}>
+<svg class="diagram {{ $tone }}{{ with .class }} {{ . }}{{ end }}{{ if .carry }} carries{{ end }}" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
 {{ if $fill }}<defs>
 {{- if eq $fill 1 }}<pattern id="p{{ $id }}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="1.2" class="d-fill"/></pattern>{{ end -}}
 {{- if eq $fill 2 }}<pattern id="p{{ $id }}" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.2" height="12" class="d-fill"/></pattern>{{ end -}}

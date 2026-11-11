@@ -32,21 +32,26 @@ origin = "https://plausible.io/api/event"
 "X-Content-Type-Options" = "nosniff"
 "Referrer-Policy" = "strict-origin-when-cross-origin"
 "Permissions-Policy" = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-# Enforces frame-ancestors 'none' while the CSP is report-only.
+# Same effect as frame-ancestors 'none' in the CSP, for browsers that predate it.
 "X-Frame-Options" = "DENY"
 
-# Report-only until real violations have been inspected; then switch the header to
-# Content-Security-Policy. The sha256 source is the inline theme script (assets/js/theme.js);
-# scripts/check.py fails when the build's inline scripts and these hashes differ.
+# Enforced since November 2026. There is no report collector (docs/DECISIONS.md), so the proof is
+# the browser suite: tests/browser.cjs loads every page type with this policy enforced and fails on
+# any violation. To fall back, set header to "Content-Security-Policy-Report-Only" and publish.
+# The sha256 sources are the inline theme script (assets/js/theme.js) and the speculation rules in
+# layouts/_partials/head.html; scripts/check.py fails when the build's inline scripts and these
+# hashes differ. Chromium did not honour 'inline-speculation-rules' next to a hash in testing, so
+# the rules carry their own hash; the keyword stays for browsers that do.
+# No inline styles: style attributes and <style> elements are blocked, so templates use classes.
 # 'wasm-unsafe-eval' lets the Pagefind search engine (a same-origin WebAssembly module) compile; it
 # does not allow eval() or inline script (docs/DECISIONS.md, Search).
 # Do not expand the allowlists silently.
 [csp]
-header = "Content-Security-Policy-Report-Only"
+header = "Content-Security-Policy"
 
 [csp.directives]
 "default-src" = "'self'"
-"script-src" = "'self' 'sha256-y+XKvSCYG/Fi4uKM1CG8bJ0IRf77feTYnxoyklLsbgc=' 'inline-speculation-rules' 'wasm-unsafe-eval'"
+"script-src" = "'self' 'sha256-y+XKvSCYG/Fi4uKM1CG8bJ0IRf77feTYnxoyklLsbgc=' 'sha256-zEEvCzOWv7s2bVJI0y5AtdS7QCAhpL3KGYT+BIxg3Y8=' 'inline-speculation-rules' 'wasm-unsafe-eval'"
 "style-src" = "'self'"
 "img-src" = "'self' data:"
 "font-src" = "'self'"

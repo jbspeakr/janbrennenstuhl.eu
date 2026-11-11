@@ -19,7 +19,25 @@ const routes = [
 const launch = () => chromium.launch({ headless: true, ...(process.env.CHROMIUM_EXECUTABLE ? { executablePath: process.env.CHROMIUM_EXECUTABLE, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] } : {}) });
 const overflow = page => page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
 // QA never calls analytics (proxied in production, see edge/rules.toml); pages must behave identically when it is blocked.
+// Every page in this suite is served with the Content-Security-Policy from edge/rules.toml enforced,
+// whatever header name the edge currently sends. A violation anywhere fails the run: this is the
+// proof that the policy can be enforced, since there is no report collector (docs/DECISIONS.md).
+const cspBlock = fs.readFileSync('edge/rules.toml', 'utf8').split('[csp.directives]')[1].split(/\n\[/)[0];
+const csp = [...cspBlock.matchAll(/^"([a-z-]+)" = "(.*)"$/gm)].map(m => `${m[1]} ${m[2]}`).join('; ');
+assert.ok(csp.includes("default-src 'self'"), 'CSP read from edge/rules.toml');
+const cspViolations = new Set();
 const offline = async context => {
+  await context.route(url => url.origin === origin, async route => {
+    if (route.request().resourceType() !== 'document') return route.fallback();
+    const response = await route.fetch();
+    await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
+  });
+  // Only pages this suite serves count: the redirect check ends on the live site, which answers with its own deployed policy.
+  await context.exposeBinding('__cspViolation', ({ page }, detail) => {
+    const url = new URL(page.url());
+    if (url.origin === origin) cspViolations.add(`${url.pathname}: ${detail}`);
+  });
+  await context.addInitScript(() => document.addEventListener('securitypolicyviolation', e => window.__cspViolation(`${e.effectiveDirective} blocked ${e.blockedURI} ${e.sample || ''}`)));
   await context.route('https://plausible.io/**', r => r.abort());
   await context.route(/\/r\/(s\.js|e\.json)(\?|$)/, r => r.abort());
 };
@@ -118,7 +136,8 @@ const offline = async context => {
     page = await context.newPage();
     await page.goto(origin + '/agentic-identity-broker/');
     assert.equal(await overflow(page), false, '320px reflow');
-    await page.addStyleTag({ content: '* {line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important} p {margin-bottom:2em!important}' });
+    // A constructed stylesheet: the enforced CSP blocks the <style> element addStyleTag would insert.
+    await page.evaluate(css => { const sheet = new CSSStyleSheet(); sheet.replaceSync(css); document.adoptedStyleSheets = [sheet]; }, '* {line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important} p {margin-bottom:2em!important}');
     assert.equal(await overflow(page), false, 'Text spacing reflow');
     const missing = await page.goto(origin + '/not-a-real-page/');
     assert.equal(missing.status(), 404);
@@ -150,7 +169,8 @@ const offline = async context => {
     assert.match(await md.text(), /^---\nauthor: Jan Brennenstuhl/);
 
     fs.writeFileSync('test-results/browser.json', JSON.stringify({ checks, interactions: 'passed', noJavaScript: 'passed', reflow: 'passed' }, null, 2));
-    console.log(`${checks.length} page/width/theme checks passed; keyboard, palette, theme toggle, search history, explainers, reflow, text spacing, redirects, 404, no-JS and Markdown negotiation passed.`);
+    assert.deepEqual([...cspViolations], [], 'No Content-Security-Policy violations with the policy enforced');
+    console.log(`${checks.length} page/width/theme checks passed; keyboard, palette, theme toggle, search history, explainers, reflow, text spacing, redirects, 404, no-JS, Markdown negotiation and the enforced CSP passed.`);
   } finally {
     if (browser) await browser.close();
     server.kill();
