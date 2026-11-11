@@ -1,8 +1,8 @@
 ---
 title: "System One for Tool Approvals: Show People Only the Critical Calls"
 linkTitle: "System One for Tool Approvals"
-description: "People approve agent tool calls by reflex. I explore how a System One model could answer narrow, typed questions about a call's arguments, so that configured rules approve the harmless calls and a person only sees the critical ones, with better information."
-claim: "A System One model can take reflex approvals off people if it only answers bounded questions about a tool call's arguments, configured rules turn those answers into a recommendation or an auto-approval, and an outage, a malformed answer or disagreeing answers send the request to a person."
+description: "People approve agent tool calls by reflex. I explore how a System One model could answer narrow, typed questions about a call's arguments, so that a policy auto-approves the harmless calls and a person gets far fewer approval requests, only for the critical ones."
+claim: "People get fewer approval requests, and less approval fatigue, when a System One model answers bounded questions about a tool call's arguments and a policy auto-approves the calls that those answers show to be harmless."
 date: 2026-11-10
 slug: system-one-approvals
 tags: ["agentic-engineering", "defensive-security", "ux-security"]
@@ -10,15 +10,15 @@ findings:
   - id: approval-prompts-reflex
     text: "Anthropic reports that Claude Code users approve 97% of permission prompts, and that in a controlled study with 1,053 paid testers, human review caught 13.6% of the dangerous commands that were swapped into a prompt."
   - id: system-one-questions-not-decisions
-    text: "In my proposal for the Agentic Identity Broker, a System One model, which returns typed answers with probabilities and no generated text, answers bounded questions about the arguments of a tool call, such as whether the call gives access or data to a party outside the organisation, and rules configured in the broker make the decision. The model is never asked whether to approve or deny."
+    text: "In my proposal for the Agentic Identity Broker, a System One model answers bounded questions about the arguments of a tool call, such as whether the call gives access or data to a party outside the organisation. A policy that an operator configures auto-approves the calls whose answers are harmless, so a person is only asked about the rest."
   - id: system-one-fails-to-person
-    text: "An unavailable model, a malformed answer or answers that disagree must never auto-approve a tool call and never override a policy denial. In each of these cases the request stays a pending approval for a person."
+    text: "An unavailable model, a malformed answer or an uncertain answer must never auto-approve a tool call and never override a policy denial. In each of these cases the request stays a pending approval for a person."
 draft: true
 ---
 
 Asking a person before an agent runs a tool is the control that people expect in an agent loop. Coding agents ask before they run a shell command, and the [Agentic Identity Broker]({{< ref "/projects/agentic-identity-broker" >}}) (AIB) that Magnus Jungsbluth and I started holds a tool call until a person has approved it on a page with a description of the call and a risk level. The feature is also controversial, because the public numbers suggest that people approve nearly everything they are shown. A prompt that people answer by reflex protects little, and it still interrupts the agent's session.
 
-I'd like to get to a point where most calls never reach a person, and the few that do are the critical ones and come with enough information to decide. In October I opened [issue #206](https://github.com/zalando-incubator/agentic-identity-broker/issues/206 "AIB issue #206: Pluggable interface for an external decision model") with a proposal for AIB. A fast "System One" model reads the actual arguments of a call and answers a few narrow questions about them, such as whether the call gives data to someone outside the organisation. Rules that an operator configures in the broker turn the answers into a recommendation for the approver or, if the operator enables it, into an automatic approval. None of this is built yet, and before I start I'd like to know where the design breaks.
+I'd like to reduce the number of approvals a person gets presented. Most calls should never reach a person, and the few that do should be the critical ones and come with enough information to decide. Fewer requests mean less noise, and with that hopefully less approval fatigue. In October I opened [issue #206](https://github.com/zalando-incubator/agentic-identity-broker/issues/206 "AIB issue #206: Pluggable interface for an external decision model") with a proposal for AIB. A fast "System One" model reads the actual arguments of a call and answers a few narrow questions about them, such as whether the call gives data to someone outside the organisation. A policy that an operator configures then auto-approves the calls whose answers are harmless, and only the rest go to a person. The idea is similar to the auto mode in Claude Code, where a safety check in the background replaces most permission prompts. None of this is built yet, and before I start I'd like to know where the design breaks.
 
 ## People Approve Most Tool Calls Without Reading Them
 
@@ -28,7 +28,7 @@ The [OWASP Top 10 for Agentic Applications](https://genai.owasp.org/resource/owa
 
 AIB gives the approver little to work with today. The Open Policy Agent (OPA) policy that sends a call to approval can attach a description and a `risk_level`, and that level is currently the only risk signal the approver gets. It is static per tool. A tool like `drive.share_file` is `medium` whether the agent shares a file with a colleague or hands editor rights to `thirdparty.com`. A policy author could write rules about single arguments, because OPA receives the arguments of the call. But someone would have to write such a rule for every tool and every argument that matters, and I don't see that happening for hundreds of Model Context Protocol (MCP) tools.
 
-## I Ask the Model Questions and Let Rules Decide
+## The Model Answers Questions and a Policy Auto-Approves
 
 A [System One model](https://systemonemodels.org/guides/what-is-a-system-one-model/ "What is a System One (System 1) model?") doesn't generate text. It takes some content and a set of typed questions, and it returns typed answers with probabilities. TypeSafe AI coined the term in September when it announced its model Jev. The issue contains an illustrative request, which is a sketch and not a specification. I wrote it against `laya:en`, an open-weights System One model that I run with [Ollaya](https://ollaya.dev/ "Ollaya: Run decision models locally"), simply because that was the model I had locally at hand:
 
@@ -66,23 +66,23 @@ curl http://localhost:11435/v1/systemone -d '{
 }'
 ```
 
-The model gets the tool, the policy's risk level and the arguments. A `noul` question is a yes/no question, and the model returns the probability that the answer is yes. A `score` question places the content on an ordered scale that the caller defines. For this call, a useful model returns a probability close to 1 for the first two questions and a score around the middle level, "reversible with effort". A rule in the broker then decides what follows. An operator could configure that a call is approved automatically when both probabilities are close to 0 and the score sits at "no persistent effect", and that everything else shows up on the approval page with the three answers next to it.
+The model gets the tool, the policy's risk level and the arguments. A `noul` question is a yes/no question, and the model returns the probability that the answer is yes. A `score` question places the content on an ordered scale that the caller defines. For this call, a useful model returns a probability close to 1 for the first two questions and a score around the middle level, "reversible with effort". A policy then decides what follows. An operator could configure that a call is approved automatically when both probabilities are close to 0 and the score sits at "no persistent effect". The person never sees such a call. Everything else, like the call above, shows up on the approval page with the three answers next to it.
 
 I haven't checked how well `laya:en` answers such questions. Its makers describe it as a base to specialise, so I'd expect any model to need tuning and calibration before a threshold in a rule means much.
 
-I keep the decision away from the model mainly because an operator can review a rule. "Auto-approve when nothing leaves the organisation and the call has no persistent effect" is a sentence a security team can agree to, test and find again in an audit log next to the answers that triggered it. A model that returns "approve" leaves only the model to ask why.
+I let the model answer questions and keep the approval itself in a policy, mainly because an operator can review a rule. "Auto-approve when nothing leaves the organisation and the call has no persistent effect" is a sentence a security team can agree to, test and find again in an audit log next to the answers that triggered it. A model that returns "approve" leaves only the model to ask why.
 
 Prompt injection is another reason. The arguments of a tool call are content that an attacker may have written, and a model that reads them can be talked into things. A model whose whole output is two probabilities and a score has less room to be talked into an approval than a model that writes a verdict with a rationale. It can still be wrong. The guide linked above notes that a System One model "can pick the wrong option with high confidence", and that Jev by default treats everything in its input as data and not as potentially hostile.
 
 Fixed answers also change what the approver sees on the calls that still reach them. OWASP's guidance for ASI09 asks for a "plain-language risk summary (not model-generated rationales)". "Gives editor access to thirdparty.com" is such a summary. A paragraph in which a model explains why the call is probably fine is the persuasive text that the OWASP entry warns about, and a System One model can't write one. Still, I expect a recommendation to pull people towards accepting it, and I don't know yet how strong that pull is.
 
-Claude Code's auto mode takes the other route: a classifier looks at each tool call and allows or blocks it. Anthropic reports that the classifier blocked 89% of the dangerous commands in the study above, so a model that reads every call clearly beats a tired person. My concern is a different setting. The broker sits between many agents and many MCP servers in an organisation, and its operators have to explain why a call went through. Fixed questions and configured rules give them that explanation.
+Claude Code's auto mode has the same goal. Instead of prompting the user, a classifier checks each tool call in the background and blocks the risky ones. Anthropic reports that the classifier blocked 89% of the dangerous commands in the study above, so a model that reads every call clearly beats a tired person. The difference is who makes the call. In auto mode the classifier allows or blocks. The broker sits between many agents and many MCP servers in an organisation, and its operators have to explain why a call went through without a person. Fixed questions and a configured policy give them that explanation.
 
 ## A Failing Model Never Approves Anything
 
 The model will be unreachable at times, it will return answers that don't parse, and its answers will be uncertain or contradict each other. In all of these cases the request stays what it was before the model existed: a pending approval for a person. How the broker detects an uncertain answer isn't specified yet, and a probability near the middle is one candidate. The model's answers can also never turn a policy denial into an approval. The same holds for a permanent denial that a person has set for a tool, which the broker's [approval API](https://agenticidentitybroker.dev/docs/api/approval-endpoints "Agentic Identity Broker: Tool Approval API") already puts above any matching approval.
 
-So the model can only remove friction from calls that the policy would have let a person approve anyway. The worst outcome of an outage is today's approval page. The worst outcome of a wrong answer is bigger, because with auto-approval enabled, a call goes through that a person might have stopped. That's why auto-approval is off unless an operator turns it on, and why I'd start with recommendations.
+So the model can only take approvals off a person for calls that this person would have been allowed to approve anyway. The worst outcome of an outage is today's approval page. The worst outcome of a wrong answer is bigger, because a call goes through that a person might have stopped. That's why an operator has to turn auto-approval on and decides which answers are harmless enough for it.
 
 ## Two Questions Are Open Before I Build It
 
