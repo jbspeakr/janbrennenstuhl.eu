@@ -56,17 +56,18 @@ The header has one setting: a light/dark toggle. It follows the system until use
 
 ## The drawing
 
-`layouts/_partials/diagram.html` draws a deterministic, label-free SVG for any page. An MD5 of the page's ID and title (or a `seed`, such as a topic ID on topic pages) decides everything:
+`layouts/_partials/diagram.html` draws a deterministic, label-free SVG for any page. The page's topics decide the colour; an MD5 of the page's ID and title (or a `seed`, such as a topic ID on topic pages) decides the rest:
 
-- 3–5 columns of nodes, 1–3 nodes per middle column and 1–2 at the ends, with small offsets;
-- links so every node has a way in and out, drawn as thin neutral curves;
-- one highlighted path, one node per column, in the page's tone, ending in a node with a soft halo;
-- one dashed trust boundary around one or two neighbouring columns (never the first);
-- the page's hue, one of eight (10, 55, 100, 150, 195, 235, 275, 320). Lightness and chroma are shared, so every hue is equally quiet.
+- the hue of the page's first topic (`hue` in `data/topics.toml`: Agents 290, Identity 240, AppSec 20, Passwords 75, Tokens 150, Engineering 195) for the highlighted path, the plate's faint tint and a soft glow behind the last node; the second topic's hue, if there is one, for the trust boundary. Lightness and chroma are shared, so every hue is equally quiet. A page without a topic gets one of eight hues from the hash;
+- the shape: a free flow of 3–5 columns with 1–3 nodes each, or one of twelve set shapes (fan-out, fan-in, diamond, relay through a single party), up to four nodes in a column;
+- the line style: curves (half of the pages), right-angled runs with rounded corners, or straight lines;
+- the node mark of each column: circle, square or diamond;
+- links so every node has a way in and out, drawn thin and neutral, and one highlighted path, one node per column, ending in a node with a soft halo;
+- one dashed trust boundary around one or two neighbouring columns (never the first), plain or filled with faint dots or hatching.
 
-So no two pages share a composition, and pages in the same topic no longer look alike. The drawing is always decorative (`aria-hidden`); explanatory figures use `figure-diagram` with a text alternative. Colours come from the tokens and `--h`, so the same SVG works in both themes. The highlighted path draws in once on load; under `prefers-reduced-motion` everything is static. The same `view-transition-name` on the home flagship and its article lets the drawing carry across the navigation (`@view-transition { navigation: auto; }`, CSS only). Article and flagship drawings sit inside the content width as a rounded plate, 4:1 on wide screens and 5:2 on narrow ones.
+So no two pages share a composition, and a topic is recognisable by its colour without its pages looking alike. Colour never carries the topic alone: the eyebrow names it. The drawing is always decorative (`aria-hidden`); explanatory figures use `figure-diagram` with a text alternative. Colours come from the tokens and `--h`, so the same SVG works in both themes. The highlighted path draws in once on load; under `prefers-reduced-motion` everything is static. The same `view-transition-name` on the home flagship and its article lets the drawing carry across the navigation (`@view-transition { navigation: auto; }`, CSS only). Article and flagship drawings sit inside the content width as a rounded plate, 4:1 on wide screens and 5:2 on narrow ones.
 
-Social cards reuse it: `assets/cards/pages/<id>.png` is each article's own drawing, drawn on every CI build by `scripts/card-plates.sh` and not committed, and `assets/cards/<topic>.png` the committed topic drawings (the fallback for pages without their own plate, e.g. in a local build), all rendered at 1200×630 in the dark theme; Hugo's `images.Text` writes the title (Geist Bold) and the topic label (Geist Mono) at build time. To regenerate the topic plates after changing the drawing or the palette: build, serve on port 8000, then run `node scripts/card-plates.cjs`. To see article cards locally, run `./scripts/card-plates.sh` before `./scripts/verify.sh`.
+Social cards reuse it: `assets/cards/pages/<id>.png` is each article's own drawing, drawn on every CI build by `scripts/card-plates.sh` and not committed, and `assets/cards/<topic>.png` the committed topic drawings (the fallback for pages without their own plate, e.g. in a local build), all rendered at 1200×630 in the dark theme; Hugo's `images.Text` writes the title (Geist Bold) and the topic label (Geist Mono, in the topic's tone: `card` in `data/topics.toml`, the hue as sRGB) at build time; the short bar above the label is drawn into the plate in the same tone. To regenerate the topic plates after changing the drawing or the palette: build, serve on port 8000, then run `node scripts/card-plates.cjs`. To see article cards locally, run `./scripts/card-plates.sh` before `./scripts/verify.sh`.
 
 ## Layout
 

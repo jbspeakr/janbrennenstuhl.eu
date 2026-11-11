@@ -1,9 +1,13 @@
 # The six topics. Order is display order. A page's topics come from its
 # front-matter `topics` if set, otherwise from its tags through `tags` below.
 # Descriptions are written for people; they also feed llms.txt and topic feeds.
+# `hue` colours the topic's drawings (docs/DESIGN.md). `card` is the same tone, oklch(76% 0.075 hue),
+# as sRGB for the social-card label, because Hugo's image filters only take hex.
 
 [[topic]]
 id = "agentic-engineering"
+hue = 290
+card = "#b0a9de"
 title = "Agentic Engineering"
 short = "Agents"
 description = "Building software with coding agents, and giving agents scoped, revocable authority over the tools they use."
@@ -11,6 +15,8 @@ tags = ["agentic-engineering", "coding-agents"]
 
 [[topic]]
 id = "identity-authentication"
+hue = 240
+card = "#85b8dc"
 title = "Identity & Auth"
 short = "Identity"
 description = "OpenID Connect, OAuth, passkeys and step-up: who is acting, on whose behalf, and how strongly that was proven."
@@ -18,6 +24,8 @@ tags = ["oidc", "oauth2", "passkeys", "passwordless"]
 
 [[topic]]
 id = "application-security"
+hue = 20
+card = "#dd9e9d"
 title = "AppSec"
 short = "AppSec"
 description = "Secure defaults, platform-level controls and the attacks they have to hold against, from phishing to supply chains."
@@ -25,6 +33,8 @@ tags = ["sdlc", "supply-chain-protection", "platform-engineering", "defensive-se
 
 [[topic]]
 id = "passwords"
+hue = 75
+card = "#cdab7b"
 title = "Passwords"
 short = "Passwords"
 description = "Password policies that people can follow, systems that do not punish password managers, and the attacks on reused credentials."
@@ -32,6 +42,8 @@ tags = ["password-security", "password-manager", "brute-force"]
 
 [[topic]]
 id = "tokens-jwt"
+hue = 150
+card = "#8fbf98"
 title = "Tokens & JWT"
 short = "Tokens"
 description = "JSON Web Tokens and the JOSE family: what tokens are for, how they are signed, encrypted and verified, and where they go wrong."
@@ -39,6 +51,8 @@ tags = ["jwt"]
 
 [[topic]]
 id = "engineering-practice"
+hue = 195
+card = "#75c0c0"
 title = "Engineering Practice"
 short = "Engineering"
 description = "Notes from running software: cloud infrastructure, European hosting, tooling and the occasional migration."

@@ -11,10 +11,11 @@
   {{- if .IsHome }}{{ $title = site.Params.statement }}{{ end -}}
   {{- $size := 64 }}{{ if gt (len $title) 60 }}{{ $size = 54 }}{{ end }}{{ if gt (len $title) 95 }}{{ $size = 46 }}{{ end -}}
   {{- $label := "JANBRENNENSTUHL.EU" -}}
-  {{- with partial "data/topic.html" $topic }}{{ $label = printf "%s  /  %s" $label (upper .title) }}{{ end -}}
+  {{- $tone := "#e2a4ae" -}}
+  {{- with partial "data/topic.html" $topic }}{{ $label = printf "%s  /  %s" $label (upper .title) }}{{ with .card }}{{ $tone = . }}{{ end }}{{ end -}}
   {{- $filters := slice
     (images.Text $title (dict "font" $font "size" $size "linespacing" (int (mul $size 0.18)) "x" 72 "y" 330 "color" "#dfe1e5"))
-    (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" "#e2a4ae"))
+    (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" $tone))
   -}}
   {{- $target := printf "%ssocial.png" (strings.TrimPrefix "/" .RelPermalink) -}}
   {{- $card = $base | images.Filter $filters | resources.Copy $target -}}

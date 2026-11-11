@@ -13,23 +13,43 @@ Always decorative. Colours come from CSS custom properties, so the drawing follo
 {{- $h := md5 $seed -}}
 {{- $hex := dict "0" 0 "1" 1 "2" 2 "3" 3 "4" 4 "5" 5 "6" 6 "7" 7 "8" 8 "9" 9 "a" 10 "b" 11 "c" 12 "d" 13 "e" 14 "f" 15 -}}
 {{- $n := slice -}}{{- range seq 0 31 -}}{{- $n = $n | append (index $hex (substr $h . 1)) -}}{{- end -}}
-{{- $hue := index (slice 10 55 100 150 195 235 275 320) (mod (index $n 30) 8) -}}
 
-{{- /* Columns of nodes. Middle columns hold 1–3 nodes, the ends 1–2, so the shape varies a lot. */ -}}
-{{- $cols := add 3 (mod (index $n 0) 3) -}}
+{{- /* Colour: the first topic's hue for the path, the second topic's (if any) for the boundary. */ -}}
+{{- $topics := slice -}}
+{{- with .seed }}{{ with (partial "data/topic.html" .).id }}{{ $topics = slice . }}{{ end }}{{ else }}{{ $topics = partial "data/topics.html" $p }}{{ end -}}
+{{- $hue := index (slice 10 55 100 150 195 235 275 320) (mod (index $n 30) 8) -}}
+{{- with index $topics 0 }}{{ with (partial "data/topic.html" .).hue }}{{ $hue = . }}{{ end }}{{ end -}}
+{{- $hue2 := $hue -}}
+{{- if gt (len $topics) 1 }}{{ with (partial "data/topic.html" (index $topics 1)).hue }}{{ $hue2 = . }}{{ end }}{{ end -}}
+
+{{- /* Shape: a third of the pages get a free flow (1–3 nodes per middle column); the rest take one
+   of the set shapes: fan-out, fan-in, diamond, relay through one party. */ -}}
+{{- $shapes := slice (slice 1 2 3 4) (slice 1 3 4) (slice 4 3 2 1) (slice 4 2 1) (slice 1 3 1) (slice 1 2 3 2 1) (slice 1 4 1) (slice 2 1 2) (slice 2 1 3 1) (slice 3 1 3) (slice 2 1 2 1 2) (slice 1 1 3) -}}
+{{- $counts := slice -}}
+{{- if lt (index $n 0) 5 -}}
+  {{- $cols := add 3 (mod (index $n 0) 3) -}}
+  {{- range $c := seq 0 (sub $cols 1) -}}
+    {{- $k := add 1 (mod (index $n (add 6 $c)) 3) -}}
+    {{- if or (eq $c 0) (eq $c (sub $cols 1)) }}{{ $k = add 1 (mod (index $n (add 6 $c)) 2) }}{{ end -}}
+    {{- $counts = $counts | append $k -}}
+  {{- end -}}
+{{- else -}}
+  {{- $counts = index $shapes (mod (add (index $n 0) (index $n 31)) (len $shapes)) -}}
+{{- end -}}
+{{- $cols := len $counts -}}
 {{- $step := div 820 (sub $cols 1) -}}
+{{- $gaps := slice 0 0 130 90 64 -}}
 {{- $nodes := slice }}{{ $colNodes := slice -}}
-{{- range $c := seq 0 (sub $cols 1) -}}
-  {{- $k := add 1 (mod (index $n (add 6 $c)) 3) -}}
-  {{- if or (eq $c 0) (eq $c (sub $cols 1)) }}{{ $k = add 1 (mod (index $n (add 6 $c)) 2) }}{{ end -}}
+{{- range $c, $k := $counts -}}
   {{- $x := add (add 190 (mul $c $step)) (mul (sub (index $n (add 1 $c)) 7) 5) -}}
+  {{- $mark := mod (index $n (add 18 $c)) 3 -}}
   {{- $ids := slice -}}
   {{- range $i := seq 0 (sub $k 1) -}}
-    {{- $gap := cond (eq $k 3) 85 130 -}}
+    {{- $gap := index $gaps $k -}}
     {{- $y := add (sub 200 (div (mul $gap (sub $k 1)) 2)) (mul $i $gap) -}}
-    {{- $y = add $y (mul (sub (index $n (mod (add 12 (add (mul $c 3) $i)) 32)) 7) 3) -}}
+    {{- $y = add $y (mul (sub (index $n (mod (add 12 (add (mul $c 3) $i)) 32)) 7) (cond (eq $k 4) 2 3)) -}}
     {{- $ids = $ids | append (len $nodes) -}}
-    {{- $nodes = $nodes | append (dict "x" $x "y" $y) -}}
+    {{- $nodes = $nodes | append (dict "x" $x "y" $y "mark" $mark) -}}
   {{- end -}}
   {{- $colNodes = $colNodes | append (dict "ids" $ids) -}}
 {{- end -}}
@@ -59,19 +79,40 @@ Always decorative. Colours come from CSS custom properties, so the drawing follo
   {{- $minx = cond (lt $nd.x $minx) $nd.x $minx }}{{ $maxx = cond (gt $nd.x $maxx) $nd.x $maxx -}}
   {{- $miny = cond (lt $nd.y $miny) $nd.y $miny }}{{ $maxy = cond (gt $nd.y $maxy) $nd.y $maxy -}}
 {{- end }}{{ end -}}
-{{- $bx := sub $minx 52 }}{{ $by := sub $miny 40 }}{{ $bw := add (sub $maxx $minx) 104 }}{{ $bh := add (sub $maxy $miny) 80 -}}
+{{- $bx := sub $minx 52 }}{{ $by := sub $miny 36 }}{{ $bw := add (sub $maxx $minx) 104 }}{{ $bh := add (sub $maxy $miny) 72 -}}
 {{- $end := index $nodes (index $path (sub $cols 1)) -}}
-{{- $style := printf "--h: %d" $hue }}{{ with .name }}{{ $style = printf "%s; view-transition-name: %s" $style . }}{{ end -}}
+{{- $style := printf "--h: %d; --h2: %d" $hue $hue2 }}{{ with .name }}{{ $style = printf "%s; view-transition-name: %s" $style . }}{{ end -}}
+{{- $id := substr $h 0 6 -}}
+{{- $line := index (slice 0 0 0 0 0 0 0 0 2 2 2 2 2 1 1 1) (index $n 5) -}}
+{{- $fill := mod (index $n 29) 3 -}}
 <svg class="diagram {{ .class }}" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style="{{ $style | safeCSS }}">
+<defs><radialGradient id="g{{ $id }}"><stop class="d-g0"/><stop offset=".5" class="d-g1"/><stop offset="1" class="d-g2"/></radialGradient>
+{{- if eq $fill 1 }}<pattern id="p{{ $id }}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="1.2" class="d-fill"/></pattern>{{ end -}}
+{{- if eq $fill 2 }}<pattern id="p{{ $id }}" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.2" height="12" class="d-fill"/></pattern>{{ end -}}
+</defs>
 <rect width="1200" height="400" class="d-ground"/>
+<circle cx="{{ $end.x }}" cy="{{ $end.y }}" r="300" fill="url(#g{{ $id }})"/>
+{{- if $fill }}
+<rect x="{{ $bx }}" y="{{ $by }}" width="{{ $bw }}" height="{{ $bh }}" rx="26" fill="url(#p{{ $id }})"/>
+{{- end }}
 <rect x="{{ $bx }}" y="{{ $by }}" width="{{ $bw }}" height="{{ $bh }}" rx="26" class="d-boundary"/>
 {{- range $ei, $e := $edges -}}
-  {{- $a := index $nodes $e.a }}{{ $b := index $nodes $e.b }}{{ $mx := div (add $a.x $b.x) 2 }}
-<path d="M{{ $a.x }} {{ $a.y }}C{{ $mx }} {{ $a.y }} {{ $mx }} {{ $b.y }} {{ $b.x }} {{ $b.y }}" class="d-edge{{ if $e.hi }} hi{{ end }}"{{ if $e.hi }} pathLength="1" style="--i: {{ $ei }}"{{ end }}/>
+  {{- $a := index $nodes $e.a }}{{ $b := index $nodes $e.b }}{{ $mx := div (add $a.x $b.x) 2 -}}
+  {{- $d := printf "M%d %dC%d %d %d %d %d %d" $a.x $a.y $mx $a.y $mx $b.y $b.x $b.y -}}
+  {{- if eq $line 1 }}{{ $d = printf "M%d %dL%d %d" $a.x $a.y $b.x $b.y }}{{ end -}}
+  {{- if eq $line 2 -}}
+    {{- $dy := sub $b.y $a.y }}{{ $ady := cond (lt $dy 0) (sub 0 $dy) $dy -}}
+    {{- $r := cond (lt $ady 32) (div $ady 2) 16 }}{{ $ry := cond (lt $dy 0) (sub 0 $r) $r -}}
+    {{- $d = printf "M%d %dH%dQ%d %d %d %dV%dQ%d %d %d %dH%d" $a.x $a.y (sub $mx $r) $mx $a.y $mx (add $a.y $ry) (sub $b.y $ry) $mx $b.y (add $mx $r) $b.y $b.x -}}
+  {{- end }}
+<path d="{{ $d }}" class="d-edge{{ if $e.hi }} hi{{ end }}"{{ if $e.hi }} pathLength="1" style="--i: {{ $ei }}"{{ end }}/>
 {{- end }}
 <circle cx="{{ $end.x }}" cy="{{ $end.y }}" r="22" class="d-halo"/>
-{{- range $i, $nd := $nodes }}
-<circle cx="{{ $nd.x }}" cy="{{ $nd.y }}" r="{{ cond (eq $i (index $path (sub $cols 1))) 10 7 }}" class="d-node{{ if in $path $i }} hi{{ end }}"/>
+{{- range $i, $nd := $nodes -}}
+  {{- $last := eq $i (index $path (sub $cols 1)) }}{{ $r := cond $last 10 7 }}{{ $class := printf "d-node%s" (cond (in $path $i) " hi" "") }}
+{{ if eq $nd.mark 1 }}<rect x="{{ sub $nd.x $r }}" y="{{ sub $nd.y $r }}" width="{{ mul $r 2 }}" height="{{ mul $r 2 }}" rx="3" class="{{ $class }}"/>
+{{- else if eq $nd.mark 2 }}{{ $q := add $r 2 }}<path d="M{{ $nd.x }} {{ sub $nd.y $q }}l{{ $q }} {{ $q }}-{{ $q }} {{ $q }}-{{ $q }}-{{ $q }}z" class="{{ $class }}"/>
+{{- else }}<circle cx="{{ $nd.x }}" cy="{{ $nd.y }}" r="{{ $r }}" class="{{ $class }}"/>{{ end }}
 {{- end }}
 </svg>
 {{- /* end diagram */ -}}
