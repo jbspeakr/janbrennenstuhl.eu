@@ -2,6 +2,6 @@
 {{- $counts := partialCached "data/topic-counts.html" . "all" -}}
 <ul class="topic-nav">
 {{- range hugo.Data.topics.topic }}{{ $t := . }}{{ with index $counts $t.id }}
-  <li><a href="/topics/{{ $t.id }}/"><span class="topic-nav-title">{{ $t.title }}</span> <span class="count">{{ . }} entries</span></a><p>{{ $t.description }}</p></li>
+  <li><a href="/topics/{{ $t.id }}/"><span class="topic-nav-title"><span class="dot t-{{ $t.id }}" aria-hidden="true"></span>{{ $t.title }}</span> <span class="count">{{ . }} entries</span></a><p>{{ $t.description }}</p></li>
 {{- end }}{{ end }}
 </ul>

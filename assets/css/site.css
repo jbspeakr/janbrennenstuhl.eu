@@ -514,20 +514,34 @@
 }
 
 @layer diagram {
-  /* Each drawing sets its own hue (--h); tone and lightness are shared, so all of them stay quiet. */
-  .diagram { --dg: var(--ground-2); --tone: light-dark(oklch(55% 0.1 var(--h, 8)), oklch(76% 0.075 var(--h, 8))); }
+  /* A drawing takes its hues from the page's topics: t-<topic> for the path, u-<topic> for the boundary; h-<n> without a
+     topic. Tone and lightness are shared, so all of them stay quiet. The same tone colours the topic dots. */
+  .t-agentic-engineering { --h: 290; } .t-identity-authentication { --h: 240; } .t-application-security { --h: 20; } .t-passwords { --h: 75; } .t-tokens-jwt { --h: 150; } .t-engineering-practice { --h: 195; }
+  .u-agentic-engineering { --h2: 290; } .u-identity-authentication { --h2: 240; } .u-application-security { --h2: 20; } .u-passwords { --h2: 75; } .u-tokens-jwt { --h2: 150; } .u-engineering-practice { --h2: 195; }
+  .h-0 { --h: 10; } .h-1 { --h: 55; } .h-2 { --h: 100; } .h-3 { --h: 150; } .h-4 { --h: 195; } .h-5 { --h: 235; } .h-6 { --h: 275; } .h-7 { --h: 320; }
+  .diagram, .dot { --tone: light-dark(oklch(55% 0.1 var(--h, 8)), oklch(76% 0.075 var(--h, 8))); }
+  .diagram { --tone2: light-dark(oklch(55% 0.1 var(--h2, var(--h, 8))), oklch(76% 0.075 var(--h2, var(--h, 8)))); --dg: color-mix(in oklch, var(--tone) 5%, var(--ground-2)); }
+  .dot { display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--tone); margin-right: 0.4em; vertical-align: 0.08em; }
   .diagram .d-ground { fill: var(--dg); }
-  .diagram .d-boundary { fill: color-mix(in oklch, var(--tone) 7%, transparent); stroke: color-mix(in oklch, var(--tone) 45%, transparent); stroke-width: 1.5; stroke-dasharray: 6 7; }
+  .diagram .d-fill { fill: color-mix(in oklch, var(--tone2) 22%, transparent); }
+  .diagram .d-boundary { fill: color-mix(in oklch, var(--tone2) 7%, transparent); stroke: color-mix(in oklch, var(--tone2) 55%, transparent); stroke-width: 1.5; stroke-dasharray: 6 7; }
   .diagram .d-edge { fill: none; stroke: color-mix(in oklch, var(--ink-2) 35%, transparent); stroke-width: 1.5; }
-  .diagram .d-edge.hi { stroke: var(--tone); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .diagram .d-edge.hi { stroke: var(--tone); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
   .diagram .d-node { fill: var(--dg); stroke: color-mix(in oklch, var(--ink-2) 55%, transparent); stroke-width: 1.5; }
   .diagram .d-node.hi { fill: var(--tone); stroke: none; }
   .diagram .d-halo { fill: color-mix(in oklch, var(--tone) 16%, transparent); }
+  /* The pulse: a dot (a zero-length dash with a round cap) that runs the highlighted path once, segment by segment. */
+  .diagram .d-pulse { fill: none; stroke: color-mix(in oklch, var(--tone) 45%, var(--ink)); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 0 1; opacity: 0; }
+  .s1 { --s: 1; } .s2 { --s: 2; } .s3 { --s: 3; } .s4 { --s: 4; }
   @media (prefers-reduced-motion: no-preference) {
     .diagram .d-edge.hi { animation: draw 1.2s var(--ease) backwards; animation-delay: 200ms; }
     .diagram .d-halo { animation: fade 0.8s var(--ease) backwards; animation-delay: 1s; }
+    .diagram .d-pulse { animation: pulse 0.5s linear calc(1.6s + var(--s, 0) * 0.5s); }
+    a:hover > .diagram .d-pulse { animation: pulse-again 0.5s linear calc(var(--s, 0) * 0.5s); }
     @keyframes draw { from { stroke-dashoffset: 1; } }
     @keyframes fade { from { opacity: 0; } }
+    @keyframes pulse { from { stroke-dashoffset: 0; opacity: 1; } to { stroke-dashoffset: -1; opacity: 1; } }
+    @keyframes pulse-again { from { stroke-dashoffset: 0; opacity: 1; } to { stroke-dashoffset: -1; opacity: 1; } }
   }
   @media (prefers-reduced-motion: reduce) {
     @view-transition { navigation: none; }

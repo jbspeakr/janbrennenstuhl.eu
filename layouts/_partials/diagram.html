@@ -1,77 +1,176 @@
 {{- /*
-Trust Boundaries: a quiet, deterministic flow drawing for any page. A hash of the page's identity
-picks everything: how many columns of nodes, how many nodes per column, which links cross, which
-path is highlighted, where the trust boundary sits and the page's own muted hue. No labels, so
-the drawing stays calm; no two pages share a composition.
+Trust Boundaries: a quiet, deterministic drawing for any page. The page's topics pick the colours.
+An essay, talk or project with three or more sections is drawn from its own outline: one column
+per section, more nodes for a longer or subdivided section, and the boundary on the column of its
+part in a series. Everything else comes from a hash of the page's identity: a set shape for pages
+without an outline, flow or hub layout, line style, node marks, the highlighted path. No labels,
+so the drawing stays calm; no two pages share a composition.
 
 Context: dict "page" PAGE, optional "seed" (string, overrides the page identity),
 "name" (view-transition name), "class".
-Always decorative. Colours come from CSS custom properties, so the drawing follows the theme.
+Always decorative. Colours come from CSS classes and custom properties, so the drawing follows the theme.
 */ -}}
 {{- $p := .page -}}
 {{- $seed := .seed | default (printf "%s|%s" (partial "data/id.html" $p) $p.Title) -}}
 {{- $h := md5 $seed -}}
 {{- $hex := dict "0" 0 "1" 1 "2" 2 "3" 3 "4" 4 "5" 5 "6" 6 "7" 7 "8" 8 "9" 9 "a" 10 "b" 11 "c" 12 "d" 13 "e" 14 "f" 15 -}}
 {{- $n := slice -}}{{- range seq 0 31 -}}{{- $n = $n | append (index $hex (substr $h . 1)) -}}{{- end -}}
-{{- $hue := index (slice 10 55 100 150 195 235 275 320) (mod (index $n 30) 8) -}}
 
-{{- /* Columns of nodes. Middle columns hold 1–3 nodes, the ends 1–2, so the shape varies a lot. */ -}}
-{{- $cols := add 3 (mod (index $n 0) 3) -}}
-{{- $step := div 820 (sub $cols 1) -}}
-{{- $nodes := slice }}{{ $colNodes := slice -}}
-{{- range $c := seq 0 (sub $cols 1) -}}
-  {{- $k := add 1 (mod (index $n (add 6 $c)) 3) -}}
-  {{- if or (eq $c 0) (eq $c (sub $cols 1)) }}{{ $k = add 1 (mod (index $n (add 6 $c)) 2) }}{{ end -}}
-  {{- $x := add (add 190 (mul $c $step)) (mul (sub (index $n (add 1 $c)) 7) 5) -}}
-  {{- $ids := slice -}}
+{{- /* Colour: the first topic's hue for the path (t-<topic>), the second topic's for the boundary
+   (u-<topic>). A page without a topic takes one of eight hues from the hash (h-<n>). */ -}}
+{{- $topics := slice -}}
+{{- with .seed }}{{ with (partial "data/topic.html" .).id }}{{ $topics = slice . }}{{ end }}{{ else }}{{ $topics = partial "data/topics.html" $p }}{{ end -}}
+{{- $tone := printf "h-%d" (mod (index $n 30) 8) -}}
+{{- with index $topics 0 }}{{ $tone = printf "t-%s" . }}{{ end -}}
+{{- if gt (len $topics) 1 }}{{ $tone = printf "%s u-%s" $tone (index $topics 1) }}{{ end -}}
+
+{{- /* Outline: nodes per section, from the section's length against the page's average and
+   whether it has subsections. At most six sections are drawn. */ -}}
+{{- $counts := slice }}{{ $outline := false -}}
+{{- if and (not .seed) (in (slice "essay" "talk" "project") (partial "data/kind.html" $p)) -}}
+  {{- $words := slice }}{{ $subs := slice }}{{ $total := 0 -}}
+  {{- range $i, $s := split $p.RawContent "\n## " }}{{ if and $i (lt (len $words) 6) -}}
+    {{- $w := countwords $s }}{{ $total = add $total $w -}}
+    {{- $words = $words | append $w }}{{ $subs = $subs | append (sub (len (split $s "\n### ")) 1) -}}
+  {{- end }}{{ end -}}
+  {{- if ge (len $words) 3 -}}
+    {{- $outline = true }}{{ $mean := div $total (len $words) -}}
+    {{- range $i, $w := $words -}}
+      {{- $k := 1 -}}
+      {{- if gt (mul $w 4) (mul $mean 3) }}{{ $k = add $k 1 }}{{ end -}}
+      {{- if gt (mul $w 2) (mul $mean 3) }}{{ $k = add $k 1 }}{{ end -}}
+      {{- if index $subs $i }}{{ $k = add $k 1 }}{{ end -}}
+      {{- if and (gt $k 3) (gt (len $words) 4) }}{{ $k = 3 }}{{ end -}}
+      {{- $counts = $counts | append $k -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- /* Without an outline: a third of the pages get a free flow (1–3 nodes per middle column); the
+   rest take one of the set shapes: fan-out, fan-in, diamond, relay through one party. */ -}}
+{{- if not $outline -}}
+  {{- $shapes := slice (slice 1 2 3 4) (slice 1 3 4) (slice 4 3 2 1) (slice 4 2 1) (slice 1 3 1) (slice 1 2 3 2 1) (slice 1 4 1) (slice 2 1 2) (slice 2 1 3 1) (slice 3 1 3) (slice 2 1 2 1 2) (slice 1 1 3) -}}
+  {{- if lt (index $n 0) 5 -}}
+    {{- $c := add 3 (mod (index $n 0) 3) -}}
+    {{- range $i := seq 0 (sub $c 1) -}}
+      {{- $k := add 1 (mod (index $n (add 6 $i)) 3) -}}
+      {{- if or (eq $i 0) (eq $i (sub $c 1)) }}{{ $k = add 1 (mod (index $n (add 6 $i)) 2) }}{{ end -}}
+      {{- $counts = $counts | append $k -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $counts = index $shapes (mod (add (index $n 0) (index $n 31)) (len $shapes)) -}}
+  {{- end -}}
+{{- end -}}
+{{- $cols := len $counts -}}
+{{- /* Part in a series (0 for the first), or -1. */ -}}
+{{- $part := -1 -}}
+{{- if not .seed }}{{ with partial "data/series.html" $p }}{{ range $i, $sp := .pages }}{{ if eq $sp $p }}{{ $part = $i }}{{ end }}{{ end }}{{ end }}{{ end -}}
+
+{{- $nodes := slice }}{{ $edges := slice }}{{ $path := slice -}}
+{{- $bx := 0 }}{{ $by := 0 }}{{ $bw := 0 }}{{ $bh := 0 -}}
+{{- $hub := lt (index $n 4) 4 -}}
+{{- if $hub -}}
+  {{- /* Hub: one party in the middle, one spoke per section (four to eight), the path in through
+     one spoke and out through another. The boundary sits on the hub or on the path's last node. */ -}}
+  {{- $k := add 5 (mod (index $n 0) 4) -}}
+  {{- if $outline }}{{ $k = cond (lt $cols 4) 4 $cols }}{{ end -}}
+  {{- $cx := add 600 (mul (sub (index $n 1) 7) 6) -}}
+  {{- $nodes = $nodes | append (dict "x" $cx "y" 200 "mark" (mod (index $n 18) 3)) -}}
+  {{- $from := mod (index $n 24) $k }}{{ $to := mod (add $from (add (div $k 2) (mod (index $n 25) 2))) $k -}}
+  {{- $turn := mul (index $n 2) 4 -}}
   {{- range $i := seq 0 (sub $k 1) -}}
-    {{- $gap := cond (eq $k 3) 85 130 -}}
-    {{- $y := add (sub 200 (div (mul $gap (sub $k 1)) 2)) (mul $i $gap) -}}
-    {{- $y = add $y (mul (sub (index $n (mod (add 12 (add (mul $c 3) $i)) 32)) 7) 3) -}}
-    {{- $ids = $ids | append (len $nodes) -}}
-    {{- $nodes = $nodes | append (dict "x" $x "y" $y) -}}
+    {{- $deg := add (add (div (mul 360 $i) $k) $turn) (mul (sub (index $n (add 6 $i)) 7) 2) -}}
+    {{- $rad := div (mul (float $deg) math.Pi) 180 -}}
+    {{- $x := add $cx (int (math.Round (mul 400 (math.Cos $rad)))) }}{{ $y := add 200 (int (math.Round (mul 118 (math.Sin $rad)))) -}}
+    {{- $nodes = $nodes | append (dict "x" $x "y" $y "mark" (mod (index $n (add 19 (mod $i 5))) 3)) -}}
   {{- end -}}
-  {{- $colNodes = $colNodes | append (dict "ids" $ids) -}}
-{{- end -}}
-
-{{- /* Highlighted path: one node per column, chosen by the hash. */ -}}
-{{- $path := slice -}}
-{{- range $c, $col := $colNodes }}{{ $path = $path | append (index $col.ids (mod (index $n (add 24 $c)) (len $col.ids))) }}{{ end -}}
-
-{{- /* Links between neighbouring columns: every node has a way in and out, plus the highlighted path. */ -}}
-{{- $seen := dict }}{{ $edges := slice -}}
-{{- range $c := seq 0 (sub $cols 2) -}}
-  {{- $from := (index $colNodes $c).ids }}{{ $to := (index $colNodes (add $c 1)).ids -}}
-  {{- $pairs := slice (slice (index $path $c) (index $path (add $c 1)) true) -}}
-  {{- range $i, $a := $from }}{{ $pairs = $pairs | append (slice $a (index $to (mod $i (len $to))) false) }}{{ end -}}
-  {{- range $j, $b := $to }}{{ $pairs = $pairs | append (slice (index $from (mod $j (len $from))) $b false) }}{{ end -}}
-  {{- range $pairs -}}
-    {{- $key := printf "%d-%d" (index . 0) (index . 1) -}}
-    {{- if not (index $seen $key) }}{{ $seen = merge $seen (dict $key true) }}{{ $edges = $edges | append (dict "a" (index . 0) "b" (index . 1) "hi" (index . 2)) }}{{ end -}}
+  {{- $edges = slice (dict "a" (add $from 1) "b" 0 "hi" true) (dict "a" 0 "b" (add $to 1) "hi" true) -}}
+  {{- range $i := seq 0 (sub $k 1) }}{{ if and (ne $i $from) (ne $i $to) }}{{ $edges = $edges | append (dict "a" 0 "b" (add $i 1) "hi" false) }}{{ end }}{{ end -}}
+  {{- $path = slice (add $from 1) 0 (add $to 1) -}}
+  {{- $at := index $nodes (cond (eq (mod (index $n 10) 3) 0) (add $to 1) 0) -}}
+  {{- $bx = sub $at.x 70 }}{{ $by = sub $at.y 44 }}{{ $bw = 140 }}{{ $bh = 88 -}}
+{{- else -}}
+  {{- /* Flow: columns of nodes, left to right. */ -}}
+  {{- $step := div 820 (sub $cols 1) -}}
+  {{- $gaps := slice 0 0 130 90 64 -}}
+  {{- $colNodes := slice -}}
+  {{- range $c, $k := $counts -}}
+    {{- $x := add (add 190 (mul $c $step)) (mul (sub (index $n (add 1 $c)) 7) (cond (gt $cols 5) 3 5)) -}}
+    {{- $mark := mod (index $n (add 18 $c)) 3 -}}
+    {{- $ids := slice -}}
+    {{- range $i := seq 0 (sub $k 1) -}}
+      {{- $gap := index $gaps $k -}}
+      {{- $y := add (sub 200 (div (mul $gap (sub $k 1)) 2)) (mul $i $gap) -}}
+      {{- $y = add $y (mul (sub (index $n (mod (add 12 (add (mul $c 3) $i)) 32)) 7) (cond (eq $k 4) 2 3)) -}}
+      {{- $ids = $ids | append (len $nodes) -}}
+      {{- $nodes = $nodes | append (dict "x" $x "y" $y "mark" $mark) -}}
+    {{- end -}}
+    {{- $colNodes = $colNodes | append (dict "ids" $ids) -}}
   {{- end -}}
+  {{- /* Highlighted path: one node per column, chosen by the hash. */ -}}
+  {{- range $c, $col := $colNodes }}{{ $path = $path | append (index $col.ids (mod (index $n (add 24 $c)) (len $col.ids))) }}{{ end -}}
+  {{- /* Links between neighbouring columns: every node has a way in and out, plus the highlighted path. */ -}}
+  {{- $seen := dict -}}
+  {{- range $c := seq 0 (sub $cols 2) -}}
+    {{- $from := (index $colNodes $c).ids }}{{ $to := (index $colNodes (add $c 1)).ids -}}
+    {{- $pairs := slice (slice (index $path $c) (index $path (add $c 1)) true) -}}
+    {{- range $i, $a := $from }}{{ $pairs = $pairs | append (slice $a (index $to (mod $i (len $to))) false) }}{{ end -}}
+    {{- range $j, $b := $to }}{{ $pairs = $pairs | append (slice (index $from (mod $j (len $from))) $b false) }}{{ end -}}
+    {{- range $pairs -}}
+      {{- $key := printf "%d-%d" (index . 0) (index . 1) -}}
+      {{- if not (index $seen $key) }}{{ $seen = merge $seen (dict $key true) }}{{ $edges = $edges | append (dict "a" (index . 0) "b" (index . 1) "hi" (index . 2)) }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- /* Trust boundary around one or two neighbouring columns (never the first). In a series it
+     sits on the column of the page's part, so it moves along from one part to the next. */ -}}
+  {{- $b0 := add 1 (mod (index $n 10) (sub $cols 1)) -}}
+  {{- if ge $part 0 }}{{ $b0 = add 1 (mod $part (sub $cols 1)) }}{{ end -}}
+  {{- $b1 := $b0 }}{{ if and (eq (mod (index $n 11) 3) 0) (lt (add $b0 1) $cols) }}{{ $b1 = add $b0 1 }}{{ end -}}
+  {{- $minx := 2000 }}{{ $maxx := 0 }}{{ $miny := 2000 }}{{ $maxy := 0 -}}
+  {{- range seq $b0 $b1 }}{{ range (index $colNodes .).ids }}{{ $nd := index $nodes . -}}
+    {{- $minx = cond (lt $nd.x $minx) $nd.x $minx }}{{ $maxx = cond (gt $nd.x $maxx) $nd.x $maxx -}}
+    {{- $miny = cond (lt $nd.y $miny) $nd.y $miny }}{{ $maxy = cond (gt $nd.y $maxy) $nd.y $maxy -}}
+  {{- end }}{{ end -}}
+  {{- $bx = sub $minx 52 }}{{ $by = sub $miny 36 }}{{ $bw = add (sub $maxx $minx) 104 }}{{ $bh = add (sub $maxy $miny) 72 -}}
 {{- end -}}
-
-{{- /* Trust boundary around one or two neighbouring columns (never the first). */ -}}
-{{- $b0 := add 1 (mod (index $n 10) (sub $cols 1)) -}}
-{{- $b1 := $b0 }}{{ if and (eq (mod (index $n 11) 3) 0) (lt (add $b0 1) $cols) }}{{ $b1 = add $b0 1 }}{{ end -}}
-{{- $minx := 2000 }}{{ $maxx := 0 }}{{ $miny := 2000 }}{{ $maxy := 0 -}}
-{{- range seq $b0 $b1 }}{{ range (index $colNodes .).ids }}{{ $nd := index $nodes . -}}
-  {{- $minx = cond (lt $nd.x $minx) $nd.x $minx }}{{ $maxx = cond (gt $nd.x $maxx) $nd.x $maxx -}}
-  {{- $miny = cond (lt $nd.y $miny) $nd.y $miny }}{{ $maxy = cond (gt $nd.y $maxy) $nd.y $maxy -}}
-{{- end }}{{ end -}}
-{{- $bx := sub $minx 52 }}{{ $by := sub $miny 40 }}{{ $bw := add (sub $maxx $minx) 104 }}{{ $bh := add (sub $maxy $miny) 80 -}}
-{{- $end := index $nodes (index $path (sub $cols 1)) -}}
-{{- $style := printf "--h: %d" $hue }}{{ with .name }}{{ $style = printf "%s; view-transition-name: %s" $style . }}{{ end -}}
-<svg class="diagram {{ .class }}" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style="{{ $style | safeCSS }}">
+{{- $endId := index $path (sub (len $path) 1) }}{{ $end := index $nodes $endId -}}
+{{- $id := substr $h 0 6 -}}
+{{- $line := index (slice 0 0 0 0 0 0 0 0 2 2 2 2 2 1 1 1) (index $n 5) -}}
+{{- if $hub }}{{ $line = 1 }}{{ end -}}
+{{- $fill := mod (index $n 29) 3 -}}
+{{- $pulses := slice -}}
+<svg class="diagram {{ $tone }}{{ with .class }} {{ . }}{{ end }}" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"{{ with .name }} style="{{ printf "view-transition-name: %s" . | safeCSS }}"{{ end }}>
+{{ if $fill }}<defs>
+{{- if eq $fill 1 }}<pattern id="p{{ $id }}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="1.2" class="d-fill"/></pattern>{{ end -}}
+{{- if eq $fill 2 }}<pattern id="p{{ $id }}" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.2" height="12" class="d-fill"/></pattern>{{ end -}}
+</defs>{{ end }}
 <rect width="1200" height="400" class="d-ground"/>
+{{- if $fill }}
+<rect x="{{ $bx }}" y="{{ $by }}" width="{{ $bw }}" height="{{ $bh }}" rx="26" fill="url(#p{{ $id }})"/>
+{{- end }}
 <rect x="{{ $bx }}" y="{{ $by }}" width="{{ $bw }}" height="{{ $bh }}" rx="26" class="d-boundary"/>
-{{- range $ei, $e := $edges -}}
-  {{- $a := index $nodes $e.a }}{{ $b := index $nodes $e.b }}{{ $mx := div (add $a.x $b.x) 2 }}
-<path d="M{{ $a.x }} {{ $a.y }}C{{ $mx }} {{ $a.y }} {{ $mx }} {{ $b.y }} {{ $b.x }} {{ $b.y }}" class="d-edge{{ if $e.hi }} hi{{ end }}"{{ if $e.hi }} pathLength="1" style="--i: {{ $ei }}"{{ end }}/>
+{{- range $e := $edges -}}
+  {{- $a := index $nodes $e.a }}{{ $b := index $nodes $e.b }}{{ $mx := div (add $a.x $b.x) 2 -}}
+  {{- $d := printf "M%d %dC%d %d %d %d %d %d" $a.x $a.y $mx $a.y $mx $b.y $b.x $b.y -}}
+  {{- if eq $line 1 }}{{ $d = printf "M%d %dL%d %d" $a.x $a.y $b.x $b.y }}{{ end -}}
+  {{- if eq $line 2 -}}
+    {{- $dy := sub $b.y $a.y }}{{ $ady := cond (lt $dy 0) (sub 0 $dy) $dy -}}
+    {{- $dx := sub $b.x $a.x }}{{ $adx := cond (lt $dx 0) (sub 0 $dx) $dx -}}
+    {{- $r := cond (lt $ady 32) (div $ady 2) 16 }}{{ $r = cond (lt $adx (mul $r 2)) (div $adx 2) $r -}}
+    {{- $ry := cond (lt $dy 0) (sub 0 $r) $r }}{{ $rx := cond (lt $dx 0) (sub 0 $r) $r -}}
+    {{- $d = printf "M%d %dH%dQ%d %d %d %dV%dQ%d %d %d %dH%d" $a.x $a.y (sub $mx $rx) $mx $a.y $mx (add $a.y $ry) (sub $b.y $ry) $mx $b.y (add $mx $rx) $b.y $b.x -}}
+  {{- end -}}
+  {{- if $e.hi }}{{ $pulses = $pulses | append $d }}{{ end }}
+<path d="{{ $d }}" class="d-edge{{ if $e.hi }} hi{{ end }}"{{ if $e.hi }} pathLength="1"{{ end }}/>
+{{- end }}
+{{- range $i, $d := $pulses }}
+<path d="{{ $d }}" class="d-pulse s{{ $i }}" pathLength="1"/>
 {{- end }}
 <circle cx="{{ $end.x }}" cy="{{ $end.y }}" r="22" class="d-halo"/>
-{{- range $i, $nd := $nodes }}
-<circle cx="{{ $nd.x }}" cy="{{ $nd.y }}" r="{{ cond (eq $i (index $path (sub $cols 1))) 10 7 }}" class="d-node{{ if in $path $i }} hi{{ end }}"/>
+{{- range $i, $nd := $nodes -}}
+  {{- $last := eq $i $endId }}{{ $r := cond $last 10 7 }}{{ $class := printf "d-node%s" (cond (in $path $i) " hi" "") }}
+{{ if eq $nd.mark 1 }}<rect x="{{ sub $nd.x $r }}" y="{{ sub $nd.y $r }}" width="{{ mul $r 2 }}" height="{{ mul $r 2 }}" rx="3" class="{{ $class }}"/>
+{{- else if eq $nd.mark 2 }}{{ $q := add $r 2 }}<path d="M{{ $nd.x }} {{ sub $nd.y $q }}l{{ $q }} {{ $q }}-{{ $q }} {{ $q }}-{{ $q }}-{{ $q }}z" class="{{ $class }}"/>
+{{- else }}<circle cx="{{ $nd.x }}" cy="{{ $nd.y }}" r="{{ $r }}" class="{{ $class }}"/>{{ end }}
 {{- end }}
 </svg>
 {{- /* end diagram */ -}}
