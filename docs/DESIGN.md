@@ -81,7 +81,7 @@ Social cards reuse it: `assets/cards/pages/<id>.png` is each article's own drawi
 - **Field-guide entry:** question title, short answer, key findings as `finding` blocks with anchors and quiet actions (link, copy quote with link, save the 1200×630 image), evidence table, what to do for engineers and for product/UX, details, review status and change log.
 - **Pages** (about, imprint, accessibility …): the article grid. The side column holds the table of contents, the update date and the Markdown link; on the about page it holds the portrait and short facts.
 - **Code:** filename caption, line highlighting via Hugo options, copy button, scrollable focusable region, palette-matched highlighting.
-- **Search:** ⌘K / Ctrl+K command palette (loaded on demand) and `/search/` with type and topic filters; both use the same index. Without JS, `/search/` lists everything.
+- **Search:** ⌘K / Ctrl+K command palette (loaded on demand) and `/search/` with type and topic filters; both search through Pagefind, which fetches only the index chunks and page fragments a query needs, matches word forms (passkey, passkeys) and returns the matching section with the words marked. Without JS, `/search/` lists everything.
 
 ## Budgets
 
@@ -94,7 +94,8 @@ Compressed transfer, enforced by `scripts/check.py` (and Lighthouse in CI):
 | HTML per essay or guide entry | 30 kB | ~12 kB typical |
 | Preloaded font | 35 kB | 26.4 kB |
 | Inline diagram | 6 kB | ~2 kB |
-| Search index (`/search/index.json`, full text) | 200 kB | ~150 kB |
+| Search engine before the first query (Pagefind API, worker, WebAssembly, index metadata) | 100 kB | 86 kB |
+| MCP search index (`/search/index.json`, read by the edge script only) | 400 kB | ~170 kB |
 | Third-party requests | 0: the deferred Plausible script is proxied through our own host (docs/DECISIONS.md) | 0 |
 
 ### LCP and the CSP
