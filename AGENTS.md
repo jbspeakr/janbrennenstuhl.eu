@@ -51,7 +51,7 @@ Read `docs/DELIVERY.md` before touching deployment. No production credentials in
 Use the archetypes; never hand-copy front matter from another page.
 
 - Essay: `hugo new content post/<slug>`
-- Field-guide entry: `hugo new content knowledge-base/<area>/<slug>` (areas: account-security, oidc, agent-identity)
+- Field-guide entry: `hugo new content knowledge-base/<area>/<slug>` (areas: account-security, oidc, agent-identity, supply-chain)
 - Talk: `hugo new content talks/<slug>`
 - Project: `hugo new content projects/<slug>`
 
