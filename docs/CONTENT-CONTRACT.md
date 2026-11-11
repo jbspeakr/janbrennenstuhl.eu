@@ -79,7 +79,7 @@ Internal links use `ref` (`{{</* ref "/post/jwks" */>}}`); a missing target fail
 | `/catalog.json` | Every entry's metadata, sections and a `content_hash` (SHA-256 of title, description, last modified date and source). The hash detects changes; it is not a signature. |
 | `/findings.json` | Every finding with its URL, source, entry and review status. |
 | `/llms.txt`, `/llms-full.txt` | Orientation with claims and twin links; the full corpus. |
-| `/feed.json`, `/index.xml` and per topic / field guide | Full-content JSON Feed 1.1 and RSS. |
+| `/feed.json`, `/index.xml` and per topic / field guide | Full-content JSON Feed 1.1 and RSS, the newest 20 entries each (`params.feedLimit`). |
 | `/search/index.json` | Search page and command palette. |
 
 `scripts/check.py` enforces parity between HTML, Markdown and the catalog, that every advertised link resolves, and that no shortcode syntax leaks.
