@@ -32,7 +32,11 @@ const offline = async context => {
     const response = await route.fetch();
     await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
   });
-  await context.exposeBinding('__cspViolation', ({ page }, detail) => cspViolations.add(`${new URL(page.url()).pathname}: ${detail}`));
+  // Only pages this suite serves count: the redirect check ends on the live site, which answers with its own deployed policy.
+  await context.exposeBinding('__cspViolation', ({ page }, detail) => {
+    const url = new URL(page.url());
+    if (url.origin === origin) cspViolations.add(`${url.pathname}: ${detail}`);
+  });
   await context.addInitScript(() => document.addEventListener('securitypolicyviolation', e => window.__cspViolation(`${e.effectiveDirective} blocked ${e.blockedURI} ${e.sample || ''}`)));
   await context.route('https://plausible.io/**', r => r.abort());
   await context.route(/\/r\/(s\.js|e\.json)(\?|$)/, r => r.abort());
