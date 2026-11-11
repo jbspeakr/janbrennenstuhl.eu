@@ -1,11 +1,13 @@
-{{- /* Publishes a redirect page for every retired route and lists the redirects (data file plus page aliases, minus old pagination) for the edge 301 rules. */ -}}
+{{- /* Publishes a redirect page for every retired route and lists the redirects (data file plus page aliases) for the edge 301 rules.
+     Edge rules are scarce (50 per zone, docs/DELIVERY.md), so only retired articles get one. Old pagination (/2/, /tags/x/1/)
+     and old listings (tags, categories, archives: every redirect to /topics/… or /writing/) keep only their HTML redirect
+     page, which scripts/check.py still verifies. */ -}}
 {{- $list := slice -}}
 {{- range hugo.Data.redirects.redirect -}}
   {{- $to := .to | absURL -}}
   {{- $html := printf "<!doctype html><html lang=\"en-GB\"><head><title>%s</title><link rel=\"canonical\" href=\"%s\"><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex\"><meta http-equiv=\"refresh\" content=\"0; url=%s\"></head><body><p>Moved to <a href=\"%s\">%s</a>.</p></body></html>" $to $to $to $to $to -}}
   {{- $_ := (resources.FromString (printf "%sindex.html" (strings.TrimPrefix "/" .from)) $html).Publish -}}
-  {{- /* Old pagination (/2/, /tags/x/1/) keeps only its HTML page; it was never linked, and edge rules are scarce. */ -}}
-  {{- if not (findRE `/[0-9]+/$` .from) }}{{ $list = $list | append (dict "from" .from "to" .to "status" 301) }}{{ end -}}
+  {{- if not (or (findRE `/[0-9]+/$` .from) (hasPrefix .to "/topics/") (eq .to "/writing/")) }}{{ $list = $list | append (dict "from" .from "to" .to "status" 301) }}{{ end -}}
 {{- end -}}
-{{- range site.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $list = $list | append (dict "from" (printf "/%s/" (strings.Trim . "/")) "to" $to "status" 301) }}{{ end }}{{ end -}}
-{{- dict "description" "Retired routes. The CDN should answer these with HTTP 301; the HTML redirect pages are a fallback." "redirects" $list | jsonify -}}
+{{- range site.Pages }}{{ $to := .RelPermalink }}{{ if not (or (hasPrefix $to "/topics/") (eq $to "/writing/")) }}{{ range .Aliases }}{{ $list = $list | append (dict "from" (printf "/%s/" (strings.Trim . "/")) "to" $to "status" 301) }}{{ end }}{{ end }}{{ end -}}
+{{- dict "description" "Retired articles. The CDN should answer these with HTTP 301; the HTML redirect pages are a fallback. Old pagination and listings have only the HTML page." "redirects" $list | jsonify -}}

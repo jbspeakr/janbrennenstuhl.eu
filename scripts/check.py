@@ -13,6 +13,7 @@ import json
 import os
 import re
 import sys
+import tomllib
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from html.parser import HTMLParser
@@ -361,6 +362,11 @@ for r in redirects:
     source = target_of(r["from"])
     check(source in pages and is_redirect(pages[source]), f"Redirect page missing for {r['from']}")
     check(target_of(r["to"]).exists(), f"Redirect target missing {r['from']} -> {r['to']}")
+# Old pagination and listings have no edge rule (layouts/home.redirects.json), only their HTML page.
+for r in tomllib.loads((ROOT / "data/redirects.toml").read_text())["redirect"]:
+    source = target_of(r["from"])
+    check(source in pages and is_redirect(pages[source]), f"Redirect page missing for {r['from']}")
+    check(target_of(r["to"]).exists(), f"Redirect target missing {r['from']} -> {r['to']}")
 
 for name in ("api-catalog", "tdmrep.json", "capabilities.json"):
     json.loads((PUBLIC / ".well-known" / name).read_text())
@@ -401,7 +407,6 @@ for desc in rss.iter("description"):
 # --- CSP: inline scripts and the hashes the edge allows must match exactly ---------------------------
 import base64
 import hashlib
-import tomllib
 script_src = tomllib.loads((ROOT / "edge/rules.toml").read_text())["csp"]["directives"]["script-src"].split()
 inline_hashes = set()
 for page in pages.values():
