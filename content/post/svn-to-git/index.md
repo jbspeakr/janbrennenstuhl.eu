@@ -33,7 +33,7 @@ Checkout your SVN repository.
 svn co SVN_REPO_URL
 ```
 
-Go into the repo directory and extract authors from the SVN repo [using this statement](http://stackoverflow.com/questions/2159567/what-is-the-format-of-an-authors-file-for-git-svn-specifically-for-special-char).
+Go into the repo directory and extract authors from the SVN repo [using this statement](https://stackoverflow.com/questions/2159567/what-is-the-format-of-an-authors-file-for-git-svn-specifically-for-special-char).
 
 ```bash
 svn log --xml | grep author | sort -u | perl -pe 's/.>(.?)<./$1 = /'

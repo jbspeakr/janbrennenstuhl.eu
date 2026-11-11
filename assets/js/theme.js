@@ -1,7 +1,11 @@
 // Runs before first paint: apply a stored theme choice. Storage may be unavailable; reading must still work.
 try {
   const s = JSON.parse(localStorage.getItem('jb-reader') || '{}');
-  if (s.theme === 'light' || s.theme === 'dark') document.documentElement.dataset.theme = s.theme;
+  if (s.theme === 'light' || s.theme === 'dark') {
+    document.documentElement.dataset.theme = s.theme;
+    // The browser's own chrome follows the reader's choice too, not only the system setting.
+    for (const m of document.querySelectorAll('meta[name=theme-color]')) m.content = s.theme === 'dark' ? '#16191c' : '#fafbfc';
+  }
 } catch (_) { /* Follow the system theme. */ }
 // Plausible queue stub (the script itself is loaded only on the production host, see baseof.html).
 // Events go to our own host; the edge proxies /api/event to plausible.io (edge/rules.toml).

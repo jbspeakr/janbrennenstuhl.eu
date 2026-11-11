@@ -16,6 +16,7 @@ if (toggle) {
   system.addEventListener('change', label);
   toggle.addEventListener('click', () => {
     root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
+    for (const m of document.querySelectorAll('meta[name=theme-color]')) m.content = root.dataset.theme === 'dark' ? '#16191c' : '#fafbfc';
     label();
     try { localStorage.setItem('jb-reader', JSON.stringify({ theme: root.dataset.theme })); } catch (_) { /* session only */ }
   });
