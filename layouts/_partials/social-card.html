@@ -3,7 +3,8 @@
 {{- $eligible := in (partial "eligible.html" .) . -}}
 {{- $topic := "home" -}}
 {{- if .Params.topic }}{{ $topic = .Params.topic }}{{ else if $eligible }}{{ $topic = index (partial "data/topics.html" .) 0 | default "home" }}{{ end -}}
-{{- if or .IsHome $eligible .Params.topic -}}
+{{- /* Hubs, lists and plain pages share the home plate with their own title, so every shared link has a card. */ -}}
+{{- if ne .Kind "404" -}}
   {{- $base := resources.Get (printf "cards/pages/%s.png" (partial "data/id.html" .)) | default (resources.Get (printf "cards/%s.png" $topic)) | default (resources.Get "cards/home.png") -}}
   {{- $font := resources.Get "fonts/Geist-Bold-card.ttf" -}}
   {{- $mono := resources.Get "fonts/GeistMono-Medium-card.ttf" -}}
@@ -13,6 +14,7 @@
   {{- $label := "JANBRENNENSTUHL.EU" -}}
   {{- $tone := "#e2a4ae" -}}
   {{- with partial "data/topic.html" $topic }}{{ $label = printf "%s  /  %s" $label (upper .title) }}{{ with .card }}{{ $tone = . }}{{ end }}{{ end -}}
+  {{- if and .IsSection (not .Params.topic) (ne .FirstSection .) }}{{ $label = printf "%s  /  %s" $label (upper .FirstSection.Title) }}{{ end -}}
   {{- $filters := slice
     (images.Text $title (dict "font" $font "size" $size "linespacing" (int (mul $size 0.18)) "x" 72 "y" 330 "color" "#dfe1e5"))
     (images.Text $label (dict "font" $mono "size" 22 "x" 72 "y" 560 "color" $tone))
