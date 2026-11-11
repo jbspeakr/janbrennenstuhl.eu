@@ -117,12 +117,14 @@
 }
 
 @layer components {
-  .eyebrow { font-size: var(--small); color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: baseline; }
+  .eyebrow { font-size: var(--tiny); color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: baseline; }
   .eyebrow a { text-decoration: none; }
   .eyebrow a:hover { text-decoration: underline; }
   .chip { color: var(--boundary); }
   .lead { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.3rem); line-height: 1.5; color: var(--ink-2); max-width: 46ch; text-wrap: pretty; }
   .meta, .row-meta, .byline, .small { font-size: var(--small); color: var(--ink-2); }
+  /* Metadata speaks in mono: kinds, dates, bylines, counts. Never navigation, tables or prose. */
+  .eyebrow, .row-meta, .count, .byline, .label, .series-nav time, .flagship .meta, .footer-meta { font-family: var(--mono); font-size: var(--tiny); word-spacing: -0.15em; font-feature-settings: normal; }
   .small { font-size: var(--tiny); }
   .arrow::after { content: " →" / ""; }
   a.ext::after { content: "↗" / ""; font-size: 0.75em; margin-left: 0.15em; text-decoration: none; display: inline-block; }
@@ -200,7 +202,7 @@
   .article-head { padding-top: clamp(1.75rem, 4vw, 3rem); }
   .answer { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.3rem); line-height: 1.5; max-width: 48ch; border-left: 2px solid var(--signal); padding-left: 1rem; }
   .answer-label { display: block; font-size: var(--small); font-weight: 600; color: var(--signal); margin-bottom: 0.25rem; }
-  .byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-size: var(--small); font-variant-numeric: tabular-nums; }
+  .byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
   .byline a { color: var(--ink); }
   .byline .reviewed { color: var(--green); }
   /* The head uses the body's text column: eyebrow, title, lead and prose share one width.

@@ -46,7 +46,7 @@ Each kind of block has its own treatment, so a page never reads as a stack of id
 ## Type
 
 - **Geist** (variable, 100–900, Latin subset, 26 kB woff2) for headings, UI and body; preloaded. Italic is a separate 27 kB file, fetched only when a page uses italics.
-- **Geist Mono** (variable, 21 kB) for code, keyboard keys and finding IDs only. Labels, eyebrows, dates and table heads are set in Geist with tabular figures where numbers line up. Labels and table heads are sentence case; names in the eyebrow (kinds, topics, series) are Title Case, as in the main navigation.
+- **Geist Mono** (variable, 21 kB) for code, keyboard keys, finding IDs and metadata: eyebrows, bylines, dates and kinds in list rows, entry counts, the small labels in the Now strip and the footer's small print, all at 13px. It is not preloaded and swaps in. Navigation, table heads, panel headings and prose stay in Geist, with tabular figures where numbers line up. Labels and table heads are sentence case; names in the eyebrow (kinds, topics, series) are Title Case, as in the main navigation.
 - Fallback `Geist Fallback` is Arial with `size-adjust: 104.71%`, `ascent-override: 95.98%`, `descent-override: 28.17%`, computed from both fonts' metrics, so the swap does not move text.
 - Headings weight 600, tracking −0.015 to −0.03em. The home statement tops out at 3.75rem, article titles at 3.1rem. Body 17–18px, line height 1.7, 66-character measure. Nothing below 13px.
 - Rules are 1px; accent bars (answer, findings) 2px.
@@ -83,7 +83,7 @@ Compressed transfer, enforced by `scripts/check.py` (and Lighthouse in CI):
 
 | Budget | Limit | Current |
 | --- | --- | --- |
-| CSS (one fingerprinted file) | 15 kB | 7.5 kB |
+| CSS (one fingerprinted file) | 15 kB | 8.0 kB |
 | JS on an article (site module; explainers only where used) | 8 kB | 1.3 kB |
 | HTML per essay or guide entry | 30 kB | ~12 kB typical |
 | Preloaded font | 35 kB | 26.4 kB |
