@@ -21,7 +21,7 @@ const overflow = page => page.evaluate(() => document.documentElement.scrollWidt
 // QA never calls analytics (proxied in production, see edge/rules.toml); pages must behave identically when it is blocked.
 const offline = async context => {
   await context.route('https://plausible.io/**', r => r.abort());
-  await context.route(/\/(js\/pa-[^/]*\.js|api\/event)(\?|$)/, r => r.abort());
+  await context.route(/\/r\/(s\.js|e\.json)(\?|$)/, r => r.abort());
 };
 
 (async () => {
