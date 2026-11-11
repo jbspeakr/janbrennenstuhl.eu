@@ -482,9 +482,6 @@
   /* Each drawing takes its hues from the page's topics (--h, --h2); tone and lightness are shared, so all of them stay quiet. */
   .diagram { --tone: light-dark(oklch(55% 0.1 var(--h, 8)), oklch(76% 0.075 var(--h, 8))); --tone2: light-dark(oklch(55% 0.1 var(--h2, 8)), oklch(76% 0.075 var(--h2, 8))); --dg: color-mix(in oklch, var(--tone) 5%, var(--ground-2)); }
   .diagram .d-ground { fill: var(--dg); }
-  .diagram .d-g0 { stop-color: var(--tone); stop-opacity: 0.13; }
-  .diagram .d-g1 { stop-color: var(--tone); stop-opacity: 0.04; }
-  .diagram .d-g2 { stop-color: var(--tone); stop-opacity: 0; }
   .diagram .d-fill { fill: color-mix(in oklch, var(--tone2) 22%, transparent); }
   .diagram .d-boundary { fill: color-mix(in oklch, var(--tone2) 7%, transparent); stroke: color-mix(in oklch, var(--tone2) 55%, transparent); stroke-width: 1.5; stroke-dasharray: 6 7; }
   .diagram .d-edge { fill: none; stroke: color-mix(in oklch, var(--ink-2) 35%, transparent); stroke-width: 1.5; }

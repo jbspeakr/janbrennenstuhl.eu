@@ -86,12 +86,11 @@ Always decorative. Colours come from CSS custom properties, so the drawing follo
 {{- $line := index (slice 0 0 0 0 0 0 0 0 2 2 2 2 2 1 1 1) (index $n 5) -}}
 {{- $fill := mod (index $n 29) 3 -}}
 <svg class="diagram {{ .class }}" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style="{{ $style | safeCSS }}">
-<defs><radialGradient id="g{{ $id }}"><stop class="d-g0"/><stop offset=".5" class="d-g1"/><stop offset="1" class="d-g2"/></radialGradient>
+{{ if $fill }}<defs>
 {{- if eq $fill 1 }}<pattern id="p{{ $id }}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="1.2" class="d-fill"/></pattern>{{ end -}}
 {{- if eq $fill 2 }}<pattern id="p{{ $id }}" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.2" height="12" class="d-fill"/></pattern>{{ end -}}
-</defs>
+</defs>{{ end }}
 <rect width="1200" height="400" class="d-ground"/>
-<circle cx="{{ $end.x }}" cy="{{ $end.y }}" r="300" fill="url(#g{{ $id }})"/>
 {{- if $fill }}
 <rect x="{{ $bx }}" y="{{ $by }}" width="{{ $bw }}" height="{{ $bh }}" rx="26" fill="url(#p{{ $id }})"/>
 {{- end }}

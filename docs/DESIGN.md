@@ -58,7 +58,7 @@ The header has one setting: a light/dark toggle. It follows the system until use
 
 `layouts/_partials/diagram.html` draws a deterministic, label-free SVG for any page. The page's topics decide the colour; an MD5 of the page's ID and title (or a `seed`, such as a topic ID on topic pages) decides the rest:
 
-- the hue of the page's first topic (`hue` in `data/topics.toml`: Agents 290, Identity 240, AppSec 20, Passwords 75, Tokens 150, Engineering 195) for the highlighted path, the plate's faint tint and a soft glow behind the last node; the second topic's hue, if there is one, for the trust boundary. Lightness and chroma are shared, so every hue is equally quiet. A page without a topic gets one of eight hues from the hash;
+- the hue of the page's first topic (`hue` in `data/topics.toml`: Agents 290, Identity 240, AppSec 20, Passwords 75, Tokens 150, Engineering 195) for the highlighted path and the plate's faint tint; the second topic's hue, if there is one, for the trust boundary. Lightness and chroma are shared, so every hue is equally quiet. A page without a topic gets one of eight hues from the hash;
 - the shape: a free flow of 3–5 columns with 1–3 nodes each, or one of twelve set shapes (fan-out, fan-in, diamond, relay through a single party), up to four nodes in a column;
 - the line style: curves (half of the pages), right-angled runs with rounded corners, or straight lines;
 - the node mark of each column: circle, square or diamond;
