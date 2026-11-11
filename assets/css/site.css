@@ -300,7 +300,7 @@
   .pullquote p::before { content: "“" / ""; color: var(--signal); }
   .pullquote p::after { content: "”" / ""; color: var(--signal); }
   .prose :not(pre) > code { background: var(--ground-3); padding: 0.1em 0.35em; border-radius: 5px; font-size: 0.85em; overflow-wrap: anywhere; }
-  .prose mark { background: var(--signal-soft); color: inherit; padding-inline: 0.15em; }
+  .prose mark, .search-hit mark { background: var(--signal-soft); color: inherit; padding-inline: 0.15em; }
   p > .figure:only-child, .figure { margin-block: 2rem; }
   .figure figcaption, .hero-image figcaption { font-size: var(--small); color: var(--ink-2); margin-top: 0.5rem; }
   .hero-image { margin-bottom: 2rem; }

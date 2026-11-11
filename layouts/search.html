@@ -1,6 +1,6 @@
 {{ define "main" }}
 <section class="wrap search-page">
-  <header class="page-header"><h1>{{ .Title }}</h1><p class="lead">{{ .Description }} Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> anywhere for quick search.</p></header>
+  <header class="page-header"><h1>{{ .Title }}</h1><p class="lead">{{ .Description }} <span class="shortcut-hint">Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> anywhere for quick search.</span></p></header>
   <form id="search-form" role="search" action="/search/" method="get">
     <label for="query">Search terms</label>
     <div class="search-input"><input id="query" name="q" type="search" placeholder="Try passkeys, delegation or JWKS" autocomplete="off"><button type="submit">Search</button></div>
