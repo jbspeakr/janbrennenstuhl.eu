@@ -37,7 +37,9 @@ listmonk, Buttondown, webmention.io, a comments widget.
 **No external monitoring.** Bunny terminates TLS and renews certificates; the site is static, so the
 failure modes are a bad deploy (caught by the verify and browser jobs before publish, and by
 `scripts/smoke.py` after it) or a Bunny outage (not ours to watch). Rules out: uptime pingers,
-certificate-expiry checks, a CSP report collector for now.
+certificate-expiry checks, a CSP report collector. The CSP is enforced without one (11 November 2026):
+the browser suite loads every page type with the policy enforced and fails on a violation, which is
+the evidence a collector would have gathered.
 
 ## Bunny configuration as code (17 October 2026, replaces "Deferred" of 15 October)
 

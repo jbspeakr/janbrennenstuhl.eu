@@ -69,6 +69,9 @@
   abbr[title] { text-decoration: underline dotted; text-underline-offset: 0.2em; }
   hr { border: 0; border-top: 1px solid var(--rule); margin-block: 2.5rem; }
   @view-transition { navigation: auto; }
+  /* The flagship drawing on the home page and on its own article share a name, so it carries across that navigation.
+     A class, not a style attribute: the CSP allows no inline styles. */
+  .diagram.carries { view-transition-name: flagship-drawing; }
 }
 
 @layer layout {
@@ -342,6 +345,7 @@
   thead th { font-size: var(--tiny); color: var(--ink-2); font-weight: 500; padding-block: 0.5rem; border-bottom-color: var(--rule-strong); }
   tbody tr:last-child > * { border-bottom: 0; }
   .num { text-align: right; }
+  .al-left { text-align: left; } .al-center { text-align: center; } .al-right { text-align: right; }
   /* Key figures: {.figures} on a two-column table; **bold** sets the figure */
   .figures { border-top: 0; }
   .figures thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

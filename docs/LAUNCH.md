@@ -45,7 +45,7 @@ below "Publish" happens before everything above it is ticked.
 
 ## First week
 
-- [ ] Check CSP report-only violations in Bunny logs if a collector was configured; otherwise skip.
+- [ ] The CSP is enforced: open the home page, an essay, a field-guide entry with an explainer and `/search/` with the browser console open and confirm no Content-Security-Policy errors.
 - [ ] Search Console: crawl errors, soft 404s, redirect chains.
 - [ ] Lift the content freeze; announce the field guide and the agents page on Mastodon.
 - [ ] Delete the `redesign` branch; keep `modernize` until the first post-launch release is out.
