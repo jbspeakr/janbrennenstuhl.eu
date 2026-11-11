@@ -54,6 +54,15 @@ if (canCopy) {
 const tocBox = document.querySelector('.toc-box');
 if (tocBox && matchMedia('(min-width: 70rem)').matches) tocBox.open = true;
 
+// Narrow screens: once the contents list has scrolled away, offer a way back to it, and open it on arrival.
+const toContents = document.querySelector('.to-contents');
+const tocAside = document.querySelector('#contents');
+if (toContents && tocAside && 'IntersectionObserver' in window) {
+  // The root reaches far below the viewport, so the list counts as in view until it has left through the top.
+  new IntersectionObserver(([entry]) => { toContents.hidden = entry.isIntersecting; }, { rootMargin: '0px 0px 1000000px 0px' }).observe(tocAside);
+  toContents.addEventListener('click', () => { if (tocBox) tocBox.open = true; });
+}
+
 // Table of contents: mark the section being read.
 const tocLinks = [...document.querySelectorAll('.toc a[href^="#"]')];
 if (tocLinks.length && 'IntersectionObserver' in window) {

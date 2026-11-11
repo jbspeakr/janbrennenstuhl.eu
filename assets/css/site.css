@@ -266,6 +266,10 @@
   @media (max-width: 69.99rem) { .toc-box { border: 1px solid var(--rule); border-radius: var(--radius); padding: 0.5rem 1rem; } }
   .article-body { min-width: 0; }
 
+  /* Way back to the contents list on narrow screens, where it does not stay beside the text. */
+  .to-contents { position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 15; padding: 0.5rem 0.9rem; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--ground-2); color: var(--ink); font-size: var(--tiny); font-weight: 500; text-decoration: none; }
+  .to-contents::before { content: "↑ "; color: var(--ink-2); }
+  @media (min-width: 70rem) { .to-contents { display: none; } }
   .progress { position: fixed; inset: 0 0 auto 0; height: 2px; background: var(--signal); transform-origin: 0 50%; transform: scaleX(0); z-index: 20; }
   @supports (animation-timeline: scroll()) {
     .progress { animation: progress linear both; animation-timeline: scroll(root); }
@@ -556,7 +560,7 @@
 @layer print {
   @media print {
     :root { color-scheme: light; --ground: #fff; --ink: #000; --ink-2: #333; --signal: #000; --boundary: #000; }
-    .site-header, .site-footer, .toc, .related, .theme-toggle, .link-button, .text-button, .finding-tools, .cite-formats, .copy-code, .article-art, .flagship-art, .progress, .heading-anchor, .skip-link { display: none !important; }
+    .site-header, .site-footer, .toc, .related, .theme-toggle, .link-button, .text-button, .finding-tools, .cite-formats, .copy-code, .article-art, .flagship-art, .progress, .to-contents, .heading-anchor, .skip-link { display: none !important; }
     body { font-size: 11pt; line-height: 1.5; }
     .article-layout { display: block; }
     .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #333; }

@@ -13,7 +13,7 @@
     </div>
   </header>
   <div class="wrap article-layout">
-    <aside class="toc" aria-label="On this page">
+    <aside class="toc" id="contents" aria-label="On this page">
       {{- if ge (len .Fragments.Headings) 1 }}{{ with .TableOfContents }}
       <details class="toc-box"><summary>On this page</summary>{{ . }}</details>{{ end }}{{ end }}
       <p class="toc-links">{{ with .OutputFormats.Get "markdown" }}<a href="{{ .RelPermalink }}">Markdown</a>{{ end }}<a href="#cite">Cite</a>{{ with partial "data/series.html" . }}<a href="#series">Series</a>{{ end }}</p>
@@ -32,6 +32,8 @@
   </div>
   {{ partial "ui/related.html" . }}
 </article>
+{{- /* Narrow screens have the contents list only at the top of a long page; site.js shows this once it is out of view. */}}
+{{ if ge (len .Fragments.Headings) 1 }}<a class="to-contents" href="#contents" hidden>Contents</a>{{ end }}
 {{- else -}}
 <article class="wrap page">
   <header class="page-header">
