@@ -33,7 +33,7 @@ Bunny allows 50 edge rules per pull zone by default, hand-made ones included (ab
 
 Enabling the sync, once: delete the hand-made rules that `edge/rules.toml` replaces (security headers, `Cache-Control`, redirects; the old site also sends `X-XSS-Protection` and `Referrer-Policy: strict-origin`), add `ACCOUNT_API_KEY` and `BUNNY_PULL_ZONE_ID`, set `BUNNY_SYNC_EDGE_RULES=true`, and run `publish`. Then run `scripts/smoke.py`. Rehearse on the staging zone first: `edge_rules.py --apply --host <preview host>` with the staging pull zone ID runs from a laptop; for the production host the script only runs on a main-branch push.
 
-Zone settings that are not edge rules stay manual: Brotli and gzip, validators, the 404 page, the root-domain redirect. `scripts/smoke.py` checks the observable parts after deployment, including a 301 for every entry in `/redirects.json`.
+Zone settings that are not edge rules stay manual: Brotli and gzip, validators, the 404 page, the root-domain redirect. `scripts/smoke.py` checks the observable parts after deployment, including a 301 for every entry in `/redirects.json` (retired articles).
 
 ### Caching
 
@@ -67,7 +67,7 @@ Edge rules from `edge/rules.toml` set:
 ### Errors and redirects
 
 - Custom error page: `/404.html` with a real **404** status, not a 200 fallback.
-- Retired routes: `/redirects.json` lists every old URL (former home pagination, categories, tags, section pagination, front-matter aliases) with its new target. The synced edge rules answer each with a **301**, one rule per target; patterns include the host, so `/1/` never matches `/knowledge-base/account-security/1/`. The HTML redirect pages in the artifact remain as a fallback for clients that reach the origin. Old pagination URLs (`/2/`, `/tags/x/1/`) get only that HTML page, no edge rule: they were never linked, and the zone has 50 rules. Old `…/index.md` twins of renamed pages are not redirected.
+- Retired routes: `/redirects.json` lists every old URL (former home pagination, categories, tags, section pagination, front-matter aliases) with its new target. The synced edge rules answer each with a **301**, one rule per target; patterns include the host, so `/1/` never matches `/knowledge-base/account-security/1/`. The HTML redirect pages in the artifact remain as a fallback for clients that reach the origin. Only retired articles get an edge rule. Old pagination URLs (`/2/`, `/tags/x/1/`) and old listings (tags, categories, `/archives/`: every redirect to `/topics/…` or `/writing/`) get only that HTML page: pagination was never linked, listings carry little inbound link equity, an instant meta refresh still forwards visitors and search engines, and the zone has 50 rules. `scripts/check.py` still checks each of those pages and its target. Old `…/index.md` twins of renamed pages are not redirected.
 - Directory URLs: `/about/index.html` and `/about` **301** to `/about/` at any depth (`%{Url.Directory}`), keeping a query string on the `index.html` redirect. Extensionless `/.well-known/*` files are excluded by URL.
 - Root domain, the zone's `*.b-cdn.net` hostname and `jbspeakr.cc` (with `www`) to `www.janbrennenstuhl.eu`: one managed **301** rule (`canonicalFrom` in `edge/rules.toml`), so only one edge domain is ever indexed.
 
