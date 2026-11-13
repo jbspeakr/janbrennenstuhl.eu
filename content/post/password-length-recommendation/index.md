@@ -1,16 +1,16 @@
 ---
 id: jb-password-length-recommendation
 imageDecorative: true
-title: "Max Password Length: A Secure Password Guide"
-linkTitle: "Max Password Length: A Secure Password Guide"
-description: "A comprehensive password guide with max password length recommendation to ensure your accounts stay safe and secure."
-claim: "Length matters more than complexity: use unique passwords of at least 12 to 16 characters, and services should not cap passwords below 64 characters."
-excerpt: "What's the ideal password length? Are there official password guidelines? Find industry best-practises and essential tips for better password quality in this comprehensive guide on strong password composition."
-lead: "Is there a max password length recommendation? Are short passwords putting your web security at risk?"
+title: "Password Length: The Minimum and Maximum NIST Recommends"
+linkTitle: "Password Length: Minimum and Maximum"
+description: "How long a password should be and how long a service should allow it to be, based on NIST SP 800-63B-4 and the OWASP cheat sheets."
+claim: "A password used on its own should have at least 15 characters, a service should accept at least 64, and a maximum far above that is still reasonable to keep password hashing cheap."
+excerpt: "How long a password should be and how long a service should allow it to be, based on NIST SP 800-63B-4 and the OWASP cheat sheets."
+lead: "At least 15 characters for a password used on its own, at least 64 accepted by the service, and no composition rules."
 slug: max-password-length
 aliases: ["/max-password-length-recommendation/"]
 date: 2023-05-04
-lastmod: 2025-06-15
+lastmod: 2026-11-13
 draft: false
 weight: 50
 image: max-password-length-guide.webp
@@ -19,90 +19,65 @@ keywords: password length recommendations, max password length, recommended pass
 series: passwords
 ---
 
-Today, digital security is more important than ever. With cyber threats on the rise, having strong, unique passwords is critical for protecting your accounts and data. Common sense among security researchers is, that longer passwords are more crucial than complicated ones. In this article, I'll go into detail about the max password length recommendation, how it affects your digital security, and how to generate the most secure passwords available.
+A password that is the only thing protecting an account should have at least 15 characters, and the service behind it should accept at least 64. Both numbers come from the US National Institute of Standards and Technology (NIST), and they are the numbers I recommend. In this article I explain where the numbers come from, why they are about length and not about special characters, and why a service may still set an upper limit.
 
-## Password Length Recommendations
+{{< callout title="Update, November 2026: rewritten for the 2025 NIST guideline" >}}
+I reworked this article with the help of a coding agent. The 2023 version was based on the NIST guideline from 2017 and recommended 12 to 16 characters. It also claimed that NIST asks for complex passwords, which was wrong then and is wrong now. This version follows the 2025 revision.
+{{< /callout >}}
 
-### A Look into Password Length
+## What NIST and OWASP recommend today
 
-Before we look at password guidelines and how to choose the right length, let's go over why length is important. Longer passwords are generally more secure since they increase the number of possible combinations that a brute-force attack would have to try. To put it another way, the longer the password, the more time and effort it takes hackers to crack it.
+<span id="password-length-recommendations"></span><span id="the-nist-guidelines"></span><span id="so-whats-the-ideal-length"></span>NIST published the fourth revision of its guideline on authentication, [SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/ "NIST SP 800-63B-4: Authenticator and Verifier Requirements"), in 2025. It is written for US government systems, but OWASP and many others refer to it as well. Section 3.1.1.2 lists what a service that verifies passwords has to do. The OWASP [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html "OWASP Authentication Cheat Sheet"), for example, repeats the same length numbers and names NIST as its source.
 
-### The NIST Guidelines
+| Question | NIST SP 800-63B-4 |
+|----------|-------------------|
+| Minimum length when the password is the only factor | 15 characters |
+| Minimum length when multi-factor authentication (MFA) is always required | 8 characters |
+| Maximum length a service should at least accept | 64 characters |
+| Rules such as "one digit, one symbol, one uppercase letter" | Not allowed |
+| Checking only the first part of a long password | Not allowed |
+| Forced password changes on a schedule | Not allowed |
 
-The National Institute of Standards and Technology (NIST) released their latest [password security standards](https://pages.nist.gov/800-63-3/sp800-63b.html "NIST Digital Identity Guidelines – Authentication and Lifecycle Management") as part of the digital identity guidelines in 2017. The NIST password guidelines recommend a minimum password length of 8 characters, but no maximum length is specified. Instead, NIST advises users to establish long, complex passwords that are easy to remember but difficult to guess for others. The European Union Agency for Cybersecurity (ENISA), the European NIST-counterpart, mentions in their report on Security Hygiene from 2020 that user generated passwords should at least have 12 characters. 
+The 64 in this table is easy to misread, and my 2023 version of this article was not clear about it either. NIST says services "SHOULD permit a maximum password length of at least 64 characters". A limit of 64 is therefore the smallest acceptable one, and a limit of 20 or 32 characters doesn't meet the guideline.
 
-### Why No Max Length?
+If you want to compare an existing policy against the full list of requirements, I keep a checker in my field-guide entry on [what a password policy should require]({{< ref "/knowledge-base/account-security/password-policy-requirements" >}} "What should a password policy require?").
 
-NIST does not advocate for a maximum password length because they believe it is more essential to focus on the complexity requirements and uniqueness of passwords. A longer password is generally considered more secure than a short one, independent of its characters, numbers, and symbols composition and whether it fulfils arbitrary password complexity requirements.
+## Why the guideline counts characters and not character types
 
-### So, What's the Ideal Length?
+<span id="a-look-into-password-length"></span><span id="complex-passwords--the-importance-of-unpredictability"></span><span id="how-does-password-length-affect-security--brute-force-attacks"></span>An attacker who steals a database of password hashes can try guesses on their own hardware, without any rate limit. In its appendix on the [strength of passwords](https://pages.nist.gov/800-63-4/sp800-63b/passwords/ "NIST SP 800-63B-4, Appendix A: Strength of Passwords"), NIST speaks of "many billions of hashes per second" for such offline attacks. Every additional character multiplies the number of candidates the attacker has to try, so length is what makes guessing expensive.
 
-While NIST does not specify a maximum secret length, most cybersecurity experts agree that a unique password of 12 to 16 characters is sufficient for most common use-cases today. This length strikes a good balance between security and memorability. However, this is not intended to prevent service providers from allowing users to choose longer secrets – rather the opposite! According to OWASP, [a common maximum length is 64 characters](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) due to limitations in certain hashing algorithms. Imposing characters on users is actually considered bad practice.
+Composition rules were meant to have the same effect, but people respond to them in predictable ways. NIST gives this example:
 
-## Creating Strong Passwords
+{{< quote source="NIST SP 800-63B-4, Appendix A" url="https://pages.nist.gov/800-63-4/sp800-63b/passwords/" >}}
+For example, a user who might have chosen "password" as their password would be relatively likely to choose "Password1" if required to include an uppercase letter and a number or "Password1!" if a symbol is also required.
+{{< /quote >}}
 
-### Complex Passwords & the Importance of Unpredictability
+Attackers know these patterns and try them first. For that reason NIST dropped composition rules and asks services to compare new passwords against a blocklist of common and breached passwords. I describe how such a policy could look in [How to Design a Strong & Usable Password Policy]({{< ref "/post/password-policy/index.md" >}} "How to Design a Strong & Usable Password Policy").
 
-When it comes to creating a secure password, unpredictability is key. Avoid utilizing information that is easily guessed, such as names, dates, or common words and common passwords. [Do not reuse passwords]({{< ref "/knowledge-base/account-security/password-reuse/index.md" >}} "5 Alarming Password Reuse Studies"), but use a unique combination of lower- and uppercase characters, numerals, and special characters. Avoid sequential characters and use machine generated passwords! Make them longer!
+Length alone has limits. A long password that appears in a breach list, or that is reused on a second site, is still easy to guess. The same appendix also points out that phishing and keystroke logging work as well against a long password as against a short one.
 
-### Passphrases: A Password Manager Alternative
+## Why a service may still set a maximum
 
-For people without any password managers at hand, it is hard to remember complex passwords. Passphrases are a good alternative to conventional passwords. They are composed of a series of random words, making them easier to remember but more difficult to crack, especially when combined with special characters to protect against dictionary attacks. For example, "Butterfly_machine/skyscraper_twilight" is a unique password that satisfies the password length recommendation. Always keep in mind however, that [the only secure password](https://www.troyhunt.com/only-secure-password-is-one-you-cant/ "Troy Hunt: The only secure password is the one you can’t remember") is the one you can’t remember.
+<span id="why-no-max-length"></span><span id="what-is-the-max-password-length-recommendation"></span>A stored password hash has the same size for a short and for a long password, so storage is no reason for a low limit. NIST still doesn't ask for unlimited input:
 
-### Use a Password Manager
+{{< quote source="NIST SP 800-63B-4, Appendix A" url="https://pages.nist.gov/800-63-4/sp800-63b/passwords/" >}}
+Users should be encouraged to make their passwords as long as they want within reason. [...] However, extremely long passwords (perhaps megabytes long) could require excessive processing time to hash, so it is reasonable to have some limit.
+{{< /quote >}}
 
-Password managers are useful applications that can assist you in creating and storing complicated, one-of-a-kind passwords for all of your user accounts. They can create passwords that comply with strong password security recommendations and securely store them so you don't have to remember them. My personal recommendation for password creation and secure storage is 1Password, but there are many useful alternatives out there!
+Password hashing is slow on purpose, and for some algorithms the time grows with the length of the input. An attacker can abuse this by sending huge passwords to the login endpoint. The Django project had exactly this problem in 2013, and its [security release](https://www.djangoproject.com/weblog/2013/sep/15/security/ "Django security releases: denial-of-service via large passwords") rejected every password above 4096 bytes.
 
-## Common Password Pitfalls
+My reading is that the upper limit belongs somewhere between 64 characters and a few thousand. It should be so high that neither a person with a passphrase nor a password manager reaches it. In case you run a login system and want to know how to implement such a limit, read my article on [long password support]({{< ref "/post/long-password-support/index.md" >}} "How to Support Long Passwords in a Login System").
 
-### Short Passwords
+## What this means for your own passwords
 
-User created passwords are often too short. Many online platforms and services still apply [password policies]({{< ref "/post/password-policy/index.md" >}} "How to Design a Strong & Usable Password Policy") that are decades behind modern threat vectors, with outdated minimum password length requirements and composition rules. Often companies shy away from introducing any kind of additional friction in their sign-up or authentication process, enabling malicious actors to be successful with only few password attempts. Always make sure to use a complex password to minimize security risks.
+<span id="creating-strong-passwords"></span><span id="use-a-password-manager"></span><span id="common-password-pitfalls"></span><span id="short-passwords"></span><span id="what-is-a-password-manager-and-how-can-it-help-me"></span>The NIST numbers are written for services, but they translate well to personal use. My recommendation is a password manager, and I use 1Password myself. A password manager generates a random password for every account and fills it in, so a length of 20 or 30 characters costs no extra effort. Set the generator to at least 15 characters, and to more where the site accepts it.
 
-### Reusing Passwords
+<span id="passphrases-a-password-manager-alternative"></span><span id="what-is-a-passphrase--how-is-it-different-from-a-password"></span>Some passwords have to be typed by hand, for example the one that unlocks your computer or the password manager itself. For those, a passphrase of several random words is easier to type than random characters and reaches 15 characters quickly. The words have to be random: a quote or a song line is something an attacker's word list may contain.
 
-One of the most common mistakes people practice with their passwords is to reuse passwords across several accounts. If a hacker cracks, guesses or brute-forces one password, they may be able [to gain access to multiple accounts]({{< ref "/knowledge-base/account-security/account-hijacking/index.md" >}} "Defend against account takeovers & account hijacking attacks") if the same password is employed by the user. Ensuring passwords are different for each account is key!
+<span id="reusing-passwords"></span><span id="why-should-i-avoid-reusing-passwords"></span>A long password protects only the accounts it is not shared with. When a site leaks its passwords, attackers try the same email and password combination on other sites. I collected the numbers on that in [How common is password reuse?]({{< ref "/knowledge-base/account-security/password-reuse/index.md" >}} "How common is password reuse?").
 
-### Writing Passwords Down
+<span id="writing-passwords-down"></span><span id="ignoring-two-factor-authentication"></span><span id="faqs"></span><span id="conclusion"></span><span id="additional-tips-for-strengthening-your-password-security"></span>Three more points follow from the guideline:
 
-Writing down your passwords might seem to poses a significant security risk. If someone finds the written passwords, they can easily gain unauthorized access to your accounts. However, these security risks surely depend on your private threat model. For most common endusers, writing passwords down into a physical password vault is actually a great idea if it leads to more unique and long passwords being used. In any case, consider using a password management tool instead!
-
-### Ignoring Two-Factor Authentication
-
-Multi-factor authentication (2FA) protects your accounts by adding an extra layer of security using [passwordless authentication]({{< ref "/post/passkeys-controversy/index.md" >}} "Critical Notes on Passkeys") approaches. Even if someone guesses your most commonly used passwords, they'll need to also get access to your 2FA method (such as a text message or an authentication app) to log in. Enable 2FA whenever it is available! 
-
-## FAQs
-
-### What is the Max Password Length Recommendation?
-
-The max length recommendation refers to the best length for maximum security. Neither the NIST guidelines nor security researchers specify a maximum length – for good reason! A longish password is generally considered more secure. Most cybersecurity and password policy experts recommend to use secrets of at least 12 to 16 characters for the best balance of security and memorability. Arbitrarily short limitations of below 64 characters should not be imposed on users!
-
-### How does Password Length affect Security & Brute-Force Attacks?
-
-The number of characters is important for passwords because it increases the number of possible combinations that an attacker must try in brute-force attacks.  Every character added also increases time and effort required for password cracking (the recovery of hashed passwords with brute force). An 8-character password will take anywhere from a few minutes to a couple of hours to crack while a 16-character password will take a cracker years, which renders even offline attacks non-sustainable. A long password is also harder to guess.
-
-### What is a Passphrase & How is it different from a Password?
-
-A passphrase is a string of random dictionary words that is used to create a safe password. Passphrases are typically longer and hence are considered more secure than regular, weak passwords, as well as easier to remember. They are a useful approach to create lengthy passwords and offer a higher level of security. Better use a secure password generator!
-
-### Why should I avoid Reusing Passwords?
-
-Reusing passwords across multiple accounts is a dangerous practice because a [single data breach]({{< ref "/knowledge-base/account-security/compromised-credentials/index.md" >}} "Credential Stuffing & Compromised Credentials") can put all your other accounts at risk. If a malicious actor manages to crack one password, they can potentially access multiple accounts with the same password. It's essential to use unique passwords for each account to protect your digital identity.
-
-### What is a password manager, and how can it help me?
-
-[A password manager]({{< ref "/post/password-manager-friendly/index.md" >}} "Effortless Login: Make Your Login Forms Password-Manager Friendly!") is an app that allows you to create, save, and manage complex, unique passwords for all of your accounts. It can create passwords that adhere to best practices for password complexity and store passwords securely so you don't have to remember them.
-
-## Conclusion
-
-Finally, length is a critical attribute of password strength. You may dramatically improve the security of your accounts and data by creating strong passwords that are at least between 12 and 16 characters long, use a combination of character classes, numbers, and special characters, and avoid typical password problems. Don't forget to think about utilizing passphrases or a secure password generator to make the procedure even easier and more secure.
-
-## Additional Tips for Strengthening Your Password Security
-
-Now that we've covered the minimal and maximal password lengths and the necessity of creating secure passwords, let's look at some extra ideas that help you boost your password security even further.
-
-- **No Need to Regularly Update Your Passwords** – There is no need to change a strong password. There is no need for automatic password expiration. Changing your passwords every three to six months adds no security benefit and will not increase password protection. If you use complex passwords frequent password changes are simply unnecessary.
-- **Be Cautious with Password Recovery Questions** – Password recovery questions might be a vulnerability in your account security because they frequently incorporate personal information that hackers can easily find. Don't use any kind of recovery or security questions. If you have to, complain and if there is no way around it, choose questions with answers that aren't readily available online or easily guessed.
-- **Monitor Your Accounts for Suspicious Activity** – Check your accounts on a regular basis for any signs of unauthorized access or questionable behavior. If you discover anything out of the ordinary, change your password immediately and notify the service provider and proper authorities.
-- **Educate Yourself on Phishing Scams** – Cybercriminals use phishing scams to lure you into disclosing sensitive information such as your passwords or personal information. Never click on strange links or download attachments from unfamiliar sources, and be wary of unsolicited emails, messages, or phone calls requesting your password or personal information.
-- **Use a VPN When on Public Wi-Fi** – Using public Wi-Fi networks puts your data at risk of being compromised by hackers and other bad actors. When connecting to public Wi-Fi networks, use a Virtual Private Network (VPN) to protect your data and account security. A proper VPN adds an additional layer of encryption and ensures the privacy and security of your online activity.
+- Writing passwords down is acceptable if the note is stored safely. NIST says that recording passwords is "not necessarily vulnerable", although some ways of doing it are. [Troy Hunt](https://www.troyhunt.com/only-secure-password-is-one-you-cant/ "Troy Hunt: The only secure password is the one you can't remember") made the same argument years ago.
+- A good password doesn't need to be changed on a schedule. Change it when there is a sign that it leaked.
+- Length doesn't help against phishing. Turn on MFA where a site offers it, or use [passkeys]({{< ref "/post/passkeys-controversy/index.md" >}} "Passwordless: Critical Notes on FIDO2 Passkeys") if they fit your setup.

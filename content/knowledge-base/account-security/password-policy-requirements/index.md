@@ -66,4 +66,4 @@ The checker on this page compares the settings of a password policy with the req
 
 - [Do password strength meters work?]({{< ref "/knowledge-base/account-security/password-policy" >}})
 - [How common is password reuse?]({{< ref "/knowledge-base/account-security/password-reuse" >}})
-- [Max password length: a secure password guide]({{< ref "/post/password-length-recommendation" >}})
+- [Password length: the minimum and maximum NIST recommends]({{< ref "/post/password-length-recommendation" >}})

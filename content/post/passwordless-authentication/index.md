@@ -32,7 +32,7 @@ Passwordless authentication refers to a way of validating a user's identity that
 
 Multi-factor authentication (MFA) is a layered authentication method that includes at least two of the following authentication factors:
 
-- something the user knows (knowledge-based, such as a [long password]({{< ref "/post/long-password-support/index.md" >}} "Long Password Support: A Key to Stronger & Safer Login Systems")),
+- something the user knows (knowledge-based, such as a [long password]({{< ref "/post/long-password-support/index.md" >}} "How to Support Long Passwords in a Login System")),
 - something the user has (possession-based, such as a hardware token), or
 - something the user is (biometric, such as a retinal scan).
 

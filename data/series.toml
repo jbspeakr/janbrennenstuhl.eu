@@ -18,11 +18,6 @@ title = "AppSec for Agentic Engineering"
 description = "How coding agents change application security, and what security teams should build in response."
 
 [[series]]
-id = "whaling"
-title = "Whaling"
-description = "Phishing aimed at executives: how it works and how to train for it."
-
-[[series]]
 id = "state-of-the-broker"
 title = "State of the Broker"
 description = "A monthly look at how the open-source Agentic Identity Broker evolves: new features, project numbers, who wrote about it, what got in the way and what comes next."

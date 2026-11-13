@@ -1145,58 +1145,19 @@
     "redirect": false
   },
   "/whaling-cyber-security/index.html": {
-    "canonical": "https://www.janbrennenstuhl.eu/whaling-phishing-definition/",
+    "canonical": "https://www.janbrennenstuhl.eu/topics/application-security/",
     "headings": [],
     "redirect": true
   },
   "/whaling-phishing-definition/index.html": {
-    "canonical": "https://www.janbrennenstuhl.eu/whaling-phishing-definition/",
-    "headings": [
-      "spear-phishing-vs-whaling-attacks-in-cybersecurity",
-      "whale-phishing-a-personalized-approach-to-spear-phishing",
-      "the-risks-of-spear-phishing-attacks",
-      "how-whaling-works",
-      "targeting-the-top",
-      "social-engineering-tactics",
-      "impersonation",
-      "whaling-attack-examples",
-      "ceo-fraud",
-      "high-profile-whaling-attacks",
-      "strategies-for-preventing-whaling-cyber-attacks",
-      "implement-employee-training-programs",
-      "establish-best-practices-for-email-communication",
-      "profile-target-audiences",
-      "protecting-against-whaling-phishing-attacks",
-      "potential-impact-of-whaling-phishing-on-organizations",
-      "financial-losses",
-      "reputational-damage",
-      "compromised-sensitive-data",
-      "conclusion-understanding-the-risks-of-whaling-phishing-attacks",
-      "frequently-asked-questions-faqs"
-    ],
-    "redirect": false
+    "canonical": "https://www.janbrennenstuhl.eu/topics/application-security/",
+    "headings": [],
+    "redirect": true
   },
   "/what-is-whaling-cyber-awareness/index.html": {
-    "canonical": "https://www.janbrennenstuhl.eu/what-is-whaling-cyber-awareness/",
-    "headings": [
-      "what-is-whaling-cyber-awareness",
-      "security-awareness-why-it-matters",
-      "technologies-and-strategies-for-whaling-prevention",
-      "defensive-technologies-anti-spoofing-secure-email-gateways-and-ai-based-solutions",
-      "proactive-measures-two-factor-authentication-secure-communication-channels",
-      "incident-response-planning-preparation-for-whaling-attacks",
-      "make-dmarc-a-part-of-your-whaling-cyber-awareness-agenda",
-      "robust-compliance-policies",
-      "defense-strategies-for-individuals",
-      "the-future-of-whaling-and-cyber-awareness",
-      "predicting-future-trends-in-whaling-the-changing-landscape",
-      "the-role-of-ai-and-machine-learning-in-whaling-defense",
-      "a-machine-learning-approach-to-phishing-detection-and-defense",
-      "the-importance-of-ongoing-cyber-awareness-training-and-education",
-      "ai-driven-cybersecurity",
-      "frequently-asked-questions-faqs"
-    ],
-    "redirect": false
+    "canonical": "https://www.janbrennenstuhl.eu/topics/application-security/",
+    "headings": [],
+    "redirect": true
   },
   "/why-aws-cloudformation-sucks/index.html": {
     "canonical": "https://www.janbrennenstuhl.eu/why-aws-cloudformation-sucks/",
