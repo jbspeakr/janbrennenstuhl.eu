@@ -21,10 +21,6 @@ series: passwords
 
 A password that is the only thing protecting an account should have at least 15 characters, and the service behind it should accept at least 64. Both numbers come from the US National Institute of Standards and Technology (NIST), and they are the numbers I recommend. In this article I explain where the numbers come from, why they are about length and not about special characters, and why a service may still set an upper limit.
 
-{{< callout title="Update, November 2026: rewritten for the 2025 NIST guideline" >}}
-I reworked this article. The 2023 version was based on the NIST guideline from 2017 and recommended 12 to 16 characters. It also claimed that NIST asks for complex passwords, which was wrong then and is wrong now. This version follows the 2025 revision.
-{{< /callout >}}
-
 ## What NIST and OWASP recommend today
 
 <span id="password-length-recommendations"></span><span id="the-nist-guidelines"></span><span id="so-whats-the-ideal-length"></span>NIST published the fourth revision of its guideline on authentication, [SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/ "NIST SP 800-63B-4: Authenticator and Verifier Requirements"), in 2025. It is written for US government systems, but OWASP and many others refer to it as well. Section 3.1.1.2 lists what a service that verifies passwords has to do. The OWASP [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html "OWASP Authentication Cheat Sheet"), for example, repeats the same length numbers and names NIST as its source.
@@ -38,7 +34,7 @@ I reworked this article. The 2023 version was based on the NIST guideline from 2
 | Checking only the first part of a long password | Not allowed |
 | Forced password changes on a schedule | Not allowed |
 
-The 64 in this table is easy to misread, and my 2023 version of this article was not clear about it either. NIST says services "SHOULD permit a maximum password length of at least 64 characters". A limit of 64 is therefore the smallest acceptable one, and a limit of 20 or 32 characters doesn't meet the guideline.
+The 64 in this table is easy to misread. NIST says services "SHOULD permit a maximum password length of at least 64 characters". A limit of 64 is therefore the smallest acceptable one, and a limit of 20 or 32 characters doesn't meet the guideline.
 
 If you want to compare an existing policy against the full list of requirements, I keep a checker in my field-guide entry on [what a password policy should require]({{< ref "/knowledge-base/account-security/password-policy-requirements" >}} "What should a password policy require?").
 

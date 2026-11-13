@@ -21,10 +21,6 @@ series: passwords
 
 A login system should accept passwords of at least 64 characters, check every character of them, and reject input above a maximum that somebody chose on purpose. Often the limit was never chosen: a form attribute, a database column or the hash function sets it. In this article I go through the places where such limits hide and how I would replace them with a single explicit one.
 
-{{< callout title="Update, November 2026: rewritten and shortened" >}}
-I reworked this article. The 2023 version was long and repeated itself, and it recommended keeping the old and the new password hash side by side during a migration, which leaves the weaker hash in the database. The hashing parameters and length numbers now follow the current OWASP cheat sheets and NIST SP 800-63B-4.
-{{< /callout >}}
-
 ## Start with the two numbers
 
 <span id="the-importance-of-password-security"></span><span id="the-rise-of-long-passwords"></span><span id="password-maximum-length-limitations"></span><span id="common-password-max-length-limits"></span><span id="the-consequences-of-short-password-limits"></span><span id="the-benefits-of-long-passwords"></span><span id="secure-password-enhanced-security-through-entropy"></span><span id="resistance-to-brute-force-attacks"></span>The US National Institute of Standards and Technology (NIST) sets both ends in [SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/ "NIST SP 800-63B-4: Authenticator and Verifier Requirements"). The minimum is 15 characters when the password is the only factor, and 8 when multi-factor authentication is always required. For the maximum, services "SHOULD permit a maximum password length of at least 64 characters". I explain the reasoning behind these numbers in my article on [password length]({{< ref "/post/password-length-recommendation/index.md" >}} "Password Length: The Minimum and Maximum NIST Recommends").
