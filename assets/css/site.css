@@ -183,9 +183,12 @@
   .row-meta .series { color: var(--ink-2); }
 
   /* Home blocks: the lead essay with rows, cards (field guide, projects), the agents panel. */
-  .row-rich { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; padding-block: 1rem; }
+  .row-rich { display: grid; grid-template-columns: 1fr; gap: 0.25rem; padding-block: 1rem; }
   .row-rich:first-child { padding-top: 1.5rem; }
-  .row-date { font-size: var(--tiny); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .row-rich .row-meta { flex-wrap: nowrap; align-items: baseline; line-height: 1.4; }
+  .row-about { min-width: 0; }
+  .row-time { white-space: nowrap; }
+  .row-date { margin-left: auto; padding-left: 1rem; white-space: nowrap; flex-shrink: 0; }
   .row-rich > a { grid-column: 1 / -1; font-weight: 600; font-size: 1.1rem; }
   .cards { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
   .card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--ground-2); }
