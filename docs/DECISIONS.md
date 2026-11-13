@@ -86,9 +86,6 @@ to search.
 - Essays, talks and projects are written and published by Jan, so publication is their first
   review: they show no review label until a later review (17 October 2026). Field-guide
   entries were rewritten in a new form and stay unreviewed until Jan signs each one off.
-- Old essays are not retired. The notice and the topic index handle age; a post is archived
-  (`status: archived`) only when its advice is wrong, and superseded (`status: superseded`,
-  `supersededBy`) when a newer page replaces it.
 
 ## Dependencies (15 October 2026)
 
