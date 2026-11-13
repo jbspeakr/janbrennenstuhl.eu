@@ -22,7 +22,7 @@ series: passwords
 A login system should accept passwords of at least 64 characters, check every character of them, and reject input above a maximum that somebody chose on purpose. Often the limit was never chosen: a form attribute, a database column or the hash function sets it. In this article I go through the places where such limits hide and how I would replace them with a single explicit one.
 
 {{< callout title="Update, November 2026: rewritten and shortened" >}}
-I reworked this article with the help of a coding agent. The 2023 version was long and repeated itself, and it recommended keeping the old and the new password hash side by side during a migration, which leaves the weaker hash in the database. The hashing parameters and length numbers now follow the current OWASP cheat sheets and NIST SP 800-63B-4.
+I reworked this article. The 2023 version was long and repeated itself, and it recommended keeping the old and the new password hash side by side during a migration, which leaves the weaker hash in the database. The hashing parameters and length numbers now follow the current OWASP cheat sheets and NIST SP 800-63B-4.
 {{< /callout >}}
 
 ## Start with the two numbers

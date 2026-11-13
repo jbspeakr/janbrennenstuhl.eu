@@ -22,7 +22,7 @@ series: passwords
 A password that is the only thing protecting an account should have at least 15 characters, and the service behind it should accept at least 64. Both numbers come from the US National Institute of Standards and Technology (NIST), and they are the numbers I recommend. In this article I explain where the numbers come from, why they are about length and not about special characters, and why a service may still set an upper limit.
 
 {{< callout title="Update, November 2026: rewritten for the 2025 NIST guideline" >}}
-I reworked this article with the help of a coding agent. The 2023 version was based on the NIST guideline from 2017 and recommended 12 to 16 characters. It also claimed that NIST asks for complex passwords, which was wrong then and is wrong now. This version follows the 2025 revision.
+I reworked this article. The 2023 version was based on the NIST guideline from 2017 and recommended 12 to 16 characters. It also claimed that NIST asks for complex passwords, which was wrong then and is wrong now. This version follows the 2025 revision.
 {{< /callout >}}
 
 ## What NIST and OWASP recommend today
@@ -70,7 +70,7 @@ My reading is that the upper limit belongs somewhere between 64 characters and a
 
 ## What this means for your own passwords
 
-<span id="creating-strong-passwords"></span><span id="use-a-password-manager"></span><span id="common-password-pitfalls"></span><span id="short-passwords"></span><span id="what-is-a-password-manager-and-how-can-it-help-me"></span>The NIST numbers are written for services, but they translate well to personal use. My recommendation is a password manager, and I use 1Password myself. A password manager generates a random password for every account and fills it in, so a length of 20 or 30 characters costs no extra effort. Set the generator to at least 15 characters, and to more where the site accepts it.
+<span id="creating-strong-passwords"></span><span id="use-a-password-manager"></span><span id="common-password-pitfalls"></span><span id="short-passwords"></span><span id="what-is-a-password-manager-and-how-can-it-help-me"></span>The NIST numbers are written for services, but they translate well to personal use. My recommendation is a password manager. It generates a random password for every account and fills it in, so a length of 20 or 30 characters costs no extra effort. Set the generator to at least 15 characters, and to more where the site accepts it.
 
 <span id="passphrases-a-password-manager-alternative"></span><span id="what-is-a-passphrase--how-is-it-different-from-a-password"></span>Some passwords have to be typed by hand, for example the one that unlocks your computer or the password manager itself. For those, a passphrase of several random words is easier to type than random characters and reaches 15 characters quickly. The words have to be random: a quote or a song line is something an attacker's word list may contain.
 
