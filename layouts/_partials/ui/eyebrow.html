@@ -1,6 +1,7 @@
 {{- $kind := partial "data/kind.html" . -}}
+{{- /* Each separator travels with the crumb after it, so a wrapped line never ends on a bare slash. */ -}}
 <p class="eyebrow">
-  <span>{{ partial "ui/kind-label.html" $kind }}</span>
-  {{- range partial "data/topics.html" . }}{{ with partial "data/topic.html" . }} <span aria-hidden="true">/</span> <a class="chip" href="/topics/{{ .id }}/"><span class="dot t-{{ .id }}" aria-hidden="true"></span>{{ .title }}</a>{{ end }}{{ end }}
-  {{- with partial "data/series.html" . }} <span aria-hidden="true">/</span> <a href="#series">Series: {{ .title }}</a>{{ end }}
+  <span class="crumb">{{ partial "ui/kind-label.html" $kind }}</span>
+  {{- range partial "data/topics.html" . }}{{ with partial "data/topic.html" . }} <span class="crumb"><span aria-hidden="true">/</span> <a class="chip" href="/topics/{{ .id }}/"><span class="dot t-{{ .id }}" aria-hidden="true"></span>{{ .title }}</a></span>{{ end }}{{ end }}
+  {{- with partial "data/series.html" . }} <span class="crumb crumb-series"><span aria-hidden="true">/</span> <a href="#series">Series: {{ .title }}</a></span>{{ end }}
 </p>
