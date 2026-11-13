@@ -348,13 +348,12 @@ see = ["/knowledge-base/account-security/account-hijacking"]
 id = "phishing"
 term = "Phishing"
 definition = "Tricking someone into handing over credentials, approving a login or running something, usually with a message or site that imitates one they trust. Passkeys and password managers resist it because they check the domain; people can't do that reliably."
-see = ["/post/whaling", "/post/passkeys-controversy"]
+see = ["/post/passkeys-controversy"]
 
 [[term]]
 id = "whaling"
 term = "Whaling"
 definition = "Phishing aimed at senior executives, usually to get them to approve payments or share sensitive data."
-see = ["/post/whaling", "/post/whaling-awareness"]
 
 [[term]]
 id = "honeytoken"

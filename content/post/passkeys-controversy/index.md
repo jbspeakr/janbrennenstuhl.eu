@@ -30,7 +30,7 @@ The FIDO Alliance developed FIDO2 as an open standard that enables secure and us
 
 [The FIDO master plan](https://media.fidoalliance.org/wp-content/uploads/2022/03/How-FIDO-Addresses-a-Full-Range-of-Use-Cases-March24.pdf) is to turn every mobile phone into a phishing-resistant, roaming authenticator by augmenting the FIDO WebAuthn specs with a protocol that uses Bluetooth to communicate between the FIDO authenticator (a mobile phone) and the device from which a user is attempting to authenticate. Specialized security keys (hardware tokens like YubiKeys) will be rendered obsolete.
 
-The term *"Passkeys"* refers to the credentials used in this authentication procedure based on cryptographic concepts. Passkeys for FIDO2 allow users to authenticate themselves without entering a [long password]({{< ref "/post/password-length-recommendation/index.md" >}} "Password Length Recommendation: The Ultimate Guide to Strong Passwords"), lowering the risk of password-related security breaches.
+The term *"Passkeys"* refers to the credentials used in this authentication procedure based on cryptographic concepts. Passkeys for FIDO2 allow users to authenticate themselves without entering a [long password]({{< ref "/post/password-length-recommendation/index.md" >}} "Password Length: The Minimum and Maximum NIST Recommends"), lowering the risk of password-related security breaches.
 
 ### Public-Key Cryptography
 

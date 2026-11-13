@@ -279,3 +279,21 @@ to = "/topics/passwords/"
 [[redirect]]
 from = "/tags/ux-security/"
 to = "/topics/passwords/"
+
+# Retired essays (November 2026): the two whaling articles were removed. Their routes and old
+# aliases point to the topic that listed them.
+[[redirect]]
+from = "/whaling-phishing/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/whaling-phishing-definition/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/whaling-cyber-security/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/whaling-awareness/"
+to = "/topics/application-security/"
+[[redirect]]
+from = "/what-is-whaling-cyber-awareness/"
+to = "/topics/application-security/"
