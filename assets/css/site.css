@@ -122,6 +122,13 @@
   .eyebrow { font-size: var(--tiny); color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: baseline; }
   .eyebrow a { text-decoration: none; }
   .eyebrow a:hover { text-decoration: underline; }
+  .eyebrow .crumb { white-space: nowrap; }
+  /* Phones: the series takes its own line and drops its slash; rows sit closer. */
+  @media (max-width: 40rem) {
+    .article-head .eyebrow { line-height: 1.5; row-gap: 0.15rem; }
+    .article-head .crumb-series { flex-basis: 100%; white-space: normal; }
+    .article-head .crumb-series > [aria-hidden] { display: none; }
+  }
   .chip { color: var(--boundary); }
   .lead { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.3rem); line-height: 1.5; color: var(--ink-2); max-width: 46ch; text-wrap: pretty; }
   .meta, .row-meta, .byline, .small { font-size: var(--small); color: var(--ink-2); }
