@@ -4,6 +4,6 @@
     <p class="card-label">{{ .Parent.Title }}</p>
     <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
     <p>{{ (.Params.answer | default .Description) | markdownify | plainify | truncate 170 }}</p>
-    <p class="row-meta">{{ with $state.reviewed }}Reviewed {{ time.Format "Jan 2006" . }}{{ else }}Not yet reviewed{{ end }}</p>
+    {{ with $state.reviewed }}<p class="row-meta">Reviewed {{ time.Format "Jan 2006" . }}</p>{{ end }}
   </div></li>{{ end }}
 </ol>
