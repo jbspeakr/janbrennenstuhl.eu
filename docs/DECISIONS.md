@@ -89,9 +89,6 @@ to search.
 - Old essays are not retired. The notice and the topic index handle age; a post is archived
   (`status: archived`) only when its advice is wrong, and superseded (`status: superseded`,
   `supersededBy`) when a newer page replaces it.
-- Exception (13 November 2026): Jan removed the two whaling essays from 2023 after a quality review
-  of the archive. Their routes and aliases redirect to `/topics/application-security/`
-  (`data/redirects.toml`), and their baseline entries are now redirects without heading anchors.
 
 ## Dependencies (15 October 2026)
 

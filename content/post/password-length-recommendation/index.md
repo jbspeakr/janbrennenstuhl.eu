@@ -23,7 +23,7 @@ A password that is the only thing protecting an account should have at least 15 
 
 ## What NIST and OWASP recommend today
 
-<span id="password-length-recommendations"></span><span id="the-nist-guidelines"></span><span id="so-whats-the-ideal-length"></span>NIST published the fourth revision of its guideline on authentication, [SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/ "NIST SP 800-63B-4: Authenticator and Verifier Requirements"), in 2025. It is written for US government systems, but OWASP and many others refer to it as well. Section 3.1.1.2 lists what a service that verifies passwords has to do. The OWASP [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html "OWASP Authentication Cheat Sheet"), for example, repeats the same length numbers and names NIST as its source.
+NIST published the fourth revision of its guideline on authentication, [SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/ "NIST SP 800-63B-4: Authenticator and Verifier Requirements"), in 2025. It is written for US government systems, but OWASP and many others refer to it as well. Section 3.1.1.2 lists what a service that verifies passwords has to do. The OWASP [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html "OWASP Authentication Cheat Sheet"), for example, repeats the same length numbers and names NIST as its source.
 
 | Question | NIST SP 800-63B-4 |
 |----------|-------------------|
@@ -40,7 +40,7 @@ If you want to compare an existing policy against the full list of requirements,
 
 ## Why the guideline counts characters and not character types
 
-<span id="a-look-into-password-length"></span><span id="complex-passwords--the-importance-of-unpredictability"></span><span id="how-does-password-length-affect-security--brute-force-attacks"></span>An attacker who steals a database of password hashes can try guesses on their own hardware, without any rate limit. In its appendix on the [strength of passwords](https://pages.nist.gov/800-63-4/sp800-63b/passwords/ "NIST SP 800-63B-4, Appendix A: Strength of Passwords"), NIST speaks of "many billions of hashes per second" for such offline attacks. Every additional character multiplies the number of candidates the attacker has to try, so length is what makes guessing expensive.
+An attacker who steals a database of password hashes can try guesses on their own hardware, without any rate limit. In its appendix on the [strength of passwords](https://pages.nist.gov/800-63-4/sp800-63b/passwords/ "NIST SP 800-63B-4, Appendix A: Strength of Passwords"), NIST speaks of "many billions of hashes per second" for such offline attacks. Every additional character multiplies the number of candidates the attacker has to try, so length is what makes guessing expensive.
 
 Composition rules were meant to have the same effect, but people respond to them in predictable ways. NIST gives this example:
 
@@ -54,7 +54,7 @@ Length alone has limits. A long password that appears in a breach list, or that 
 
 ## Why a service may still set a maximum
 
-<span id="why-no-max-length"></span><span id="what-is-the-max-password-length-recommendation"></span>A stored password hash has the same size for a short and for a long password, so storage is no reason for a low limit. NIST still doesn't ask for unlimited input:
+A stored password hash has the same size for a short and for a long password, so storage is no reason for a low limit. NIST still doesn't ask for unlimited input:
 
 {{< quote source="NIST SP 800-63B-4, Appendix A" url="https://pages.nist.gov/800-63-4/sp800-63b/passwords/" >}}
 Users should be encouraged to make their passwords as long as they want within reason. [...] However, extremely long passwords (perhaps megabytes long) could require excessive processing time to hash, so it is reasonable to have some limit.
@@ -66,13 +66,13 @@ My reading is that the upper limit belongs somewhere between 64 characters and a
 
 ## What this means for your own passwords
 
-<span id="creating-strong-passwords"></span><span id="use-a-password-manager"></span><span id="common-password-pitfalls"></span><span id="short-passwords"></span><span id="what-is-a-password-manager-and-how-can-it-help-me"></span>The NIST numbers are written for services, but they translate well to personal use. My recommendation is a password manager. It generates a random password for every account and fills it in, so a length of 20 or 30 characters costs no extra effort. Set the generator to at least 15 characters, and to more where the site accepts it.
+The NIST numbers are written for services, but they translate well to personal use. My recommendation is a password manager. It generates a random password for every account and fills it in, so a length of 20 or 30 characters costs no extra effort. Set the generator to at least 15 characters, and to more where the site accepts it.
 
-<span id="passphrases-a-password-manager-alternative"></span><span id="what-is-a-passphrase--how-is-it-different-from-a-password"></span>Some passwords have to be typed by hand, for example the one that unlocks your computer or the password manager itself. For those, a passphrase of several random words is easier to type than random characters and reaches 15 characters quickly. The words have to be random: a quote or a song line is something an attacker's word list may contain.
+Some passwords have to be typed by hand, for example the one that unlocks your computer or the password manager itself. For those, a passphrase of several random words is easier to type than random characters and reaches 15 characters quickly. The words have to be random: a quote or a song line is something an attacker's word list may contain.
 
-<span id="reusing-passwords"></span><span id="why-should-i-avoid-reusing-passwords"></span>A long password protects only the accounts it is not shared with. When a site leaks its passwords, attackers try the same email and password combination on other sites. I collected the numbers on that in [How common is password reuse?]({{< ref "/knowledge-base/account-security/password-reuse/index.md" >}} "How common is password reuse?").
+A long password protects only the accounts it is not shared with. When a site leaks its passwords, attackers try the same email and password combination on other sites. I collected the numbers on that in [How common is password reuse?]({{< ref "/knowledge-base/account-security/password-reuse/index.md" >}} "How common is password reuse?").
 
-<span id="writing-passwords-down"></span><span id="ignoring-two-factor-authentication"></span><span id="faqs"></span><span id="conclusion"></span><span id="additional-tips-for-strengthening-your-password-security"></span>Three more points follow from the guideline:
+Three more points follow from the guideline:
 
 - Writing passwords down is acceptable if the note is stored safely. NIST says that recording passwords is "not necessarily vulnerable", although some ways of doing it are. [Troy Hunt](https://www.troyhunt.com/only-secure-password-is-one-you-cant/ "Troy Hunt: The only secure password is the one you can't remember") made the same argument years ago.
 - A good password doesn't need to be changed on a schedule. Change it when there is a sign that it leaked.
